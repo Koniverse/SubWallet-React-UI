@@ -111,6 +111,7 @@ export interface BaseButtonProps {
   danger?: boolean;
   block?: boolean;
   children?: React.ReactNode;
+  title?: string;
 }
 
 // Typescript will make optional not optional if use Pick with union.
