@@ -39,7 +39,7 @@ const App: React.FC = () => (
 export default App;
 ```
 
-You will get a theme with primary color <div style="display: inline-block; width: 16px; height: 16px; border-radius: 4px; background: #00b96b; vertical-align: text-bottom;"></div> `#00b96b`. And we can see the change in Button:
+You will get a theme with primary color <ColorChunk color="#00b96b" /></ColorChunk>. And we can see the change in Button:
 
 ![themed button](https://gw.alipayobjects.com/mdn/rms_08e378/afts/img/A*CbF_RJfKEiwAAAAAAAAAAAAAARQnAQ)
 
@@ -90,7 +90,7 @@ const App: React.FC = () => (
 export default App;
 ```
 
-In this way, we changed the primary color of Radio to <div style="display: inline-block; width: 16px; height: 16px; border-radius: 4px; background: #00b96b; vertical-align: text-bottom;"></div> `#00b96b`, and Checkbox is not affected.
+In this way, we changed the primary color of Radio to <ColorChunk color="#00b96b" /></ColorChunk>, and Checkbox is not affected.
 
 ![component token](https://gw.alipayobjects.com/mdn/rms_08e378/afts/img/A*EMY0QrHFDjsAAAAAAAAAAAAAARQnAQ)
 
@@ -299,6 +299,27 @@ export default () => {
 };
 ```
 
+### Shadow DOM Usage
+
+Since `<style />` tag insertion is different from normal DOM in Shadow DOM scenario, you need to use `StyleProvider` of `@ant-design/cssinjs` to configure the `container` property to set the insertion position:
+
+```tsx
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+import { StyleProvider } from '@ant-design/cssinjs';
+
+const shadowRoot = someEle.attachShadow({ mode: 'open' });
+const container = document.createElement('div');
+shadowRoot.appendChild(container);
+const root = createRoot(container);
+
+root.render(
+  <StyleProvider container={shadowRoot}>
+    <MyApp />
+  </StyleProvider>,
+);
+```
+
 ## API
 
 ### Theme
@@ -314,7 +335,7 @@ export default () => {
 
 | Property | Description | Type | Default |
 | --- | --- | --- | --- |
-| `Component` (可以是任意 antd 组件名，如 `Button`) | 用于修改 Component Token 以及覆盖该组件消费的 Alias Token | `ComponentToken & AliasToken` | - |
+| `Component` (Can be any antd Component name like `Button`) | Modify Component Token or override Component used Alias Token | `ComponentToken & AliasToken` | - |
 
 ### SeedToken
 
@@ -322,19 +343,23 @@ export default () => {
 
 ### MapToken
 
-> 继承所有 SeedToken 的 Property
+> Inherit all SeedToken properties
 
 <TokenTable type="map"></TokenTable>
 
 ### AliasToken
 
-> 继承所有 SeedToken 和 MapToken 的 Property
+> Inherit all SeedToken and MapToken properties
 
 <TokenTable type="alias"></TokenTable>
 
+### StyleProvider
+
+Please ref [`@ant-design/cssinjs`](https://github.com/ant-design/cssinjs#styleprovider).
+
 ## How to Debug your Theme
 
-We provide tools to help users debug themes: [Theme Editor](https://ant-design.github.io/antd-token-previewer/~demos/docs-theme-editor-simple)
+We provide tools to help users debug themes: [Theme Editor](/theme-editor)
 
 You can use this tool to freely modify Design Token to meet your theme expectations.
 
