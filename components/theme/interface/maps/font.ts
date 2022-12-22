@@ -1,5 +1,6 @@
 export interface FontMapToken {
   // Font Size
+  fontSizeSSM: number;
   fontSizeSM: number;
   fontSize: number;
   fontSizeLG: number;
@@ -40,6 +41,7 @@ export interface FontMapToken {
   lineHeight: number;
   lineHeightLG: number;
   lineHeightSM: number;
+  lineHeightSSM: number;
 
   lineHeightHeading1: number;
   lineHeightHeading2: number;

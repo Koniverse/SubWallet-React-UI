@@ -172,6 +172,69 @@ interface ColorPrimaryMapToken {
   colorPrimaryTextActive: string; // 10
 }
 
+interface ColorSecondaryMapToken {
+  /**
+   * @nameZH 品牌主色
+   * @desc 品牌色是体现产品特性和传播理念最直观的视觉元素之一，用于产品的主色调、主按钮、主图标、主文本等   */
+  colorSecondary: string; // 6
+
+  /**
+   * @nameZH 主色浅色背景色
+   * @nameEN Light Background Color of Secondary Color
+   * @desc 主色浅色背景颜色，一般用于视觉层级较弱的选中状态。
+   * @descEN Light background color of secondary color, usually used for weak visual level selection state.
+   */
+  colorSecondaryBg: string; // 1
+
+  /**
+   * @nameZH 主色浅色背景悬浮态
+   * @desc 与主色浅色背景颜色相对应的悬浮态颜色。
+   */
+  colorSecondaryBgHover: string; // 2
+
+  /**
+   * @nameZH 主色描边色
+   * @desc 主色梯度下的描边用色，用在 Slider 组件的描边上
+   */
+  colorSecondaryBorder: string; // 3
+
+  /**
+   * @nameZH 主色描边色悬浮态
+   * @desc 主色梯度下的描边用色的悬浮态，Slider 、Button 等组件的描边 Hover 时会使用
+   */
+  colorSecondaryBorderHover: string; // 4
+
+  /**
+   * @nameZH 主色悬浮态
+   * @desc 主色梯度下的悬浮态，使用频率很高
+   */
+  colorSecondaryHover: string; // 5
+
+  /**
+   * @nameZH 主色激活态
+   * @desc 主色梯度下的深色激活态
+   */
+  colorSecondaryActive: string; // 7
+
+  /**
+   * @nameZH 主色文本悬浮态
+   * @desc 主色梯度下的文本悬浮态
+   */
+  colorSecondaryTextHover: string; // 8
+
+  /**
+   * @nameZH 主色文本
+   * @desc 主色梯度下的文本颜色
+   */
+  colorSecondaryText: string; // 9
+
+  /**
+   * @nameZH 主色文本
+   * @desc 主色梯度下的文本激活态
+   */
+  colorSecondaryTextActive: string; // 10
+}
+
 interface ColorSuccessMapToken {
   /**
    * @nameZH 成功色的浅色背景颜色
@@ -408,6 +471,7 @@ interface ColorErrorMapToken {
 export interface ColorMapToken
   extends ColorNeutralMapToken,
     ColorPrimaryMapToken,
+    ColorSecondaryMapToken,
     ColorSuccessMapToken,
     ColorWarningMapToken,
     ColorErrorMapToken,

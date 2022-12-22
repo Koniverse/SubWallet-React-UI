@@ -7,6 +7,7 @@ const genFontMapToken = (fontSize: number): FontMapToken => {
   const lineHeights = fontSizePairs.map((pair) => pair.lineHeight);
 
   return {
+    fontSizeSSM: 11,
     fontSizeSM: fontSizes[0],
     fontSize: fontSizes[1],
     fontSizeLG: fontSizes[2],
@@ -21,6 +22,7 @@ const genFontMapToken = (fontSize: number): FontMapToken => {
     lineHeight: lineHeights[1],
     lineHeightLG: lineHeights[2],
     lineHeightSM: lineHeights[0],
+    lineHeightSSM: lineHeights[0],
 
     lineHeightHeading1: lineHeights[6],
     lineHeightHeading2: lineHeights[5],

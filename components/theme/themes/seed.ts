@@ -22,6 +22,7 @@ const seedToken: SeedToken = {
 
   // Color
   colorPrimary: '#1677ff',
+  colorSecondary: '#004BFF',
   colorSuccess: '#52c41a',
   colorWarning: '#faad14',
   colorError: '#ff4d4f',
@@ -34,6 +35,11 @@ const seedToken: SeedToken = {
   fontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
 'Noto Color Emoji'`,
+  monoSpaceFontFamily: `-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+'Noto Color Emoji'`,
+  bodyFontWeight: '400',
+  headingFontWeight: '600',
   fontSize: 14,
 
   // Line
