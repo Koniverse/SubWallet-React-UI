@@ -1,6 +1,6 @@
 export interface FontMapToken {
   // Font Size
-  fontSizeSSM: number;
+  fontSizeXS: number;
   fontSizeSM: number;
   fontSize: number;
   fontSizeLG: number;
@@ -36,16 +36,31 @@ export interface FontMapToken {
    * @default 16
    */
   fontSizeHeading5: number;
+  /**
+   * @nameZH 五级标题字号
+   * @desc h6 标签使用的字号
+   * @default 14
+   */
+  fontSizeHeading6: number;
+
+  fontSizeSuper1: number;
+  fontSizeSuper2: number;
+  fontSizeSuper3: number;
 
   // LineHeight
   lineHeight: number;
   lineHeightLG: number;
   lineHeightSM: number;
-  lineHeightSSM: number;
+  lineHeightXS: number;
 
   lineHeightHeading1: number;
   lineHeightHeading2: number;
   lineHeightHeading3: number;
   lineHeightHeading4: number;
   lineHeightHeading5: number;
+  lineHeightHeading6: number;
+
+  lineHeightSuper1: number;
+  lineHeightSuper2: number;
+  lineHeightSuper3: number;
 }
