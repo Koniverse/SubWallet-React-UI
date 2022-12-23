@@ -1,4 +1,5 @@
 export const PresetColors = [
+  'gray',
   'blue',
   'purple',
   'cyan',

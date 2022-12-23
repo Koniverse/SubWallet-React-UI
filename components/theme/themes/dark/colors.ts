@@ -25,7 +25,7 @@ export const generateNeutralColorPalettes: GenerateNeutralColorMap = (
   bgBaseColor: string,
   textBaseColor: string,
 ) => {
-  const colorBgBase = bgBaseColor || '#000';
+  const colorBgBase = bgBaseColor || '#0C0C0C';
   const colorTextBase = textBaseColor || '#fff';
 
   return {
@@ -49,5 +49,11 @@ export const generateNeutralColorPalettes: GenerateNeutralColorMap = (
 
     colorBorder: getSolidColor(colorBgBase, 26),
     colorBorderSecondary: getSolidColor(colorBgBase, 19),
+
+    colorBgDefault: colorBgBase,
+    colorBgSecondary: '#1A1A1A',
+    colorBgInput: '#252525',
+    colorBgBorder: '#212121',
+    colorBgDivider: 'rgba(33, 33, 33, 0.8)',
   };
 };

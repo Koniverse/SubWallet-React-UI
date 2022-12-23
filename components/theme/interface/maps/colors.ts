@@ -104,6 +104,12 @@ export interface ColorNeutralMapToken {
    * @desc 该色用于引起用户强烈关注注意的背景色，目前只用在 Tooltip 的背景色上。
    */
   colorBgSpotlight: string;
+
+  colorBgDefault: string;
+  colorBgSecondary: string;
+  colorBgInput: string;
+  colorBgBorder: string;
+  colorBgDivider: string;
 }
 
 /**

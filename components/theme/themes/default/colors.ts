@@ -48,6 +48,13 @@ export const generateNeutralColorPalettes: GenerateNeutralColorMap = (
     colorBgSpotlight: getAlphaColor(colorTextBase, 0.85),
 
     colorBorder: getSolidColor(colorBgBase, 15),
-    colorBorderSecondary: getSolidColor(colorBgBase, 6),
+
+    // todo: change later
+    colorBorderSecondary: getSolidColor(colorBgBase, 15),
+    colorBgDefault: getSolidColor(colorBgBase, 6),
+    colorBgSecondary: getSolidColor(colorBgBase, 6),
+    colorBgInput: getSolidColor(colorBgBase, 6),
+    colorBgBorder: getSolidColor(colorBgBase, 6),
+    colorBgDivider: getSolidColor(colorBgBase, 6),
   };
 };

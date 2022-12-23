@@ -1,19 +1,20 @@
 import type { PresetColorType, SeedToken } from '../internal';
 
 export const defaultPresetColors: PresetColorType = {
-  blue: '#1677ff',
-  purple: '#722ED1',
-  cyan: '#13C2C2',
-  green: '#52C41A',
-  magenta: '#EB2F96',
-  pink: '#eb2f96',
-  red: '#F5222D',
-  orange: '#FA8C16',
-  yellow: '#FADB14',
-  volcano: '#FA541C',
-  geekblue: '#2F54EB',
-  gold: '#FAAD14',
-  lime: '#A0D911',
+  gray: '#D9D9D9',
+  blue: '#0078D9',
+  purple: '#6F00C9',
+  cyan: '#4CEAAC',
+  green: '#2DA73F',
+  magenta: '#D92079',
+  pink: '#D92079',
+  red: '#BF1616',
+  orange: '#D96F00',
+  yellow: '#D9C500',
+  volcano: '#D84A1B',
+  geekblue: '#004BFF',
+  gold: '#D9A33E',
+  lime: '#86C338',
 };
 
 const seedToken: SeedToken = {
@@ -21,12 +22,12 @@ const seedToken: SeedToken = {
   ...defaultPresetColors,
 
   // Color
-  colorPrimary: '#1677ff',
-  colorSecondary: '#004BFF',
-  colorSuccess: '#52c41a',
-  colorWarning: '#faad14',
-  colorError: '#ff4d4f',
-  colorInfo: '#1677ff',
+  colorPrimary: '#004BFF',
+  colorSecondary: '#4CEAAC',
+  colorSuccess: '#A5D990',
+  colorWarning: '#FFCD29',
+  colorError: '#E11A1A',
+  colorInfo: '#0078D9',
   colorTextBase: '',
 
   colorBgBase: '',
