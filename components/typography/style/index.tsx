@@ -68,7 +68,8 @@ const genTypographyStyle: GenerateStyle<TypographyToken> = (token) => {
       & + h2&,
       & + h3&,
       & + h4&,
-      & + h5&
+      & + h5&,
+      & + h6&,
       `]: {
         marginTop: sizeMarginHeadingVerticalStart,
       },
@@ -82,13 +83,15 @@ const genTypographyStyle: GenerateStyle<TypographyToken> = (token) => {
       h2,
       h3,
       h4,
-      h5`]: {
+      h5,
+      h6`]: {
         [`
         + h1,
         + h2,
         + h3,
         + h4,
-        + h5
+        + h5,
+        + h6
         `]: {
           marginTop: sizeMarginHeadingVerticalStart,
         },

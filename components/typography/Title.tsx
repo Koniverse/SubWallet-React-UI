@@ -3,13 +3,13 @@ import warning from '../_util/warning';
 import type { BlockProps } from './Base';
 import Base from './Base';
 
-const TITLE_ELE_LIST = [1, 2, 3, 4, 5] as const;
+const TITLE_ELE_LIST = [1, 2, 3, 4, 5, 6] as const;
 
 export interface TitleProps
-  extends Omit<BlockProps<'h1' | 'h2' | 'h3' | 'h4' | 'h5'>, 'strong'>,
+  extends Omit<BlockProps<'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'>, 'strong'>,
     Omit<
       React.HTMLAttributes<HTMLHeadElement>,
-      'type' | keyof BlockProps<'h1' | 'h2' | 'h3' | 'h4' | 'h5'>
+      'type' | keyof BlockProps<'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'>
     > {
   level?: typeof TITLE_ELE_LIST[number];
 }
@@ -24,7 +24,7 @@ const Title = React.forwardRef<HTMLElement, TitleProps>((props, ref) => {
     warning(
       false,
       'Typography.Title',
-      'Title only accept `1 | 2 | 3 | 4 | 5` as `level` value. And `5` need 4.6.0+ version.',
+      'Title only accept `1 | 2 | 3 | 4 | 5 | 6` as `level` value',
     );
     component = 'h1';
   }
