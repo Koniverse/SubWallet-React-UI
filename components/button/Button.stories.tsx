@@ -1,7 +1,7 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Button } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
+import Button from './button';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
