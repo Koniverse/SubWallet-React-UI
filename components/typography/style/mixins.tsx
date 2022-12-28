@@ -35,6 +35,7 @@ const getTitleStyle = (
 // eslint-disable-next-line import/prefer-default-export
 export const getTitleStyles: GenerateStyle<TypographyToken, CSSObject> = (token) => {
   const headings = [1, 2, 3, 4, 5, 6] as const;
+  const superLevels = [1, 2, 3] as const;
 
   const styles = {} as CSSObject;
   headings.forEach((headingLevel) => {
@@ -51,7 +52,23 @@ export const getTitleStyles: GenerateStyle<TypographyToken, CSSObject> = (token)
       token.colorTextHeading,
       token,
     );
+
+    superLevels.forEach((superLevel) => {
+      styles[
+        `
+        h${headingLevel}&.-super-level-${superLevel},
+        div&-h${headingLevel}.-super-level-${superLevel},
+        div&-h${headingLevel}.-super-level-${superLevel} > textarea,
+      `
+      ] = getTitleStyle(
+        token[`fontSizeSuper${superLevel}`],
+        token[`lineHeightSuper${superLevel}`],
+        token.colorTextHeading,
+        token,
+      );
+    });
   });
+
   return styles;
 };
 
