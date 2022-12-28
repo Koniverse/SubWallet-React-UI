@@ -58,7 +58,7 @@ export const getTitleStyles: GenerateStyle<TypographyToken, CSSObject> = (token)
         `
         h${headingLevel}&.-super-level-${superLevel},
         div&-h${headingLevel}.-super-level-${superLevel},
-        div&-h${headingLevel}.-super-level-${superLevel} > textarea,
+        div&-h${headingLevel}.-super-level-${superLevel} > textarea
       `
       ] = getTitleStyle(
         token[`fontSizeSuper${superLevel}`],
@@ -68,6 +68,44 @@ export const getTitleStyles: GenerateStyle<TypographyToken, CSSObject> = (token)
       );
     });
   });
+
+  return styles;
+};
+
+export const getTextStyles: GenerateStyle<TypographyToken, CSSObject> = (token) => {
+  const sizes = ['xs', 'sm', 'md', 'lg'];
+
+  const sizeMap: Record<string, { fontSize: number; lineHeight: number }> = {
+    xs: {
+      fontSize: token.fontSizeXS,
+      lineHeight: token.lineHeightXS,
+    },
+    sm: {
+      fontSize: token.fontSizeSM,
+      lineHeight: token.lineHeightSM,
+    },
+    md: {
+      fontSize: token.fontSize,
+      lineHeight: token.lineHeight,
+    },
+    lg: {
+      fontSize: token.fontSizeLG,
+      lineHeight: token.lineHeightLG,
+    },
+  };
+
+  const styles = {} as CSSObject;
+
+  sizes.forEach((size) => {
+    styles[`&.-size-${size}`] = {
+      fontSize: sizeMap[size].fontSize,
+      lineHeight: sizeMap[size].lineHeight,
+    };
+  });
+
+  styles[`&.-monospace`] = {
+    fontFamily: token.monoSpaceFontFamily,
+  };
 
   return styles;
 };
