@@ -138,7 +138,6 @@ export interface SeedToken extends PresetColorType {
 
   /**
    * @nameZH 组件箭头尺寸
-   * @internal
    */
   sizePopupArrow: number;
 
@@ -177,7 +176,6 @@ export interface SeedToken extends PresetColorType {
   /**
    * @nameZH 图片不透明度
    * @nameEN Define default Image opacity. Useful when in dark-like theme
-   * @internal
    */
   opacityImage: number;
 
@@ -195,48 +193,23 @@ export interface SeedToken extends PresetColorType {
 
   /**
    * @nameZH 动画基础时长
-   * @internal
    */
   motionBase: number;
 
-  /**
-   * @internal
-   */
   motionEaseOutCirc: string;
 
-  /**
-   * @internal
-   */
   motionEaseInOutCirc: string;
 
-  /**
-   * @internal
-   */
   motionEaseInOut: string;
 
-  /**
-   * @internal
-   */
   motionEaseOutBack: string;
 
-  /**
-   * @internal
-   */
   motionEaseInBack: string;
 
-  /**
-   * @internal
-   */
   motionEaseInQuint: string;
 
-  /**
-   * @internal
-   */
   motionEaseOutQuint: string;
 
-  /**
-   * @internal
-   */
   motionEaseOut: string;
 
   //  ----------   Style   ---------- //
