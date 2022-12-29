@@ -100,7 +100,9 @@
     "install-react-17": "npm i --no-save --legacy-peer-deps react@17 react-dom@17 @testing-library/react@12",
     "install-react-18": "npm i --no-save --legacy-peer-deps react@18 react-dom@18",
     "storybook": "start-storybook -p 6006",
-    "build-storybook": "build-storybook"
+    "clean-storybook": "yarn clean && rm -rf storybook-static",
+    "build-storybook": "yarn clean-storybook && build-storybook",
+    "deploy-storybook": "yarn build-storybook && gh-pages --dist 'storybook-static' --branch 'gh-page-storybook'"
   },
   "browserslist": [
     "> 0.5%",
