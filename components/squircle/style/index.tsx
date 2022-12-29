@@ -4,12 +4,7 @@ import { genComponentStyleHook, mergeToken } from '../../theme/internal';
 
 export interface ComponentToken {}
 
-interface SquircleToken extends FullToken<'Squircle'> {
-  spinDotDefault: string;
-  spinDotSize: number;
-  spinDotSizeSM: number;
-  spinDotSizeLG: number;
-}
+interface SquircleToken extends FullToken<'Squircle'> {}
 
 const genSizeSquircleStyle = (token: SquircleToken): CSSInterpolation => {
   const { componentCls } = token;
