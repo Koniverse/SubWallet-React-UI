@@ -21,7 +21,7 @@ const genSharedDividerStyle: GenerateStyle<DividerToken> = (token): CSSObject =>
   return {
     [componentCls]: {
       ...resetComponent(token),
-      borderBlockStart: `${lineWidth}px solid ${colorSplit}`,
+      borderBlockStart: `${lineWidth * 2}px solid ${colorSplit}`,
 
       // vertical
       '&-vertical': {
@@ -95,7 +95,7 @@ const genSharedDividerStyle: GenerateStyle<DividerToken> = (token): CSSObject =>
         background: 'none',
         borderColor: colorSplit,
         borderStyle: 'dashed',
-        borderWidth: `${lineWidth}px 0 0`,
+        borderWidth: `${lineWidth}px 0 ${lineWidth}px 0`,
       },
 
       '&-horizontal&-with-text&-dashed': {
@@ -155,7 +155,7 @@ export default genComponentStyleHook(
     const dividerToken = mergeToken<DividerToken>(token, {
       dividerVerticalGutterMargin: token.marginXS,
       dividerHorizontalWithTextGutterMargin: token.margin,
-      dividerHorizontalGutterMargin: token.marginLG,
+      dividerHorizontalGutterMargin: token.marginXS,
     });
     return [genSharedDividerStyle(dividerToken)];
   },
