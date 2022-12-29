@@ -32,7 +32,7 @@ const genSharedDividerStyle: GenerateStyle<DividerToken> = (token): CSSObject =>
         margin: `0 ${token.dividerVerticalGutterMargin}px`,
         verticalAlign: 'middle',
         borderTop: 0,
-        borderInlineStart: `${lineWidth}px solid ${colorSplit}`,
+        borderInlineStart: `${lineWidth * 2}px solid ${colorSplit}`,
       },
 
       '&-horizontal': {
