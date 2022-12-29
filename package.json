@@ -153,12 +153,13 @@
     "rc-trigger": "^5.2.10",
     "rc-upload": "~4.3.0",
     "rc-util": "^5.27.0",
+    "react-superellipse": "^0.0.6",
     "scroll-into-view-if-needed": "^3.0.3",
     "throttle-debounce": "^5.0.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.2",
     "@ant-design/tools": "^17.0.0-alpha.5",
+    "@babel/core": "^7.20.2",
     "@babel/eslint-plugin": "^7.19.1",
     "@emotion/babel-preset-css-prop": "^11.10.0",
     "@emotion/css": "^11.10.5",
