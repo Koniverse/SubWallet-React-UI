@@ -6,6 +6,7 @@ import {
   getEllipsisStyles,
   getLinkStyles,
   getResetStyles,
+  getTextStyles,
   getTitleStyles,
 } from './mixins';
 import { operationUnit } from '../../style';
@@ -98,6 +99,8 @@ const genTypographyStyle: GenerateStyle<TypographyToken> = (token) => {
       },
 
       ...getResetStyles(),
+
+      ...getTextStyles(token),
 
       ...getLinkStyles(token),
 

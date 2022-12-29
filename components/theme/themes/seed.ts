@@ -36,7 +36,7 @@ const seedToken: SeedToken = {
   fontFamily: `'Plus Jakarta Sans',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
 'Noto Color Emoji'`,
-  monoSpaceFontFamily: `sans-serif`,
+  monoSpaceFontFamily: `monospace`,
   bodyFontWeight: '400',
   headingFontWeight: '600',
   fontSize: 14,
