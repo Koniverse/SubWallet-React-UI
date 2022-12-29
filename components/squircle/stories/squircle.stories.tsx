@@ -8,8 +8,16 @@ export default {
   component: Squircle,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    size: { control: 'number', defaultValue: 64 },
-    color: { control: 'color', defaultValue: '#004BFF' },
+    size: {
+      control: 'radio',
+      options: [undefined, 'xs', 'sm', 'md', 'lg'],
+      defaultValue: 'lg',
+    },
+    inline: {
+      control: 'boolean',
+    },
+    customSize: { control: 'object', defaultValue: undefined },
+    fill: { control: 'color', defaultValue: '#004BFF' },
   },
 } as ComponentMeta<typeof Squircle>;
 
