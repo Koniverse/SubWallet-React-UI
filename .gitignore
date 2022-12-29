@@ -62,3 +62,4 @@ __image_snapshots__/
 /imageDiffSnapshots
 
 .devcontainer*
+/storybook-static/
