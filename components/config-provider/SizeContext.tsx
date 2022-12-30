@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-export type SizeType = 'small' | 'middle' | 'large' | undefined;
+export type SizeType = 'xs' | 'sm' | 'md' | 'lg' | 'small' | 'middle' | 'large' | undefined;
 
 const SizeContext = React.createContext<SizeType>(undefined);
 
