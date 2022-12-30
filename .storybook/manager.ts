@@ -1,9 +1,7 @@
 import { addons } from '@storybook/addons';
-import { themes } from '@storybook/theming';
-
-const theme = themes.dark;
-theme.brandImage = './subwallet.png';
+import { SWPreviewTheme } from './theme';
 
 addons.setConfig({
-  theme,
+  theme: SWPreviewTheme,
+  toolbar: {},
 });
