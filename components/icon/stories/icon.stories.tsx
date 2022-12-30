@@ -13,13 +13,11 @@ export default {
   component: Icon,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    type: { control: 'radio', options: ['phosphor', 'fontAwesome'], defaultValue: 'phosphor' },
     size: {
       control: 'radio',
       options: ['xs', 'sm', 'md'],
       defaultValue: 'md',
     },
-    fill: { control: 'color', defaultValue: '#004BFF' },
     iconColor: { control: 'color', defaultValue: '#FFFFFF' },
   },
 } as ComponentMeta<typeof Icon>;
@@ -28,9 +26,9 @@ export default {
 const Template: ComponentStory<typeof Icon> = (args) => (
   <>
     <div>
-      <Icon {...args} phosphorIcon={MagnifyingGlass} />
-      <Icon {...args} phosphorIcon={WifiHigh} />
-      <Icon {...args} phosphorIcon={CaretUp} />
+      <Icon {...args} type="phosphor" phosphorIcon={MagnifyingGlass} />
+      <Icon {...args} type="phosphor" phosphorIcon={WifiHigh} />
+      <Icon {...args} type="phosphor" phosphorIcon={CaretUp} />
     </div>
     <div>
       <Icon {...args} type="fontAwesome" fontawesomeIcon={faMagnifyingGlass} />
