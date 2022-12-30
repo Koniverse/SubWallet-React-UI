@@ -1,7 +1,7 @@
 import type { PresetColorType, SeedToken } from '../internal';
 
 export const defaultPresetColors: PresetColorType = {
-  gray: '#D9D9D9',
+  gray: '#fff',
   blue: '#0078D9',
   purple: '#6F00C9',
   cyan: '#4CEAAC',
@@ -23,10 +23,10 @@ const seedToken: SeedToken = {
 
   // Color
   colorPrimary: '#004BFF',
-  colorSecondary: '#4CEAAC',
-  colorSuccess: '#A5D990',
-  colorWarning: '#FFCD29',
-  colorError: '#E11A1A',
+  colorSecondary: '#7CD383',
+  colorSuccess: '#7CD383',
+  colorWarning: '#D9C500',
+  colorError: '#BF1616',
   colorInfo: '#0078D9',
   colorTextBase: '',
 

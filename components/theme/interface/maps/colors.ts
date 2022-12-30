@@ -110,6 +110,26 @@ export interface ColorNeutralMapToken {
   colorBgInput: string;
   colorBgBorder: string;
   colorBgDivider: string;
+
+  colorTextLight1: string;
+  colorTextLight2: string;
+  colorTextLight3: string;
+  colorTextLight4: string;
+  colorTextLight5: string;
+  colorTextLight6: string;
+  colorTextLight7: string;
+  colorTextLight8: string;
+  colorTextLight9: string;
+
+  colorTextDark1: string;
+  colorTextDark2: string;
+  colorTextDark3: string;
+  colorTextDark4: string;
+  colorTextDark5: string;
+  colorTextDark6: string;
+  colorTextDark7: string;
+  colorTextDark8: string;
+  colorTextDark9: string;
 }
 
 /**

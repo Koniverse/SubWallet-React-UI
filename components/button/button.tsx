@@ -2,6 +2,7 @@
 import classNames from 'classnames';
 import omit from 'rc-util/lib/omit';
 import * as React from 'react';
+import type { PresetShapeType } from '../_util/shapes';
 import { ConfigContext } from '../config-provider';
 import DisabledContext from '../config-provider/DisabledContext';
 import type { SizeType } from '../config-provider/SizeContext';
@@ -76,11 +77,12 @@ function spaceChildren(children: React.ReactNode, needInserted: boolean) {
   );
 }
 
+export type ButtonSchema = 'primary' | 'secondary' | 'warning' | 'danger' | 'error';
+
 const ButtonTypes = ['default', 'primary', 'ghost', 'dashed', 'link', 'text'] as const;
 export type ButtonType = typeof ButtonTypes[number];
 
-const ButtonShapes = ['default', 'circle', 'round'] as const;
-export type ButtonShape = typeof ButtonShapes[number];
+export type ButtonShape = PresetShapeType;
 
 const ButtonHTMLTypes = ['submit', 'button', 'reset'] as const;
 export type ButtonHTMLType = typeof ButtonHTMLTypes[number];
@@ -102,6 +104,7 @@ export interface BaseButtonProps {
    * @default default
    */
   shape?: ButtonShape;
+  schema?: ButtonSchema;
   size?: SizeType;
   disabled?: boolean;
   loading?: boolean | { delay?: number };
@@ -164,6 +167,12 @@ const InternalButton: React.ForwardRefRenderFunction<
     htmlType = 'button' as ButtonProps['htmlType'],
     ...rest
   } = props;
+
+  let { schema = 'primary' } = props;
+
+  if (danger) {
+    schema = 'danger';
+  }
 
   const { getPrefixCls, autoInsertSpaceInButton, direction } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('btn', customizePrefixCls);
@@ -250,7 +259,15 @@ const InternalButton: React.ForwardRefRenderFunction<
   const autoInsertSpace = autoInsertSpaceInButton !== false;
   const { compactSize, compactItemClassnames } = useCompactItemContext(prefixCls, direction);
 
-  const sizeClassNameMap = { large: 'lg', small: 'sm', middle: undefined };
+  const sizeClassNameMap = {
+    xs: 'xs',
+    sm: 'sm',
+    md: 'md',
+    lg: 'lg',
+    large: 'lg',
+    small: 'sm',
+    middle: 'md',
+  };
   const sizeFullname = compactSize || groupSize || customizeSize || size;
   const sizeCls = sizeFullname ? sizeClassNameMap[sizeFullname] || '' : '';
 
@@ -264,17 +281,17 @@ const InternalButton: React.ForwardRefRenderFunction<
     prefixCls,
     hashId,
     {
-      [`${prefixCls}-${shape}`]: shape !== 'default' && shape, // Note: Shape also has `default`
       [`${prefixCls}-${type}`]: type,
-      [`${prefixCls}-${sizeCls}`]: sizeCls,
       [`${prefixCls}-icon-only`]: !children && children !== 0 && !!iconType,
       [`${prefixCls}-background-ghost`]: ghost && !isUnBorderedButtonType(type),
       [`${prefixCls}-loading`]: innerLoading,
       [`${prefixCls}-two-chinese-chars`]: hasTwoCNChar && autoInsertSpace && !innerLoading,
       [`${prefixCls}-block`]: block,
-      [`${prefixCls}-dangerous`]: !!danger,
       [`${prefixCls}-rtl`]: direction === 'rtl',
-      [`${prefixCls}-disabled`]: hrefAndDisabled,
+      [`-disabled`]: hrefAndDisabled,
+      [`-size-${sizeCls}`]: !!sizeCls,
+      [`-shape-${shape}`]: !!shape,
+      [`-schema-${schema}`]: !!schema,
     },
     compactItemClassnames,
     className,

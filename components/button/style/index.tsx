@@ -1,10 +1,18 @@
 import type { CSSInterpolation, CSSObject } from '@ant-design/cssinjs';
 import type { FullToken, GenerateStyle } from '../../theme/internal';
 import { genComponentStyleHook, mergeToken } from '../../theme/internal';
-import genGroupStyle from './group';
 import { genFocusStyle } from '../../style';
-import { genCompactItemStyle } from '../../style/compact-item';
-import { genCompactItemVerticalStyle } from '../../style/compact-item-vertical';
+
+const buttonSizes = ['xs', 'sm', 'md', 'lg'] as const;
+
+type ButtonSize = typeof buttonSizes[number];
+
+const buttonSizeMap: Record<ButtonSize, number> = {
+  xs: 40,
+  sm: 48,
+  md: 52,
+  lg: 64,
+};
 
 /** Component only token. Which will handle additional calculation of alias token */
 export interface ComponentToken {}
@@ -23,19 +31,27 @@ const genSharedButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token): CSS
     [componentCls]: {
       outline: 'none',
       position: 'relative',
-      display: 'inline-block',
-      fontWeight: 400,
+      display: 'inline-flex',
+      fontWeight: 600,
       whiteSpace: 'nowrap',
-      textAlign: 'center',
       backgroundImage: 'none',
       backgroundColor: 'transparent',
-      border: `${token.lineWidth}px ${token.lineType} transparent`,
+      border: 0,
       cursor: 'pointer',
       transition: `all ${token.motionDurationMid} ${token.motionEaseInOut}`,
       userSelect: 'none',
       touchAction: 'manipulation',
-      lineHeight: token.lineHeight,
+      padding: '0 16px',
       color: token.colorText,
+      fontSize: token.fontSizeLG,
+      height: buttonSizeMap.md,
+      lineHeight: `${buttonSizeMap.md}px`,
+      alignItems: 'center',
+      justifyContent: 'center',
+
+      [`&${componentCls}-block`]: {
+        width: '100%',
+      },
 
       '> span': {
         display: 'inline-block',
@@ -54,426 +70,154 @@ const genSharedButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token): CSS
       '&-icon-only&-compact-item': {
         flex: 'none',
       },
-      // Special styles for Primary Button
-      [`&-compact-item${componentCls}-primary`]: {
-        '&:not([disabled]) + &:not([disabled])': {
-          position: 'relative',
 
-          '&:before': {
-            position: 'absolute',
-            top: -token.lineWidth,
-            insetInlineStart: -token.lineWidth,
-            display: 'inline-block',
-            width: token.lineWidth,
-            height: `calc(100% + ${token.lineWidth * 2}px)`,
-            backgroundColor: token.colorPrimaryHover,
-            content: '""',
-          },
+      [`&-icon-only`]: {
+        paddingInlineStart: 0,
+        paddingInlineEnd: 0,
+        width: buttonSizeMap.md,
+
+        // todo: icon may have different class name
+        '.anticon': {
+          height: 24,
+          width: 24,
+          fontSize: 24,
         },
       },
-      // Special styles for Primary Button
-      '&-compact-vertical-item': {
-        [`&${componentCls}-primary`]: {
-          '&:not([disabled]) + &:not([disabled])': {
-            position: 'relative',
 
-            '&:before': {
-              position: 'absolute',
-              top: -token.lineWidth,
-              insetInlineStart: -token.lineWidth,
-              display: 'inline-block',
-              width: `calc(100% + ${token.lineWidth * 2}px)`,
-              height: token.lineWidth,
-              backgroundColor: token.colorPrimaryHover,
-              content: '""',
-            },
-          },
-        },
+      // Loading
+      [`&${componentCls}-loading`]: {
+        opacity: token.opacityLoading,
+        cursor: 'default',
+      },
+
+      [`${componentCls}-loading-icon`]: {
+        display: 'inline-flex',
+        transition: `width ${token.motionDurationSlow} ${token.motionEaseInOut}, opacity ${token.motionDurationSlow} ${token.motionEaseInOut}`,
+      },
+
+      [`&:not(&-icon-only) ${componentCls}-loading-icon > ${iconCls}`]: {
+        marginInlineEnd: token.marginXS,
+      },
+
+      '&.-disabled,&:disabled': {
+        cursor: 'not-allowed',
       },
     },
   };
 };
 
-const genHoverActiveButtonStyle = (hoverStyle: CSSObject, activeStyle: CSSObject): CSSObject => ({
-  '&:not(:disabled)': {
-    '&:hover': hoverStyle,
-    '&:active': activeStyle,
-  },
-});
-
-// ============================== Shape ===============================
-const genCircleButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token) => ({
-  minWidth: token.controlHeight,
-  paddingInlineStart: 0,
-  paddingInlineEnd: 0,
-  borderRadius: '50%',
-});
-
-const genRoundButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token) => ({
-  borderRadius: token.controlHeight,
-  paddingInlineStart: token.controlHeight / 2,
-  paddingInlineEnd: token.controlHeight / 2,
-  width: 'auto',
-});
-
 // =============================== Type ===============================
-const genDisabledStyle: GenerateStyle<ButtonToken, CSSObject> = (token) => ({
-  cursor: 'not-allowed',
-  borderColor: token.colorBorder,
-  color: token.colorTextDisabled,
-  backgroundColor: token.colorBgContainerDisabled,
-  boxShadow: 'none',
-});
-
-const genGhostButtonStyle = (
-  btnCls: string,
-  textColor: string | false,
-  borderColor: string | false,
-  textColorDisabled: string | false,
-  borderColorDisabled: string | false,
-  hoverStyle?: CSSObject,
-  activeStyle?: CSSObject,
-): CSSObject => ({
-  [`&${btnCls}-background-ghost`]: {
-    color: textColor || undefined,
-    backgroundColor: 'transparent',
-    borderColor: borderColor || undefined,
-    boxShadow: 'none',
-
-    ...genHoverActiveButtonStyle(
-      {
-        backgroundColor: 'transparent',
-        ...hoverStyle,
-      },
-      {
-        backgroundColor: 'transparent',
-        ...activeStyle,
-      },
-    ),
-
-    '&:disabled': {
-      cursor: 'not-allowed',
-      color: textColorDisabled || undefined,
-      borderColor: borderColorDisabled || undefined,
-    },
-  },
-});
-
-const genSolidDisabledButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token) => ({
-  '&:disabled': {
-    ...genDisabledStyle(token),
-  },
-});
-
-const genSolidButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token) => ({
-  ...genSolidDisabledButtonStyle(token),
-});
-
-const genPureDisabledButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token) => ({
-  '&:disabled': {
-    cursor: 'not-allowed',
-    color: token.colorTextDisabled,
-  },
-});
-
-// Type: Default
-const genDefaultButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token) => ({
-  ...genSolidButtonStyle(token),
-
-  backgroundColor: token.colorBgContainer,
-  borderColor: token.colorBorder,
-
-  boxShadow: `0 ${token.controlOutlineWidth}px 0 ${token.controlTmpOutline}`,
-
-  ...genHoverActiveButtonStyle(
-    {
-      color: token.colorPrimaryHover,
-      borderColor: token.colorPrimaryHover,
-    },
-    {
-      color: token.colorPrimaryActive,
-      borderColor: token.colorPrimaryActive,
-    },
-  ),
-
-  ...genGhostButtonStyle(
-    token.componentCls,
-    token.colorBgContainer,
-    token.colorBgContainer,
-    token.colorTextDisabled,
-    token.colorBorder,
-  ),
-
-  [`&${token.componentCls}-dangerous`]: {
-    color: token.colorError,
-    borderColor: token.colorError,
-
-    ...genHoverActiveButtonStyle(
-      {
-        color: token.colorErrorHover,
-        borderColor: token.colorErrorBorderHover,
-      },
-      {
-        color: token.colorErrorActive,
-        borderColor: token.colorErrorActive,
-      },
-    ),
-
-    ...genGhostButtonStyle(
-      token.componentCls,
-      token.colorError,
-      token.colorError,
-      token.colorTextDisabled,
-      token.colorBorder,
-    ),
-    ...genSolidDisabledButtonStyle(token),
-  },
-});
-
-// Type: Primary
-const genPrimaryButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token) => ({
-  ...genSolidButtonStyle(token),
-
-  color: token.colorTextLightSolid,
-  backgroundColor: token.colorPrimary,
-
-  boxShadow: `0 ${token.controlOutlineWidth}px 0 ${token.controlOutline}`,
-
-  ...genHoverActiveButtonStyle(
-    {
-      color: token.colorTextLightSolid,
-      backgroundColor: token.colorPrimaryHover,
-    },
-    {
-      color: token.colorTextLightSolid,
-      backgroundColor: token.colorPrimaryActive,
-    },
-  ),
-
-  ...genGhostButtonStyle(
-    token.componentCls,
-    token.colorPrimary,
-    token.colorPrimary,
-    token.colorTextDisabled,
-    token.colorBorder,
-    {
-      color: token.colorPrimaryHover,
-      borderColor: token.colorPrimaryHover,
-    },
-    {
-      color: token.colorPrimaryActive,
-      borderColor: token.colorPrimaryActive,
-    },
-  ),
-
-  [`&${token.componentCls}-dangerous`]: {
-    backgroundColor: token.colorError,
-    boxShadow: `0 ${token.controlOutlineWidth}px 0 ${token.colorErrorOutline}`,
-
-    ...genHoverActiveButtonStyle(
-      {
-        backgroundColor: token.colorErrorHover,
-      },
-      {
-        backgroundColor: token.colorErrorActive,
-      },
-    ),
-
-    ...genGhostButtonStyle(
-      token.componentCls,
-      token.colorError,
-      token.colorError,
-      token.colorTextDisabled,
-      token.colorBorder,
-      {
-        color: token.colorErrorHover,
-        borderColor: token.colorErrorHover,
-      },
-      {
-        color: token.colorErrorActive,
-        borderColor: token.colorErrorActive,
-      },
-    ),
-    ...genSolidDisabledButtonStyle(token),
-  },
-});
-
-// Type: Dashed
-const genDashedButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token) => ({
-  ...genDefaultButtonStyle(token),
-  borderStyle: 'dashed',
-});
-
-// Type: Link
-const genLinkButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token) => ({
-  color: token.colorLink,
-
-  ...genHoverActiveButtonStyle(
-    {
-      color: token.colorLinkHover,
-    },
-    {
-      color: token.colorLinkActive,
-    },
-  ),
-
-  ...genPureDisabledButtonStyle(token),
-
-  [`&${token.componentCls}-dangerous`]: {
-    color: token.colorError,
-
-    ...genHoverActiveButtonStyle(
-      {
-        color: token.colorErrorHover,
-      },
-      {
-        color: token.colorErrorActive,
-      },
-    ),
-
-    ...genPureDisabledButtonStyle(token),
-  },
-});
-
-// Type: Text
-const genTextButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token) => ({
-  ...genHoverActiveButtonStyle(
-    {
-      color: token.colorText,
-      backgroundColor: token.colorBgTextHover,
-    },
-    {
-      color: token.colorText,
-      backgroundColor: token.colorBgTextActive,
-    },
-  ),
-
-  ...genPureDisabledButtonStyle(token),
-
-  [`&${token.componentCls}-dangerous`]: {
-    color: token.colorError,
-
-    ...genPureDisabledButtonStyle(token),
-    ...genHoverActiveButtonStyle(
-      {
-        color: token.colorErrorHover,
-        backgroundColor: token.colorErrorBg,
-      },
-      {
-        color: token.colorErrorHover,
-        backgroundColor: token.colorErrorBg,
-      },
-    ),
-  },
-});
-
-// Href and Disabled
-const genDisabledButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token) => ({
-  ...genDisabledStyle(token),
-  [`&${token.componentCls}:hover`]: {
-    ...genDisabledStyle(token),
-  },
-});
-
 const genTypeButtonStyle: GenerateStyle<ButtonToken> = (token) => {
   const { componentCls } = token;
 
   return {
-    [`${componentCls}-default`]: genDefaultButtonStyle(token),
-    [`${componentCls}-primary`]: genPrimaryButtonStyle(token),
-    [`${componentCls}-dashed`]: genDashedButtonStyle(token),
-    [`${componentCls}-link`]: genLinkButtonStyle(token),
-    [`${componentCls}-text`]: genTextButtonStyle(token),
-    [`${componentCls}-disabled`]: genDisabledButtonStyle(token),
+    [`${componentCls}-default`]: {
+      backgroundColor: token.colorBgContainer,
+    },
   };
 };
 
 // =============================== Size ===============================
-const genSizeButtonStyle = (token: ButtonToken, sizePrefixCls: string = ''): CSSInterpolation => {
-  const { componentCls, iconCls } = token;
-
-  const paddingVertical = Math.max(
-    0,
-    (token.controlHeight - token.fontSize * token.lineHeight) / 2 - token.lineWidth,
-  );
-  const paddingHorizontal = token.buttonPaddingHorizontal - token.lineWidth;
-
+const genSizeButtonStyle = (token: ButtonToken, size: ButtonSize): CSSInterpolation => {
+  const { componentCls } = token;
   const iconOnlyCls = `${componentCls}-icon-only`;
 
   return [
-    // Size
     {
-      [`${componentCls}${sizePrefixCls}`]: {
-        fontSize: token.fontSize,
-        height: token.controlHeight,
-        padding: `${paddingVertical}px ${paddingHorizontal}px`,
-        borderRadius: token.borderRadius,
+      [`${componentCls}.-size-${size}`]: {
+        height: buttonSizeMap[size],
+        lineHeight: `${buttonSizeMap[size]}px`,
 
         [`&${iconOnlyCls}`]: {
-          width: token.controlHeight,
-          paddingInlineStart: 0,
-          paddingInlineEnd: 0,
-
-          '> span': {
-            transform: 'scale(1.143)', // 14px -> 16px
-          },
-        },
-
-        // Loading
-        [`&${componentCls}-loading`]: {
-          opacity: token.opacityLoading,
-          cursor: 'default',
-        },
-
-        [`${componentCls}-loading-icon`]: {
-          transition: `width ${token.motionDurationSlow} ${token.motionEaseInOut}, opacity ${token.motionDurationSlow} ${token.motionEaseInOut}`,
-        },
-
-        [`&:not(${iconOnlyCls}) ${componentCls}-loading-icon > ${iconCls}`]: {
-          marginInlineEnd: token.marginXS,
+          width: buttonSizeMap[size],
         },
       },
-    },
-
-    // Shape - patch prefixCls again to override solid border radius style
-    {
-      [`${componentCls}${componentCls}-circle${sizePrefixCls}`]: genCircleButtonStyle(token),
-    },
-    {
-      [`${componentCls}${componentCls}-round${sizePrefixCls}`]: genRoundButtonStyle(token),
     },
   ];
 };
 
-const genSizeBaseButtonStyle: GenerateStyle<ButtonToken> = (token) => genSizeButtonStyle(token);
+const genSizeButtonStyles = (token: ButtonToken) => {
+  const styles: CSSInterpolation[] = [];
 
-const genSizeSmallButtonStyle: GenerateStyle<ButtonToken> = (token) => {
-  const smallToken = mergeToken<ButtonToken>(token, {
-    controlHeight: token.controlHeightSM,
-    padding: token.paddingXS,
-    buttonPaddingHorizontal: 8, // Fixed padding
-    borderRadius: token.borderRadiusSM,
+  buttonSizes.forEach((size) => {
+    styles.push(genSizeButtonStyle(token, size));
   });
 
-  return genSizeButtonStyle(smallToken, `${token.componentCls}-sm`);
+  return styles;
 };
 
-const genSizeLargeButtonStyle: GenerateStyle<ButtonToken> = (token) => {
-  const largeToken = mergeToken<ButtonToken>(token, {
-    controlHeight: token.controlHeightLG,
-    fontSize: token.fontSizeLG,
-    borderRadius: token.borderRadiusLG,
-  });
-
-  return genSizeButtonStyle(largeToken, `${token.componentCls}-lg`);
-};
-
-const genBlockButtonStyle: GenerateStyle<ButtonToken> = (token) => {
+// ============================== Shape ===============================
+const genButtonShapeStyles: GenerateStyle<ButtonToken, CSSObject> = (token) => {
   const { componentCls } = token;
+
   return {
-    [componentCls]: {
-      [`&${componentCls}-block`]: {
-        width: '100%',
+    [`${componentCls}-default`]: {
+      '&.-shape-default': {
+        borderRadius: token.borderRadiusLG,
+      },
+
+      '&.-shape-square': {
+        borderRadius: 0,
+      },
+
+      '&.-shape-rounded, &.-shape-circle': {
+        borderRadius: buttonSizeMap.md,
+
+        '&.-size-xs': {
+          borderRadius: buttonSizeMap.xs,
+        },
+        '&.-size-sm': {
+          borderRadius: buttonSizeMap.sm,
+        },
+        '&.-size-md': {
+          borderRadius: buttonSizeMap.md,
+        },
+        '&.-size-lg': {
+          borderRadius: buttonSizeMap.lg,
+        },
+      },
+    },
+  };
+};
+
+// ============================== Schema ===============================
+const genSchemaStyle = (backgroundColor: string, color: string): CSSObject => ({
+  backgroundColor,
+  color,
+});
+
+const genSchemaStyles: GenerateStyle<ButtonToken, CSSObject> = (token) => {
+  const { componentCls } = token;
+
+  console.log('tokentokentoken', token);
+  return {
+    [`${componentCls}-default`]: {
+      '&.-schema-primary': {
+        ...genSchemaStyle(token.colorPrimary, token.colorTextLight1),
+        '&:hover': genSchemaStyle(token.colorPrimaryHover, token.colorTextLight1),
+        '&:active': genSchemaStyle(token.colorPrimaryActive, token.colorTextLight1),
+        '&.-disabled, &:disabled': genSchemaStyle(token.colorPrimaryActive, token.colorTextLight5),
+      },
+
+      '&.-schema-secondary': {
+        ...genSchemaStyle(token['gray-1'], token.colorSecondary),
+        '&:hover': genSchemaStyle(token['gray-2'], token.colorTextLight1),
+        '&:active': genSchemaStyle(token['gray-1'], token.colorTextLight1),
+        '&.-disabled, &:disabled': genSchemaStyle(token['gray-1'], token.colorTextLight5),
+      },
+
+      '&.-schema-warning': {
+        ...genSchemaStyle(token.colorWarning, token.colorTextDark2),
+        '&:hover': genSchemaStyle(token.colorWarningHover, token.colorTextDark2),
+        '&:active': genSchemaStyle(token.colorWarningActive, token.colorTextDark2),
+        '&.-disabled, &:disabled': genSchemaStyle(token.colorWarningActive, token.colorTextDark5),
+      },
+
+      '&.-schema-danger, &.-schema-error': {
+        ...genSchemaStyle(token.colorError, token.colorTextLight1),
+        '&:hover': genSchemaStyle(token.colorErrorHover, token.colorTextLight1),
+        '&:active': genSchemaStyle(token.colorErrorActive, token.colorTextLight1),
+        '&.-disabled, &:disabled': genSchemaStyle(token.colorErrorActive, token.colorTextLight5),
       },
     },
   };
@@ -492,22 +236,16 @@ export default genComponentStyleHook('Button', (token) => {
     // Shared
     genSharedButtonStyle(buttonToken),
 
-    // Size
-    genSizeSmallButtonStyle(buttonToken),
-    genSizeBaseButtonStyle(buttonToken),
-    genSizeLargeButtonStyle(buttonToken),
-
-    // Block
-    genBlockButtonStyle(buttonToken),
-
     // Group (type, ghost, danger, disabled, loading)
     genTypeButtonStyle(buttonToken),
 
-    // Button Group
-    genGroupStyle(buttonToken),
+    // Size
+    genSizeButtonStyles(buttonToken),
 
-    // Space Compact
-    genCompactItemStyle(token, { focus: false }),
-    genCompactItemVerticalStyle(token),
+    // Shape
+    genButtonShapeStyles(buttonToken),
+
+    // Schema
+    genSchemaStyles(buttonToken),
   ];
 });
