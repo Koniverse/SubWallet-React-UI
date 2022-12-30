@@ -2,20 +2,21 @@ import CloseOutlined from '@ant-design/icons/CloseOutlined';
 import classNames from 'classnames';
 import * as React from 'react';
 import { ConfigContext } from '../config-provider';
-import type { PresetColorType, PresetStatusColorType } from '../_util/colors';
-import { PresetColorTypes, PresetStatusColorTypes } from '../_util/colors';
+import type { PresetBrandColorType, PresetColorType, PresetStatusColorType } from '../_util/colors';
+import { PresetBrandColorTypes, PresetColorTypes, PresetStatusColorTypes } from '../_util/colors';
 import Wave from '../_util/wave';
 import warning from '../_util/warning';
 import CheckableTag from './CheckableTag';
 import useStyle from './style';
 import type { LiteralUnion } from '../_util/type';
+import type { PresetBarShapeType } from '../_util/shapes';
 
 export type { CheckableTagProps } from './CheckableTag';
 
 export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
   prefixCls?: string;
   className?: string;
-  color?: LiteralUnion<PresetColorType | PresetStatusColorType>;
+  color?: LiteralUnion<PresetColorType | PresetStatusColorType | PresetBrandColorType>;
   closable?: boolean;
   closeIcon?: React.ReactNode;
   /** @deprecated `visible` will be removed in next major version. */
@@ -23,10 +24,13 @@ export interface TagProps extends React.HTMLAttributes<HTMLSpanElement> {
   onClose?: (e: React.MouseEvent<HTMLElement>) => void;
   style?: React.CSSProperties;
   icon?: React.ReactNode;
+  shape?: PresetBarShapeType;
+  bgType?: 'default' | 'gray' | 'filled';
 }
 
 const PresetColorRegex = new RegExp(`^(${PresetColorTypes.join('|')})(-inverse)?$`);
 const PresetStatusColorRegex = new RegExp(`^(${PresetStatusColorTypes.join('|')})$`);
+const PresetBrandColorRegex = new RegExp(`^(${PresetBrandColorTypes.join('|')})$`);
 
 export interface TagType
   extends React.ForwardRefExoticComponent<TagProps & React.RefAttributes<HTMLElement>> {
@@ -44,6 +48,8 @@ const InternalTag: React.ForwardRefRenderFunction<HTMLSpanElement, TagProps> = (
     onClose,
     closeIcon,
     closable = false,
+    shape,
+    bgType,
     ...props
   },
   ref,
@@ -70,7 +76,11 @@ const InternalTag: React.ForwardRefRenderFunction<HTMLSpanElement, TagProps> = (
     if (!color) {
       return false;
     }
-    return PresetColorRegex.test(color) || PresetStatusColorRegex.test(color);
+    return (
+      PresetColorRegex.test(color) ||
+      PresetStatusColorRegex.test(color) ||
+      PresetBrandColorRegex.test(color)
+    );
   };
 
   const tagStyle = {
@@ -87,6 +97,8 @@ const InternalTag: React.ForwardRefRenderFunction<HTMLSpanElement, TagProps> = (
     prefixCls,
     {
       [`${prefixCls}-${color}`]: presetColor,
+      [`${prefixCls}-bg-${bgType}`]: bgType,
+      [`${prefixCls}-shape-${shape}`]: shape,
       [`${prefixCls}-has-color`]: color && !presetColor,
       [`${prefixCls}-hidden`]: !visible,
       [`${prefixCls}-rtl`]: direction === 'rtl',

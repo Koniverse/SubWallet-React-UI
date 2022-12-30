@@ -1,3 +1,4 @@
+export const PresetBrandColorTypes = ['primary', 'secondary'] as const;
 export const PresetStatusColorTypes = [
   'success',
   'processing',
@@ -21,6 +22,8 @@ export const PresetColorTypes = [
   'gold',
   'lime',
 ] as const;
+
+export type PresetBrandColorType = typeof PresetBrandColorTypes[number];
 
 export type PresetColorType = typeof PresetColorTypes[number];
 
