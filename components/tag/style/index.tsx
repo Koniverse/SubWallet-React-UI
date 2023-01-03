@@ -1,6 +1,6 @@
 import type { CSSInterpolation, CSSObject } from '@ant-design/cssinjs';
 import type React from 'react';
-import type { PresetBrandColorType, PresetStatusColorType } from 'antd/es/_util/colors';
+import type { PresetBrandColorType, PresetStatusColorType } from '../../_util/colors';
 import type { FullToken, PresetColorType } from '../../theme/internal';
 import { genComponentStyleHook, mergeToken, PresetColors } from '../../theme/internal';
 import capitalize from '../../_util/capitalize';
