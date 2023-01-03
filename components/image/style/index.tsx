@@ -272,7 +272,7 @@ const genImageStyle: GenerateStyle<ImageToken> = (token: ImageToken) => {
         ...genBoxStyle(),
       },
       '> img': {
-        borderRadius: '8px',
+        borderRadius: token.borderRadiusLG,
       },
       '&.-shape-square': {
         '> img': {
