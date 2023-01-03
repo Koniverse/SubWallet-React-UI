@@ -271,6 +271,24 @@ const genImageStyle: GenerateStyle<ImageToken> = (token: ImageToken) => {
       [`${componentCls}-placeholder`]: {
         ...genBoxStyle(),
       },
+      '> img': {
+        borderRadius: token.borderRadiusLG,
+      },
+      '&.-shape-square': {
+        '> img': {
+          borderRadius: '0px',
+        },
+      },
+      '&.-shape-circle': {
+        '> img': {
+          borderRadius: '50%',
+        },
+      },
+      '&.-responsive': {
+        '> img': {
+          maxWidth: '100%',
+        },
+      },
     },
   };
 };
