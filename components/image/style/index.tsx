@@ -279,11 +279,6 @@ const genImageStyle: GenerateStyle<ImageToken> = (token: ImageToken) => {
           borderRadius: '0px',
         },
       },
-      '&.-shape-rounded': {
-        '> img': {
-          borderRadius: '32px',
-        },
-      },
       '&.-shape-circle': {
         '> img': {
           borderRadius: '50%',

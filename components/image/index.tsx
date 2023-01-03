@@ -10,7 +10,7 @@ import defaultLocale from '../locale/en_US';
 import { getTransitionName } from '../_util/motion';
 import PreviewGroup, { icons } from './PreviewGroup';
 
-const ImageShapes = ['default', 'square', 'rounded', 'circle', 'squircle'] as const;
+const ImageShapes = ['default', 'square', 'circle', 'squircle'] as const;
 export type ImageShape = typeof ImageShapes[number];
 
 export interface SwImageProps extends ImageProps {

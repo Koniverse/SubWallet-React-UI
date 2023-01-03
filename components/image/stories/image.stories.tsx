@@ -9,7 +9,7 @@ export default {
   argTypes: {
     shape: {
       control: 'radio',
-      options: ['default', 'square', 'rounded', 'circle', 'squircle'],
+      options: ['default', 'square', 'circle', 'squircle'],
       defaultValue: 'default',
     },
     width: { control: 'text' },
@@ -37,15 +37,6 @@ Square.args = {
   src: imgLink,
   shape: 'square',
   width: '200px',
-};
-
-export const Rounded = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Rounded.args = {
-  src: imgLink,
-  shape: 'rounded',
-  width: '200px',
-  height: '200px',
 };
 
 export const Circle = Template.bind({});
