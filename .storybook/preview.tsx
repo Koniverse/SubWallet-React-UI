@@ -47,17 +47,6 @@ export const decorators = [
         algorithm: theme.darkAlgorithm,
         token: {
           ...seedToken,
-          ['gray']: '#D9D9D9',
-          ['gray-1']: '#1B1B1B',
-          ['gray-2']: '#363636',
-          ['gray-3']: '#4D4D4D',
-          ['gray-4']: '#737373',
-          ['gray-5']: '#A6A6A6',
-          ['gray-6']: '#D9D9D9',
-          ['gray-7']: '#E6E6E6',
-          ['gray-8']: '#F2F2F2',
-          ['gray-9']: '#F7F7F7',
-          ['gray-10']: '#FAFAFA',
         },
       }}
     >

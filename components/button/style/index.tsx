@@ -67,21 +67,24 @@ const genSharedButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token): CSS
       },
 
       // make `btn-icon-only` not too narrow
-      '&-icon-only&-compact-item': {
+      '&-compact-item.-icon-only': {
         flex: 'none',
       },
 
-      [`&-icon-only`]: {
+      [`&.-icon-only`]: {
         paddingInlineStart: 0,
         paddingInlineEnd: 0,
         width: buttonSizeMap.md,
+      },
 
-        // todo: icon may have different class name
-        '.anticon': {
-          height: 24,
-          width: 24,
-          fontSize: 24,
-        },
+      // todo: icon may have different class name
+      '.anticon': {
+        height: 28,
+        width: 28,
+        fontSize: 26,
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       },
 
       // Loading
@@ -95,7 +98,7 @@ const genSharedButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token): CSS
         transition: `width ${token.motionDurationSlow} ${token.motionEaseInOut}, opacity ${token.motionDurationSlow} ${token.motionEaseInOut}`,
       },
 
-      [`&:not(&-icon-only) ${componentCls}-loading-icon > ${iconCls}`]: {
+      [`&:not(.-icon-only) ${componentCls}-loading-icon > ${iconCls}`]: {
         marginInlineEnd: token.marginXS,
       },
 
@@ -120,7 +123,27 @@ const genTypeButtonStyle: GenerateStyle<ButtonToken> = (token) => {
 // =============================== Size ===============================
 const genSizeButtonStyle = (token: ButtonToken, size: ButtonSize): CSSInterpolation => {
   const { componentCls } = token;
-  const iconOnlyCls = `${componentCls}-icon-only`;
+
+  if (size === 'xs') {
+    return [
+      {
+        [`${componentCls}.-size-xs`]: {
+          fontSize: token.fontSize,
+          height: buttonSizeMap[size],
+          lineHeight: `${buttonSizeMap[size]}px`,
+
+          [`&.-icon-only`]: {
+            width: buttonSizeMap[size],
+            '.anticon': {
+              height: 24,
+              width: 24,
+              fontSize: 22,
+            },
+          },
+        },
+      },
+    ];
+  }
 
   return [
     {
@@ -128,7 +151,7 @@ const genSizeButtonStyle = (token: ButtonToken, size: ButtonSize): CSSInterpolat
         height: buttonSizeMap[size],
         lineHeight: `${buttonSizeMap[size]}px`,
 
-        [`&${iconOnlyCls}`]: {
+        [`&.-icon-only`]: {
           width: buttonSizeMap[size],
         },
       },
@@ -189,7 +212,6 @@ const genSchemaStyle = (backgroundColor: string, color: string): CSSObject => ({
 const genSchemaStyles: GenerateStyle<ButtonToken, CSSObject> = (token) => {
   const { componentCls } = token;
 
-  console.log('tokentokentoken', token);
   return {
     [`${componentCls}-default`]: {
       '&.-schema-primary': {
@@ -218,6 +240,26 @@ const genSchemaStyles: GenerateStyle<ButtonToken, CSSObject> = (token) => {
         '&:hover': genSchemaStyle(token.colorErrorHover, token.colorTextLight1),
         '&:active': genSchemaStyle(token.colorErrorActive, token.colorTextLight1),
         '&.-disabled, &:disabled': genSchemaStyle(token.colorErrorActive, token.colorTextLight5),
+      },
+    },
+    [`${componentCls}-ghost`]: {
+      [`&.-icon-only`]: {
+        color: token.colorTextBase,
+      },
+
+      [`&:not(.-icon-only)`]: {
+        color: token.colorTextBase,
+        opacity: 0.45,
+
+        '&:hover': {
+          opacity: 0.65,
+        },
+        '&:active': {
+          opacity: 1,
+        },
+        '&.-disabled, &:disabled': {
+          opacity: 0.4,
+        },
       },
     },
   };

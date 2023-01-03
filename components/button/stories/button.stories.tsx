@@ -1,8 +1,9 @@
 import React from 'react';
-import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import { SearchOutlined } from '@ant-design/icons';
+import type { ComponentMeta, ComponentStory } from '@storybook/react';
+import { PaperPlaneTilt } from 'phosphor-react';
 import { PresetShapeTypes } from '../../_util/shapes';
 import Button from '../button';
+import IconComponent from '../../icon';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -59,6 +60,8 @@ export default {
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
+const icon = <IconComponent type="phosphor" phosphorIcon={PaperPlaneTilt} />;
+
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
@@ -70,5 +73,34 @@ export const Icon = Template.bind({});
 Icon.args = {
   type: 'default',
   shape: 'circle',
-  icon: <SearchOutlined />,
+  icon,
+};
+
+export const Squircle = Template.bind({});
+Squircle.args = {
+  type: 'default',
+  shape: 'squircle',
+  icon,
+};
+
+export const IconWithText = Template.bind({});
+IconWithText.args = {
+  type: 'default',
+  children: <>Button</>,
+  icon,
+};
+
+export const GhostIcon = Template.bind({});
+GhostIcon.args = {
+  type: 'ghost',
+  size: 'xs',
+  icon,
+};
+
+export const GhostIconWithText = Template.bind({});
+GhostIconWithText.args = {
+  type: 'ghost',
+  size: 'xs',
+  children: <>Button</>,
+  icon,
 };

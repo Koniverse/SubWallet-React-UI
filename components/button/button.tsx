@@ -6,7 +6,7 @@ import type { PresetShapeType } from '../_util/shapes';
 import { ConfigContext } from '../config-provider';
 import DisabledContext from '../config-provider/DisabledContext';
 import type { SizeType } from '../config-provider/SizeContext';
-import SizeContext from '../config-provider/SizeContext';
+import SizeContext, { sizeNameMap } from '../config-provider/SizeContext';
 import { useCompactItemContext } from '../space/Compact';
 import { cloneElement, isFragment } from '../_util/reactNode';
 import warning from '../_util/warning';
@@ -16,6 +16,7 @@ import LoadingIcon from './LoadingIcon';
 
 // CSSINJS
 import useStyle from './style';
+import Squircle from '../squircle';
 
 const rxTwoCNChar = /^[\u4e00-\u9fa5]{2}$/;
 const isTwoCNChar = rxTwoCNChar.test.bind(rxTwoCNChar);
@@ -259,17 +260,8 @@ const InternalButton: React.ForwardRefRenderFunction<
   const autoInsertSpace = autoInsertSpaceInButton !== false;
   const { compactSize, compactItemClassnames } = useCompactItemContext(prefixCls, direction);
 
-  const sizeClassNameMap = {
-    xs: 'xs',
-    sm: 'sm',
-    md: 'md',
-    lg: 'lg',
-    large: 'lg',
-    small: 'sm',
-    middle: 'md',
-  };
   const sizeFullname = compactSize || groupSize || customizeSize || size;
-  const sizeCls = sizeFullname ? sizeClassNameMap[sizeFullname] || '' : '';
+  const sizeCls = sizeFullname ? sizeNameMap[sizeFullname] || '' : '';
 
   const iconType = innerLoading ? 'loading' : icon;
 
@@ -277,12 +269,14 @@ const InternalButton: React.ForwardRefRenderFunction<
 
   const hrefAndDisabled = linkButtonRestProps.href !== undefined && mergedDisabled;
 
+  const isIconOnly = !children && children !== 0 && !!iconType;
+
   const classes = classNames(
     prefixCls,
     hashId,
     {
       [`${prefixCls}-${type}`]: type,
-      [`${prefixCls}-icon-only`]: !children && children !== 0 && !!iconType,
+      [`-icon-only`]: isIconOnly,
       [`${prefixCls}-background-ghost`]: ghost && !isUnBorderedButtonType(type),
       [`${prefixCls}-loading`]: innerLoading,
       [`${prefixCls}-two-chinese-chars`]: hasTwoCNChar && autoInsertSpace && !innerLoading,
@@ -331,6 +325,14 @@ const InternalButton: React.ForwardRefRenderFunction<
       {kids}
     </button>
   );
+
+  if (!!icon && isIconOnly && shape === 'squircle' && type === 'default') {
+    buttonNode = (
+      <Squircle inline={!block} size={size}>
+        {buttonNode}
+      </Squircle>
+    );
+  }
 
   if (!isUnBorderedButtonType(type)) {
     buttonNode = <Wave disabled={!!innerLoading}>{buttonNode}</Wave>;
