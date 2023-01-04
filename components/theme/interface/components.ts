@@ -32,6 +32,7 @@ import type { ComponentToken as RateComponentToken } from '../../rate/style';
 import type { ComponentToken as ResultComponentToken } from '../../result/style';
 import type { ComponentToken as SegmentedComponentToken } from '../../segmented/style';
 import type { ComponentToken as SelectComponentToken } from '../../select/style';
+import type { ComponentToken as SelectModalComponentToken } from '../../select-modal/style';
 import type { ComponentToken as SkeletonComponentToken } from '../../skeleton/style';
 import type { ComponentToken as SliderComponentToken } from '../../slider/style';
 import type { ComponentToken as SpaceComponentToken } from '../../space/style';
@@ -106,6 +107,7 @@ export interface ComponentTokenMap {
   Steps?: StepsComponentToken;
   Menu?: MenuComponentToken;
   Modal?: ModalComponentToken;
+  SelectModal?: SelectModalComponentToken;
   Message?: MessageComponentToken;
   Upload?: UploadComponentToken;
   Tooltip?: TooltipComponentToken;
