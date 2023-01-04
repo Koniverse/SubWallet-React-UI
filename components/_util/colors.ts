@@ -5,6 +5,7 @@ export const PresetStatusColorTypes = [
   'error',
   'default',
   'warning',
+  'danger',
 ] as const;
 
 export const PresetColorTypes = [

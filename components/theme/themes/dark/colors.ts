@@ -21,12 +21,15 @@ export const generateColorPalettes: GenerateColorMap = (baseColor: string) => {
   };
 };
 
+const colorLight = '#FFF';
+const colorDark = '#000';
+
 export const generateNeutralColorPalettes: GenerateNeutralColorMap = (
   bgBaseColor: string,
   textBaseColor: string,
 ) => {
-  const colorBgBase = bgBaseColor || '#0C0C0C';
-  const colorTextBase = textBaseColor || '#fff';
+  const colorBgBase = bgBaseColor || colorDark;
+  const colorTextBase = textBaseColor || colorLight;
 
   return {
     colorBgBase,
@@ -55,5 +58,25 @@ export const generateNeutralColorPalettes: GenerateNeutralColorMap = (
     colorBgInput: '#252525',
     colorBgBorder: '#212121',
     colorBgDivider: 'rgba(33, 33, 33, 0.8)',
+
+    colorTextLight1: colorLight,
+    colorTextLight2: getAlphaColor(colorLight, 0.85),
+    colorTextLight3: getAlphaColor(colorLight, 0.65),
+    colorTextLight4: getAlphaColor(colorLight, 0.45),
+    colorTextLight5: getAlphaColor(colorLight, 0.3),
+    colorTextLight6: getAlphaColor(colorLight, 0.2),
+    colorTextLight7: getAlphaColor(colorLight, 0.12),
+    colorTextLight8: getAlphaColor(colorLight, 0.08),
+    colorTextLight9: getAlphaColor(colorLight, 0.04),
+
+    colorTextDark1: colorDark,
+    colorTextDark2: getAlphaColor(colorDark, 0.85),
+    colorTextDark3: getAlphaColor(colorDark, 0.65),
+    colorTextDark4: getAlphaColor(colorDark, 0.45),
+    colorTextDark5: getAlphaColor(colorDark, 0.25),
+    colorTextDark6: getAlphaColor(colorDark, 0.15),
+    colorTextDark7: getAlphaColor(colorDark, 0.06),
+    colorTextDark8: getAlphaColor(colorDark, 0.04),
+    colorTextDark9: getAlphaColor(colorDark, 0.02),
   };
 };
