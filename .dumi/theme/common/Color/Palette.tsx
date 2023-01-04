@@ -63,7 +63,7 @@ const Palette: FC<PaletteProps> = ({
   const [lastColor, firstColor] = dark ? colorPaletteMap.dark : colorPaletteMap.default;
   for (let i = 1; i <= count; i += 1) {
     const colorText = `${name}-${i}`;
-    const defaultBgStyle = dark ? presetDarkPalettes[name][i - 1] : '';
+    const defaultBgStyle = '';
     colors.push(
       <CopyToClipboard
         text={hexColors[colorText]}
@@ -77,7 +77,7 @@ const Palette: FC<PaletteProps> = ({
           }}
           className={`main-color-item palette-${name}-${i}`}
           style={{
-            color: (name === 'yellow' ? i > 6 : i > 5) ? firstColor : lastColor,
+            color: i > 6 ? firstColor : lastColor,
             fontWeight: i === 6 ? 'bold' : 'normal',
             backgroundColor: defaultBgStyle,
           }}
