@@ -25,12 +25,19 @@ export type DirectionType = 'ltr' | 'rtl' | undefined;
 
 export type MappingAlgorithm = DerivativeFunc<SeedToken, MapToken>;
 
+export interface Web3LogoMap {
+  network: Record<string, any>;
+  symbol: Record<string, any>;
+  default: any;
+}
+
 export interface ThemeConfig {
   token?: Partial<AliasToken>;
   components?: OverrideToken;
   algorithm?: MappingAlgorithm | MappingAlgorithm[];
   hashed?: boolean;
   inherit?: boolean;
+  logoMap?: Web3LogoMap;
 }
 
 export interface ConfigConsumerProps {
