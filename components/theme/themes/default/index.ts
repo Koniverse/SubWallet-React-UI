@@ -43,8 +43,6 @@ export default function derivative(token: SeedToken): MapToken {
       return prev;
     }, {} as ColorPalettes);
 
-  console.log('themeColorPalettes', themeColorPalettes);
-
   return {
     ...token,
     ...themeColorPalettes,
