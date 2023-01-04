@@ -13,6 +13,7 @@ import { canUseDocElement } from '../_util/styleChecker';
 import { renderCloseIcon } from './PurePanel';
 import useStyle from './style';
 import Icon from '../icon';
+import Typography from '../typography';
 
 type MousePosition = { x: number; y: number } | null;
 
@@ -164,7 +165,7 @@ const SelectModal = <T extends Record<string, any>>(
       }
 
       if (!item) {
-        return 'Select';
+        return <Typography.Text style={{ color: 'white' }}>Select</Typography.Text>;
       }
 
       return renderItem(item, false);
@@ -211,7 +212,7 @@ const SelectModal = <T extends Record<string, any>>(
           onClose={handleCancel}
           closeIcon={renderCloseIcon(prefixCls, closeIcon)}
           focusTriggerAfterClose={focusTriggerAfterClose}
-          transitionName={getTransitionName(rootPrefixCls, 'slide-up', props.transitionName)}
+          transitionName={getTransitionName(rootPrefixCls, 'slide-down', props.transitionName)}
           maskTransitionName={getTransitionName(rootPrefixCls, 'fade', props.maskTransitionName)}
           className={classNames(hashId, className)}
         >

@@ -1,5 +1,5 @@
 import type React from 'react';
-import { initFadeMotion, initZoomMotion, initSlideMotion } from '../../style/motion';
+import { initFadeMotion, initSlideMotion } from '../../style/motion';
 import type { AliasToken, FullToken, GenerateStyle } from '../../theme/internal';
 import { genComponentStyleHook, mergeToken } from '../../theme/internal';
 import type { TokenWithCommonCls } from '../../theme/util/genComponentStyleHook';
@@ -247,6 +247,10 @@ const genModalStyle: GenerateStyle<SelectModalToken> = (token) => {
           fontSize: token.fontSize,
           lineHeight: token.lineHeight,
           wordWrap: 'break-word',
+          overflow: 'auto',
+          maxHeight: '80vh',
+          margin: `0 -${token.paddingContentHorizontalLG}px`,
+          padding: `0 ${token.paddingContentHorizontalLG}px`,
 
           [`${componentCls}-item-container`]: {
             display: 'flex',
@@ -496,7 +500,6 @@ export default genComponentStyleHook('SelectModal', (token) => {
     genRTLStyle(modalToken),
     genModalMaskStyle(modalToken),
     token.wireframe && genWireframeStyle(modalToken),
-    initZoomMotion(modalToken, 'zoom'),
-    initSlideMotion(modalToken, 'slide-up'),
+    initSlideMotion(modalToken, 'slide-down'),
   ];
 });

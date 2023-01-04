@@ -60,13 +60,15 @@ interface Item {
   value: string;
 }
 
+const items: Item[] = [];
+
+for (let i = 0; i < 20; i++) {
+  items.push({ value: i.toString(), label: i.toString() });
+}
+
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 // @ts-ignore
 const Wrapper: ComponentStory<typeof SelectModal> = ({ ...args }) => {
-  const items: Item[] = [
-    { label: '1', value: '1' },
-    { label: '2', value: '2' },
-  ];
   const [selected, setSelected] = useState<string>('');
   const [selected2, setSelected2] = useState<string>('');
 
