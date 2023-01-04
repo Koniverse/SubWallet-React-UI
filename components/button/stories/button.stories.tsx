@@ -44,6 +44,11 @@ export default {
       control: 'boolean',
       defaultValue: false,
     },
+    contentAlign: {
+      control: 'radio',
+      options: ['default', 'left'],
+      defaultValue: 'default',
+    },
     children: {
       table: {
         disable: true,

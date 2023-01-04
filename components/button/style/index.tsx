@@ -77,6 +77,10 @@ const genSharedButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token): CSS
         width: buttonSizeMap.md,
       },
 
+      [`&.-content-align-left`]: {
+        justifyContent: 'flex-start',
+      },
+
       // todo: icon may have different class name
       '.anticon': {
         height: 28,

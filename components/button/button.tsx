@@ -79,7 +79,7 @@ function spaceChildren(children: React.ReactNode, needInserted: boolean) {
   );
 }
 
-export type ButtonSchema = PresetBrandColorType | PresetStatusColorType | 'danger';
+export type ButtonSchema = PresetBrandColorType | PresetStatusColorType;
 
 const ButtonTypes = ['default', 'primary', 'ghost', 'dashed', 'link', 'text'] as const;
 export type ButtonType = typeof ButtonTypes[number];
@@ -110,6 +110,7 @@ export interface BaseButtonProps {
   size?: SizeType;
   disabled?: boolean;
   loading?: boolean | { delay?: number };
+  contentAlign?: 'default' | 'left';
   prefixCls?: string;
   className?: string;
   ghost?: boolean;
@@ -159,6 +160,7 @@ const InternalButton: React.ForwardRefRenderFunction<
     shape = 'default',
     size: customizeSize,
     disabled: customDisabled,
+    contentAlign,
     className,
     children,
     icon,
@@ -284,6 +286,7 @@ const InternalButton: React.ForwardRefRenderFunction<
       [`${prefixCls}-block`]: block,
       [`${prefixCls}-rtl`]: direction === 'rtl',
       [`-disabled`]: hrefAndDisabled,
+      [`-content-align-${contentAlign}`]: !!contentAlign,
       [`-size-${sizeCls}`]: !!sizeCls,
       [`-shape-${shape}`]: !!shape,
       [`-schema-${schema}`]: !!schema,
