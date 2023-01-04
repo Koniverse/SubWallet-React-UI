@@ -122,6 +122,10 @@ export const getLinkStyles: GenerateStyle<TypographyToken, CSSObject> = (token) 
         textDecoration: token.linkHoverDecoration,
       },
 
+      '.anticon + span': {
+        marginLeft: 4,
+      },
+
       [`&[disabled], &${componentCls}-disabled`]: {
         color: token.colorTextDisabled,
         cursor: 'not-allowed',

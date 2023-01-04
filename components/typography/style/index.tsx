@@ -70,7 +70,7 @@ const genTypographyStyle: GenerateStyle<TypographyToken> = (token) => {
       & + h3&,
       & + h4&,
       & + h5&,
-      & + h6&,
+      & + h6&
       `]: {
         marginTop: sizeMarginHeadingVerticalStart,
       },

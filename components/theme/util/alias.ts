@@ -35,9 +35,9 @@ export default function formatToken(derivativeToken: RawMergedToken): AliasToken
   const aliasToken: AliasToken = {
     ...mergedToken,
 
-    colorLink: mergedToken.colorInfoText,
-    colorLinkHover: mergedToken.colorInfoHover,
-    colorLinkActive: mergedToken.colorInfoActive,
+    colorLink: mergedToken.colorPrimary,
+    colorLinkHover: mergedToken.colorPrimaryHover,
+    colorLinkActive: mergedToken.colorPrimaryActive,
 
     // ============== Background ============== //
     colorFillContent: mergedToken.colorFillSecondary,
