@@ -1,7 +1,9 @@
 import React from 'react';
-import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import { SearchOutlined } from '@ant-design/icons';
+import type { ComponentMeta, ComponentStory } from '@storybook/react';
+import { PaperPlaneTilt } from 'phosphor-react';
+import { PresetShapeTypes } from '../../_util/shapes';
 import Button from '../button';
+import IconComponent from '../../icon';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -10,29 +12,100 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     type: {
-      control: 'select',
-      options: ['primary', 'dashed', 'ghost', 'text', 'link'],
-      defaultValue: 'primary',
+      control: 'radio',
+      options: [undefined, 'default', 'ghost'],
+      defaultValue: undefined,
     },
-    size: { control: 'radio', options: ['small', 'medium', 'large'], defaultValue: 'medium' },
-    shape: { control: 'radio', options: ['default', 'round', 'circle'], defaultValue: 'default' },
+    size: {
+      control: 'radio',
+      options: [undefined, 'xs', 'sm', 'md', 'lg'],
+      defaultValue: undefined,
+    },
+    shape: {
+      control: 'radio',
+      options: [undefined, ...PresetShapeTypes],
+      defaultValue: undefined,
+    },
+    schema: {
+      control: 'radio',
+      options: [undefined, 'primary', 'secondary', 'warning', 'danger', 'error'],
+      defaultValue: undefined,
+    },
+    block: {
+      control: 'boolean',
+      defaultValue: false,
+    },
     loading: { control: 'boolean', defaultValue: false },
+    disabled: {
+      control: 'boolean',
+      defaultValue: false,
+    },
+    danger: {
+      control: 'boolean',
+      defaultValue: false,
+    },
+    contentAlign: {
+      control: 'radio',
+      options: ['default', 'left'],
+      defaultValue: 'default',
+    },
+    children: {
+      table: {
+        disable: true,
+      },
+    },
+    icon: {
+      table: {
+        disable: true,
+      },
+    },
   },
 } as ComponentMeta<typeof Button>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
 
-export const Primary = Template.bind({});
+const icon = <IconComponent type="phosphor" phosphorIcon={PaperPlaneTilt} />;
+
+export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Primary.args = {
-  type: 'primary',
+Default.args = {
+  type: 'default',
   children: <>Button</>,
 };
 
 export const Icon = Template.bind({});
 Icon.args = {
-  type: 'primary',
+  type: 'default',
   shape: 'circle',
-  icon: <SearchOutlined />,
+  icon,
+};
+
+export const Squircle = Template.bind({});
+Squircle.args = {
+  type: 'default',
+  shape: 'squircle',
+  icon,
+};
+
+export const IconWithText = Template.bind({});
+IconWithText.args = {
+  type: 'default',
+  children: <>Button</>,
+  icon,
+};
+
+export const GhostIcon = Template.bind({});
+GhostIcon.args = {
+  type: 'ghost',
+  size: 'xs',
+  icon,
+};
+
+export const GhostIconWithText = Template.bind({});
+GhostIconWithText.args = {
+  type: 'ghost',
+  size: 'xs',
+  children: <>Button</>,
+  icon,
 };

@@ -47,7 +47,6 @@ export const decorators = [
         algorithm: theme.darkAlgorithm,
         token: {
           ...seedToken,
-          fontFamily: `'Plus Jakarta Sans'`,
         },
       }}
     >

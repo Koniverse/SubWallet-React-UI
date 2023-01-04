@@ -7,7 +7,7 @@ import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { AntIconType } from 'antd/es/icon/stories/icon.stories';
 
 interface SwIconProps {
-  type: string;
+  type: 'fontAwesome' | 'phosphor' | 'antDesignIcon';
   size?: SizeType;
   phosphorIcon?: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<SVGSVGElement>>;
   fontawesomeIcon?: IconProp;
@@ -26,53 +26,58 @@ const Icon: React.FC<SwIconProps> = ({
   iconColor,
 }) => {
   const getIconSize = () => {
-    if (size === 'xs') {
-      return '12px';
-    }
-    if (size === 'sm') {
-      return '16px';
-    }
-
-    return '24px';
-  };
-
-  const getAntIconSize = () => {
     if (!size) {
       return undefined;
     }
 
     if (size === 'xs') {
-      return 16;
+      return 12;
     }
     if (size === 'sm') {
-      return 24;
+      return 16;
     }
 
-    return 32;
+    return 24;
   };
 
   if (type === 'fontAwesome' && fontawesomeIcon) {
     return (
-      <FontAwesomeIcon
-        icon={fontawesomeIcon}
-        style={{ width: getIconSize(), height: getIconSize() }}
-        color={iconColor}
-      />
+      <span
+        className='anticon'
+        style={{
+          fontSize: getIconSize(),
+          color: iconColor,
+        }}
+      >
+        <FontAwesomeIcon
+          icon={fontawesomeIcon}
+          style={{ width: '1em', height: '1em' }}
+          color="currentColor"
+        />
+      </span>
     );
   }
 
   if (type === 'phosphor' && PhosphorIcon) {
-    return <PhosphorIcon size={getIconSize()} weight={weight} color={iconColor} />;
+    return (
+      <span
+        className='anticon'
+        style={{
+          fontSize: getIconSize(),
+          color: iconColor,
+        }}
+      >
+        <PhosphorIcon size="1em" weight={weight} color="currentColor" />
+      </span>
+    );
   }
 
   if (type === 'antDesignIcon' && AntDesignIcon) {
     return (
       <AntDesignIcon
         style={{
-          fontSize: getAntIconSize(),
+          fontSize: getIconSize(),
           color: iconColor,
-          width: getAntIconSize(),
-          height: getAntIconSize(),
         }}
       />
     );

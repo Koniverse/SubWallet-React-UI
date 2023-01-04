@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
 import useStyle from './style';
-
-type SizeType = 'xs' | 'sm' | 'md' | 'lg';
+import type { SizeType } from '../config-provider/SizeContext';
+import { sizeNameMap } from '../config-provider/SizeContext';
 
 export interface SquircleProps {
   prefixCls?: string;
@@ -50,8 +50,9 @@ const Squircle: React.FC<SquircleProps> = (props) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('squircle', customizePrefixCls);
   const [wrapSSR, hashId] = useStyle(prefixCls);
+  const sizeCls = size ? sizeNameMap[size] || '' : '';
   const classes = classNames(prefixCls, hashId, className, {
-    [`-size-${size}`]: !!size,
+    [`-size-${sizeCls}`]: !!sizeCls,
     '-inline': !!inline,
   });
 
