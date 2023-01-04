@@ -2,7 +2,6 @@ import type { CSSObject } from '@ant-design/cssinjs';
 import { TinyColor } from '@ctrl/tinycolor';
 import type { FullToken, GenerateStyle } from '../../theme/internal';
 import { genComponentStyleHook, mergeToken } from '../../theme/internal';
-import { genFocusStyle, resetComponent } from '../../style';
 
 interface SwitchToken extends FullToken<'Switch'> {
   switchMinWidth: number;
@@ -26,96 +25,13 @@ interface SwitchToken extends FullToken<'Switch'> {
   switchHandleActiveInset: string;
 }
 
-const genSwitchSmallStyle: GenerateStyle<SwitchToken, CSSObject> = (token) => {
-  const { componentCls } = token;
-  const switchInnerCls = `${componentCls}-inner`;
-
-  return {
-    [componentCls]: {
-      [`&${componentCls}-small`]: {
-        minWidth: token.switchMinWidthSM,
-        height: token.switchHeightSM,
-        lineHeight: `${token.switchHeightSM}px`,
-
-        [`${componentCls}-inner`]: {
-          [`${switchInnerCls}-checked`]: {
-            marginInlineStart: `calc(${token.switchInnerMarginMinSM}px - 100% + ${
-              token.switchPinSizeSM + token.switchPadding * 2
-            }px)`,
-            marginInlineEnd: `calc(${token.switchInnerMarginMaxSM}px + 100% - ${
-              token.switchPinSizeSM + token.switchPadding * 2
-            }px)`,
-          },
-
-          [`${switchInnerCls}-unchecked`]: {
-            marginTop: -token.switchHeightSM,
-            marginInlineStart: token.switchInnerMarginMaxSM,
-            marginInlineEnd: token.switchInnerMarginMinSM,
-          },
-        },
-
-        [`${componentCls}-handle`]: {
-          width: token.switchPinSizeSM,
-          height: token.switchPinSizeSM,
-        },
-
-        [`${componentCls}-loading-icon`]: {
-          top: (token.switchPinSizeSM - token.switchLoadingIconSize) / 2,
-          fontSize: token.switchLoadingIconSize,
-        },
-
-        [`&${componentCls}-checked`]: {
-          [`${componentCls}-inner`]: {
-            [`${switchInnerCls}-checked`]: {
-              marginInlineStart: token.switchInnerMarginMinSM,
-              marginInlineEnd: token.switchInnerMarginMaxSM,
-            },
-
-            [`${switchInnerCls}-unchecked`]: {
-              marginInlineStart: `calc(${token.switchInnerMarginMaxSM}px + 100% - ${
-                token.switchPinSizeSM + token.switchPadding * 2
-              }px)`,
-              marginInlineEnd: `calc(${token.switchInnerMarginMinSM}px - 100% + ${
-                token.switchPinSizeSM + token.switchPadding * 2
-              }px)`,
-            },
-          },
-
-          [`${componentCls}-handle`]: {
-            insetInlineStart: `calc(100% - ${token.switchPinSizeSM + token.switchPadding}px)`,
-          },
-        },
-
-        [`&:not(${componentCls}-disabled):active`]: {
-          [`&:not(${componentCls}-checked) ${switchInnerCls}`]: {
-            [`${switchInnerCls}-unchecked`]: {
-              marginInlineStart: token.switchInnerMarginMaxSM + token.marginXXS / 2,
-              marginInlineEnd: token.switchInnerMarginMinSM - token.marginXXS / 2,
-            },
-          },
-
-          [`&${componentCls}-checked ${switchInnerCls}`]: {
-            [`${switchInnerCls}-checked`]: {
-              marginInlineStart: token.switchInnerMarginMinSM - token.marginXXS / 2,
-              marginInlineEnd: token.switchInnerMarginMaxSM + token.marginXXS / 2,
-            },
-          },
-        },
-      },
-    },
-  };
-};
-
 const genSwitchLoadingStyle: GenerateStyle<SwitchToken, CSSObject> = (token) => {
   const { componentCls } = token;
 
   return {
     [componentCls]: {
       [`${componentCls}-loading-icon${token.iconCls}`]: {
-        position: 'relative',
-        top: (token.switchPinSize - token.fontSize) / 2,
         color: token.switchLoadingIconColor,
-        verticalAlign: 'top',
       },
 
       [`&${componentCls}-checked ${componentCls}-loading-icon`]: {
@@ -133,11 +49,14 @@ const genSwitchHandleStyle: GenerateStyle<SwitchToken, CSSObject> = (token) => {
     [componentCls]: {
       [switchHandleCls]: {
         position: 'absolute',
-        top: token.switchPadding,
-        insetInlineStart: token.switchPadding,
-        width: token.switchPinSize,
-        height: token.switchPinSize,
+        top: 2,
+        insetInlineStart: 2,
+        width: 27,
+        height: 27,
         transition: `all ${token.switchDuration} ease-in-out`,
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
 
         '&::before': {
           position: 'absolute',
@@ -146,27 +65,15 @@ const genSwitchHandleStyle: GenerateStyle<SwitchToken, CSSObject> = (token) => {
           bottom: 0,
           insetInlineStart: 0,
           backgroundColor: token.colorWhite,
-          borderRadius: token.switchPinSize / 2,
-          boxShadow: token.switchHandleShadow,
+          borderRadius: 27,
+          boxShadow: 'none',
           transition: `all ${token.switchDuration} ease-in-out`,
           content: '""',
         },
       },
 
       [`&${componentCls}-checked ${switchHandleCls}`]: {
-        insetInlineStart: `calc(100% - ${token.switchPinSize + token.switchPadding}px)`,
-      },
-
-      [`&:not(${componentCls}-disabled):active`]: {
-        [`${switchHandleCls}::before`]: {
-          insetInlineEnd: token.switchHandleActiveInset,
-          insetInlineStart: 0,
-        },
-
-        [`&${componentCls}-checked ${switchHandleCls}::before`]: {
-          insetInlineEnd: 0,
-          insetInlineStart: token.switchHandleActiveInset,
-        },
+        insetInlineStart: `calc(100% - 29px)`,
       },
     },
   };
@@ -223,22 +130,6 @@ const genSwitchInnerStyle: GenerateStyle<SwitchToken, CSSObject> = (token) => {
           }px)`,
         },
       },
-
-      [`&:not(${componentCls}-disabled):active`]: {
-        [`&:not(${componentCls}-checked) ${switchInnerCls}`]: {
-          [`${switchInnerCls}-unchecked`]: {
-            marginInlineStart: token.switchInnerMarginMax + token.switchPadding * 2,
-            marginInlineEnd: token.switchInnerMarginMin - token.switchPadding * 2,
-          },
-        },
-
-        [`&${componentCls}-checked ${switchInnerCls}`]: {
-          [`${switchInnerCls}-checked`]: {
-            marginInlineStart: token.switchInnerMarginMin - token.switchPadding * 2,
-            marginInlineEnd: token.switchInnerMarginMax + token.switchPadding * 2,
-          },
-        },
-      },
     },
   };
 };
@@ -248,39 +139,24 @@ const genSwitchStyle = (token: SwitchToken): CSSObject => {
 
   return {
     [componentCls]: {
-      ...resetComponent(token),
-
       position: 'relative',
       display: 'inline-block',
-      boxSizing: 'border-box',
-      minWidth: token.switchMinWidth,
-      height: token.switchHeight,
-      lineHeight: `${token.switchHeight}px`,
-      verticalAlign: 'middle',
-      background: token.colorTextQuaternary,
+      minWidth: 51,
+      height: 31,
+      background: token['gray-5'],
       border: '0',
-      borderRadius: 100,
+      borderRadius: 51,
       cursor: 'pointer',
       transition: `all ${token.motionDurationMid}`,
       userSelect: 'none',
 
-      [`&:hover:not(${componentCls}-disabled)`]: {
-        background: token.colorTextTertiary,
-      },
-
-      ...genFocusStyle(token),
-
       [`&${componentCls}-checked`]: {
-        background: token.switchColor,
-
-        [`&:hover:not(${componentCls}-disabled)`]: {
-          background: token.colorPrimaryHover,
-        },
+        background: token['green-6'],
       },
 
       [`&${componentCls}-loading, &${componentCls}-disabled`]: {
         cursor: 'not-allowed',
-        opacity: token.switchDisabledOpacity,
+        opacity: 0.4,
 
         '*': {
           boxShadow: 'none',
@@ -337,8 +213,5 @@ export default genComponentStyleHook('Switch', (token) => {
 
     // loading style
     genSwitchLoadingStyle(switchToken),
-
-    // small style
-    genSwitchSmallStyle(switchToken),
   ];
 });
