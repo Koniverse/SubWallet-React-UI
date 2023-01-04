@@ -45,11 +45,12 @@ export default {
         exists: false,
       },
     },
-    // onSelect: {
-    //   if: {
-    //     exists: false,
-    //   },
-    // },
+    onSelect: {
+      if: {
+        arg: 'neverCheck',
+        exists: true,
+      },
+    },
   },
   // @ts-ignore
 } as ComponentMeta<typeof SelectModal>;
@@ -61,7 +62,7 @@ interface Item {
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 // @ts-ignore
-const Wrapper: ComponentStory<typeof SelectModal> = ({ onSelect, ...args }) => {
+const Wrapper: ComponentStory<typeof SelectModal> = ({ ...args }) => {
   const items: Item[] = [
     { label: '1', value: '1' },
     { label: '2', value: '2' },
@@ -100,23 +101,16 @@ const Wrapper: ComponentStory<typeof SelectModal> = ({ onSelect, ...args }) => {
 
   const _onSelect = useCallback(
     (value: string) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      onSelect && onSelect(value);
       setSelected(value);
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      activeModal && activeModal('test-select-modal-2');
+      activeModal('test-select-modal-2');
     },
-    [onSelect, activeModal],
+    [activeModal],
   );
 
-  const _onSelect2 = useCallback(
-    (value: string) => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
-      onSelect && onSelect(value);
-      setSelected2(value);
-    },
-    [onSelect],
-  );
+  const _onSelect2 = useCallback((value: string) => {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    setSelected2(value);
+  }, []);
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
@@ -159,4 +153,6 @@ export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   maskClosable: false,
+  shape: 'default',
+  background: 'default',
 };

@@ -98,10 +98,29 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
         padding: '8px 16px',
         gap: 8,
         background: token.colorBgSecondary,
-        borderRadius: 32,
         color: token.colorText,
         lineHeight: token.lineHeightLG,
         fontSize: token.fontSizeLG,
+
+        [`&${componentCls}-input-square`]: {
+          borderRadius: 0,
+        },
+
+        [`&${componentCls}-input-rounded`]: {
+          borderRadius: token.lineHeightLG + 8 * 2,
+        },
+
+        [`&${componentCls}-input-default`]: {
+          borderRadius: token.borderRadius,
+        },
+
+        [`&${componentCls}-input-bg-default`]: {
+          background: token.colorBgSecondary,
+        },
+
+        [`&${componentCls}-input-bg-transparent`]: {
+          background: 'transparent',
+        },
       },
     },
   ];

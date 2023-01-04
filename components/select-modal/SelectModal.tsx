@@ -78,6 +78,8 @@ export interface SelectModalProps<T extends Record<string, any>> {
   inputClassName?: string;
   onSelect: (value: string) => void;
   id: string;
+  shape?: 'default' | 'square' | 'rounded';
+  background?: 'default' | 'transparent';
 }
 
 type getContainerFunc = () => HTMLElement;
@@ -109,6 +111,8 @@ const SelectModal = <T extends Record<string, any>>(
     inputClassName,
     onSelect,
     title = 'Select',
+    shape = 'default',
+    background = 'default',
     id,
     onCancel,
     ...restProps
@@ -131,6 +135,14 @@ const SelectModal = <T extends Record<string, any>>(
   const wrapClassNameExtended = classNames(wrapClassName, {
     [`${prefixCls}-wrap-rtl`]: direction === 'rtl',
     [`${prefixCls}-d-none`]: !isActive,
+  });
+
+  const inputClassNameExtended = classNames(hashId, `${prefixCls}-input`, inputClassName, {
+    [`${prefixCls}-input-default`]: shape === 'default',
+    [`${prefixCls}-input-square`]: shape === 'square',
+    [`${prefixCls}-input-rounded`]: shape === 'rounded',
+    [`${prefixCls}-input-bg-default`]: background === 'default',
+    [`${prefixCls}-input-bg-transparent`]: background === 'transparent',
   });
 
   const openModal = useCallback(() => {
@@ -180,10 +192,7 @@ const SelectModal = <T extends Record<string, any>>(
   return wrapSSR(
     <NoCompactStyle>
       <NoFormStyle status override>
-        <div
-          onClick={openModal}
-          className={classNames(hashId, `${prefixCls}-input`, inputClassName)}
-        >
+        <div onClick={openModal} className={inputClassNameExtended}>
           <div className={classNames(`${prefixCls}-input-content`)}>
             {_renderInput(selectedItem)}
           </div>
