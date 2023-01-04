@@ -223,9 +223,9 @@ const genSchemaStyles: GenerateStyle<ButtonToken, CSSObject> = (token) => {
 
       '&.-schema-secondary': {
         ...genSchemaStyle(token['gray-1'], token.colorSecondary),
-        '&:hover': genSchemaStyle(token['gray-2'], token.colorTextLight1),
-        '&:active': genSchemaStyle(token['gray-1'], token.colorTextLight1),
-        '&.-disabled, &:disabled': genSchemaStyle(token['gray-1'], token.colorTextLight5),
+        '&:hover': genSchemaStyle(token['gray-2'], token.colorSecondary),
+        '&:active': genSchemaStyle(token['gray-1'], token.colorSecondary),
+        '&.-disabled, &:disabled': genSchemaStyle(token['gray-1'], token.colorSecondary),
       },
 
       '&.-schema-warning': {

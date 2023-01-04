@@ -13,6 +13,7 @@ import warning from '../_util/warning';
 import Wave from '../_util/wave';
 import Group, { GroupSizeContext } from './button-group';
 import LoadingIcon from './LoadingIcon';
+import type { PresetBrandColorType, PresetStatusColorType } from '../_util/colors';
 
 // CSSINJS
 import useStyle from './style';
@@ -78,7 +79,7 @@ function spaceChildren(children: React.ReactNode, needInserted: boolean) {
   );
 }
 
-export type ButtonSchema = 'primary' | 'secondary' | 'warning' | 'danger' | 'error';
+export type ButtonSchema = PresetBrandColorType | PresetStatusColorType | 'danger';
 
 const ButtonTypes = ['default', 'primary', 'ghost', 'dashed', 'link', 'text'] as const;
 export type ButtonType = typeof ButtonTypes[number];
