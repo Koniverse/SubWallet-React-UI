@@ -1,22 +1,37 @@
-import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import classNames from 'classnames';
 import RcImage, { type ImageProps } from 'rc-image';
 import * as React from 'react';
+import EyeOutlined from '@ant-design/icons/EyeOutlined';
+import Squircle from '../squircle/index';
 import { ConfigContext } from '../config-provider';
+// CSSINJS
+import useStyle from './style';
 import defaultLocale from '../locale/en_US';
 import { getTransitionName } from '../_util/motion';
-// CSSINJS
 import PreviewGroup, { icons } from './PreviewGroup';
-import useStyle from './style';
+
+const ImageShapes = ['default', 'square', 'circle', 'squircle'] as const;
+export type ImageShape = typeof ImageShapes[number];
+
+export interface SwImageProps extends ImageProps {
+  shape?: ImageShape;
+  width: string;
+  height?: string;
+  responsive?: boolean;
+}
 
 export interface CompositionImage<P> extends React.FC<P> {
   PreviewGroup: typeof PreviewGroup;
 }
 
-const Image: CompositionImage<ImageProps> = ({
+const Image: CompositionImage<SwImageProps> = ({
   prefixCls: customizePrefixCls,
   preview,
   rootClassName,
+  shape = 'default',
+  width,
+  height = 'auto',
+  responsive,
   ...otherProps
 }) => {
   const {
@@ -32,7 +47,11 @@ const Image: CompositionImage<ImageProps> = ({
   // Style
   const [wrapSSR, hashId] = useStyle(prefixCls);
 
-  const mergedRootClassName = classNames(rootClassName, hashId);
+  const mergedRootClassName = classNames(rootClassName, hashId, {
+    [`-shape-${shape}`]: shape !== 'default' && shape,
+    '-responsive': !!responsive,
+  });
+
   const mergedPreview = React.useMemo(() => {
     if (preview === false) {
       return preview;
@@ -53,11 +72,25 @@ const Image: CompositionImage<ImageProps> = ({
       maskTransitionName: getTransitionName(rootPrefixCls, 'fade', _preview.maskTransitionName),
     };
   }, [preview, imageLocale]);
+  if (shape === 'squircle') {
+    return wrapSSR(
+      <Squircle customSize={width}>
+        <RcImage
+          style={{ width, height }}
+          preview={false}
+          prefixCls={`${prefixCls}`}
+          rootClassName={mergedRootClassName}
+          {...otherProps}
+        />
+      </Squircle>,
+    );
+  }
 
   return wrapSSR(
     <RcImage
-      prefixCls={`${prefixCls}`}
+      style={{ width, height: shape === 'circle' ? width : height }}
       preview={mergedPreview}
+      prefixCls={`${prefixCls}`}
       rootClassName={mergedRootClassName}
       {...otherProps}
     />,
