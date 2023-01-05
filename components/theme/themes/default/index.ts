@@ -1,4 +1,5 @@
 import { generate } from '@ant-design/colors';
+import type { ThemePresetColorType } from 'antd/es/theme/interface/presetColors';
 import genControlHeight from '../shared/genControlHeight';
 import genSizeMapToken from '../shared/genSizeMapToken';
 import type { ColorPalettes, MapToken, PresetColorType, SeedToken } from '../../interface';
@@ -10,7 +11,7 @@ import genFontMapToken from '../shared/genFontMapToken';
 
 export default function derivative(token: SeedToken): MapToken {
   const themeColorPalettes = Object.keys(themePresetColors)
-    .map((colorKey: keyof PresetColorType) => {
+    .map((colorKey: keyof ThemePresetColorType) => {
       const colors = generate(token[colorKey]);
 
       return new Array(10).fill(1).reduce((prev, _, i) => {
