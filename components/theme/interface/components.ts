@@ -1,6 +1,7 @@
 import type { ComponentToken as AlertComponentToken } from '../../alert/style';
 import type { ComponentToken as AnchorComponentToken } from '../../anchor/style';
 import type { ComponentToken as AvatarComponentToken } from '../../avatar/style';
+import type { ComponentToken as ActivityIndicatorComponentToken } from '../../activity-indicator/style';
 import type { ComponentToken as BackTopComponentToken } from '../../back-top/style';
 import type { ComponentToken as ButtonComponentToken } from '../../button/style';
 import type { ComponentToken as FloatButtonComponentToken } from '../../float-button/style';
@@ -58,6 +59,7 @@ export interface ComponentTokenMap {
   Alert?: AlertComponentToken;
   Anchor?: AnchorComponentToken;
   Avatar?: AvatarComponentToken;
+  ActivityIndicator?: ActivityIndicatorComponentToken;
   BackTop?: BackTopComponentToken;
   Badge?: {};
   Button?: ButtonComponentToken;
