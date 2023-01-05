@@ -1,6 +1,5 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
-import { PresetColorTypes } from '../../_util/colors';
 import Number from '../index';
 
 export default {
