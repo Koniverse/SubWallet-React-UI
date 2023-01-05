@@ -15,6 +15,9 @@ export default {
     title: {
       type: 'string',
     },
+    placeholder: {
+      type: 'string',
+    },
     items: {
       if: {
         exists: false,
@@ -62,7 +65,7 @@ interface Item {
 
 const items: Item[] = [];
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 5; i++) {
   items.push({ value: i.toString(), label: i.toString() });
 }
 
@@ -74,12 +77,10 @@ const Wrapper: ComponentStory<typeof SelectModal> = ({ ...args }) => {
 
   const { activeModal } = useContext(SelectModalContext);
 
-  const renderSelected = useCallback((item?: Item) => {
-    if (!item) {
-      return <Typography.Text style={{ color: 'white' }}>Select</Typography.Text>;
-    }
-    return <Typography.Text style={{ color: 'white' }}>{item.value}</Typography.Text>;
-  }, []);
+  const renderSelected = useCallback(
+    (item: Item) => <Typography.Text style={{ color: 'white' }}>{item.value}</Typography.Text>,
+    [],
+  );
 
   const renderItem = useCallback(
     (item: Item, _selected: boolean) => (
@@ -90,6 +91,9 @@ const Wrapper: ComponentStory<typeof SelectModal> = ({ ...args }) => {
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: 16,
+          padding: '14px 12px',
+          borderRadius: 8,
+          backgroundColor: '#252525',
         }}
       >
         <Typography.Text style={{ color: 'white' }}>{item.value}</Typography.Text>
@@ -156,4 +160,6 @@ Primary.args = {
   maskClosable: false,
   shape: 'default',
   background: 'default',
+  size: 'default',
+  placeholder: 'Select Box',
 };

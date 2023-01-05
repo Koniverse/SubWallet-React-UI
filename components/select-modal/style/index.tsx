@@ -95,31 +95,86 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '8px 16px',
         gap: 8,
-        background: token.colorBgSecondary,
-        color: token.colorText,
+        color: token.colorTextTertiary,
         lineHeight: token.lineHeightLG,
-        fontSize: token.fontSizeLG,
+        borderWidth: token.lineWidth * 2,
+        borderStyle: token.modalHeaderBorderStyle,
 
-        [`&${componentCls}-input-square`]: {
+        '&:hover': {
+          borderColor: `${token['geekblue-4']} !important`,
+        },
+
+        [`&${componentCls}-input-focus`]: {
+          borderColor: `${token['geekblue-6']} !important`,
+        },
+
+        [`${componentCls}-input-placeholder`]: {
+          color: token.colorTextPlaceholder,
+          fontSize: token.fontSizeLG,
+        },
+
+        // Size
+        [`&${componentCls}-input-size-default`]: {
+          padding: `${token.paddingContentVertical - token.lineWidth * 2}px ${
+            token.paddingContentHorizontal - token.lineWidth * 2
+          }px`,
+        },
+
+        [`&${componentCls}-input-size-small`]: {
+          padding: `${token.paddingContentVerticalSM - token.lineWidth * 2}px ${
+            token.paddingContentHorizontal - token.lineWidth * 2
+          }px`,
+        },
+
+        [`&${componentCls}-input-size-medium`]: {
+          padding: `${token.paddingContentVertical - token.lineWidth * 2}px ${
+            token.paddingContentHorizontal - token.lineWidth * 2
+          }px`,
+        },
+
+        [`&${componentCls}-input-size-large`]: {
+          padding: `${token.paddingContentVerticalLG - token.lineWidth * 2}px ${
+            token.paddingContentHorizontal - token.lineWidth * 2
+          }px`,
+        },
+
+        // Border
+        [`&${componentCls}-input-border-square`]: {
           borderRadius: 0,
         },
 
-        [`&${componentCls}-input-round`]: {
-          borderRadius: token.lineHeightLG + 8 * 2,
+        [`&${componentCls}-input-border-round`]: {
+          [`&${componentCls}-input-size-default`]: {
+            borderRadius: token.lineHeightLG + token.paddingContentVertical * 2,
+          },
+
+          [`&${componentCls}-input-size-small`]: {
+            borderRadius: token.lineHeightLG + token.paddingContentVerticalSM * 2,
+          },
+
+          [`&${componentCls}-input-size-medium`]: {
+            borderRadius: token.lineHeightLG + token.paddingContentVertical * 2,
+          },
+
+          [`&${componentCls}-input-size-large`]: {
+            borderRadius: token.lineHeightLG + token.paddingContentVerticalLG * 2,
+          },
         },
 
-        [`&${componentCls}-input-default`]: {
+        [`&${componentCls}-input-border-default`]: {
           borderRadius: token.borderRadius,
         },
 
+        // Background
         [`&${componentCls}-input-bg-default`]: {
           background: token.colorBgSecondary,
+          borderColor: token.colorBgSecondary,
         },
 
         [`&${componentCls}-input-bg-transparent`]: {
           background: 'transparent',
+          borderColor: 'transparent',
         },
       },
     },
@@ -188,16 +243,16 @@ const genModalStyle: GenerateStyle<SelectModalToken> = (token) => {
           backgroundColor: token.modalContentBg,
           backgroundClip: 'padding-box',
           border: 0,
-          borderRadius: `${token.borderRadiusLG}px ${token.borderRadiusLG}px 0 0`,
+          borderRadius: `${token.borderRadiusXXL}px ${token.borderRadiusXXL}px 0 0`,
           boxShadow: token.boxShadowSecondary,
           pointerEvents: 'auto',
-          padding: `${token.paddingMD}px ${token.paddingContentHorizontalLG}px`,
+          padding: token.padding,
         },
 
         [`${componentCls}-close`]: {
           position: 'absolute',
-          top: (token.modalHeaderCloseSize - token.modalCloseBtnSize) / 2,
-          insetInlineEnd: (token.modalHeaderCloseSize - token.modalCloseBtnSize) / 2,
+          top: token.modalHeaderCloseSize / 4,
+          insetInlineStart: (token.modalHeaderCloseSize - token.modalCloseBtnSize) / 2,
           zIndex: token.zIndexPopupBase + 10,
           padding: 0,
           color: token.modalCloseColor,
@@ -206,8 +261,8 @@ const genModalStyle: GenerateStyle<SelectModalToken> = (token) => {
           textDecoration: 'none',
           background: 'transparent',
           borderRadius: token.borderRadiusSM,
-          width: token.modalConfirmIconSize,
-          height: token.modalConfirmIconSize,
+          width: token.modalHeaderCloseSize,
+          height: token.modalHeaderCloseSize,
           border: 0,
           outline: 0,
           cursor: 'pointer',
@@ -215,16 +270,10 @@ const genModalStyle: GenerateStyle<SelectModalToken> = (token) => {
 
           '&-x': {
             display: 'block',
-            fontSize: token.fontSizeLG,
-            fontStyle: 'normal',
-            lineHeight: `${token.modalCloseBtnSize}px`,
             textAlign: 'center',
-            textTransform: 'none',
-            textRendering: 'auto',
           },
 
           '&:hover': {
-            color: token.modalIconHoverColor,
             backgroundColor: token.wireframe ? 'transparent' : token.colorFillContent,
             textDecoration: 'none',
           },
@@ -240,7 +289,11 @@ const genModalStyle: GenerateStyle<SelectModalToken> = (token) => {
           color: token.colorText,
           background: token.modalHeaderBg,
           borderRadius: `${token.borderRadiusLG}px ${token.borderRadiusLG}px 0 0`,
-          marginBottom: token.marginXS,
+          padding: `0 ${token.padding}px ${token.padding}px`,
+          margin: `0 -${token.padding}px ${token.padding}px`,
+          borderBottom: `${token.lineWidth * 2}px ${token.modalHeaderBorderStyle} ${
+            token.colorSplit
+          }`,
         },
 
         [`${componentCls}-body`]: {
@@ -249,18 +302,16 @@ const genModalStyle: GenerateStyle<SelectModalToken> = (token) => {
           wordWrap: 'break-word',
           overflow: 'auto',
           maxHeight: '80vh',
-          margin: `0 -${token.paddingContentHorizontalLG}px`,
-          padding: `0 ${token.paddingContentHorizontalLG}px`,
+          margin: `0 -${token.padding}px`,
+          padding: `0 ${token.padding}px`,
 
           [`${componentCls}-item-container`]: {
             display: 'flex',
             flexDirection: 'column',
+            gap: token.paddingContentVerticalSM,
 
             [`${componentCls}-item`]: {
               cursor: 'pointer',
-              padding: '14px 0',
-              margin: '0 12px',
-              borderBottom: `2px solid ${token.colorSplit}`,
             },
           },
         },
@@ -332,7 +383,7 @@ const genModalConfirmStyle: GenerateStyle<SelectModalToken> = (token) => {
           // create BFC to avoid
           // https://user-images.githubusercontent.com/507615/37702510-ba844e06-2d2d-11e8-9b67-8e19be57f445.png
           overflow: 'hidden',
-          color: token.colorTextHeading,
+          color: token.colorWhite,
           fontWeight: token.fontWeightStrong,
           fontSize: token.modalHeaderTitleFontSize,
           lineHeight: token.modalHeaderTitleLineHeight,
@@ -466,8 +517,8 @@ const genWireframeStyle: GenerateStyle<SelectModalToken> = (token) => {
 // ============================== Export ==============================
 export default genComponentStyleHook('SelectModal', (token) => {
   const headerPaddingVertical = token.padding;
-  const headerFontSize = token.fontSizeHeading5;
-  const headerLineHeight = token.lineHeightHeading5;
+  const headerFontSize = token.fontSizeHeading4;
+  const headerLineHeight = token.lineHeightHeading4;
 
   const modalToken = mergeToken<SelectModalToken>(token, {
     modalBodyPadding: token.paddingLG,
@@ -478,10 +529,10 @@ export default genComponentStyleHook('SelectModal', (token) => {
     modalHeaderTitleLineHeight: headerLineHeight,
     modalHeaderTitleFontSize: headerFontSize,
     modalHeaderBorderColorSplit: token.colorSplit,
-    modalHeaderCloseSize: headerLineHeight * headerFontSize + headerPaddingVertical * 2,
+    modalHeaderCloseSize: token.controlHeightLG,
     modalContentBg: token.colorBgElevated,
     modalHeadingColor: token.colorTextHeading,
-    modalCloseColor: token.colorTextDescription,
+    modalCloseColor: token.colorText,
     modalFooterBg: 'transparent',
     modalFooterBorderColorSplit: token.colorSplit,
     modalFooterBorderStyle: token.lineType,
@@ -491,7 +542,7 @@ export default genComponentStyleHook('SelectModal', (token) => {
     modalConfirmTitleFontSize: token.fontSizeLG,
     modalIconHoverColor: token.colorIconHover,
     modalConfirmIconSize: token.fontSize * token.lineHeight,
-    modalCloseBtnSize: token.controlHeightLG * 0.55,
+    modalCloseBtnSize: token.controlHeightLG * 0.6,
   });
   return [
     genInputStyle(modalToken),

@@ -32,6 +32,22 @@ export interface StyleMapToken {
    */
   borderRadiusLG: number;
   /**
+   * @nameZH XL号圆角
+   * @nameEN XL Border Radius
+   * @desc XL号圆角，用于组件中的一些大圆角，如 Card、Modal 等一些组件样式。
+   * @descEN XL size border radius, used in some large border radius components, such as Card, Modal and other components.
+   * @default 16
+   */
+  borderRadiusXL: number;
+  /**
+   * @nameZH XXL号圆角
+   * @nameEN XXL Border Radius
+   * @desc XXL号圆角，用于组件中的一些大圆角，如 Card、Modal 等一些组件样式。
+   * @descEN XXL size border radius, used in some large border radius components, such as Card, Modal and other components.
+   * @default 32
+   */
+  borderRadiusXXL: number;
+  /**
    * @default 4
    */
   borderRadiusOuter: number;

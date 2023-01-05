@@ -4,7 +4,13 @@ const genRadius = (
   radiusBase: number,
 ): Pick<
   MapToken,
-  'borderRadiusXS' | 'borderRadiusSM' | 'borderRadiusLG' | 'borderRadius' | 'borderRadiusOuter'
+  | 'borderRadiusXS'
+  | 'borderRadiusSM'
+  | 'borderRadiusLG'
+  | 'borderRadius'
+  | 'borderRadiusOuter'
+  | 'borderRadiusXL'
+  | 'borderRadiusXXL'
 > => {
   let radiusLG = radiusBase;
   let radiusSM = radiusBase;
@@ -47,11 +53,16 @@ const genRadius = (
     radiusOuter = 6;
   }
 
+  const radiusXL = radiusLG * 2;
+  const radiusXXL = radiusXL * 2;
+
   return {
     borderRadius: radiusBase > 16 ? 16 : radiusBase,
     borderRadiusXS: radiusXS,
     borderRadiusSM: radiusSM,
     borderRadiusLG: radiusLG,
+    borderRadiusXL: radiusXL,
+    borderRadiusXXL: radiusXXL,
     borderRadiusOuter: radiusOuter,
   };
 };

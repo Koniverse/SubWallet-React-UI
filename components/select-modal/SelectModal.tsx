@@ -75,12 +75,14 @@ export interface SelectModalProps<T extends Record<string, any>> {
   itemKey: string;
   selected: string;
   renderItem: (item: T, selected: boolean) => React.ReactNode;
-  renderSelected?: (item?: T) => React.ReactNode;
+  renderSelected?: (item: T) => React.ReactNode;
   inputClassName?: string;
   onSelect: (value: string) => void;
   id: string;
   shape?: 'default' | 'square' | 'round';
   background?: 'default' | 'transparent';
+  placeholder?: string;
+  size?: 'default' | 'sm' | 'medium' | 'large';
 }
 
 type getContainerFunc = () => HTMLElement;
@@ -114,6 +116,8 @@ const SelectModal = <T extends Record<string, any>>(
     title = 'Select',
     shape = 'default',
     background = 'default',
+    placeholder = 'Select box',
+    size: inputSize = 'default',
     id,
     onCancel,
     ...restProps
@@ -138,13 +142,17 @@ const SelectModal = <T extends Record<string, any>>(
     [`${prefixCls}-d-none`]: !isActive,
   });
 
-  const inputClassNameExtended = classNames(hashId, `${prefixCls}-input`, inputClassName, {
-    [`${prefixCls}-input-default`]: shape === 'default',
-    [`${prefixCls}-input-square`]: shape === 'square',
-    [`${prefixCls}-input-round`]: shape === 'round',
-    [`${prefixCls}-input-bg-default`]: background === 'default',
-    [`${prefixCls}-input-bg-transparent`]: background === 'transparent',
-  });
+  const inputClassNameExtended = classNames(
+    hashId,
+    `${prefixCls}-input`,
+    `${prefixCls}-input-border-${shape}`,
+    `${prefixCls}-input-size-${inputSize}`,
+    `${prefixCls}-input-bg-${background}`,
+    inputClassName,
+    {
+      [`${prefixCls}-input-focus`]: isActive,
+    },
+  );
 
   const openModal = useCallback(() => {
     activeModal(id);
@@ -160,17 +168,21 @@ const SelectModal = <T extends Record<string, any>>(
 
   const _renderInput = useCallback(
     (item: T | undefined) => {
+      if (!item) {
+        return (
+          <Typography.Text className={classNames(`${prefixCls}-input-placeholder`)}>
+            {placeholder}
+          </Typography.Text>
+        );
+      }
+
       if (renderSelected) {
         return renderSelected(item);
       }
 
-      if (!item) {
-        return <Typography.Text style={{ color: 'white' }}>Select</Typography.Text>;
-      }
-
       return renderItem(item, false);
     },
-    [renderSelected],
+    [renderSelected, placeholder],
   );
 
   const _onSelect = useCallback(
