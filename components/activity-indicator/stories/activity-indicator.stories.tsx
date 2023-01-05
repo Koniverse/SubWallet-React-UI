@@ -10,6 +10,7 @@ export default {
   argTypes: {
     size: { control: 'number', defaultValue: 40 },
     color: { control: 'text', defaultValue: '#888' },
+    loading: { control: 'boolean', defaultValue: true },
   },
 } as ComponentMeta<typeof ActivityIndicator>;
 
