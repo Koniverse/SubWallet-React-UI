@@ -11,6 +11,7 @@ interface NumberProps {
   value: string | number | BigNumber;
   decimal: number;
   size?: number;
+  weight?: number;
   subFloatNumber?: boolean;
   prefix?: string;
   suffix?: string;
@@ -19,6 +20,11 @@ interface NumberProps {
   metadata?: Record<string, number>;
   className?: string;
   prefixCls?: string;
+
+  leftOpacity?: number;
+  leftColor?: string;
+  rightOpacity?: number;
+  rightColor?: string;
 }
 
 interface LocaleNumberFormat {
@@ -54,6 +60,8 @@ const getNumberSeparators = () => {
 const { decimal: decimalSeparator, thousand: thousandSeparator } = getNumberSeparators();
 
 const Number: React.FC<NumberProps> = (props) => {
+  const { getPrefixCls } = React.useContext(ConfigContext);
+
   const {
     metadata,
     formatType,
@@ -66,9 +74,28 @@ const Number: React.FC<NumberProps> = (props) => {
     value,
     className,
     prefixCls: customizePrefixCls,
+    leftColor = '#FFF',
+    leftOpacity = 1,
+    rightColor = '#FFF',
+    rightOpacity = 1,
+    weight = 500,
   } = props;
 
-  const { getPrefixCls } = React.useContext(ConfigContext);
+  const leftStyle = useMemo(
+    (): React.CSSProperties => ({
+      color: leftColor,
+      opacity: leftOpacity,
+    }),
+    [leftColor, leftOpacity],
+  );
+
+  const rightStyle = useMemo(
+    (): React.CSSProperties => ({
+      color: rightColor,
+      opacity: rightOpacity,
+    }),
+    [rightColor, rightOpacity],
+  );
 
   const prefixCls = getPrefixCls('number', customizePrefixCls);
   const [wrapSSR, hashId] = useStyle(prefixCls);
@@ -113,21 +140,21 @@ const Number: React.FC<NumberProps> = (props) => {
       {prefix && (
         <Typography.Text
           className={classNames(`${prefixCls}-prefix`)}
-          style={{ fontSize: integerFontSize }}
+          style={{ ...leftStyle, fontWeight: weight, fontSize: integerFontSize }}
         >
           {prefix}
         </Typography.Text>
       )}
       <Typography.Text
         className={classNames(`${prefixCls}-integer`)}
-        style={{ fontSize: integerFontSize }}
+        style={{ ...leftStyle, fontWeight: weight, fontSize: integerFontSize }}
       >
         {_int}
       </Typography.Text>
       {!!_dec && (
         <Typography.Text
           className={classNames(`${prefixCls}-decimal`)}
-          style={{ fontSize: decimalFontSize }}
+          style={{ ...rightStyle, fontWeight: weight, fontSize: decimalFontSize }}
         >
           {decimalSeparator}
           {_dec}
@@ -136,7 +163,7 @@ const Number: React.FC<NumberProps> = (props) => {
       {suffix && (
         <Typography.Text
           className={classNames(`${prefixCls}-suffix`)}
-          style={{ fontSize: integerFontSize }}
+          style={{ ...rightStyle, fontWeight: weight, fontSize: integerFontSize }}
         >
           &nbsp;{suffix}
         </Typography.Text>

@@ -1,5 +1,6 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
+import { PresetColorTypes } from '../../_util/colors';
 import Number from '../index';
 
 export default {
@@ -22,8 +23,25 @@ export default {
     size: {
       type: 'number',
     },
+    weight: {
+      type: 'number',
+    },
     subFloatNumber: {
       type: 'boolean',
+    },
+    leftOpacity: {
+      type: 'number',
+    },
+    leftColor: {
+      control: 'select',
+      options: ['white', ...PresetColorTypes],
+    },
+    rightOpacity: {
+      type: 'number',
+    },
+    rightColor: {
+      control: 'select',
+      options: ['white', ...PresetColorTypes],
     },
   },
 } as ComponentMeta<typeof Number>;
@@ -33,10 +51,15 @@ const Template: ComponentStory<typeof Number> = (args) => <Number {...args} />;
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
-  value: '15125125125',
-  decimal: 12,
-  prefix: '',
-  suffix: '',
+  value: '1234567890',
+  decimal: 8,
+  prefix: '$',
+  suffix: 'DOT',
   size: 16,
-  subFloatNumber: false,
+  subFloatNumber: true,
+  leftOpacity: 1,
+  leftColor: 'white',
+  rightOpacity: 0.8,
+  rightColor: 'white',
+  weight: 500,
 };
