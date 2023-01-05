@@ -25,23 +25,39 @@ export default {
     },
     weight: {
       type: 'number',
+      control: {
+        type: 'range',
+        min: 100,
+        max: 900,
+        step: 50,
+      },
     },
     subFloatNumber: {
       type: 'boolean',
     },
     leftOpacity: {
       type: 'number',
+      control: {
+        type: 'number',
+        min: 0,
+        max: 1,
+        step: 0.1,
+      },
     },
     leftColor: {
-      control: 'select',
-      options: ['white', ...PresetColorTypes],
+      control: 'color',
     },
     rightOpacity: {
       type: 'number',
+      control: {
+        type: 'number',
+        min: 0,
+        max: 1,
+        step: 0.1,
+      },
     },
     rightColor: {
-      control: 'select',
-      options: ['white', ...PresetColorTypes],
+      control: 'color',
     },
   },
 } as ComponentMeta<typeof Number>;
@@ -58,8 +74,8 @@ Default.args = {
   size: 16,
   subFloatNumber: true,
   leftOpacity: 1,
-  leftColor: 'white',
+  leftColor: '#FFF',
   rightOpacity: 0.8,
-  rightColor: 'white',
+  rightColor: '#FFF',
   weight: 500,
 };
