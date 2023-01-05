@@ -104,7 +104,6 @@ const Wrapper: ComponentStory<typeof SelectModal> = ({ ...args }) => {
   const _onSelect = useCallback(
     (value: string) => {
       setSelected(value);
-      activeModal('test-select-modal-2');
     },
     [activeModal],
   );

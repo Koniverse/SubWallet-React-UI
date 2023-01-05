@@ -106,7 +106,7 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
           borderRadius: 0,
         },
 
-        [`&${componentCls}-input-rounded`]: {
+        [`&${componentCls}-input-round`]: {
           borderRadius: token.lineHeightLG + 8 * 2,
         },
 

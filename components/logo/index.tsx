@@ -5,7 +5,7 @@ import InnerLogo from './InnerLogo';
 import type { PresetIconShapeType } from '../_util/shapes';
 import useStyle from './style';
 
-interface LogoProps {
+export interface LogoProps {
   size: string;
   subLogoSize: string;
   shape: PresetIconShapeType;

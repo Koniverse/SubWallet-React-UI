@@ -4,7 +4,7 @@ import { message } from 'antd';
 import CopyToClipboard from 'react-copy-to-clipboard';
 
 const rgbToHex = (rgbString: string): string => {
-  const rgb = rgbString.match(/\d+/g);
+  const rgb = rgbString.match(/\d+/g) || ['00', '00', '00'];
   let r = parseInt(rgb[0], 10).toString(16);
   let g = parseInt(rgb[1], 10).toString(16);
   let b = parseInt(rgb[2], 10).toString(16);
@@ -42,10 +42,13 @@ const Palette: FC<PaletteProps> = ({
   useEffect(() => {
     const colors = {};
     Object.keys(colorNodesRef.current || {}).forEach((key) => {
+      // @ts-ignore
       const computedColor = getComputedStyle(colorNodesRef.current[key])['background-color'];
       if (computedColor.includes('rgba')) {
+        // @ts-ignore
         colors[key] = computedColor;
       } else {
+        // @ts-ignore
         colors[key] = rgbToHex(computedColor);
       }
     });
@@ -72,6 +75,7 @@ const Palette: FC<PaletteProps> = ({
         <div
           key={i}
           ref={(node) => {
+            // @ts-ignore
             colorNodesRef.current[`${name}-${i}`] = node;
           }}
           className={`main-color-item palette-${name}-${i}`}

@@ -1,6 +1,6 @@
-import type { FullToken } from 'antd/es/theme/internal';
-import { genComponentStyleHook, mergeToken } from 'antd/es/theme/internal';
 import type { CSSInterpolation } from '@ant-design/cssinjs';
+import { genComponentStyleHook, mergeToken } from '../../theme/internal';
+import type { FullToken } from '../../theme/internal';
 
 export interface ComponentToken {}
 

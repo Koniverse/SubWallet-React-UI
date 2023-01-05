@@ -4,7 +4,7 @@ import cls from 'classnames';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { css, Global } from '@emotion/react';
 import { useToken } from '../internal';
-import Palette from '../../../.dumi/theme/common/Color/Palette';
+import Palette from './Palette';
 
 const colors = [
   {

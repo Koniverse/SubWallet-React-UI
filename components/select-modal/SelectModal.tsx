@@ -79,7 +79,7 @@ export interface SelectModalProps<T extends Record<string, any>> {
   inputClassName?: string;
   onSelect: (value: string) => void;
   id: string;
-  shape?: 'default' | 'square' | 'rounded';
+  shape?: 'default' | 'square' | 'round';
   background?: 'default' | 'transparent';
 }
 
@@ -141,7 +141,7 @@ const SelectModal = <T extends Record<string, any>>(
   const inputClassNameExtended = classNames(hashId, `${prefixCls}-input`, inputClassName, {
     [`${prefixCls}-input-default`]: shape === 'default',
     [`${prefixCls}-input-square`]: shape === 'square',
-    [`${prefixCls}-input-rounded`]: shape === 'rounded',
+    [`${prefixCls}-input-round`]: shape === 'round',
     [`${prefixCls}-input-bg-default`]: background === 'default',
     [`${prefixCls}-input-bg-transparent`]: background === 'transparent',
   });

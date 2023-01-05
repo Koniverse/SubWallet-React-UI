@@ -9,14 +9,15 @@ import useStyle from './style';
 import defaultLocale from '../locale/en_US';
 import { getTransitionName } from '../_util/motion';
 import PreviewGroup, { icons } from './PreviewGroup';
+import { formatPxNumbers } from '../_util/dimension';
 
 const ImageShapes = ['default', 'square', 'circle', 'squircle'] as const;
 export type ImageShape = typeof ImageShapes[number];
 
 export interface SwImageProps extends ImageProps {
   shape?: ImageShape;
-  width: string;
-  height?: string;
+  width?: string | number;
+  height?: string | number;
   responsive?: boolean;
 }
 
@@ -29,7 +30,7 @@ const Image: CompositionImage<SwImageProps> = ({
   preview,
   rootClassName,
   shape = 'default',
-  width,
+  width = 'auto',
   height = 'auto',
   responsive,
   ...otherProps
@@ -39,6 +40,8 @@ const Image: CompositionImage<SwImageProps> = ({
     locale: contextLocale = defaultLocale,
     getPopupContainer: getContextPopupContainer,
   } = React.useContext(ConfigContext);
+
+  [width, height] = formatPxNumbers([width, height]);
 
   const prefixCls = getPrefixCls('image', customizePrefixCls);
   const rootPrefixCls = getPrefixCls();

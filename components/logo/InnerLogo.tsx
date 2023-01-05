@@ -6,14 +6,14 @@ import Image from '../image';
 import type { PresetIconShapeType } from '../_util/shapes';
 import useStyle from './style';
 
-interface LogoProps {
+export interface SWLogoProps {
   shape: PresetIconShapeType;
   size: string;
   token?: string;
   network?: string;
 }
 
-const InnerLogo: React.FC<LogoProps> = ({ size, shape, token, network }: LogoProps) => {
+const InnerLogo: React.FC<SWLogoProps> = ({ size, shape, token, network }: SWLogoProps) => {
   const { theme, getPrefixCls } = useContext(ConfigContext);
   const prefixCls = getPrefixCls('inner-logo');
   const [, hashId] = useStyle(prefixCls);

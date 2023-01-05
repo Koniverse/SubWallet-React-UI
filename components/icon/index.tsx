@@ -6,8 +6,8 @@ import type { IconProps } from 'phosphor-react';
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type { AntIconType } from 'antd/es/icon/stories/icon.stories';
 
-interface SwIconProps {
-  type: 'fontAwesome' | 'phosphor' | 'antDesignIcon';
+export interface SWIconProps {
+  type?: 'fontAwesome' | 'phosphor' | 'antDesignIcon';
   size?: SizeType;
   phosphorIcon?: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<SVGSVGElement>>;
   fontawesomeIcon?: IconProp;
@@ -16,8 +16,8 @@ interface SwIconProps {
   iconColor?: string;
 }
 
-const Icon: React.FC<SwIconProps> = ({
-  type,
+const Icon: React.FC<SWIconProps> = ({
+  type = 'phosphor',
   size,
   phosphorIcon: PhosphorIcon,
   fontawesomeIcon,

@@ -169,7 +169,7 @@ const genBaseStyle = (token: TagToken): CSSInterpolation => {
       },
 
       // Shape
-      '&-shape-rounded': {
+      '&-shape-round': {
         borderRadius: `${token.tagLineHeight}px`,
       },
       '&-shape-square': {

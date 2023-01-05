@@ -187,7 +187,7 @@ const genButtonShapeStyles: GenerateStyle<ButtonToken, CSSObject> = (token) => {
         borderRadius: 0,
       },
 
-      '&.-shape-rounded, &.-shape-circle': {
+      '&.-shape-round, &.-shape-circle': {
         borderRadius: buttonSizeMap.md,
 
         '&.-size-xs': {
