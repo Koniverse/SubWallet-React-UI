@@ -24,16 +24,6 @@ object-assign
  */
 
 /*!
- * https://github.com/paulmillr/es6-shim
- * @license es6-shim Copyright 2013-2016 by Paul Miller (http://paulmillr.com)
- *   and contributors,  MIT License
- * es6-shim: v0.35.4
- * see https://github.com/paulmillr/es6-shim/blob/0.35.3/LICENSE
- * Details and documentation:
- * https://github.com/paulmillr/es6-shim/
- */
-
-/*!
  * is-plain-object <https://github.com/jonschlinkert/is-plain-object>
  *
  * Copyright (c) 2014-2017, Jon Schlinkert.
@@ -62,7 +52,22 @@ OTHER TORTIOUS ACTION, ARISING OUT OF OR IN CONNECTION WITH THE USE OR
 PERFORMANCE OF THIS SOFTWARE.
 ***************************************************************************** */
 
+/*! noble-secp256k1 - MIT License (c) 2019 Paul Miller (paulmillr.com) */
+
 /*! regenerator-runtime -- Copyright (c) 2014-present, Facebook, Inc. -- license (MIT): https://github.com/facebook/regenerator/blob/main/LICENSE */
+
+/*! scure-base - MIT License (c) 2022 Paul Miller (paulmillr.com) */
+
+/**
+	 * A handy class to calculate color values.
+	 *
+	 * @version 1.0
+	 * @author Robert Eisele <robert@xarg.org>
+	 * @copyright Copyright (c) 2010, Robert Eisele
+	 * @link http://www.xarg.org/2010/03/generate-client-side-png-files-using-javascript/
+	 * @license http://www.opensource.org/licenses/bsd-license.php BSD License
+	 *
+	 */
 
 /**
  * @license React
