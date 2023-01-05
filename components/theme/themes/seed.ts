@@ -12,13 +12,13 @@ export const defaultPresetColors: PresetColorType = {
   orange: '#ff8200',
   yellow: '#ffe800',
   volcano: '#fe5720',
-  geekblue: '#0058ff',
+  geekblue: '#004BFF',
   gold: '#ffc049',
   lime: '#9ee542',
 };
 
 export const themePresetColors = {
-  colorPrimary: '#0058ff',
+  colorPrimary: '#004BFF',
   colorSecondary: '#35c44a',
   colorSuccess: '#35c44a',
   colorWarning: '#ffe800',
