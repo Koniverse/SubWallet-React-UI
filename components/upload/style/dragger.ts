@@ -70,6 +70,48 @@ const genDraggerStyle: GenerateStyle<UploadToken> = (token) => {
         },
       },
     },
+    [`${componentCls}-drag-single`]: {
+      textAlign: 'center',
+      cursor: 'pointer',
+      background: token.colorBgSecondary,
+      border: `2px dotted ${token.colorBgDivider}`,
+      transition: `border-color ${token.motionDurationSlow}`,
+      borderRadius: token.borderRadiusLG,
+      padding: '32px 16px 10px 16px',
+
+      [`${componentCls}-btn`]: {
+        display: 'block',
+        outline: 'none',
+      },
+      [`${componentCls}-drag__icon`]: {
+        fontSize: 32,
+        marginBottom: 8,
+      },
+      [`${componentCls}-drag__title`]: {
+        fontWeight: '600',
+        marginBottom: 8,
+      },
+      [`${componentCls}-drag__hint`]: {
+        fontWeight: '500',
+        color: token.colorTextLight4,
+        wordBreak: 'break-word',
+      },
+      '&.-drag-hover': {
+        paddingBottom: 32,
+        borderColor: token['geekblue-6'],
+      },
+      '&.-uploaded': {
+        paddingBottom: 32,
+
+        [`${componentCls}-drag__icon`]: {
+          color: token.colorWarning,
+        },
+      },
+
+      '&:hover': {
+        borderColor: token['geekblue-4'],
+      },
+    },
   };
 };
 
