@@ -1,10 +1,11 @@
-import 'antd/dist/reset.css';
+import '../components/style/reset.css';
 import { Story } from '@storybook/react';
 import React from 'react';
 import { ConfigProvider, theme } from '../components';
 import seedToken from '../components/theme/themes/seed';
 import { SWPreviewTheme } from './theme';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
+import logoMap from '../components/theme/themes/logoMap';
 
 export const parameters = {
   actions: { argTypesRegex: '^on[A-Z].*' },
@@ -48,6 +49,7 @@ export const decorators = [
         token: {
           ...seedToken,
         },
+        logoMap: logoMap,
       }}
     >
       <div>

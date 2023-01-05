@@ -23,6 +23,7 @@ export default function genColorMapToken(
   } = seed;
 
   const primaryColors = generateColorPalettes(colorPrimaryBase);
+  primaryColors[6] = colorPrimaryBase;
   const secondaryColors = generateColorPalettes(colorSecondaryBase);
   const successColors = generateColorPalettes(colorSuccessBase);
   const warningColors = generateColorPalettes(colorWarningBase);

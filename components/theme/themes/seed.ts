@@ -2,19 +2,28 @@ import type { PresetColorType, SeedToken } from '../internal';
 
 export const defaultPresetColors: PresetColorType = {
   gray: '#fff',
-  blue: '#0078D9',
-  purple: '#6F00C9',
-  cyan: '#4CEAAC',
-  green: '#2DA73F',
-  magenta: '#D92079',
-  pink: '#D92079',
-  red: '#BF1616',
-  orange: '#D96F00',
-  yellow: '#D9C500',
-  volcano: '#D84A1B',
+  blue: '#008dff',
+  purple: '#8200ec',
+  cyan: '#59ffca',
+  green: '#35c44a',
+  magenta: '#ff268e',
+  pink: '#ff268e',
+  red: '#e11a1a',
+  orange: '#ff8200',
+  yellow: '#ffe800',
+  volcano: '#fe5720',
   geekblue: '#004BFF',
-  gold: '#D9A33E',
-  lime: '#86C338',
+  gold: '#ffc049',
+  lime: '#9ee542',
+};
+
+export const themePresetColors = {
+  colorPrimary: '#004BFF',
+  colorSecondary: '#35c44a',
+  colorSuccess: '#35c44a',
+  colorWarning: '#ffe800',
+  colorError: '#e11a1a',
+  colorInfo: '#008dff',
 };
 
 const seedToken: SeedToken = {
@@ -22,15 +31,10 @@ const seedToken: SeedToken = {
   ...defaultPresetColors,
 
   // Color
-  colorPrimary: '#004BFF',
-  colorSecondary: '#7CD383',
-  colorSuccess: '#7CD383',
-  colorWarning: '#D9C500',
-  colorError: '#BF1616',
-  colorInfo: '#0078D9',
+  ...themePresetColors,
   colorTextBase: '',
 
-  colorBgBase: '',
+  colorBgBase: '#000',
 
   // Font
   fontFamily: `'Plus Jakarta Sans',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,

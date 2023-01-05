@@ -11,7 +11,6 @@ export default {
   argTypes: {
     dashed: { control: 'boolean' },
     type: { control: 'radio', options: ['horizontal', 'vertical'], defaultValue: 'horizontal' },
-    orientation: { control: 'radio', options: ['left', 'right', 'center'], defaultValue: 'center' },
   },
 } as ComponentMeta<typeof Divider>;
 

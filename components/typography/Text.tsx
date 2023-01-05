@@ -5,18 +5,15 @@ import warning from '../_util/warning';
 import type { BlockProps, EllipsisConfig } from './Base';
 import Base from './Base';
 
-export type TextSizeType = 'xs' | 'sm' | 'md' | 'lg';
-
 export interface TextProps
   extends BlockProps<'span'>,
     Omit<React.HTMLAttributes<HTMLSpanElement>, 'type' | keyof BlockProps<'span'>> {
   ellipsis?: boolean | Omit<EllipsisConfig, 'expandable' | 'rows' | 'onExpand'>;
-  size?: TextSizeType;
   monospace?: boolean;
 }
 
 const Text: React.ForwardRefRenderFunction<HTMLSpanElement, TextProps> = (
-  { ellipsis, size = '', monospace, className, ...restProps },
+  { ellipsis, monospace, className, ...restProps },
   ref,
 ) => {
   const mergedEllipsis = React.useMemo(() => {
@@ -36,7 +33,6 @@ const Text: React.ForwardRefRenderFunction<HTMLSpanElement, TextProps> = (
   );
 
   const _classNames = classNames(className, {
-    [`-size-${size}`]: !!size,
     [`-monospace`]: !!monospace,
   });
 

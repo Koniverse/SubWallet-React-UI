@@ -2,7 +2,6 @@ import type { FC } from 'react';
 import React, { useEffect } from 'react';
 import { message } from 'antd';
 import CopyToClipboard from 'react-copy-to-clipboard';
-import { presetDarkPalettes } from '@ant-design/colors';
 
 const rgbToHex = (rgbString: string): string => {
   const rgb = rgbString.match(/\d+/g);
@@ -21,7 +20,7 @@ interface PaletteProps {
   dark?: boolean;
   color?: {
     name: string;
-    count: number;
+    count?: number;
     description?: string;
     english?: string;
     chinese?: string;
@@ -63,7 +62,7 @@ const Palette: FC<PaletteProps> = ({
   const [lastColor, firstColor] = dark ? colorPaletteMap.dark : colorPaletteMap.default;
   for (let i = 1; i <= count; i += 1) {
     const colorText = `${name}-${i}`;
-    const defaultBgStyle = dark ? presetDarkPalettes[name][i - 1] : '';
+    const defaultBgStyle = '';
     colors.push(
       <CopyToClipboard
         text={hexColors[colorText]}
@@ -77,7 +76,7 @@ const Palette: FC<PaletteProps> = ({
           }}
           className={`main-color-item palette-${name}-${i}`}
           style={{
-            color: (name === 'yellow' ? i > 6 : i > 5) ? firstColor : lastColor,
+            color: i > 6 ? firstColor : lastColor,
             fontWeight: i === 6 ? 'bold' : 'normal',
             backgroundColor: defaultBgStyle,
           }}

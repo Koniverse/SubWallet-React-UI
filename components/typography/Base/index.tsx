@@ -60,6 +60,8 @@ export interface EllipsisConfig {
   tooltip?: React.ReactNode | TooltipProps;
 }
 
+export type TextSizeType = 'xs' | 'sm' | 'md' | 'lg';
+
 export interface BlockProps<C extends keyof JSX.IntrinsicElements = keyof JSX.IntrinsicElements>
   extends TypographyProps<C> {
   title?: string;
@@ -76,6 +78,7 @@ export interface BlockProps<C extends keyof JSX.IntrinsicElements = keyof JSX.In
   strong?: boolean;
   keyboard?: boolean;
   italic?: boolean;
+  size?: TextSizeType;
 }
 
 function wrapperDecorations(
@@ -130,6 +133,7 @@ const Base = React.forwardRef<HTMLElement, BlockProps>((props, ref) => {
     copyable,
     component,
     title,
+    size,
     ...restProps
   } = props;
   const { getPrefixCls, direction } = React.useContext(ConfigContext);
@@ -507,6 +511,7 @@ const Base = React.forwardRef<HTMLElement, BlockProps>((props, ref) => {
                 [`${prefixCls}-single-line`]: mergedEnableEllipsis && rows === 1,
                 [`${prefixCls}-ellipsis-single-line`]: cssTextOverflow,
                 [`${prefixCls}-ellipsis-multiple-line`]: cssLineClamp,
+                [`-size-${size}`]: !!size,
               },
               className,
             )}

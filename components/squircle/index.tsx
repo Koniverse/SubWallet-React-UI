@@ -7,20 +7,25 @@ import { useMemo } from 'react';
 import useStyle from './style';
 import type { SizeType } from '../config-provider/SizeContext';
 import { sizeNameMap } from '../config-provider/SizeContext';
+import { formatPxNumber } from '../_util/dimension';
 
 export interface SquircleProps {
   prefixCls?: string;
   size?: SizeType;
-  customSize?: string;
+  customSize?: string | number;
   className?: string;
   children?: React.ReactElement;
   fill?: string;
   inline?: boolean;
 }
 
-function getStyle(customSize?: string, fill?: string): CSSProperties | undefined {
+function getStyle(customSize?: string | number, fill?: string): CSSProperties | undefined {
   if (!customSize && !fill) {
     return undefined;
+  }
+
+  if (customSize) {
+    customSize = formatPxNumber(customSize);
   }
 
   const style: CSSProperties = {};

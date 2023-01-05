@@ -43,21 +43,21 @@ Closeable.args = {
 export const Rounded = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Rounded.args = {
-  shape: 'rounded',
+  shape: 'round',
   color: 'purple',
 };
 
 export const BgGray = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 BgGray.args = {
-  shape: 'rounded',
+  shape: 'round',
   color: 'danger',
   bgType: 'gray',
 };
 export const BgFilled = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 BgFilled.args = {
-  shape: 'rounded',
+  shape: 'round',
   color: 'danger',
   bgType: 'filled',
 };
