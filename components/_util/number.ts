@@ -66,7 +66,7 @@ export const balanceFormatter: NumberFormatter = (
       (index < maxNumberFormat || metNotZero)
     ) {
       const _char = decimal[index];
-      _decimal = _decimal + _char;
+      _decimal += _char;
       index++;
       if (_char !== '0') {
         metNotZero = true;
@@ -83,9 +83,9 @@ export const balanceFormatter: NumberFormatter = (
 
   if (_decimal) {
     return `${int}.${_decimal}`;
-  } else {
-    return int;
   }
+
+  return int;
 };
 
 export const PREDEFINED_FORMATTER: Record<string, NumberFormatter> = {
@@ -94,7 +94,7 @@ export const PREDEFINED_FORMATTER: Record<string, NumberFormatter> = {
 
 export const toBNString = (input: string | number | BigNumber, decimal: number): string => {
   const raw = new BigNumber(input);
-  return raw.multipliedBy(BN_TEN.pow(decimal)).toString();
+  return raw.multipliedBy(BN_TEN.pow(decimal)).toFixed();
 };
 
 export const formatNumber = (
@@ -103,7 +103,7 @@ export const formatNumber = (
   formatter: NumberFormatter,
   metadata?: Record<string, number>,
 ): string => {
-  const raw = new BigNumber(input).dividedBy(BN_TEN.pow(decimal)).toString();
+  const raw = new BigNumber(input).dividedBy(BN_TEN.pow(decimal)).toFixed();
 
   return formatter(raw, metadata);
 };

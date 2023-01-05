@@ -24,6 +24,7 @@ import type { ComponentToken as MenuComponentToken } from '../../menu/style';
 import type { ComponentToken as MessageComponentToken } from '../../message/style';
 import type { ComponentToken as ModalComponentToken } from '../../modal/style';
 import type { ComponentToken as NotificationComponentToken } from '../../notification/style';
+import type { ComponentToken as NumberComponentToken } from '../../number/style';
 import type { ComponentToken as PopconfirmComponentToken } from '../../popconfirm/style';
 import type { ComponentToken as PopoverComponentToken } from '../../popover/style';
 import type { ComponentToken as ProgressComponentToken } from '../../progress/style';
@@ -81,6 +82,7 @@ export interface ComponentTokenMap {
   List?: ListComponentToken;
   Mentions?: MentionsComponentToken;
   Notification?: NotificationComponentToken;
+  Number?: NumberComponentToken;
   Pagination?: {};
   Popover?: PopoverComponentToken;
   Popconfirm?: PopconfirmComponentToken;
