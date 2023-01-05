@@ -10,7 +10,7 @@ import Icon from '../icon';
 import useStyle from './style';
 import { ConfigContext } from '../config-provider';
 
-interface SwAvatarProps {
+export interface SwAvatarProps {
   theme: IconTheme;
   size: number;
   value: string | null;
