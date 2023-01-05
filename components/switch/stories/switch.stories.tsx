@@ -8,10 +8,6 @@ export default {
   component: Switch,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    checked: {
-      control: 'boolean',
-      defaultValue: false,
-    },
     disabled: {
       control: 'boolean',
       defaultValue: false,
@@ -29,12 +25,6 @@ const Template: ComponentStory<typeof Switch> = (args) => <Switch {...args} />;
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {};
-
-export const Checked = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Checked.args = {
-  checked: true,
-};
 
 export const Loading = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args

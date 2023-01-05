@@ -53,7 +53,7 @@ export const generateNeutralColorPalettes: GenerateNeutralColorMap = (
     colorBorder: getSolidColor(colorBgBase, 26),
     colorBorderSecondary: getSolidColor(colorBgBase, 19),
 
-    colorBgDefault: colorBgBase,
+    colorBgDefault: '#0C0C0C',
     colorBgSecondary: '#1A1A1A',
     colorBgInput: '#252525',
     colorBgBorder: '#212121',

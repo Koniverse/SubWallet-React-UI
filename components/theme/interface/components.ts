@@ -25,6 +25,7 @@ import type { ComponentToken as MenuComponentToken } from '../../menu/style';
 import type { ComponentToken as MessageComponentToken } from '../../message/style';
 import type { ComponentToken as ModalComponentToken } from '../../modal/style';
 import type { ComponentToken as NotificationComponentToken } from '../../notification/style';
+import type { ComponentToken as NumberComponentToken } from '../../number/style';
 import type { ComponentToken as PopconfirmComponentToken } from '../../popconfirm/style';
 import type { ComponentToken as PopoverComponentToken } from '../../popover/style';
 import type { ComponentToken as ProgressComponentToken } from '../../progress/style';
@@ -39,6 +40,7 @@ import type { ComponentToken as SliderComponentToken } from '../../slider/style'
 import type { ComponentToken as SpaceComponentToken } from '../../space/style';
 import type { ComponentToken as SpinComponentToken } from '../../spin/style';
 import type { ComponentToken as SquircleComponentToken } from '../../squircle/style';
+import type { ComponentToken as SwAvatarComponentToken } from '../../sw-avatar/style';
 import type { ComponentToken as StepsComponentToken } from '../../steps/style';
 import type { ComponentToken as TableComponentToken } from '../../table/style';
 import type { ComponentToken as TabsComponentToken } from '../../tabs/style';
@@ -84,6 +86,7 @@ export interface ComponentTokenMap {
   Logo?: LogoComponentToken;
   Mentions?: MentionsComponentToken;
   Notification?: NotificationComponentToken;
+  Number?: NumberComponentToken;
   Pagination?: {};
   Popover?: PopoverComponentToken;
   Popconfirm?: PopconfirmComponentToken;
@@ -96,6 +99,7 @@ export interface ComponentTokenMap {
   Slider?: SliderComponentToken;
   Spin?: SpinComponentToken;
   Squircle?: SquircleComponentToken;
+  SwAvatar?: SwAvatarComponentToken;
   Statistic?: {};
   Switch?: {};
   Tag?: TagComponentToken;

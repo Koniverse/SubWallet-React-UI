@@ -65,7 +65,7 @@ export interface UploadLocale {
   previewFile?: string;
 }
 
-export type UploadType = 'drag' | 'select';
+export type UploadType = 'single-file-drag' | 'drag' | 'select';
 export type UploadListType = 'text' | 'picture' | 'picture-card';
 export type UploadListProgressProps = Omit<ProgressProps, 'percent' | 'type'>;
 
@@ -89,6 +89,8 @@ type BeforeUploadValueType = void | boolean | string | Blob | File;
 export interface UploadProps<T = any> extends Pick<RcUploadProps, 'capture'> {
   type?: UploadType;
   name?: string;
+  title?: string;
+  hint?: string;
   defaultFileList?: Array<UploadFile<T>>;
   fileList?: Array<UploadFile<T>>;
   action?: string | ((file: RcFile) => string) | ((file: RcFile) => PromiseLike<string>);

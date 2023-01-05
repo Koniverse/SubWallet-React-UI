@@ -14,9 +14,11 @@ export interface SWIconProps {
   antDesignIcon?: AntIconType;
   weight?: IconWeight;
   iconColor?: string;
+  className?: string;
 }
 
 const Icon: React.FC<SWIconProps> = ({
+  className,
   type = 'phosphor',
   size,
   phosphorIcon: PhosphorIcon,
@@ -31,19 +33,21 @@ const Icon: React.FC<SWIconProps> = ({
     }
 
     if (size === 'xs') {
-      return 12;
-    }
-    if (size === 'sm') {
       return 16;
     }
+    if (size === 'sm') {
+      return 24;
+    }
 
-    return 24;
+    return 32;
   };
+
+  const wrapperClass = className ? `anticon ${className}` : 'anticon';
 
   if (type === 'fontAwesome' && fontawesomeIcon) {
     return (
       <span
-        className='anticon'
+        className={wrapperClass}
         style={{
           fontSize: getIconSize(),
           color: iconColor,
@@ -61,7 +65,7 @@ const Icon: React.FC<SWIconProps> = ({
   if (type === 'phosphor' && PhosphorIcon) {
     return (
       <span
-        className='anticon'
+        className={wrapperClass}
         style={{
           fontSize: getIconSize(),
           color: iconColor,
@@ -75,6 +79,7 @@ const Icon: React.FC<SWIconProps> = ({
   if (type === 'antDesignIcon' && AntDesignIcon) {
     return (
       <AntDesignIcon
+        className={className}
         style={{
           fontSize: getIconSize(),
           color: iconColor,

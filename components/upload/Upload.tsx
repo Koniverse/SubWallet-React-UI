@@ -4,6 +4,7 @@ import RcUpload from 'rc-upload';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import * as React from 'react';
 import { flushSync } from 'react-dom';
+import { Eraser, UploadSimple } from 'phosphor-react';
 import { ConfigContext } from '../config-provider';
 import DisabledContext from '../config-provider/DisabledContext';
 import LocaleReceiver from '../locale/LocaleReceiver';
@@ -13,12 +14,16 @@ import type { RcFile, ShowUploadListInterface, UploadChangeParam, UploadFile } f
 import { UploadProps } from './interface';
 import UploadList from './UploadList';
 import { file2Obj, getFileItem, removeFileItem, updateFileList } from './utils';
+import Icon from '../icon';
 
 import useStyle from './style';
 
 export const LIST_IGNORE = `__LIST_IGNORE_${Date.now()}__`;
 
 export { UploadProps };
+
+// todo: i18n this
+const ClickOrDragToReplaceFile = 'Click or Drag to replace file';
 
 const InternalUpload: React.ForwardRefRenderFunction<unknown, UploadProps> = (props, ref) => {
   const {
@@ -49,6 +54,8 @@ const InternalUpload: React.ForwardRefRenderFunction<unknown, UploadProps> = (pr
     action = '',
     accept = '',
     supportServerRender = true,
+    title = 'Drag title',
+    hint = 'Drag hint',
   } = props;
 
   // ===================== Disabled =====================
@@ -413,6 +420,53 @@ const InternalUpload: React.ForwardRefRenderFunction<unknown, UploadProps> = (pr
         </div>
         {renderUploadList()}
       </span>,
+    );
+  }
+
+  if (type === 'single-file-drag') {
+    const dragCls = classNames(
+      prefixCls,
+      `${prefixCls}-drag-single`,
+      {
+        '-drag-uploading': mergedFileList.some((file) => file.status === 'uploading'),
+        '-drag-hover': dragState === 'dragover',
+        '-disabled': mergedDisabled,
+        '-uploaded': mergedFileList.length,
+      },
+      hashId,
+    );
+
+    return wrapSSR(
+      <div className={classNames(`${prefixCls}-wrapper`, rtlCls, className, hashId)}>
+        <div
+          className={dragCls}
+          onDrop={onFileDrop}
+          onDragOver={onFileDrop}
+          onDragLeave={onFileDrop}
+        >
+          <RcUpload {...rcUploadProps} ref={upload} className={`${prefixCls}-btn`}>
+            <div className={`${prefixCls}-drag-container`}>
+              {!mergedFileList.length ? (
+                <>
+                  <Icon
+                    type='phosphor'
+                    phosphorIcon={UploadSimple}
+                    className='ant-upload-drag__icon'
+                  />
+                  <div className={`${prefixCls}-drag__title`}>{title}</div>
+                  <div className={`${prefixCls}-drag__hint`}>{hint}</div>
+                </>
+              ) : (
+                <>
+                  <Icon type='phosphor' phosphorIcon={Eraser} className='ant-upload-drag__icon' />
+                  <div className={`${prefixCls}-drag__title`}>{ClickOrDragToReplaceFile}</div>
+                  <div className={`${prefixCls}-drag__hint`}>{mergedFileList[0].name}</div>
+                </>
+              )}
+            </div>
+          </RcUpload>
+        </div>
+      </div>,
     );
   }
 
