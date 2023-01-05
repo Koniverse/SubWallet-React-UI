@@ -251,3 +251,22 @@ mark {
   padding: 0.2em;
   background-color: #feffe6;
 }
+
+*::-webkit-scrollbar-track
+{
+	background-color: transparent;
+}
+
+*::-webkit-scrollbar
+{
+	width: 4px;
+  height: 4px;
+	background-color: transparent;
+  border-radius: 0;
+}
+
+*::-webkit-scrollbar-thumb
+{
+	border-radius: 4px;
+	background-color: rgba(128,128, 128,0.2);
+}

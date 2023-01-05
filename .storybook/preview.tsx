@@ -1,4 +1,4 @@
-import 'antd/dist/reset.css';
+import '../components/style/reset.css';
 import { Story } from '@storybook/react';
 import React from 'react';
 import { ConfigProvider, theme } from '../components';
