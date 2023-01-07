@@ -1,18 +1,18 @@
-import EyeInvisibleOutlined from '@ant-design/icons/EyeInvisibleOutlined';
-import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import classNames from 'classnames';
 import omit from 'rc-util/lib/omit';
 import { composeRef } from 'rc-util/lib/ref';
 import * as React from 'react';
 import { useRef, useState } from 'react';
+import { Eye, EyeClosed, Key } from 'phosphor-react';
 import type { ConfigConsumerProps } from '../config-provider';
 import { ConfigContext } from '../config-provider';
 import useRemovePasswordTimeout from './hooks/useRemovePasswordTimeout';
 import type { InputProps, InputRef } from './Input';
 import Input from './Input';
+import Icon from '../icon';
 
 const defaultIconRender = (visible: boolean): React.ReactNode =>
-  visible ? <EyeOutlined /> : <EyeInvisibleOutlined />;
+  visible ? <Icon phosphorIcon={Eye} /> : <Icon phosphorIcon={EyeClosed} />;
 
 type VisibilityToggle = {
   visible?: boolean;
@@ -66,13 +66,12 @@ const Password = React.forwardRef<InputRef, PasswordProps>((props, ref) => {
     });
   };
 
-  const getIcon = (prefixCls: string) => {
+  const getIcon = () => {
     const { action = 'click', iconRender = defaultIconRender } = props;
     const iconTrigger = ActionMap[action] || '';
     const icon = iconRender(visible);
     const iconProps = {
       [iconTrigger]: onVisibleChange,
-      className: `${prefixCls}-icon`,
       key: 'passwordIcon',
       onMouseDown: (e: MouseEvent) => {
         // Prevent focused state lost
@@ -85,7 +84,7 @@ const Password = React.forwardRef<InputRef, PasswordProps>((props, ref) => {
         e.preventDefault();
       },
     };
-    return React.cloneElement(React.isValidElement(icon) ? icon : <span>{icon}</span>, iconProps);
+    return React.cloneElement(<div className='__input-action'>{icon}</div>, iconProps);
   };
 
   const {
@@ -100,7 +99,7 @@ const Password = React.forwardRef<InputRef, PasswordProps>((props, ref) => {
   const inputPrefixCls = getPrefixCls('input', customizeInputPrefixCls);
   const prefixCls = getPrefixCls('input-password', customizePrefixCls);
 
-  const suffixIcon = visibilityToggle && getIcon(prefixCls);
+  const suffixIcon = visibilityToggle && getIcon();
 
   const inputClassName = classNames(prefixCls, className, {
     [`${prefixCls}-${size}`]: !!size,
@@ -112,6 +111,7 @@ const Password = React.forwardRef<InputRef, PasswordProps>((props, ref) => {
     className: inputClassName,
     prefixCls: inputPrefixCls,
     suffix: suffixIcon,
+    prefix: <Icon phosphorIcon={Key} customSize="24px" />,
   };
 
   if (size) {

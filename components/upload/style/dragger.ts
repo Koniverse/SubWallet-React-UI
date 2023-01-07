@@ -92,7 +92,6 @@ const genDraggerStyle: GenerateStyle<UploadToken> = (token) => {
         marginBottom: 8,
       },
       [`${componentCls}-drag__hint`]: {
-        fontWeight: '500',
         color: token.colorTextLight4,
         wordBreak: 'break-word',
       },
