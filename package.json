@@ -164,6 +164,7 @@
     "rc-util": "^5.27.1",
     "react-copy-to-clipboard": "^5.1.0",
     "react-superellipse": "^0.0.6",
+    "react-toastify": "^9.1.1",
     "scroll-into-view-if-needed": "^3.0.3",
     "throttle-debounce": "^5.0.0"
   },

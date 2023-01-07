@@ -28,6 +28,7 @@ export interface ArgsProps {
   readonly type?: IconType;
   onClick?: () => void;
   closeIcon?: React.ReactNode;
+  direction?: 'horizontal' | 'vertical';
   props?: DivProps;
 }
 

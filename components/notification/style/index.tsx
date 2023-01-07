@@ -27,7 +27,6 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
     iconCls,
     componentCls, // .ant-notification
     boxShadowSecondary,
-    fontSizeLG,
     notificationMarginBottom,
     borderRadiusLG,
     colorSuccess,
@@ -35,7 +34,6 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
     colorWarning,
     colorError,
     colorTextHeading,
-    notificationBg,
     notificationPadding,
     notificationMarginEdge,
     motionDurationMid,
@@ -43,7 +41,6 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
     fontSize,
     lineHeight,
     width,
-    notificationIconSize,
   } = token;
 
   const noticeCls = `${componentCls}-notice`;
@@ -155,17 +152,59 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
     {
       [noticeCls]: {
         position: 'relative',
-        width,
+        width: '100%',
         maxWidth: `calc(100vw - ${notificationMarginEdge * 2}px)`,
         marginBottom: notificationMarginBottom,
         marginInlineStart: 'auto',
         padding: notificationPadding,
+        display: 'flex',
         overflow: 'hidden',
-        lineHeight,
+        height: '100%',
         wordWrap: 'break-word',
-        background: notificationBg,
+        background: 'rgba(0, 0, 0, 0.75)',
         borderRadius: borderRadiusLG,
         boxShadow: boxShadowSecondary,
+
+        [`${noticeCls}-with-icon`]: {
+          display: 'flex',
+          alignItems: 'center',
+        },
+
+        [`&${noticeCls}-content`]: {
+          display: 'flex',
+        },
+
+        [`${noticeCls}-with-icon${noticeCls}-vertical`]: {
+          flexDirection: 'column',
+          minHeight: 94,
+          minWidth: 78,
+          alignItems: 'center',
+          justifyContent: 'center',
+
+          [`${noticeCls}-message`]: {
+            marginInlineStart: 0,
+          },
+
+          [`${noticeCls}-icon`]: {
+            position: 'static',
+            marginRight: 0,
+          },
+        },
+
+        [`&${noticeCls}-success`]: {
+          padding: '6px 14px',
+          border: `2px solid ${colorSuccess}`,
+        },
+
+        [`&${noticeCls}-warning`]: {
+          padding: '6px 14px',
+          border: `2px solid ${colorWarning}`,
+        },
+
+        [`&${noticeCls}-error`]: {
+          padding: '6px 14px',
+          border: `2px solid ${colorError}`,
+        },
 
         [`${componentCls}-close-icon`]: {
           fontSize,
@@ -173,39 +212,36 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
         },
 
         [`${noticeCls}-message`]: {
-          marginBottom: token.marginXS,
           color: colorTextHeading,
-          fontSize: fontSizeLG,
-          lineHeight: token.lineHeightLG,
+          fontSize,
+          lineHeight,
+          fontWeight: token.bodyFontWeight,
+          whiteSpace: 'nowrap',
         },
 
         [`${noticeCls}-description`]: {
-          fontSize,
+          marginTop: token.marginXS,
+          fontSize: token.fontSizeSM,
         },
 
         [`&${noticeCls}-closable ${noticeCls}-message`]: {
-          paddingInlineEnd: token.paddingLG,
+          paddingInlineEnd: 0,
         },
 
         [`${noticeCls}-with-icon ${noticeCls}-message`]: {
-          marginBottom: token.marginXS,
-          marginInlineStart: token.marginSM + notificationIconSize,
-          fontSize: fontSizeLG,
+          fontSize,
         },
 
         [`${noticeCls}-with-icon ${noticeCls}-description`]: {
-          marginInlineStart: token.marginSM + notificationIconSize,
-          fontSize,
+          marginTop: token.marginXS,
+          fontSize: token.fontSizeSM,
         },
 
         // Icon & color style in different selector level
         // https://github.com/ant-design/ant-design/issues/16503
         // https://github.com/ant-design/ant-design/issues/15512
         [`${noticeCls}-icon`]: {
-          position: 'absolute',
-          fontSize: notificationIconSize,
-          lineHeight: 0,
-
+          marginRight: token.marginXS,
           // icon-font
           [`&-success${iconCls}`]: {
             color: colorSuccess,
@@ -223,7 +259,10 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
 
         [`${noticeCls}-close`]: {
           position: 'absolute',
-          top: token.notificationPaddingVertical,
+          top: 0,
+          bottom: 0,
+          marginTop: 'auto',
+          marginBottom: 'auto',
           insetInlineEnd: token.notificationPaddingHorizontal,
           color: token.colorIcon,
           outline: 'none',
@@ -231,7 +270,7 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
           height: token.notificationCloseButtonSize,
           borderRadius: token.borderRadiusSM,
           transition: `background-color ${token.motionDurationMid}, color ${token.motionDurationMid}`,
-          display: 'flex',
+          display: 'none',
           alignItems: 'center',
           justifyContent: 'center',
 
@@ -261,8 +300,8 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
 export default genComponentStyleHook(
   'Notification',
   (token) => {
-    const notificationPaddingVertical = token.paddingMD;
-    const notificationPaddingHorizontal = token.paddingLG;
+    const notificationPaddingVertical = token.paddingXS;
+    const notificationPaddingHorizontal = token.padding;
 
     const notificationToken = mergeToken<NotificationToken>(token, {
       // default.less variables
@@ -270,7 +309,7 @@ export default genComponentStyleHook(
       notificationPaddingVertical,
       notificationPaddingHorizontal,
       // index.less variables
-      notificationPadding: `${token.paddingMD}px ${token.paddingContentHorizontalLG}px`,
+      notificationPadding: `${token.paddingXS}px ${token.padding}px`,
       notificationMarginBottom: token.margin,
       notificationMarginEdge: token.marginLG,
       animationMaxHeight: 150,
