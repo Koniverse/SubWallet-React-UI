@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
-import type { SWModalFuncProps } from '../SWModal';
-import type { SWConfirmDialogProps } from '../SWConfirmDialog';
-import SWConfirmDialog from '../SWConfirmDialog';
+import type { SwModalFuncProps } from '../SwModal';
+import type { SwConfirmDialogProps } from '../SwConfirmDialog';
+import SwConfirmDialog from '../SwConfirmDialog';
 
 interface ModalContextType {
   initModal: (id: string) => void;
@@ -9,7 +9,7 @@ interface ModalContextType {
   checkActive: (id: string) => boolean;
   activeModal: (id: string) => void;
   inactiveModal: (id: string) => void;
-  addConfirmModal: (props: SWModalFuncProps) => void;
+  addConfirmModal: (props: SwModalFuncProps) => void;
 }
 
 interface ModalContextProviderProps {
@@ -18,7 +18,7 @@ interface ModalContextProviderProps {
 
 export const ModalContext = React.createContext({} as ModalContextType);
 export const ModalContextProvider = ({ children }: ModalContextProviderProps) => {
-  const [externalList, setExternalList] = useState<SWConfirmDialogProps[]>([]);
+  const [externalList, setExternalList] = useState<SwConfirmDialogProps[]>([]);
   const [, setGlobalList] = useState<string[]>([]);
   const [visibleList, setVisibleList] = useState<string[]>([]);
 
@@ -70,9 +70,9 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
     setVisibleList((prevState) => [...prevState].filter((value) => value !== id));
   }, []);
 
-  const addConfirmModal = useCallback((_props: SWModalFuncProps) => {
+  const addConfirmModal = useCallback((_props: SwModalFuncProps) => {
     const { id } = _props;
-    const newProps: SWConfirmDialogProps = {
+    const newProps: SwConfirmDialogProps = {
       ..._props,
     };
 
@@ -112,7 +112,7 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
     >
       {children}
       {externalList.map((props) => (
-        <SWConfirmDialog key={props.id} {...props} />
+        <SwConfirmDialog key={props.id} {...props} />
       ))}
     </ModalContext.Provider>
   );

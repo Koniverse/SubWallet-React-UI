@@ -10,7 +10,7 @@ export interface ComponentToken {
   // Component token here
 }
 
-export interface SWModalToken extends FullToken<'SWModal'> {
+export interface SwModalToken extends FullToken<'SwModal'> {
   // Custom token here
   modalBodyPadding: number;
   modalHeaderBg: string;
@@ -84,7 +84,7 @@ export const genModalMaskStyle: GenerateStyle<TokenWithCommonCls<AliasToken>> = 
   ];
 };
 
-const genModalStyle: GenerateStyle<SWModalToken> = (token) => {
+const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
   const { componentCls } = token;
 
   return [
@@ -253,7 +253,7 @@ const genModalStyle: GenerateStyle<SWModalToken> = (token) => {
   ];
 };
 
-const genModalConfirmStyle: GenerateStyle<SWModalToken> = (token) => {
+const genModalConfirmStyle: GenerateStyle<SwModalToken> = (token) => {
   const { componentCls } = token;
   const confirmComponentCls = `${componentCls}-confirm`;
 
@@ -372,7 +372,7 @@ const genModalConfirmStyle: GenerateStyle<SWModalToken> = (token) => {
   };
 };
 
-const genRTLStyle: GenerateStyle<SWModalToken> = (token) => {
+const genRTLStyle: GenerateStyle<SwModalToken> = (token) => {
   const { componentCls } = token;
   return {
     [`${componentCls}-root`]: {
@@ -387,7 +387,7 @@ const genRTLStyle: GenerateStyle<SWModalToken> = (token) => {
   };
 };
 
-const genWireframeStyle: GenerateStyle<SWModalToken> = (token) => {
+const genWireframeStyle: GenerateStyle<SwModalToken> = (token) => {
   const { componentCls, antCls } = token;
   const confirmComponentCls = `${componentCls}-confirm`;
 
@@ -434,12 +434,12 @@ const genWireframeStyle: GenerateStyle<SWModalToken> = (token) => {
 };
 
 // ============================== Export ==============================
-export default genComponentStyleHook('SWModal', (token) => {
+export default genComponentStyleHook('SwModal', (token) => {
   const headerPaddingVertical = token.padding;
   const headerFontSize = token.fontSizeHeading4;
   const headerLineHeight = token.lineHeightHeading4;
 
-  const modalToken = mergeToken<SWModalToken>(token, {
+  const modalToken = mergeToken<SwModalToken>(token, {
     modalBodyPadding: token.paddingLG,
     modalHeaderBg: token.colorBgElevated,
     modalHeaderPadding: `${headerPaddingVertical}px ${token.paddingLG}px`,

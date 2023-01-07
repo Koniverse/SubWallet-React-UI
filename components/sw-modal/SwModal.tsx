@@ -36,7 +36,7 @@ if (canUseDocElement()) {
   document.documentElement.addEventListener('click', getClickPosition, true);
 }
 
-export interface SWModalProps {
+export interface SwModalProps {
   confirmLoading?: boolean;
   title?: React.ReactNode;
   closable?: boolean;
@@ -77,7 +77,7 @@ export interface SWModalProps {
 
 type getContainerFunc = () => HTMLElement;
 
-export interface SWModalFuncProps extends SWModalProps {
+export interface SwModalFuncProps extends SwModalProps {
   content?: React.ReactNode;
   icon?: React.ReactNode;
   okCancel?: boolean;
@@ -85,13 +85,13 @@ export interface SWModalFuncProps extends SWModalProps {
   subTitle?: string;
 }
 
-export interface SWModalLocale {
+export interface SwModalLocale {
   okText: string;
   cancelText: string;
   justOkText: string;
 }
 
-const SWModal: React.FC<SWModalProps> = (props) => {
+const SwModal: React.FC<SwModalProps> = (props) => {
   const {
     getPopupContainer: getContextPopupContainer,
     getPrefixCls,
@@ -166,4 +166,4 @@ const SWModal: React.FC<SWModalProps> = (props) => {
   );
 };
 
-export default SWModal;
+export default SwModal;

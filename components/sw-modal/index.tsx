@@ -1,4 +1,4 @@
-import SWModal from './SWModal';
+import SwModal from './SwModal';
 
-export type { SWModalProps } from './SWModal';
-export default SWModal;
+export type { SwModalProps } from './SwModal';
+export default SwModal;

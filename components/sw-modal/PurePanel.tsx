@@ -7,16 +7,16 @@ import Button from '../button';
 import { convertLegacyProps } from '../button/button';
 import { ConfigContext } from '../config-provider';
 import LocaleReceiver from '../locale/LocaleReceiver';
-import { SWConfirmContent } from './SWConfirmDialog';
+import { SwConfirmContent } from './SwConfirmDialog';
 import { getConfirmLocale } from './locale';
-import type { SWModalProps, SWModalFuncProps } from './SWModal';
+import type { SwModalProps, SwModalFuncProps } from './SwModal';
 import Icon from '../icon';
 
 import useStyle from './style';
 
 export interface PurePanelProps
   extends Omit<PanelProps, 'prefixCls'>,
-    Pick<SWModalFuncProps, 'type'> {
+    Pick<SwModalFuncProps, 'type'> {
   prefixCls?: string;
   style?: React.CSSProperties;
 }
@@ -31,7 +31,7 @@ export function renderCloseIcon(prefixCls: string, closeIcon?: React.ReactNode) 
 
 export function renderFooter(
   props: Pick<
-    SWModalProps,
+    SwModalProps,
     | 'forceRenderFooter'
     | 'footer'
     | 'okText'
@@ -114,7 +114,7 @@ export default function PurePanel(props: PurePanelProps) {
       title: '',
       footer: '',
       children: (
-        <SWConfirmContent {...props} confirmPrefixCls={confirmPrefixCls} content={children} />
+        <SwConfirmContent {...props} confirmPrefixCls={confirmPrefixCls} content={children} />
       ),
     };
   } else {

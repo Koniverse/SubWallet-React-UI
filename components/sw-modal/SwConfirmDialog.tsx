@@ -11,20 +11,20 @@ import { convertLegacyProps } from '../button/button';
 import LocaleReceiver from '../locale/LocaleReceiver';
 import Button from '../button';
 import warning from '../_util/warning';
-import type { SWModalFuncProps, SWModalLocale } from './SWModal';
-import SWModal from './SWModal';
+import type { SwModalFuncProps, SwModalLocale } from './SwModal';
+import SwModal from './SwModal';
 import Icon from '../icon';
 
-export interface SWConfirmDialogProps extends SWModalFuncProps {
+export interface SwConfirmDialogProps extends SwModalFuncProps {
   autoFocusButton?: null | 'ok' | 'cancel';
   iconPrefixCls?: string;
 
   /** @private Internal Usage. Do not override this */
-  locale?: SWModalLocale;
+  locale?: SwModalLocale;
 }
 
-export const SWConfirmContent = (
-  props: Omit<SWConfirmDialogProps, 'id'> & { confirmPrefixCls: string },
+export const SwConfirmContent = (
+  props: Omit<SwConfirmDialogProps, 'id'> & { confirmPrefixCls: string },
 ) => {
   const {
     icon,
@@ -157,7 +157,7 @@ export const SWConfirmContent = (
   );
 };
 
-const SWConfirmDialog = (props: SWConfirmDialogProps) => {
+const SwConfirmDialog = (props: SwConfirmDialogProps) => {
   const {
     zIndex,
     afterClose,
@@ -191,7 +191,7 @@ const SWConfirmDialog = (props: SWConfirmDialogProps) => {
   );
 
   return (
-    <SWModal
+    <SwModal
       {...props}
       forceRenderFooter={false}
       prefixCls={prefixCls}
@@ -212,13 +212,13 @@ const SWConfirmDialog = (props: SWConfirmDialogProps) => {
       focusTriggerAfterClose={focusTriggerAfterClose}
       id={id}
     >
-      <SWConfirmContent {...props} confirmPrefixCls={confirmPrefixCls} />
-    </SWModal>
+      <SwConfirmContent {...props} confirmPrefixCls={confirmPrefixCls} />
+    </SwModal>
   );
 };
 
 if (process.env.NODE_ENV !== 'production') {
-  SWConfirmDialog.displayName = 'SWConfirmDialog';
+  SwConfirmDialog.displayName = 'SwConfirmDialog';
 }
 
-export default SWConfirmDialog;
+export default SwConfirmDialog;

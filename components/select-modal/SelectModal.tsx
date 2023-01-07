@@ -2,8 +2,8 @@ import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
 import { useCallback, useContext, useMemo } from 'react';
 import * as React from 'react';
-import Modal from '../sw-modal';
-import type { SWModalProps } from '../sw-modal';
+import SwModal from '../sw-modal';
+import type { SwModalProps } from '../sw-modal';
 import { ModalContext } from '../sw-modal/provider';
 import { ConfigContext } from '../config-provider';
 import { NoFormStyle } from '../form/context';
@@ -12,7 +12,7 @@ import useStyle from './style';
 import Icon from '../icon';
 import Typography from '../typography';
 
-export interface SelectModalProps<T extends Record<string, any>> extends SWModalProps {
+export interface SelectModalProps<T extends Record<string, any>> extends SwModalProps {
   items: T[];
   itemKey: string;
   selected: string;
@@ -132,7 +132,7 @@ const SelectModal = <T extends Record<string, any>>(
           </div>
           <Icon type='fontAwesome' fontawesomeIcon={faAngleDown} size="xs" />
         </div>
-        <Modal
+        <SwModal
           {...restProps}
           id={id}
           forceRenderFooter={forceRenderFooter}
@@ -147,7 +147,7 @@ const SelectModal = <T extends Record<string, any>>(
               return _renderItem(item, index, isSelected);
             })}
           </div>
-        </Modal>
+        </SwModal>
       </NoFormStyle>
     </NoCompactStyle>,
   );
