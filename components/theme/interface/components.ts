@@ -41,6 +41,7 @@ import type { ComponentToken as SpaceComponentToken } from '../../space/style';
 import type { ComponentToken as SpinComponentToken } from '../../spin/style';
 import type { ComponentToken as SquircleComponentToken } from '../../squircle/style';
 import type { ComponentToken as SwAvatarComponentToken } from '../../sw-avatar/style';
+import type { ComponentToken as SWModalComponentToken } from '../../sw-modal/style';
 import type { ComponentToken as StepsComponentToken } from '../../steps/style';
 import type { ComponentToken as TableComponentToken } from '../../table/style';
 import type { ComponentToken as TabsComponentToken } from '../../tabs/style';
@@ -100,6 +101,8 @@ export interface ComponentTokenMap {
   Spin?: SpinComponentToken;
   Squircle?: SquircleComponentToken;
   SwAvatar?: SwAvatarComponentToken;
+  SWModal?: SWModalComponentToken;
+
   Statistic?: {};
   Switch?: {};
   Tag?: TagComponentToken;

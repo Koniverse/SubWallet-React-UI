@@ -123,8 +123,6 @@ const Number: React.FC<SWNumberProps> = (props) => {
           return formatNumber(value, decimal, balanceFormatter, metadata);
       }
     } catch (e) {
-      console.log(e);
-
       return value.toString();
     }
   }, [value, decimal, customFormatter, formatType, metadata]);
