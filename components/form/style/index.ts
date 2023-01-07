@@ -262,7 +262,6 @@ const genFormItemStyle: GenerateStyle<FormToken> = (token) => {
           color: token.colorTextDescription,
           fontSize: token.fontSizeSM,
           lineHeight: token.lineHeightSM,
-          fontWeight: '500',
         },
 
         '&-explain-connected': {

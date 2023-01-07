@@ -540,7 +540,6 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
         padding: 0,
         flexGrow: 1,
         height: 48,
-        fontWeight: '500',
         paddingBottom: 12,
         paddingTop: 12,
       },

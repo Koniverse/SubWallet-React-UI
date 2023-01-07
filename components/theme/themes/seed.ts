@@ -44,7 +44,7 @@ const seedToken: SeedToken = {
 'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
 'Noto Color Emoji'`,
   monoSpaceFontFamily: `monospace`,
-  bodyFontWeight: '400',
+  bodyFontWeight: '500',
   headingFontWeight: '600',
   fontSize: 14,
 
