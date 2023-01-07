@@ -14,7 +14,7 @@ const resetForm = (token: AliasToken): CSSObject => ({
   legend: {
     display: 'block',
     width: '100%',
-    marginBottom: token.marginLG,
+    marginBottom: token.margin,
     padding: 0,
     color: token.colorTextDescription,
     fontSize: token.fontSizeLG,
@@ -119,7 +119,7 @@ const genFormItemStyle: GenerateStyle<FormToken> = (token) => {
     [formItemCls]: {
       ...resetComponent(token),
 
-      marginBottom: token.marginLG,
+      marginBottom: token.margin,
       verticalAlign: 'top',
 
       '&-with-help': {
@@ -260,8 +260,9 @@ const genFormItemStyle: GenerateStyle<FormToken> = (token) => {
         '&-explain, &-extra': {
           clear: 'both',
           color: token.colorTextDescription,
-          fontSize: token.fontSize,
-          lineHeight: token.lineHeight,
+          fontSize: token.fontSizeSM,
+          lineHeight: token.lineHeightSM,
+          fontWeight: '500',
         },
 
         '&-explain-connected': {
@@ -287,6 +288,8 @@ const genFormItemStyle: GenerateStyle<FormToken> = (token) => {
       [`&-with-help ${formItemCls}-explain`]: {
         height: 'auto',
         opacity: 1,
+        paddingTop: 8,
+        paddingBottom: 16,
       },
 
       // ==============================================================

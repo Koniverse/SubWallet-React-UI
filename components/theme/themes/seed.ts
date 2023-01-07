@@ -19,12 +19,15 @@ export const defaultPresetColors: PresetColorType = {
 
 export const themePresetColors = {
   colorPrimary: '#004BFF',
-  colorSecondary: '#35c44a',
-  colorSuccess: '#35c44a',
+  colorSecondary: '#59ffca',
+  colorSuccess: '#59ffca',
   colorWarning: '#ffe800',
   colorError: '#e11a1a',
   colorInfo: '#008dff',
 };
+
+export const colorDarkBase = '#000';
+export const colorLightBase = '#fff';
 
 const seedToken: SeedToken = {
   // preset color palettes
@@ -34,7 +37,7 @@ const seedToken: SeedToken = {
   ...themePresetColors,
   colorTextBase: '',
 
-  colorBgBase: '#000',
+  colorBgBase: colorDarkBase,
 
   // Font
   fontFamily: `'Plus Jakarta Sans',-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
