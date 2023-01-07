@@ -18,7 +18,6 @@ export const resetComponent = (token: DerivativeToken): CSSObject => ({
   color: token.colorText,
   fontSize: token.fontSize,
   // font-variant: @font-variant-base;
-  lineHeight: token.lineHeight,
   listStyle: 'none',
   // font-feature-settings: @font-feature-settings-base;
   fontFamily: token.fontFamily,
