@@ -9,6 +9,7 @@ import type { AntIconType } from 'antd/es/icon/stories/icon.stories';
 export interface SWIconProps {
   type?: 'fontAwesome' | 'phosphor' | 'antDesignIcon';
   size?: SizeType;
+  customSize?: string;
   phosphorIcon?: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<SVGSVGElement>>;
   fontawesomeIcon?: IconProp;
   antDesignIcon?: AntIconType;
@@ -21,6 +22,7 @@ const Icon: React.FC<SWIconProps> = ({
   className,
   type = 'phosphor',
   size,
+  customSize,
   phosphorIcon: PhosphorIcon,
   fontawesomeIcon,
   antDesignIcon: AntDesignIcon,
@@ -49,7 +51,7 @@ const Icon: React.FC<SWIconProps> = ({
       <span
         className={wrapperClass}
         style={{
-          fontSize: getIconSize(),
+          fontSize: customSize || getIconSize(),
           color: iconColor,
         }}
       >
@@ -67,7 +69,7 @@ const Icon: React.FC<SWIconProps> = ({
       <span
         className={wrapperClass}
         style={{
-          fontSize: getIconSize(),
+          fontSize: customSize || getIconSize(),
           color: iconColor,
         }}
       >
@@ -81,7 +83,7 @@ const Icon: React.FC<SWIconProps> = ({
       <AntDesignIcon
         className={className}
         style={{
-          fontSize: getIconSize(),
+          fontSize: customSize || getIconSize(),
           color: iconColor,
         }}
       />
