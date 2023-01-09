@@ -22,7 +22,7 @@ interface Account {
 }
 
 interface WrapperProps extends React.ComponentProps<typeof SwHeader> {
-  multipleRightIcon: boolean;
+  rightType: number;
   selectBackground: 'default' | 'transparent';
 }
 
@@ -53,7 +53,7 @@ const PREDEFINED_ACCOUNTS: Account[] = [
 
 const SELECT_MODAL_ID = 'select-account';
 
-const Wrapper: React.FC<WrapperProps> = ({ multipleRightIcon, selectBackground, ...args }) => {
+const Wrapper: React.FC<WrapperProps> = ({ rightType, selectBackground, ...args }) => {
   const [selected, setSelected] = useState<string>(ALL_ACCOUNT_KEY);
 
   const renderItem = useCallback(
@@ -158,18 +158,21 @@ const Wrapper: React.FC<WrapperProps> = ({ multipleRightIcon, selectBackground, 
   );
 
   const rightButtons = useMemo((): ButtonProps[] => {
-    if (multipleRightIcon) {
-      return [rightIcon1, rightIcon2, rightIcon3].map((icon) => ({
-        icon,
-      }));
+    switch (rightType) {
+      case 2:
+        return [rightIcon1, rightIcon2, rightIcon3].map((icon) => ({
+          icon,
+        }));
+      case 1:
+        return [
+          {
+            icon: rightIcon,
+          },
+        ];
+      default:
+        return [];
     }
-
-    return [
-      {
-        icon: rightIcon,
-      },
-    ];
-  }, [multipleRightIcon]);
+  }, [rightType]);
 
   return (
     <SwHeader {...args} rightButtons={rightButtons}>
@@ -199,15 +202,11 @@ export default {
       control: 'radio',
       options: ['default', 'transparent'],
     },
-    mergedLeft: {
+    center: {
       type: 'boolean',
     },
     showLeftButton: {
       type: 'boolean',
-    },
-    left: {
-      control: 'radio',
-      options: ['default', 'logo', undefined],
     },
     multipleRightIcon: {
       type: 'boolean',
@@ -215,6 +214,18 @@ export default {
     selectBackground: {
       control: 'radio',
       options: ['default', 'transparent'],
+    },
+    paddingVertical: {
+      type: 'boolean',
+    },
+    rightType: {
+      type: 'number',
+      control: {
+        type: 'number',
+        min: 0,
+        max: 2,
+        step: 1,
+      },
     },
   },
 } as ComponentMeta<typeof Wrapper>;
@@ -229,8 +240,9 @@ export const Primary = Template.bind({});
 
 Primary.args = {
   background: 'default',
-  mergedLeft: false,
+  center: true,
   showLeftButton: true,
-  multipleRightIcon: false,
+  rightType: 1,
   selectBackground: 'transparent',
+  paddingVertical: false,
 };

@@ -6,10 +6,10 @@ export interface ComponentToken {
   // Component token here
 }
 
-export interface SwHeaderToken extends FullToken<'SwHeader'> {
+export interface SwSubHeaderToken extends FullToken<'SwSubHeader'> {
   // Custom token here
 }
-const genContainerStyle: GenerateStyle<SwHeaderToken> = (token) => {
+const genContainerStyle: GenerateStyle<SwSubHeaderToken> = (token) => {
   const { componentCls } = token;
 
   return [
@@ -32,11 +32,11 @@ const genContainerStyle: GenerateStyle<SwHeaderToken> = (token) => {
 
           [`&${componentCls}-right-part-no-content`]: {
             marginRight: 0,
-          },
 
-          [`&${componentCls}-right-part-min-width`]: {
-            minWidth: token.controlHeightLG,
-            marginRight: token.paddingXS,
+            [`&${componentCls}-right-part-min-width`]: {
+              minWidth: token.controlHeightLG,
+              marginRight: token.paddingXS,
+            },
           },
         },
 
@@ -45,6 +45,16 @@ const genContainerStyle: GenerateStyle<SwHeaderToken> = (token) => {
           flexDirection: 'row',
           flexGrow: 1,
           flex: 1,
+
+          [`${componentCls}-title`]: {
+            color: token.colorWhite,
+            fontSize: token.fontSizeHeading4,
+            lineHeight: token.lineHeightHeading4,
+          },
+
+          [`&${componentCls}-center-part-pl`]: {
+            paddingLeft: token.padding,
+          },
         },
       },
 
@@ -71,7 +81,7 @@ const genContainerStyle: GenerateStyle<SwHeaderToken> = (token) => {
 };
 
 // ============================== Export ==============================
-export default genComponentStyleHook('SwHeader', (token) => {
-  const swHeaderToken = mergeToken<SwHeaderToken>(token);
-  return [genContainerStyle(swHeaderToken)];
+export default genComponentStyleHook('SwSubHeader', (token) => {
+  const swSubHeaderToken = mergeToken<SwSubHeaderToken>(token);
+  return [genContainerStyle(swSubHeaderToken)];
 });

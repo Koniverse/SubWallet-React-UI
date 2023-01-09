@@ -1,40 +1,39 @@
 import classNames from 'classnames';
+import { ArrowLeft } from 'phosphor-react';
 import React, { useMemo } from 'react';
+import Icon from '../icon';
 import useStyle from './style';
-import { SwHeaderConfig } from './config';
 import { ConfigContext } from '../config-provider';
 import type { ButtonProps } from '../button';
 import Button from '../button';
 
-export interface SwHeaderProps {
+export interface SwSubHeaderProps {
   prefixCls?: string;
   className?: string;
   background?: 'default' | 'transparent';
+  center?: boolean;
   showLeftButton?: boolean;
-  left?: React.ReactNode | 'logo' | 'default';
   onClickLeft?: () => void;
   rightButtons?: ButtonProps[];
-  children?: React.ReactNode | React.ReactNode[];
+  title?: string | React.ReactNode;
   paddingVertical?: boolean;
-  center?: boolean;
 }
 
-const SwHeader: React.FC<SwHeaderProps> = (props) => {
+const SwSubHeader: React.FC<SwSubHeaderProps> = (props) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const {
     prefixCls: customizePrefixCls,
     className,
     background = 'default',
-    left,
+    center,
     showLeftButton,
     onClickLeft,
     rightButtons = [],
-    children,
+    title,
     paddingVertical,
-    center = true,
   } = props;
 
-  const prefixCls = getPrefixCls('sw-header', customizePrefixCls);
+  const prefixCls = getPrefixCls('sw-sub-header', customizePrefixCls);
   const [wrapSSR, hashId] = useStyle(prefixCls);
 
   const classNameExtend = useMemo(
@@ -46,26 +45,29 @@ const SwHeader: React.FC<SwHeaderProps> = (props) => {
     [hashId, className, prefixCls, background, center, paddingVertical],
   );
 
-  const leftPart = useMemo((): React.ReactNode => {
-    if (left === 'default' || !left) {
-      return SwHeaderConfig.default;
-    }
-
-    if (left === 'logo') {
-      return SwHeaderConfig.logo;
-    }
-
-    return left;
-  }, [left, SwHeaderConfig.logo, SwHeaderConfig.default]);
-
   return wrapSSR(
     <div className={classNames(classNameExtend)}>
       {showLeftButton && (
         <div className={classNames(`${prefixCls}-left-part`)}>
-          <Button type="ghost" size='xs' icon={leftPart} onClick={onClickLeft} />
+          <Button
+            type="ghost"
+            size='xs'
+            icon={<Icon type="phosphor" phosphorIcon={ArrowLeft} size="sm" />}
+            onClick={onClickLeft}
+          />
         </div>
       )}
-      <div className={classNames(`${prefixCls}-center-part`)}>{children}</div>
+      <div
+        className={classNames(`${prefixCls}-center-part`, {
+          [`${prefixCls}-center-part-pl`]: !showLeftButton && !center,
+        })}
+      >
+        {typeof title === 'string' ? (
+          <span className={classNames(`${prefixCls}-title`)}>{title}</span>
+        ) : (
+          title
+        )}
+      </div>
       <div
         className={classNames(`${prefixCls}-right-part`, {
           [`${prefixCls}-right-part-no-content`]: !rightButtons.length,
@@ -81,4 +83,4 @@ const SwHeader: React.FC<SwHeaderProps> = (props) => {
   );
 };
 
-export default SwHeader;
+export default SwSubHeader;
