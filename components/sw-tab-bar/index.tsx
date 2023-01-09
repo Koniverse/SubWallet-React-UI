@@ -1,5 +1,5 @@
 import SwTabBar from './SwTabBar';
 
-export type { SwTabBarProps } from './SwTabBar';
+export type { SwTabBarProps, SwTabBarItem } from './SwTabBar';
 
 export default SwTabBar;

@@ -6,12 +6,15 @@ import { ConfigContext } from '../config-provider';
 import type { ButtonProps } from '../button';
 import Button from '../button';
 
+export type SwHeaderBackground = 'default' | 'transparent';
+export type SwHeaderLeftContent = React.ReactNode | 'logo' | 'default';
+
 export interface SwHeaderProps {
   prefixCls?: string;
   className?: string;
-  background?: 'default' | 'transparent';
+  background?: SwHeaderBackground;
   showLeftButton?: boolean;
-  left?: React.ReactNode | 'logo' | 'default';
+  left?: SwHeaderLeftContent;
   onClickLeft?: () => void;
   rightButtons?: ButtonProps[];
   children?: React.ReactNode | React.ReactNode[];
@@ -64,6 +67,9 @@ const SwHeader: React.FC<SwHeaderProps> = (props) => {
         <div className={classNames(`${prefixCls}-left-part`)}>
           <Button type="ghost" size='xs' icon={leftPart} onClick={onClickLeft} />
         </div>
+      )}
+      {!showLeftButton && rightButtons.length && center && (
+        <div className={classNames(`${prefixCls}-left-part-min-width`)} />
       )}
       <div className={classNames(`${prefixCls}-center-part`)}>{children}</div>
       <div

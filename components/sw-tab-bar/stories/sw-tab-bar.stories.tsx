@@ -59,8 +59,8 @@ const Template: ComponentStory<typeof SwTabBar> = (args) => {
               phosphorIcon: Database,
             },
             label: 'Staking',
-            key: 'strking',
-            onClick: onSelect('strking'),
+            key: 'staking',
+            onClick: onSelect('staking'),
           },
           {
             icon: {

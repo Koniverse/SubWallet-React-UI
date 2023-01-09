@@ -45,7 +45,7 @@ export default {
     center: {
       type: 'boolean',
     },
-    showLeftButton: {
+    showBackButton: {
       type: 'boolean',
     },
     rightIconType: {

@@ -26,6 +26,12 @@ const genContainerStyle: GenerateStyle<SwSubHeaderToken> = (token) => {
           marginLeft: token.paddingXS,
         },
 
+        [`${componentCls}-left-part-min-width`]: {
+          minWidth: token.controlHeightLG,
+          flexShrink: 1,
+          marginLeft: token.paddingXS,
+        },
+
         [`${componentCls}-right-part`]: {
           flexShrink: 1,
           marginRight: token.paddingXS,
