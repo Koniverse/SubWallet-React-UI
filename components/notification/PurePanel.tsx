@@ -4,13 +4,14 @@ import ExclamationCircleFilled from '@ant-design/icons/ExclamationCircleFilled';
 import CloseCircleFilled from '@ant-design/icons/CloseCircleFilled';
 import CheckCircleFilled from '@ant-design/icons/CheckCircleFilled';
 import InfoCircleFilled from '@ant-design/icons/InfoCircleFilled';
-import CloseOutlined from '@ant-design/icons/CloseOutlined';
 import { Notice } from 'rc-notification';
 import classNames from 'classnames';
 import type { NoticeProps } from 'rc-notification/lib/Notice';
+import { CheckCircle, Info, WarningCircle, X, XCircle } from 'phosphor-react';
 import useStyle from './style';
 import { ConfigContext } from '../config-provider';
 import type { IconType } from './interface';
+import Icon from '../icon';
 
 export const TypeIcon = {
   info: <InfoCircleFilled />,
@@ -24,7 +25,12 @@ export function getCloseIcon(prefixCls: string, closeIcon?: React.ReactNode) {
   return (
     closeIcon || (
       <span className={`${prefixCls}-close-x`}>
-        <CloseOutlined className={`${prefixCls}-close-icon`} />
+        <Icon
+          type="phosphor"
+          phosphorIcon={X}
+          className={`${prefixCls}-close-icon`}
+          weight="bold"
+        />
       </span>
     )
   );
@@ -37,13 +43,14 @@ export interface PureContentProps {
   description?: React.ReactNode;
   btn?: React.ReactNode;
   type?: IconType;
+  direction?: 'horizontal' | 'vertical';
 }
 
 const typeToIcon = {
-  success: CheckCircleFilled,
-  info: InfoCircleFilled,
-  error: CloseCircleFilled,
-  warning: ExclamationCircleFilled,
+  success: CheckCircle,
+  info: Info,
+  error: XCircle,
+  warning: WarningCircle,
 };
 
 export function PureContent({
@@ -52,28 +59,39 @@ export function PureContent({
   type,
   message,
   description,
+  direction,
   btn,
 }: PureContentProps) {
   let iconNode: React.ReactNode = null;
+  console.log('type', type);
   if (icon) {
     iconNode = <span className={`${prefixCls}-icon`}>{icon}</span>;
   } else if (type) {
-    iconNode = React.createElement(typeToIcon[type] || null, {
-      className: classNames(`${prefixCls}-icon`, `${prefixCls}-icon-${type}`),
-    });
+    iconNode = (
+      <Icon
+        className={classNames(`${prefixCls}-icon`, `${prefixCls}-icon-${type}`)}
+        type="phosphor"
+        phosphorIcon={typeToIcon[type]}
+        weight="fill"
+        size="md"
+      />
+    );
   }
 
   return (
     <div
       className={classNames({
         [`${prefixCls}-with-icon`]: iconNode,
+        [`${prefixCls}-vertical`]: direction === 'vertical',
       })}
       role="alert"
     >
       {iconNode}
-      <div className={`${prefixCls}-message`}>{message}</div>
-      <div className={`${prefixCls}-description`}>{description}</div>
-      {btn && <div className={`${prefixCls}-btn`}>{btn}</div>}
+      <div>
+        <div className={`${prefixCls}-message`}>{message}</div>
+        {description && <div className={`${prefixCls}-description`}>{description}</div>}
+        {btn && <div className={`${prefixCls}-btn`}>{btn}</div>}
+      </div>
     </div>
   );
 }
@@ -94,8 +112,9 @@ export default function PurePanel(props: PurePanelProps) {
     message,
     description,
     btn,
-    closable = true,
+    closable = false,
     closeIcon,
+    direction,
     ...restProps
   } = props;
   const { getPrefixCls } = React.useContext(ConfigContext);
@@ -122,6 +141,7 @@ export default function PurePanel(props: PurePanelProps) {
           message={message}
           description={description}
           btn={btn}
+          direction={direction}
         />
       }
     />

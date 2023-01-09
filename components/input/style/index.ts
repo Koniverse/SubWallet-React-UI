@@ -3,7 +3,6 @@ import type { FullToken, GenerateStyle } from '../../theme/internal';
 import { genComponentStyleHook, mergeToken } from '../../theme/internal';
 import type { GlobalToken } from '../../theme/interface';
 import { clearFix, resetComponent } from '../../style';
-import { genCompactItemStyle } from '../../style/compact-item';
 
 export type InputToken<T extends GlobalToken = FullToken<'Input'>> = T & {
   inputAffixPadding: number;
@@ -505,225 +504,167 @@ export const genInputGroupStyle = (token: InputToken): CSSObject => {
 };
 
 const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
-  const { componentCls, controlHeightSM, lineWidth } = token;
-
-  const FIXED_CHROME_COLOR_HEIGHT = 16;
-  const colorSmallPadding = (controlHeightSM - lineWidth * 2 - FIXED_CHROME_COLOR_HEIGHT) / 2;
-
-  return {
-    [`${componentCls}`]: {
-      ...resetComponent(token),
-      ...genBasicInputStyle(token),
-      ...genStatusStyle(token),
-
-      '&[type="color"]': {
-        height: token.controlHeight,
-
-        [`&${componentCls}-lg`]: {
-          height: token.controlHeightLG,
-        },
-        [`&${componentCls}-sm`]: {
-          height: controlHeightSM,
-          paddingTop: colorSmallPadding,
-          paddingBottom: colorSmallPadding,
-        },
-      },
-    },
-  };
-};
-
-const genAllowClearStyle = (token: InputToken): CSSObject => {
   const { componentCls } = token;
+
   return {
-    // ========================= Input =========================
-    [`${componentCls}-clear-icon`]: {
-      margin: 0,
-      color: token.colorTextQuaternary,
-      fontSize: token.fontSizeIcon,
-      verticalAlign: -1,
-      // https://github.com/ant-design/ant-design/pull/18151
-      // https://codesandbox.io/s/wizardly-sun-u10br
-      cursor: 'pointer',
-      transition: `color ${token.motionDurationSlow}`,
+    [`${componentCls}-container`]: {
+      ...resetComponent(token),
+      backgroundColor: token.colorBgSecondary,
+      position: 'relative',
 
-      '&:hover': {
-        color: token.colorTextTertiary,
-      },
-
-      '&:active': {
-        color: token.colorText,
-      },
-
-      '&-hidden': {
-        visibility: 'hidden',
-      },
-
-      '&-has-suffix': {
-        margin: `0 ${token.inputAffixPadding}px`,
-      },
-    },
-
-    // ======================= TextArea ========================
-    '&-textarea-with-clear-btn': {
-      padding: '0 !important',
-      border: '0 !important',
-
-      [`${componentCls}-clear-icon`]: {
+      '&:before': {
+        content: '""',
         position: 'absolute',
-        insetBlockStart: token.paddingXS,
-        insetInlineEnd: token.paddingXS,
-        zIndex: 1,
-      },
-    },
-  };
-};
-
-const genAffixStyle: GenerateStyle<InputToken> = (token: InputToken) => {
-  const {
-    componentCls,
-    inputAffixPadding,
-    colorTextDescription,
-    motionDurationSlow,
-    colorIcon,
-    colorIconHover,
-    iconCls,
-  } = token;
-
-  return {
-    [`${componentCls}-affix-wrapper`]: {
-      ...genBasicInputStyle(token),
-      display: 'inline-flex',
-
-      '&:not(&-disabled):hover': {
-        ...genHoverStyle(token),
-        zIndex: 1,
-        [`${componentCls}-search-with-button &`]: {
-          zIndex: 0,
-        },
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+        display: 'block',
+        border: '2px solid transparent',
+        transition: `border-color ${token.motionDurationSlow}`,
+        zIndex: 0,
       },
 
-      '&-focused, &:focus': {
-        zIndex: 1,
+      '&.-shape-default, &.-shape-default:before': {
+        borderRadius: token.borderRadiusLG,
       },
 
-      '&-disabled': {
-        [`${componentCls}[disabled]`]: {
-          background: 'transparent',
-        },
-      },
-
-      [`> input${componentCls}`]: {
-        padding: 0,
-        fontSize: 'inherit',
-        border: 'none',
-        borderRadius: 0,
-        outline: 'none',
-
-        '&:focus': {
-          boxShadow: 'none !important',
-        },
-      },
-
-      '&::before': {
-        width: 0,
-        visibility: 'hidden',
-        content: '"\\a0"',
+      '&.-shape-round, &.-shape-round:before': {
+        borderRadius: 48,
       },
 
       [`${componentCls}`]: {
-        '&-prefix, &-suffix': {
-          display: 'flex',
-          flex: 'none',
-          alignItems: 'center',
-
-          '> *:not(:last-child)': {
-            marginInlineEnd: token.paddingXS,
-          },
-        },
-
-        '&-show-count-suffix': {
-          color: colorTextDescription,
-        },
-
-        '&-show-count-has-suffix': {
-          marginInlineEnd: token.paddingXXS,
-        },
-
-        '&-prefix': {
-          marginInlineEnd: inputAffixPadding,
-        },
-
-        '&-suffix': {
-          marginInlineStart: inputAffixPadding,
-        },
+        backgroundColor: 'transparent',
+        border: 0,
+        outline: 'none',
+        padding: 0,
+        flexGrow: 1,
+        height: 48,
+        paddingBottom: 12,
+        paddingTop: 12,
       },
 
-      ...genAllowClearStyle(token),
+      [`${componentCls}-affix-wrapper`]: {
+        display: 'flex',
+        flex: 1,
+        paddingLeft: 12,
+        paddingRight: 12,
+      },
 
-      // password
-      [`${iconCls}${componentCls}-password-icon`]: {
-        color: colorIcon,
+      [`${componentCls}-suffix, ${componentCls}-prefix`]: {
+        color: token.colorTextLight4,
+        display: 'flex',
+        alignItems: 'center',
+      },
+
+      [`${componentCls}-prefix`]: {
+        paddingRight: 8,
+      },
+
+      [`${componentCls}-suffix`]: {
+        height: 48,
+      },
+
+      [`${componentCls}-status-icon`]: {
+        fontSize: 20,
+        marginLeft: 8,
+      },
+
+      [`.__input-action`]: {
+        display: 'flex',
+        width: 28,
+        height: 28,
+        marginRight: -4,
+        alignItems: 'center',
+        justifyContent: 'center',
         cursor: 'pointer',
-        transition: `all ${motionDurationSlow}`,
+        transition: `color ${token.motionDurationSlow}`,
+        fontSize: 20,
 
         '&:hover': {
-          color: colorIconHover,
+          color: token.colorTextLight2,
         },
       },
 
-      // status
-      ...genStatusStyle(token),
-    },
-  };
-};
-
-const genGroupStyle: GenerateStyle<InputToken> = (token: InputToken) => {
-  const { componentCls, colorError, colorSuccess, borderRadiusLG, borderRadiusSM } = token;
-
-  return {
-    [`${componentCls}-group`]: {
-      // Style for input-group: input with label, with button or dropdown...
-      ...resetComponent(token),
-      ...genInputGroupStyle(token),
-
-      '&-rtl': {
-        direction: 'rtl',
+      [`${componentCls}-label`]: {
+        fontSize: token.fontSizeSM,
+        lineHeight: token.lineHeightSM,
+        color: token.colorTextLight4,
+        paddingLeft: 12,
+        paddingRight: 12,
+        paddingTop: 4,
+        top: 4,
+        whiteSpace: 'nowrap',
+        textOverflow: 'ellipsis',
+        overflow: 'hidden',
+        position: 'relative',
       },
 
-      '&-wrapper': {
-        display: 'inline-block',
-        width: '100%',
-        textAlign: 'start',
-        verticalAlign: 'top', // https://github.com/ant-design/ant-design/issues/6403
+      [`${componentCls}-wrapper`]: {
+        display: 'flex',
+        position: 'relative',
+        zIndex: 2,
 
-        '&-rtl': {
-          direction: 'rtl',
+        [`> input`]: {
+          paddingLeft: 12,
+          paddingRight: 12,
+        },
+      },
+
+      '&:hover:before': {
+        borderColor: token['geekblue-4'],
+      },
+
+      '&:focus-within:before': {
+        borderColor: token['geekblue-6'],
+      },
+
+      '&.-status-warning': {
+        '&:before': {
+          borderColor: token.colorWarning,
         },
 
-        // Size
-        '&-lg': {
-          [`${componentCls}-group-addon`]: {
-            borderRadius: borderRadiusLG,
-          },
+        [`${componentCls}-status-icon`]: {
+          color: token.colorWarning,
         },
-        '&-sm': {
-          [`${componentCls}-group-addon`]: {
-            borderRadius: borderRadiusSM,
-          },
+      },
+
+      '&.-status-error': {
+        '&:before': {
+          borderColor: token.colorError,
         },
 
-        // Status
-        '&-status-error': {
-          [`${componentCls}-group-addon`]: {
-            color: colorError,
-            borderColor: colorError,
-          },
+        [`${componentCls}-status-icon`]: {
+          color: token.colorError,
         },
-        '&-status-warning': {
-          [`${componentCls}-group-addon:last-child`]: {
-            color: colorSuccess,
-            borderColor: colorSuccess,
-          },
+      },
+
+      '&.-status-success': {
+        '&:before': {
+          borderColor: token.colorSuccess,
+        },
+
+        [`${componentCls}-status-icon`]: {
+          color: token.colorSuccess,
+        },
+      },
+
+      '&.-disabled': {
+        '&:before': {
+          borderColor: 'transparent',
+        },
+
+        [`&, ${componentCls}, .__input-action`]: {
+          cursor: 'not-allowed',
+        },
+
+        [`${componentCls}`]: {
+          cursor: 'not-allowed',
+          color: token.colorTextLight5,
+        },
+
+        '.__input-action': {
+          color: 'inherit',
         },
       },
     },
@@ -731,114 +672,19 @@ const genGroupStyle: GenerateStyle<InputToken> = (token: InputToken) => {
 };
 
 const genSearchInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
-  const { componentCls, antCls } = token;
-  const searchPrefixCls = `${componentCls}-search`;
+  const { componentCls } = token;
+
   return {
-    [searchPrefixCls]: {
-      [`${componentCls}`]: {
-        '&:hover, &:focus': {
-          borderColor: token.colorPrimaryHover,
-
-          [`+ ${componentCls}-group-addon ${searchPrefixCls}-button:not(${antCls}-btn-primary)`]: {
-            borderInlineStartColor: token.colorPrimaryHover,
-          },
-        },
+    [`${componentCls}-container.-search`]: {
+      [`${componentCls}-prefix`]: {
+        paddingRight: 6,
       },
 
-      [`${componentCls}-affix-wrapper`]: {
-        borderRadius: 0,
-      },
-
-      // fix slight height diff in Firefox:
-      // https://ant.design/components/auto-complete-cn/#components-auto-complete-demo-certain-category
-      [`${componentCls}-lg`]: {
-        lineHeight: token.lineHeightLG - 0.0002,
-      },
-
-      [`> ${componentCls}-group`]: {
-        [`> ${componentCls}-group-addon:last-child`]: {
-          insetInlineStart: -1,
-          padding: 0,
-          border: 0,
-
-          [`${searchPrefixCls}-button`]: {
-            paddingTop: 0,
-            paddingBottom: 0,
-            borderStartStartRadius: 0,
-            borderStartEndRadius: token.borderRadius,
-            borderEndEndRadius: token.borderRadius,
-            borderEndStartRadius: 0,
-          },
-
-          [`${searchPrefixCls}-button:not(${antCls}-btn-primary)`]: {
-            color: token.colorTextDescription,
-
-            '&:hover': {
-              color: token.colorPrimaryHover,
-            },
-
-            '&:active': {
-              color: token.colorPrimaryActive,
-            },
-
-            [`&${antCls}-btn-loading::before`]: {
-              insetInlineStart: 0,
-              insetInlineEnd: 0,
-              insetBlockStart: 0,
-              insetBlockEnd: 0,
-            },
-          },
-        },
-      },
-
-      [`${searchPrefixCls}-button`]: {
-        height: token.controlHeight,
-
-        '&:hover, &:focus': {
-          zIndex: 1,
-        },
-      },
-
-      [`&-large ${searchPrefixCls}-button`]: {
-        height: token.controlHeightLG,
-      },
-
-      [`&-small ${searchPrefixCls}-button`]: {
-        height: token.controlHeightSM,
-      },
-
-      '&-rtl': {
-        direction: 'rtl',
-      },
-
-      // ===================== Compact Item Customized Styles =====================
-      [`&${componentCls}-compact-item`]: {
-        [`&:not(${componentCls}-compact-last-item)`]: {
-          [`${componentCls}-group-addon`]: {
-            [`${componentCls}-search-button`]: {
-              marginInlineEnd: -token.lineWidth,
-              borderRadius: 0,
-            },
-          },
-        },
-
-        [`&:not(${componentCls}-compact-first-item)`]: {
-          [`${componentCls},${componentCls}-affix-wrapper`]: {
-            borderRadius: 0,
-          },
-        },
-
-        [`> ${componentCls}-group-addon ${componentCls}-search-button,
-        > ${componentCls},
-        ${componentCls}-affix-wrapper`]: {
-          '&:hover,&:focus,&:active': {
-            zIndex: 2,
-          },
-        },
-
-        [`> ${componentCls}-affix-wrapper-focused`]: {
-          zIndex: 2,
-        },
+      [`${componentCls}-prefix .__input-action`]: {
+        marginRight: 0,
+        marginLeft: -2,
+        fontSize: 24,
+        color: token.colorTextLight2,
       },
     },
   };
@@ -870,54 +716,28 @@ export function initInputToken<T extends GlobalToken = GlobalToken>(token: T): I
 }
 
 const genTextAreaStyle: GenerateStyle<InputToken> = (token) => {
-  const { componentCls, inputPaddingHorizontal, paddingLG } = token;
-  const textareaPrefixCls = `${componentCls}-textarea`;
+  const { componentCls } = token;
 
   return {
-    [textareaPrefixCls]: {
-      position: 'relative',
+    [`${componentCls}-container.-textarea`]: {
+      [`${componentCls}`]: {
+        height: 'auto',
+        minHeight: 51,
+        marginTop: 13,
+        paddingTop: 0,
+        paddingLeft: 12,
+        paddingRight: 12,
+      },
 
-      [`${textareaPrefixCls}-suffix`]: {
+      [`&.-has-suffix ${componentCls}`]: {
+        paddingRight: 40,
+      },
+
+      [`${componentCls}-suffix`]: {
         position: 'absolute',
         top: 0,
-        insetInlineEnd: inputPaddingHorizontal,
-        bottom: 0,
-        zIndex: 1,
-        display: 'inline-flex',
-        alignItems: 'center',
-        margin: 'auto',
-      },
-
-      [`&-status-error,
-        &-status-warning,
-        &-status-success,
-        &-status-validating`]: {
-        [`&${textareaPrefixCls}-has-feedback`]: {
-          [`${componentCls}`]: {
-            paddingInlineEnd: paddingLG,
-          },
-        },
-      },
-
-      '&-show-count': {
-        // https://github.com/ant-design/ant-design/issues/33049
-        [`> ${componentCls}`]: {
-          height: '100%',
-        },
-
-        '&::after': {
-          color: token.colorTextDescription,
-          whiteSpace: 'nowrap',
-          content: 'attr(data-count)',
-          pointerEvents: 'none',
-          float: 'right',
-        },
-      },
-
-      '&-rtl': {
-        '&::after': {
-          float: 'left',
-        },
+        right: 0,
+        paddingRight: 12,
       },
     },
   };
@@ -927,15 +747,5 @@ const genTextAreaStyle: GenerateStyle<InputToken> = (token) => {
 export default genComponentStyleHook('Input', (token) => {
   const inputToken = initInputToken<FullToken<'Input'>>(token);
 
-  return [
-    genInputStyle(inputToken),
-    genTextAreaStyle(inputToken),
-    genAffixStyle(inputToken),
-    genGroupStyle(inputToken),
-    genSearchInputStyle(inputToken),
-    // =====================================================
-    // ==             Space Compact                       ==
-    // =====================================================
-    genCompactItemStyle(inputToken),
-  ];
+  return [genInputStyle(inputToken), genTextAreaStyle(inputToken), genSearchInputStyle(inputToken)];
 });

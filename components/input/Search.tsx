@@ -1,8 +1,8 @@
-import SearchOutlined from '@ant-design/icons/SearchOutlined';
 import classNames from 'classnames';
 import { composeRef } from 'rc-util/lib/ref';
 import * as React from 'react';
-import Button from '../button';
+import { MagnifyingGlass } from 'phosphor-react';
+import Icon from '../icon';
 import { ConfigContext } from '../config-provider';
 import SizeContext from '../config-provider/SizeContext';
 import { useCompactItemContext } from '../space/Compact';
@@ -30,8 +30,6 @@ const Search = React.forwardRef<InputRef, SearchProps>((props, ref) => {
     className,
     size: customizeSize,
     suffix,
-    enterButton = false,
-    addonAfter,
     loading,
     disabled,
     onSearch: customOnSearch,
@@ -69,6 +67,10 @@ const Search = React.forwardRef<InputRef, SearchProps>((props, ref) => {
   };
 
   const onSearch = (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
+    if (disabled) {
+      return;
+    }
+
     if (customOnSearch) {
       customOnSearch(inputRef.current?.input?.value!, e);
     }
@@ -81,64 +83,20 @@ const Search = React.forwardRef<InputRef, SearchProps>((props, ref) => {
     onSearch(e);
   };
 
-  const searchIcon = typeof enterButton === 'boolean' ? <SearchOutlined /> : null;
-  const btnClassName = `${prefixCls}-button`;
-
-  let button: React.ReactNode;
-  const enterButtonAsElement = (enterButton || {}) as React.ReactElement;
-  const isAntdButton =
-    enterButtonAsElement.type && (enterButtonAsElement.type as typeof Button).__ANT_BUTTON === true;
-  if (isAntdButton || enterButtonAsElement.type === 'button') {
-    button = cloneElement(enterButtonAsElement, {
+  const button = cloneElement(
+    <div className="__input-action">
+      <Icon phosphorIcon={MagnifyingGlass} />
+    </div>,
+    {
       onMouseDown,
       onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
-        enterButtonAsElement?.props?.onClick?.(e);
         onSearch(e);
       },
       key: 'enterButton',
-      ...(isAntdButton
-        ? {
-            className: btnClassName,
-            size,
-          }
-        : {}),
-    });
-  } else {
-    button = (
-      <Button
-        className={btnClassName}
-        type={enterButton ? 'primary' : undefined}
-        size={size}
-        disabled={disabled}
-        key="enterButton"
-        onMouseDown={onMouseDown}
-        onClick={onSearch}
-        loading={loading}
-        icon={searchIcon}
-      >
-        {enterButton}
-      </Button>
-    );
-  }
-
-  if (addonAfter) {
-    button = [
-      button,
-      cloneElement(addonAfter, {
-        key: 'addonAfter',
-      }),
-    ];
-  }
-
-  const cls = classNames(
-    prefixCls,
-    {
-      [`${prefixCls}-rtl`]: direction === 'rtl',
-      [`${prefixCls}-${size}`]: !!size,
-      [`${prefixCls}-with-button`]: !!enterButton,
     },
-    className,
   );
+
+  const cls = classNames(prefixCls, className);
 
   const handleOnCompositionStart: React.CompositionEventHandler<HTMLInputElement> = (e) => {
     composedRef.current = true;
@@ -159,8 +117,9 @@ const Search = React.forwardRef<InputRef, SearchProps>((props, ref) => {
       onCompositionStart={handleOnCompositionStart}
       onCompositionEnd={handleOnCompositionEnd}
       prefixCls={inputPrefixCls}
-      addonAfter={button}
+      prefix={button}
       suffix={suffix}
+      containerClassName="-search"
       onChange={onChange}
       className={cls}
       disabled={disabled}

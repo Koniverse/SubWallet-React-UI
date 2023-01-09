@@ -113,6 +113,7 @@ export function useInternalNotification(
         placement = 'topRight',
         btn,
         className,
+        direction,
         ...restConfig
       } = config;
 
@@ -125,6 +126,7 @@ export function useInternalNotification(
             type={type}
             message={message}
             description={description}
+            direction={direction}
             btn={btn}
           />
         ),
