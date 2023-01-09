@@ -303,7 +303,7 @@ const Wrapper: React.FC<WrapperProps> = ({
   );
 };
 export default {
-  title: 'Core/SwScreenLayout',
+  title: 'Layout/SwScreenLayout',
   component: Wrapper,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {

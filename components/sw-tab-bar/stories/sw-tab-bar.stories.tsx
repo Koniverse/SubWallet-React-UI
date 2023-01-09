@@ -4,7 +4,7 @@ import React, { useCallback, useState } from 'react';
 import SwTabBar from '../index';
 
 export default {
-  title: 'Core/SwTabBar',
+  title: 'Layout/SwTabBar',
   component: SwTabBar,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},

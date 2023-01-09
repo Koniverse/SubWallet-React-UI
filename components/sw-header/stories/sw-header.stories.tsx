@@ -194,7 +194,7 @@ const Wrapper: React.FC<WrapperProps> = ({ rightType, selectBackground, ...args 
   );
 };
 export default {
-  title: 'Core/SwHeader',
+  title: 'Layout/SwHeader',
   component: Wrapper,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {

@@ -34,7 +34,7 @@ const Wrapper: React.FC<WrapperProps> = ({ rightIconType, ...args }) => {
   return <SwSubHeader {...args} rightButtons={rightButtons} />;
 };
 export default {
-  title: 'Core/SwSubHeader',
+  title: 'Layout/SwSubHeader',
   component: Wrapper,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
@@ -76,7 +76,7 @@ export const Primary = Template.bind({});
 Primary.args = {
   background: 'default',
   center: true,
-  showLeftButton: true,
+  showBackButton: true,
   title: 'Screen title',
   rightIconType: 1,
   paddingVertical: false,
