@@ -23,7 +23,7 @@ export const Address: React.FC<AddressProps> = ({ address, preLength, sufLength 
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Core/Address',
+  title: 'Core/Typography/Address',
   component: Address,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {

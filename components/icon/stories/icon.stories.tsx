@@ -9,7 +9,7 @@ import Icon from '..';
 export type AntIconType = typeof StepBackwardOutlined;
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Core/Icon',
+  title: 'Basic Components/Icon',
   component: Icon,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {

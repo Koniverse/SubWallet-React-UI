@@ -7,7 +7,7 @@ const { Text } = Typography;
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Core/Tooltip',
+  title: 'Basic Components/Tooltip',
   component: Tooltip,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {

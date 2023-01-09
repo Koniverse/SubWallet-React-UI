@@ -3,7 +3,7 @@ import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import Image from '..';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Core/Image',
+  title: 'Basic Components/Image',
   component: Image,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {

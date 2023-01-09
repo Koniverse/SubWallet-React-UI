@@ -5,7 +5,7 @@ import Upload from '..';
 const { SingleFileDragger } = Upload;
 
 export default {
-  title: 'Core/SingleFileDragger',
+  title: 'Form/Single File Dragger',
   component: SingleFileDragger,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
