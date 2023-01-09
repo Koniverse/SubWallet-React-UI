@@ -44,6 +44,7 @@ import type { ComponentToken as SquircleComponentToken } from '../../squircle/st
 import type { ComponentToken as SwAvatarComponentToken } from '../../sw-avatar/style';
 import type { ComponentToken as SwHeaderComponentToken } from '../../sw-header/style';
 import type { ComponentToken as SwSubHeaderComponentToken } from '../../sw-sub-header/style';
+import type { ComponentToken as SwTabBarComponentToken } from '../../sw-tab-bar/style';
 import type { ComponentToken as SwModalComponentToken } from '../../sw-modal/style';
 import type { ComponentToken as StepsComponentToken } from '../../steps/style';
 import type { ComponentToken as TableComponentToken } from '../../table/style';
@@ -108,6 +109,7 @@ export interface ComponentTokenMap {
   SwAvatar?: SwAvatarComponentToken;
   SwHeader?: SwHeaderComponentToken;
   SwSubHeader?: SwSubHeaderComponentToken;
+  SwTabBar?: SwTabBarComponentToken;
   SwModal?: SwModalComponentToken;
   Statistic?: {};
   Switch?: {};
