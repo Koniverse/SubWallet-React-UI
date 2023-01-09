@@ -6,7 +6,7 @@ const { Password } = Input;
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Core/Password',
+  title: 'Form/Password',
   component: Password,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {

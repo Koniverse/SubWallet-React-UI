@@ -11,7 +11,7 @@ const Notification: React.FC<NotificationProps> = () => <></>;
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Core/Notification',
+  title: 'Basic Components/Notification',
   component: Notification,
   decorators: [
     (Story: any) => (
