@@ -6,31 +6,7 @@ export interface ComponentToken {
   // Component token here
 }
 
-export interface SelectModalToken extends FullToken<'SelectModal'> {
-  // Custom token here
-  modalBodyPadding: number;
-  modalHeaderBg: string;
-  modalHeaderPadding: string;
-  modalHeaderBorderWidth: number;
-  modalHeaderBorderStyle: string;
-  modalHeaderTitleLineHeight: number;
-  modalHeaderTitleFontSize: number;
-  modalHeaderBorderColorSplit: string;
-  modalHeaderCloseSize: number;
-  modalContentBg: string;
-  modalHeadingColor: string;
-  modalCloseColor: string;
-  modalCloseBtnSize: number;
-  modalFooterBg: string;
-  modalFooterBorderColorSplit: string;
-  modalFooterBorderStyle: string;
-  modalFooterPaddingVertical: number;
-  modalFooterPaddingHorizontal: number;
-  modalFooterBorderWidth: number;
-  modalConfirmTitleFontSize: number;
-  modalIconHoverColor: string;
-  modalConfirmIconSize: number;
-}
+export interface SelectModalToken extends FullToken<'SelectModal'> {}
 const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
   const { componentCls } = token;
 
@@ -46,7 +22,7 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
         color: token.colorTextTertiary,
         lineHeight: token.lineHeightLG,
         borderWidth: token.lineWidth * 2,
-        borderStyle: token.modalHeaderBorderStyle,
+        borderStyle: token.lineType,
 
         '&:hover': {
           borderColor: `${token['geekblue-4']} !important`,
@@ -148,33 +124,6 @@ const genItemContainerStyle: GenerateStyle<SelectModalToken> = (token) => {
 
 // ============================== Export ==============================
 export default genComponentStyleHook('SelectModal', (token) => {
-  const headerPaddingVertical = token.padding;
-  const headerFontSize = token.fontSizeHeading4;
-  const headerLineHeight = token.lineHeightHeading4;
-
-  const modalToken = mergeToken<SelectModalToken>(token, {
-    modalBodyPadding: token.paddingLG,
-    modalHeaderBg: token.colorBgElevated,
-    modalHeaderPadding: `${headerPaddingVertical}px ${token.paddingLG}px`,
-    modalHeaderBorderWidth: token.lineWidth,
-    modalHeaderBorderStyle: token.lineType,
-    modalHeaderTitleLineHeight: headerLineHeight,
-    modalHeaderTitleFontSize: headerFontSize,
-    modalHeaderBorderColorSplit: token.colorSplit,
-    modalHeaderCloseSize: token.controlHeightLG,
-    modalContentBg: token.colorBgElevated,
-    modalHeadingColor: token.colorTextHeading,
-    modalCloseColor: token.colorText,
-    modalFooterBg: 'transparent',
-    modalFooterBorderColorSplit: token.colorSplit,
-    modalFooterBorderStyle: token.lineType,
-    modalFooterPaddingVertical: token.paddingXS,
-    modalFooterPaddingHorizontal: token.padding,
-    modalFooterBorderWidth: token.lineWidth,
-    modalConfirmTitleFontSize: token.fontSizeLG,
-    modalIconHoverColor: token.colorIconHover,
-    modalConfirmIconSize: token.fontSize * token.lineHeight,
-    modalCloseBtnSize: token.controlHeightLG * 0.6,
-  });
-  return [genInputStyle(modalToken), genItemContainerStyle(modalToken)];
+  const selectModalToken = mergeToken<SelectModalToken>(token);
+  return [genInputStyle(selectModalToken), genItemContainerStyle(selectModalToken)];
 });

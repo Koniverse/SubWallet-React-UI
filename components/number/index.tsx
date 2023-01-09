@@ -100,7 +100,10 @@ const Number: React.FC<SWNumberProps> = (props) => {
   const prefixCls = getPrefixCls('number', customizePrefixCls);
   const [wrapSSR, hashId] = useStyle(prefixCls);
 
-  const classNameExtend = useMemo((): string => classNames(hashId, className, prefixCls), []);
+  const classNameExtend = useMemo(
+    (): string => classNames(hashId, className, prefixCls),
+    [hashId, className, prefixCls],
+  );
   const decimalFontSize = useMemo((): number => {
     if (subFloatNumber) {
       return (integerFontSize * 24) / 38;
