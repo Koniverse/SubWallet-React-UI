@@ -1,9 +1,9 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-import Typography from 'antd/es/typography';
 import React, { useCallback, useState } from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import SelectModal from '../index';
 import Icon from '../../icon';
+import Typography from '../../typography';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
