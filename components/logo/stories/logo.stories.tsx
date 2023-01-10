@@ -7,8 +7,8 @@ export default {
   component: Logo,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    size: { control: 'text', defaultValue: '40px' },
-    subLogoSize: { control: 'text', defaultValue: '16px' },
+    size: { control: 'number', defaultValue: 40 },
+    subLogoSize: { control: 'number', defaultValue: 16 },
     shape: {
       control: 'radio',
       options: ['circle', 'squircle'],

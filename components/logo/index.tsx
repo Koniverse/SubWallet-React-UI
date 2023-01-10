@@ -6,11 +6,11 @@ import type { PresetIconShapeType } from '../_util/shapes';
 import useStyle from './style';
 
 export interface LogoProps {
-  size: string;
-  subLogoSize: string;
-  shape: PresetIconShapeType;
-  subLogoShape: PresetIconShapeType;
-  isShowSubLogo: boolean;
+  size: number;
+  subLogoSize?: number;
+  shape?: PresetIconShapeType;
+  subLogoShape?: PresetIconShapeType;
+  isShowSubLogo?: boolean;
   network?: string;
   subNetwork?: string;
   token?: string;
@@ -23,8 +23,8 @@ const Logo: React.FC<LogoProps> = ({
   subNetwork,
   token,
   subToken,
-  subLogoSize,
-  shape,
+  subLogoSize = 16,
+  shape = 'circle',
   subLogoShape = 'circle',
   isShowSubLogo,
 }: LogoProps) => {
