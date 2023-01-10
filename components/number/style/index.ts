@@ -34,6 +34,6 @@ const genNumberStyle = (token: NumberToken): CSSInterpolation => {
 
 // ============================== Export ==============================
 export default genComponentStyleHook('Number', (token) => {
-  const NumberToken = mergeToken<NumberToken>(token);
-  return [genNumberStyle(NumberToken)];
+  const numberToken = mergeToken<NumberToken>(token);
+  return [genNumberStyle(numberToken)];
 });

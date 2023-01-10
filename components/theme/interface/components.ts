@@ -42,7 +42,11 @@ import type { ComponentToken as SpaceComponentToken } from '../../space/style';
 import type { ComponentToken as SpinComponentToken } from '../../spin/style';
 import type { ComponentToken as SquircleComponentToken } from '../../squircle/style';
 import type { ComponentToken as SwAvatarComponentToken } from '../../sw-avatar/style';
+import type { ComponentToken as SwHeaderComponentToken } from '../../sw-header/style';
 import type { ComponentToken as SwModalComponentToken } from '../../sw-modal/style';
+import type { ComponentToken as SwScreenLayoutComponentToken } from '../../sw-screen-layout/style';
+import type { ComponentToken as SwSubHeaderComponentToken } from '../../sw-sub-header/style';
+import type { ComponentToken as SwTabBarComponentToken } from '../../sw-tab-bar/style';
 import type { ComponentToken as StepsComponentToken } from '../../steps/style';
 import type { ComponentToken as TableComponentToken } from '../../table/style';
 import type { ComponentToken as TabsComponentToken } from '../../tabs/style';
@@ -101,9 +105,14 @@ export interface ComponentTokenMap {
   Skeleton?: SkeletonComponentToken;
   Slider?: SliderComponentToken;
   Spin?: SpinComponentToken;
+
   Squircle?: SquircleComponentToken;
   SwAvatar?: SwAvatarComponentToken;
+  SwHeader?: SwHeaderComponentToken;
   SwModal?: SwModalComponentToken;
+  SwScreenLayout?: SwScreenLayoutComponentToken;
+  SwSubHeader?: SwSubHeaderComponentToken;
+  SwTabBar?: SwTabBarComponentToken;
   Statistic?: {};
   Switch?: {};
   Tag?: TagComponentToken;

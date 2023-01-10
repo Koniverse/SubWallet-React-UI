@@ -221,4 +221,5 @@ export interface SeedToken extends PresetColorType {
    * @default false
    */
   wireframe: boolean;
+  colorTransparent: string;
 }

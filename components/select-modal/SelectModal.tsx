@@ -24,6 +24,7 @@ export interface SelectModalProps<T extends Record<string, any>> extends SwModal
   background?: 'default' | 'transparent';
   placeholder?: string;
   size?: 'default' | 'sm' | 'medium' | 'large';
+  inputWidth?: number | string;
 }
 
 const SelectModal = <T extends Record<string, any>>(
@@ -50,6 +51,7 @@ const SelectModal = <T extends Record<string, any>>(
     placeholder = 'Select box',
     size: inputSize = 'default',
     forceRenderFooter = false,
+    inputWidth = '100%',
     id,
     onCancel,
     ...restProps
@@ -126,7 +128,7 @@ const SelectModal = <T extends Record<string, any>>(
   return wrapSSR(
     <NoCompactStyle>
       <NoFormStyle status override>
-        <div onClick={openModal} className={inputClassNameExtended}>
+        <div onClick={openModal} className={inputClassNameExtended} style={{ width: inputWidth }}>
           <div className={classNames(`${prefixCls}-input-content`)}>
             {_renderInput(selectedItem)}
           </div>
