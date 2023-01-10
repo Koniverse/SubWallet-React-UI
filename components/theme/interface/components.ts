@@ -28,6 +28,7 @@ import type { ComponentToken as ModalComponentToken } from '../../modal/style';
 import type { ComponentToken as NotificationComponentToken } from '../../notification/style';
 import type { ComponentToken as NumberComponentToken } from '../../number/style';
 import type { ComponentToken as PopconfirmComponentToken } from '../../popconfirm/style';
+import type { ComponentToken as PinCodeComponentToken } from '../../pincode/style';
 import type { ComponentToken as PopoverComponentToken } from '../../popover/style';
 import type { ComponentToken as ProgressComponentToken } from '../../progress/style';
 import type { ComponentToken as RadioComponentToken } from '../../radio/style';
@@ -95,6 +96,7 @@ export interface ComponentTokenMap {
   Notification?: NotificationComponentToken;
   Number?: NumberComponentToken;
   Pagination?: {};
+  PinCode?: PinCodeComponentToken;
   Popover?: PopoverComponentToken;
   Popconfirm?: PopconfirmComponentToken;
   Rate?: RateComponentToken;

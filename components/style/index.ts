@@ -140,3 +140,15 @@ export const genFocusStyle = (token: DerivativeToken): CSSObject => ({
     ...genFocusOutline(token),
   },
 });
+
+export const squircleSvgInput = {
+  WebkitMaskImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44px' height='44px' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CclipPath id='se-64-64-8.192-32'%3E%3Cpath fill='%23000' d='M 0,32%0AC 0,8.192 8.192,0 32,0%0AL 32,0%0AC 55.808,0 64,8.192 64,32%0AL 64,32%0AC 64,55.808 55.808,64 32,64%0AL 32,64%0AC 8.192,64 0,55.808 0,32%0AL 0,32'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg clip-path='url(%23se-64-64-8.192-32)'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3C/g%3E%3C/svg%3E")`,
+  WebkitMaskRepeat: 'no-repeat',
+  WebkitMaskPosition: 'center center',
+};
+
+export const squircleSvgWrapper = {
+  WebkitMaskImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='48px' height='48px' viewBox='0 0 64 64'%3E%3Cdefs%3E%3CclipPath id='se-64-64-8.192-32'%3E%3Cpath fill='%23000' d='M 0,32%0AC 0,8.192 8.192,0 32,0%0AL 32,0%0AC 55.808,0 64,8.192 64,32%0AL 64,32%0AC 64,55.808 55.808,64 32,64%0AL 32,64%0AC 8.192,64 0,55.808 0,32%0AL 0,32'/%3E%3C/clipPath%3E%3C/defs%3E%3Cg clip-path='url(%23se-64-64-8.192-32)'%3E%3Crect width='64' height='64' fill='%23000'/%3E%3C/g%3E%3C/svg%3E")`,
+  WebkitMaskRepeat: 'no-repeat',
+  WebkitMaskPosition: 'center center',
+};
