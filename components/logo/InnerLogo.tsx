@@ -8,7 +8,7 @@ import useStyle from './style';
 
 export interface SWLogoProps {
   shape: PresetIconShapeType;
-  size: string;
+  size: number;
   token?: string;
   network?: string;
 }

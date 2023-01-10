@@ -1,6 +1,8 @@
 import type { ComponentToken as AlertComponentToken } from '../../alert/style';
 import type { ComponentToken as AnchorComponentToken } from '../../anchor/style';
 import type { ComponentToken as AvatarComponentToken } from '../../avatar/style';
+import type { ComponentToken as AccountCardComponentToken } from '../../web3block/account-card/style';
+import type { ComponentToken as AccountItemComponentToken } from '../../web3block/account-item/style';
 import type { ComponentToken as ActivityIndicatorComponentToken } from '../../activity-indicator/style';
 import type { ComponentToken as BackTopComponentToken } from '../../back-top/style';
 import type { ComponentToken as ButtonComponentToken } from '../../button/style';
@@ -67,6 +69,8 @@ export interface ComponentTokenMap {
   Alert?: AlertComponentToken;
   Anchor?: AnchorComponentToken;
   Avatar?: AvatarComponentToken;
+  AccountCard?: AccountCardComponentToken;
+  AccountItem?: AccountItemComponentToken;
   ActivityIndicator?: ActivityIndicatorComponentToken;
   BackTop?: BackTopComponentToken;
   Badge?: {};

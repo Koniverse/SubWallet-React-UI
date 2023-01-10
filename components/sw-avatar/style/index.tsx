@@ -16,7 +16,6 @@ const genSwAvatarStyle = (token: SwAvatarToken): CSSInterpolation => {
         display: 'flex',
         justifyContent: 'center',
         position: 'relative',
-        width: 'fit-content',
         border: `2px solid ${token.colorPrimary}`,
 
         '& .icon': {
@@ -31,8 +30,8 @@ const genSwAvatarStyle = (token: SwAvatarToken): CSSInterpolation => {
 
         '& .sub-icon': {
           position: 'absolute',
-          bottom: '-2.5%',
-          right: '-2.5%',
+          bottom: '-4px',
+          right: '-4px',
           borderRadius: '50%',
           padding: 2,
         },
