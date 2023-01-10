@@ -18,6 +18,7 @@ export interface AccountCardProps {
   rightComponent?: React.ReactNode;
   subIcon?: React.ReactNode;
   isSelected?: boolean;
+  onPressItem?: () => void;
 }
 
 const AccountCard: React.FC<AccountCardProps> = ({
@@ -32,6 +33,7 @@ const AccountCard: React.FC<AccountCardProps> = ({
   rightComponent,
   subIcon,
   isSelected,
+  onPressItem,
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('account-card');
@@ -40,7 +42,7 @@ const AccountCard: React.FC<AccountCardProps> = ({
     '-selected': isSelected,
   });
   return wrapSSR(
-    <div className={classes}>
+    <div className={classes} onClick={onPressItem}>
       <SwAvatar
         value={address}
         size={size}

@@ -19,6 +19,7 @@ export interface AccountCardSelectionProps {
   subLength?: number;
   onCopy?: () => void;
   onPressOption?: () => void;
+  onPressItem?: () => void;
 }
 
 const AccountCardSelection: React.FC<AccountCardSelectionProps> = ({
@@ -35,6 +36,7 @@ const AccountCardSelection: React.FC<AccountCardSelectionProps> = ({
   subLength,
   onCopy,
   onPressOption,
+  onPressItem,
 }) => {
   const getRightComponent = () => (
     <div className="ant-account-card-right-part">
@@ -80,6 +82,7 @@ const AccountCardSelection: React.FC<AccountCardSelectionProps> = ({
       subLength={subLength}
       isSelected={isSelected}
       rightComponent={getRightComponent()}
+      onPressItem={onPressItem}
     />
   );
 };
