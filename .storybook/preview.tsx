@@ -1,5 +1,6 @@
 import '../components/style/reset.css';
 import { Story } from '@storybook/react';
+import { ModalContextProvider } from '../components/sw-modal/provider';
 import React from 'react';
 import { ConfigProvider, theme } from '../components';
 import seedToken from '../components/theme/themes/seed';
@@ -66,9 +67,11 @@ export const decorators = [
         logoMap: logoMap,
       }}
     >
-      <div>
-        <Component />
-      </div>
+      <ModalContextProvider>
+        <div>
+          <Component />
+        </div>
+      </ModalContextProvider>
     </ConfigProvider>
   ),
 ];

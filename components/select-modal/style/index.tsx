@@ -1,9 +1,5 @@
-import type React from 'react';
-import { initFadeMotion, initSlideMotion } from '../../style/motion';
-import type { AliasToken, FullToken, GenerateStyle } from '../../theme/internal';
+import type { FullToken, GenerateStyle } from '../../theme/internal';
 import { genComponentStyleHook, mergeToken } from '../../theme/internal';
-import type { TokenWithCommonCls } from '../../theme/util/genComponentStyleHook';
-import { clearFix, genFocusStyle, resetComponent } from '../../style';
 
 /** Component only token. Which will handle additional calculation of alias token */
 export interface ComponentToken {
@@ -35,55 +31,6 @@ export interface SelectModalToken extends FullToken<'SelectModal'> {
   modalIconHoverColor: string;
   modalConfirmIconSize: number;
 }
-
-function box(position: React.CSSProperties['position']): React.CSSProperties {
-  return {
-    position,
-    top: 0,
-    insetInlineEnd: 0,
-    bottom: 0,
-    insetInlineStart: 0,
-  };
-}
-
-export const genModalMaskStyle: GenerateStyle<TokenWithCommonCls<AliasToken>> = (token) => {
-  const { componentCls } = token;
-
-  return [
-    {
-      [`${componentCls}-root`]: {
-        [`${componentCls}${token.antCls}-zoom-enter, ${componentCls}${token.antCls}-zoom-appear`]: {
-          // reset scale avoid mousePosition bug
-          transform: 'none',
-          opacity: 0,
-          animationDuration: token.motionDurationSlow,
-          // https://github.com/ant-design/ant-design/issues/11777
-          userSelect: 'none',
-        },
-
-        [`${componentCls}-mask`]: {
-          ...box('fixed'),
-          zIndex: token.zIndexPopupBase,
-          height: '100%',
-          backgroundColor: token.colorBgMask,
-
-          [`${componentCls}-hidden`]: {
-            display: 'none',
-          },
-        },
-
-        [`${componentCls}-wrap`]: {
-          ...box('fixed'),
-          overflow: 'auto',
-          outline: 0,
-          WebkitOverflowScrolling: 'touch',
-        },
-      },
-    },
-    { [`${componentCls}-root`]: initFadeMotion(token) },
-  ];
-};
-
 const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
   const { componentCls } = token;
 
@@ -95,379 +42,115 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        padding: '8px 16px',
         gap: 8,
-        background: token.colorBgSecondary,
-        color: token.colorText,
+        color: token.colorTextTertiary,
         lineHeight: token.lineHeightLG,
-        fontSize: token.fontSizeLG,
+        borderWidth: token.lineWidth * 2,
+        borderStyle: token.modalHeaderBorderStyle,
 
-        [`&${componentCls}-input-square`]: {
+        '&:hover': {
+          borderColor: `${token['geekblue-4']} !important`,
+        },
+
+        [`&${componentCls}-input-focus`]: {
+          borderColor: `${token['geekblue-6']} !important`,
+        },
+
+        [`${componentCls}-input-placeholder`]: {
+          color: token.colorTextPlaceholder,
+          fontSize: token.fontSizeLG,
+        },
+
+        // Size
+        [`&${componentCls}-input-size-default`]: {
+          padding: `${token.paddingContentVertical - token.lineWidth * 2}px ${
+            token.paddingContentHorizontal - token.lineWidth * 2
+          }px`,
+        },
+
+        [`&${componentCls}-input-size-small`]: {
+          padding: `${token.paddingContentVerticalSM - token.lineWidth * 2}px ${
+            token.paddingContentHorizontal - token.lineWidth * 2
+          }px`,
+        },
+
+        [`&${componentCls}-input-size-medium`]: {
+          padding: `${token.paddingContentVertical - token.lineWidth * 2}px ${
+            token.paddingContentHorizontal - token.lineWidth * 2
+          }px`,
+        },
+
+        [`&${componentCls}-input-size-large`]: {
+          padding: `${token.paddingContentVerticalLG - token.lineWidth * 2}px ${
+            token.paddingContentHorizontal - token.lineWidth * 2
+          }px`,
+        },
+
+        // Border
+        [`&${componentCls}-input-border-square`]: {
           borderRadius: 0,
         },
 
-        [`&${componentCls}-input-round`]: {
-          borderRadius: token.lineHeightLG + 8 * 2,
+        [`&${componentCls}-input-border-round`]: {
+          [`&${componentCls}-input-size-default`]: {
+            borderRadius: token.lineHeightLG + token.paddingContentVertical * 2,
+          },
+
+          [`&${componentCls}-input-size-small`]: {
+            borderRadius: token.lineHeightLG + token.paddingContentVerticalSM * 2,
+          },
+
+          [`&${componentCls}-input-size-medium`]: {
+            borderRadius: token.lineHeightLG + token.paddingContentVertical * 2,
+          },
+
+          [`&${componentCls}-input-size-large`]: {
+            borderRadius: token.lineHeightLG + token.paddingContentVerticalLG * 2,
+          },
         },
 
-        [`&${componentCls}-input-default`]: {
+        [`&${componentCls}-input-border-default`]: {
           borderRadius: token.borderRadius,
         },
 
+        // Background
         [`&${componentCls}-input-bg-default`]: {
           background: token.colorBgSecondary,
+          borderColor: token.colorBgSecondary,
         },
 
         [`&${componentCls}-input-bg-transparent`]: {
           background: 'transparent',
+          borderColor: 'transparent',
         },
       },
     },
   ];
 };
 
-const genModalStyle: GenerateStyle<SelectModalToken> = (token) => {
+const genItemContainerStyle: GenerateStyle<SelectModalToken> = (token) => {
   const { componentCls } = token;
 
   return [
-    // ======================== Root =========================
     {
-      [`${componentCls}-root`]: {
-        [`${componentCls}-wrap`]: {
-          zIndex: token.zIndexPopupBase,
-          position: 'fixed',
-          inset: 0,
-          overflow: 'auto',
-          outline: 0,
-          WebkitOverflowScrolling: 'touch',
-        },
-        [`${componentCls}-wrap-rtl`]: {
-          direction: 'rtl',
-        },
-        [`${componentCls}-d-none`]: {
-          display: 'none',
-        },
-
-        [`@media (max-width: ${token.screenSMMax})`]: {
-          [componentCls]: {
-            maxWidth: 'calc(100vw - 16px)',
-            margin: `${token.marginXS} auto`,
-          },
-          [`${componentCls}-centered`]: {
-            [componentCls]: {
-              flex: 1,
-            },
-          },
-        },
-      },
-    },
-
-    // ======================== Modal ========================
-    {
-      [componentCls]: {
-        ...resetComponent(token),
-        pointerEvents: 'none',
-        margin: '0 auto',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
-
-        [`${componentCls}-title`]: {
-          margin: 0,
-          color: token.modalHeadingColor,
-          fontWeight: token.fontWeightStrong,
-          fontSize: token.modalHeaderTitleFontSize,
-          lineHeight: token.modalHeaderTitleLineHeight,
-          wordWrap: 'break-word',
-          textAlign: 'center',
-        },
-
-        [`${componentCls}-content`]: {
-          position: 'relative',
-          backgroundColor: token.modalContentBg,
-          backgroundClip: 'padding-box',
-          border: 0,
-          borderRadius: `${token.borderRadiusLG}px ${token.borderRadiusLG}px 0 0`,
-          boxShadow: token.boxShadowSecondary,
-          pointerEvents: 'auto',
-          padding: `${token.paddingMD}px ${token.paddingContentHorizontalLG}px`,
-        },
-
-        [`${componentCls}-close`]: {
-          position: 'absolute',
-          top: (token.modalHeaderCloseSize - token.modalCloseBtnSize) / 2,
-          insetInlineEnd: (token.modalHeaderCloseSize - token.modalCloseBtnSize) / 2,
-          zIndex: token.zIndexPopupBase + 10,
-          padding: 0,
-          color: token.modalCloseColor,
-          fontWeight: token.fontWeightStrong,
-          lineHeight: 1,
-          textDecoration: 'none',
-          background: 'transparent',
-          borderRadius: token.borderRadiusSM,
-          width: token.modalConfirmIconSize,
-          height: token.modalConfirmIconSize,
-          border: 0,
-          outline: 0,
-          cursor: 'pointer',
-          transition: `color ${token.motionDurationMid}, background-color ${token.motionDurationMid}`,
-
-          '&-x': {
-            display: 'block',
-            fontSize: token.fontSizeLG,
-            fontStyle: 'normal',
-            lineHeight: `${token.modalCloseBtnSize}px`,
-            textAlign: 'center',
-            textTransform: 'none',
-            textRendering: 'auto',
-          },
-
-          '&:hover': {
-            color: token.modalIconHoverColor,
-            backgroundColor: token.wireframe ? 'transparent' : token.colorFillContent,
-            textDecoration: 'none',
-          },
-
-          '&:active': {
-            backgroundColor: token.wireframe ? 'transparent' : token.colorFillContentHover,
-          },
-
-          ...genFocusStyle(token),
-        },
-
-        [`${componentCls}-header`]: {
-          color: token.colorText,
-          background: token.modalHeaderBg,
-          borderRadius: `${token.borderRadiusLG}px ${token.borderRadiusLG}px 0 0`,
-          marginBottom: token.marginXS,
-        },
-
-        [`${componentCls}-body`]: {
-          fontSize: token.fontSize,
-          lineHeight: token.lineHeight,
-          wordWrap: 'break-word',
-          overflow: 'auto',
-          maxHeight: '80vh',
-          margin: `0 -${token.paddingContentHorizontalLG}px`,
-          padding: `0 ${token.paddingContentHorizontalLG}px`,
-
-          [`${componentCls}-item-container`]: {
-            display: 'flex',
-            flexDirection: 'column',
-
-            [`${componentCls}-item`]: {
-              cursor: 'pointer',
-              padding: '14px 0',
-              margin: '0 12px',
-              borderBottom: `2px solid ${token.colorSplit}`,
-            },
-          },
-        },
-
-        [`${componentCls}-footer`]: {
-          textAlign: 'end',
-          background: token.modalFooterBg,
-          marginTop: token.marginSM,
-
-          [`${token.antCls}-btn + ${token.antCls}-btn:not(${token.antCls}-dropdown-trigger)`]: {
-            marginBottom: 0,
-            marginInlineStart: token.marginXS,
-          },
-        },
-
-        [`${componentCls}-open`]: {
-          overflow: 'hidden',
-        },
-      },
-    },
-
-    // ======================== Pure =========================
-    {
-      [`${componentCls}-pure-panel`]: {
-        top: 'auto',
-        padding: 0,
+      [`${componentCls}-item-container`]: {
         display: 'flex',
         flexDirection: 'column',
+        gap: token.paddingContentVerticalSM,
 
-        [`${componentCls}-content,
-          ${componentCls}-body,
-          ${componentCls}-confirm-body-wrapper`]: {
-          display: 'flex',
-          flexDirection: 'column',
-          flex: 'auto',
-        },
-
-        [`${componentCls}-confirm-body`]: {
-          marginBottom: 'auto',
+        [`${componentCls}-item`]: {
+          cursor: 'pointer',
         },
       },
     },
   ];
-};
-
-const genModalConfirmStyle: GenerateStyle<SelectModalToken> = (token) => {
-  const { componentCls } = token;
-  const confirmComponentCls = `${componentCls}-confirm`;
-
-  return {
-    [confirmComponentCls]: {
-      '&-rtl': {
-        direction: 'rtl',
-      },
-      [`${token.antCls}-modal-header`]: {
-        display: 'none',
-      },
-      [`${confirmComponentCls}-body-wrapper`]: {
-        ...clearFix(),
-      },
-      [`${confirmComponentCls}-body`]: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        alignItems: 'center',
-
-        [`${confirmComponentCls}-title`]: {
-          flex: '0 0 100%',
-          display: 'block',
-          // create BFC to avoid
-          // https://user-images.githubusercontent.com/507615/37702510-ba844e06-2d2d-11e8-9b67-8e19be57f445.png
-          overflow: 'hidden',
-          color: token.colorTextHeading,
-          fontWeight: token.fontWeightStrong,
-          fontSize: token.modalHeaderTitleFontSize,
-          lineHeight: token.modalHeaderTitleLineHeight,
-
-          [`+ ${confirmComponentCls}-content`]: {
-            marginBlockStart: token.marginXS,
-            flexBasis: '100%',
-            maxWidth: `calc(100% - ${token.modalConfirmIconSize + token.marginSM}px)`,
-          },
-        },
-
-        [`${confirmComponentCls}-content`]: {
-          color: token.colorText,
-          fontSize: token.fontSize,
-        },
-
-        [`> ${token.iconCls}`]: {
-          flex: 'none',
-          marginInlineEnd: token.marginSM,
-          fontSize: token.modalConfirmIconSize,
-
-          [`+ ${confirmComponentCls}-title`]: {
-            flex: 1,
-          },
-
-          // `content` after `icon` should set marginLeft
-          [`+ ${confirmComponentCls}-title + ${confirmComponentCls}-content`]: {
-            marginInlineStart: token.modalConfirmIconSize + token.marginSM,
-          },
-        },
-      },
-      [`${confirmComponentCls}-btns`]: {
-        textAlign: 'end',
-        marginTop: token.marginSM,
-
-        [`${token.antCls}-btn + ${token.antCls}-btn`]: {
-          marginBottom: 0,
-          marginInlineStart: token.marginXS,
-        },
-      },
-    },
-
-    [`${confirmComponentCls}-error ${confirmComponentCls}-body > ${token.iconCls}`]: {
-      color: token.colorError,
-    },
-
-    [`${confirmComponentCls}-warning ${confirmComponentCls}-body > ${token.iconCls},
-        ${confirmComponentCls}-confirm ${confirmComponentCls}-body > ${token.iconCls}`]: {
-      color: token.colorWarning,
-    },
-
-    [`${confirmComponentCls}-info ${confirmComponentCls}-body > ${token.iconCls}`]: {
-      color: token.colorInfo,
-    },
-
-    [`${confirmComponentCls}-success ${confirmComponentCls}-body > ${token.iconCls}`]: {
-      color: token.colorSuccess,
-    },
-
-    // https://github.com/ant-design/ant-design/issues/37329
-    [`${componentCls}-zoom-leave ${componentCls}-btns`]: {
-      pointerEvents: 'none',
-    },
-  };
-};
-
-const genRTLStyle: GenerateStyle<SelectModalToken> = (token) => {
-  const { componentCls } = token;
-  return {
-    [`${componentCls}-root`]: {
-      [`${componentCls}-wrap-rtl`]: {
-        direction: 'rtl',
-
-        [`${componentCls}-confirm-body`]: {
-          direction: 'rtl',
-        },
-      },
-    },
-  };
-};
-
-const genWireframeStyle: GenerateStyle<SelectModalToken> = (token) => {
-  const { componentCls, antCls } = token;
-  const confirmComponentCls = `${componentCls}-confirm`;
-
-  return {
-    [componentCls]: {
-      [`${componentCls}-content`]: {
-        padding: 0,
-      },
-
-      [`${componentCls}-header`]: {
-        padding: token.modalHeaderPadding,
-        borderBottom: `${token.modalHeaderBorderWidth}px ${token.modalHeaderBorderStyle} ${token.modalHeaderBorderColorSplit}`,
-        marginBottom: 0,
-      },
-
-      [`${componentCls}-body`]: {
-        padding: token.modalBodyPadding,
-      },
-
-      [`${componentCls}-footer`]: {
-        padding: `${token.modalFooterPaddingVertical}px ${token.modalFooterPaddingHorizontal}px`,
-        borderTop: `${token.modalFooterBorderWidth}px ${token.modalFooterBorderStyle} ${token.modalFooterBorderColorSplit}`,
-        borderRadius: `0 0 ${token.borderRadiusLG}px ${token.borderRadiusLG}px`,
-        marginTop: 0,
-      },
-    },
-
-    [confirmComponentCls]: {
-      [`${antCls}-modal-body`]: {
-        padding: `${token.padding * 2}px ${token.padding * 2}px ${token.paddingLG}px`,
-      },
-      [`${confirmComponentCls}-body`]: {
-        [`> ${token.iconCls}`]: {
-          marginInlineEnd: token.margin,
-
-          // `content` after `icon` should set marginLeft
-          [`+ ${confirmComponentCls}-title + ${confirmComponentCls}-content`]: {
-            marginInlineStart: token.modalConfirmIconSize + token.margin,
-          },
-        },
-      },
-      [`${confirmComponentCls}-btns`]: {
-        marginTop: token.marginLG,
-      },
-    },
-  };
 };
 
 // ============================== Export ==============================
 export default genComponentStyleHook('SelectModal', (token) => {
   const headerPaddingVertical = token.padding;
-  const headerFontSize = token.fontSizeHeading5;
-  const headerLineHeight = token.lineHeightHeading5;
+  const headerFontSize = token.fontSizeHeading4;
+  const headerLineHeight = token.lineHeightHeading4;
 
   const modalToken = mergeToken<SelectModalToken>(token, {
     modalBodyPadding: token.paddingLG,
@@ -478,10 +161,10 @@ export default genComponentStyleHook('SelectModal', (token) => {
     modalHeaderTitleLineHeight: headerLineHeight,
     modalHeaderTitleFontSize: headerFontSize,
     modalHeaderBorderColorSplit: token.colorSplit,
-    modalHeaderCloseSize: headerLineHeight * headerFontSize + headerPaddingVertical * 2,
+    modalHeaderCloseSize: token.controlHeightLG,
     modalContentBg: token.colorBgElevated,
     modalHeadingColor: token.colorTextHeading,
-    modalCloseColor: token.colorTextDescription,
+    modalCloseColor: token.colorText,
     modalFooterBg: 'transparent',
     modalFooterBorderColorSplit: token.colorSplit,
     modalFooterBorderStyle: token.lineType,
@@ -491,15 +174,7 @@ export default genComponentStyleHook('SelectModal', (token) => {
     modalConfirmTitleFontSize: token.fontSizeLG,
     modalIconHoverColor: token.colorIconHover,
     modalConfirmIconSize: token.fontSize * token.lineHeight,
-    modalCloseBtnSize: token.controlHeightLG * 0.55,
+    modalCloseBtnSize: token.controlHeightLG * 0.6,
   });
-  return [
-    genInputStyle(modalToken),
-    genModalStyle(modalToken),
-    genModalConfirmStyle(modalToken),
-    genRTLStyle(modalToken),
-    genModalMaskStyle(modalToken),
-    token.wireframe && genWireframeStyle(modalToken),
-    initSlideMotion(modalToken, 'slide-down'),
-  ];
+  return [genInputStyle(modalToken), genItemContainerStyle(modalToken)];
 });

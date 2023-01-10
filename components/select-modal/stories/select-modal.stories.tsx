@@ -1,8 +1,7 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import Typography from 'antd/es/typography';
-import React, { useCallback, useContext, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import { SelectModalContext, SelectModalContextProvider } from '../provider';
 import SelectModal from '../index';
 import Icon from '../../icon';
 
@@ -15,41 +14,23 @@ export default {
     title: {
       type: 'string',
     },
-    items: {
-      if: {
-        exists: false,
-      },
+    placeholder: {
+      type: 'string',
     },
-    itemKey: {
-      if: {
-        exists: false,
-      },
+    maskClosable: {
+      type: 'boolean',
     },
-    selected: {
-      if: {
-        exists: false,
-      },
+    shape: {
+      control: 'radio',
+      options: ['default', 'square', 'round'],
     },
-    renderItem: {
-      if: {
-        exists: false,
-      },
+    background: {
+      control: 'radio',
+      options: ['default', 'transparent'],
     },
-    renderSelected: {
-      if: {
-        exists: false,
-      },
-    },
-    id: {
-      if: {
-        exists: false,
-      },
-    },
-    onSelect: {
-      if: {
-        arg: 'neverCheck',
-        exists: true,
-      },
+    size: {
+      control: 'select',
+      options: ['default', 'small', 'medium', 'large'],
     },
   },
   // @ts-ignore
@@ -62,24 +43,20 @@ interface Item {
 
 const items: Item[] = [];
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 5; i++) {
   items.push({ value: i.toString(), label: i.toString() });
 }
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 // @ts-ignore
-const Wrapper: ComponentStory<typeof SelectModal> = ({ ...args }) => {
+const Template: ComponentStory<typeof SelectModal> = ({ title, ...args }) => {
   const [selected, setSelected] = useState<string>('');
   const [selected2, setSelected2] = useState<string>('');
 
-  const { activeModal } = useContext(SelectModalContext);
-
-  const renderSelected = useCallback((item?: Item) => {
-    if (!item) {
-      return <Typography.Text style={{ color: 'white' }}>Select</Typography.Text>;
-    }
-    return <Typography.Text style={{ color: 'white' }}>{item.value}</Typography.Text>;
-  }, []);
+  const renderSelected = useCallback(
+    (item: Item) => <Typography.Text style={{ color: 'white' }}>{item.value}</Typography.Text>,
+    [],
+  );
 
   const renderItem = useCallback(
     (item: Item, _selected: boolean) => (
@@ -90,6 +67,9 @@ const Wrapper: ComponentStory<typeof SelectModal> = ({ ...args }) => {
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: 16,
+          padding: '14px 12px',
+          borderRadius: 8,
+          backgroundColor: '#252525',
         }}
       >
         <Typography.Text style={{ color: 'white' }}>{item.value}</Typography.Text>
@@ -101,12 +81,9 @@ const Wrapper: ComponentStory<typeof SelectModal> = ({ ...args }) => {
     [],
   );
 
-  const _onSelect = useCallback(
-    (value: string) => {
-      setSelected(value);
-    },
-    [activeModal],
-  );
+  const _onSelect = useCallback((value: string) => {
+    setSelected(value);
+  }, []);
 
   const _onSelect2 = useCallback((value: string) => {
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
@@ -118,7 +95,7 @@ const Wrapper: ComponentStory<typeof SelectModal> = ({ ...args }) => {
       {/* @ts-ignore */}
       <SelectModal
         {...args}
-        title="Select modal 1"
+        title={`${title} 1`}
         items={items}
         renderSelected={renderSelected}
         renderItem={renderItem}
@@ -130,7 +107,7 @@ const Wrapper: ComponentStory<typeof SelectModal> = ({ ...args }) => {
       {/* @ts-ignore */}
       <SelectModal
         {...args}
-        title="Select modal 2"
+        title={`${title} 2`}
         items={items}
         renderSelected={renderSelected}
         renderItem={renderItem}
@@ -143,17 +120,13 @@ const Wrapper: ComponentStory<typeof SelectModal> = ({ ...args }) => {
   );
 };
 
-// @ts-ignore
-const Template: ComponentStory<typeof SelectModal> = ({ ...args }) => (
-  <SelectModalContextProvider>
-    <Wrapper {...args} />
-  </SelectModalContextProvider>
-);
-
 export const Primary = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Primary.args = {
   maskClosable: false,
   shape: 'default',
   background: 'default',
+  size: 'default',
+  placeholder: 'Select Box',
+  title: 'Select modal',
 };

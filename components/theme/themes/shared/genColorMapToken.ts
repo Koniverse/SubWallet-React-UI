@@ -100,7 +100,7 @@ export default function genColorMapToken(
     colorInfoText: infoColors[9],
     colorInfoTextActive: infoColors[10],
 
-    colorBgMask: new TinyColor(neutralColors.colorBgBase).setAlpha(0.55).toRgbString(),
+    colorBgMask: new TinyColor(neutralColors.colorBgSecondary).setAlpha(0.75).toRgbString(),
     colorWhite: '#fff',
   };
 }

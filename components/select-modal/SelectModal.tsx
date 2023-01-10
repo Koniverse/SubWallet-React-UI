@@ -1,109 +1,43 @@
 import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames';
-import Dialog from 'rc-dialog';
 import { useCallback, useContext, useMemo } from 'react';
 import * as React from 'react';
-import { SelectModalContext } from './provider';
-import useInitSelectModal from './hook/useInitSelectModal';
+import SwModal from '../sw-modal';
+import type { SwModalProps } from '../sw-modal';
+import { ModalContext } from '../sw-modal/provider';
 import { ConfigContext } from '../config-provider';
 import { NoFormStyle } from '../form/context';
 import { NoCompactStyle } from '../space/Compact';
-import { getTransitionName } from '../_util/motion';
-import { canUseDocElement } from '../_util/styleChecker';
-import { renderCloseIcon } from './PurePanel';
 import useStyle from './style';
 import Icon from '../icon';
 import Typography from '../typography';
 
-type MousePosition = { x: number; y: number } | null;
-
-let mousePosition: MousePosition;
-
-// ref: https://github.com/ant-design/ant-design/issues/15795
-const getClickPosition = (e: MouseEvent) => {
-  mousePosition = {
-    x: e.pageX,
-    y: e.pageY,
-  };
-  // 100ms 内发生过点击事件，则从点击位置动画展示
-  // 否则直接 zoom 展示
-  // 这样可以兼容非点击方式展开
-  setTimeout(() => {
-    mousePosition = null;
-  }, 100);
-};
-
-// 只有点击事件支持从鼠标位置动画展开
-if (canUseDocElement()) {
-  document.documentElement.addEventListener('click', getClickPosition, true);
-}
-
-export interface SelectModalProps<T extends Record<string, any>> {
-  /** 对话框是否可见 */
-  /** 标题 */
-  title?: React.ReactNode;
-  /** 是否显示右上角的关闭按钮 */
-  closable?: boolean;
-  /** 点击确定回调 */
-  onCancel?: (e: React.MouseEvent<HTMLButtonElement>) => void;
-  afterClose?: () => void;
-  /** 宽度 */
-  width?: string | number;
-  /** 确认按钮文字 */
-  maskClosable?: boolean;
-  /** 强制渲染 Modal */
-  forceRender?: boolean;
-  destroyOnClose?: boolean;
-  style?: React.CSSProperties;
-  wrapClassName?: string;
-  maskTransitionName?: string;
-  transitionName?: string;
-  className?: string;
-  getContainer?: string | HTMLElement | getContainerFunc | false;
-  zIndex?: number;
-  bodyStyle?: React.CSSProperties;
-  maskStyle?: React.CSSProperties;
-  mask?: boolean;
-  keyboard?: boolean;
-  wrapProps?: any;
-  prefixCls?: string;
-  closeIcon?: React.ReactNode;
-  modalRender?: (node: React.ReactNode) => React.ReactNode;
-  focusTriggerAfterClose?: boolean;
-  mousePosition?: MousePosition;
+export interface SelectModalProps<T extends Record<string, any>> extends SwModalProps {
   items: T[];
   itemKey: string;
   selected: string;
   renderItem: (item: T, selected: boolean) => React.ReactNode;
-  renderSelected?: (item?: T) => React.ReactNode;
+  renderSelected?: (item: T) => React.ReactNode;
   inputClassName?: string;
   onSelect: (value: string) => void;
-  id: string;
   shape?: 'default' | 'square' | 'round';
   background?: 'default' | 'transparent';
+  placeholder?: string;
+  size?: 'default' | 'sm' | 'medium' | 'large';
 }
-
-type getContainerFunc = () => HTMLElement;
 
 const SelectModal = <T extends Record<string, any>>(
   props: SelectModalProps<T>,
 ): React.ReactNode => {
-  const {
-    getPopupContainer: getContextPopupContainer,
-    getPrefixCls,
-    direction,
-  } = React.useContext(ConfigContext);
+  const { getPrefixCls } = React.useContext(ConfigContext);
 
-  const { activeModal, checkActive, inactiveModal } = useContext(SelectModalContext);
+  const { activeModal, inactiveModal, checkActive } = useContext(ModalContext);
 
   const {
     prefixCls: customizePrefixCls,
     className,
     wrapClassName,
-    getContainer,
-    closeIcon,
     focusTriggerAfterClose = true,
-    width = 400,
     items,
     renderItem,
     renderSelected,
@@ -111,15 +45,15 @@ const SelectModal = <T extends Record<string, any>>(
     selected,
     inputClassName,
     onSelect,
-    title = 'Select',
     shape = 'default',
     background = 'default',
+    placeholder = 'Select box',
+    size: inputSize = 'default',
+    forceRenderFooter = false,
     id,
     onCancel,
     ...restProps
   } = props;
-
-  useInitSelectModal(id);
 
   const isActive = checkActive(id);
 
@@ -129,48 +63,47 @@ const SelectModal = <T extends Record<string, any>>(
   );
 
   const prefixCls = getPrefixCls('select-modal', customizePrefixCls);
-  const rootPrefixCls = getPrefixCls();
   // Style
   const [wrapSSR, hashId] = useStyle(prefixCls);
 
-  const wrapClassNameExtended = classNames(wrapClassName, {
-    [`${prefixCls}-wrap-rtl`]: direction === 'rtl',
-    [`${prefixCls}-d-none`]: !isActive,
-  });
-
-  const inputClassNameExtended = classNames(hashId, `${prefixCls}-input`, inputClassName, {
-    [`${prefixCls}-input-default`]: shape === 'default',
-    [`${prefixCls}-input-square`]: shape === 'square',
-    [`${prefixCls}-input-round`]: shape === 'round',
-    [`${prefixCls}-input-bg-default`]: background === 'default',
-    [`${prefixCls}-input-bg-transparent`]: background === 'transparent',
-  });
+  const inputClassNameExtended = classNames(
+    hashId,
+    `${prefixCls}-input`,
+    `${prefixCls}-input-border-${shape}`,
+    `${prefixCls}-input-size-${inputSize}`,
+    `${prefixCls}-input-bg-${background}`,
+    inputClassName,
+    {
+      [`${prefixCls}-input-focus`]: isActive,
+    },
+  );
 
   const openModal = useCallback(() => {
     activeModal(id);
   }, [activeModal, id]);
 
-  const handleCancel = useCallback(
-    (e: React.MouseEvent<HTMLButtonElement>) => {
-      inactiveModal(id);
-      onCancel?.(e);
-    },
-    [onCancel, id, inactiveModal],
-  );
+  const handleCancel = useCallback(() => {
+    inactiveModal(id);
+    onCancel?.();
+  }, [onCancel, id, inactiveModal]);
 
   const _renderInput = useCallback(
     (item: T | undefined) => {
+      if (!item) {
+        return (
+          <Typography.Text className={classNames(`${prefixCls}-input-placeholder`)}>
+            {placeholder}
+          </Typography.Text>
+        );
+      }
+
       if (renderSelected) {
         return renderSelected(item);
       }
 
-      if (!item) {
-        return <Typography.Text style={{ color: 'white' }}>Select</Typography.Text>;
-      }
-
       return renderItem(item, false);
     },
-    [renderSelected],
+    [renderSelected, placeholder],
   );
 
   const _onSelect = useCallback(
@@ -199,30 +132,22 @@ const SelectModal = <T extends Record<string, any>>(
           </div>
           <Icon type='fontAwesome' fontawesomeIcon={faAngleDown} size="xs" />
         </div>
-        <Dialog
-          width={width}
-          title={title}
+        <SwModal
           {...restProps}
-          getContainer={getContainer === undefined ? getContextPopupContainer : getContainer}
-          prefixCls={prefixCls}
-          rootClassName={hashId}
-          wrapClassName={wrapClassNameExtended}
-          visible={isActive}
-          mousePosition={restProps.mousePosition ?? mousePosition}
-          onClose={handleCancel}
-          closeIcon={renderCloseIcon(prefixCls, closeIcon)}
+          id={id}
+          forceRenderFooter={forceRenderFooter}
+          wrapClassName={wrapClassName}
+          onCancel={handleCancel}
           focusTriggerAfterClose={focusTriggerAfterClose}
-          transitionName={getTransitionName(rootPrefixCls, 'slide-down', props.transitionName)}
-          maskTransitionName={getTransitionName(rootPrefixCls, 'fade', props.maskTransitionName)}
           className={classNames(hashId, className)}
         >
-          <div className={classNames(`${prefixCls}-item-container`)}>
+          <div className={classNames(hashId, `${prefixCls}-item-container`)}>
             {items.map((item, index) => {
               const isSelected = item[itemKey] === selected;
               return _renderItem(item, index, isSelected);
             })}
           </div>
-        </Dialog>
+        </SwModal>
       </NoFormStyle>
     </NoCompactStyle>,
   );
