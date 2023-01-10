@@ -44,7 +44,7 @@ const QRCode: React.FC<QRCodeProps> = (props) => {
     };
     return {
       value,
-      size: size - (token.paddingSM + token.lineWidth) * 2,
+      size: size - token.paddingSM * 2,
       level: errorLevel,
       bgColor: 'transparent',
       fgColor: color,
@@ -80,7 +80,7 @@ const QRCode: React.FC<QRCodeProps> = (props) => {
               {status === 'loading' && <Spin />}
               {status === 'expired' && (
                 <>
-                  <p className={`${prefixCls}-expired`}>{locale.expired}</p>
+                  <div className={`${prefixCls}-expired`}>{locale.expired}</div>
                   {typeof onRefresh === 'function' && (
                     <Button type="link" icon={<ReloadOutlined />} onClick={onRefresh}>
                       {locale.refresh}

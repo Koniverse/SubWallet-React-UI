@@ -10,7 +10,7 @@ import { PresetBarShapeTypes } from '../../_util/shapes';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Core/Tag',
+  title: 'Basic Components/Tag',
   component: Tag,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {

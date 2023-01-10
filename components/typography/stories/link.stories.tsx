@@ -7,7 +7,7 @@ import IconComponent from '../../icon';
 const { Link } = Typography;
 
 export default {
-  title: 'Core/Link',
+  title: 'Core/Typography/Link',
   component: Link,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {

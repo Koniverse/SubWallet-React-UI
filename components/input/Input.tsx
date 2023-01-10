@@ -5,10 +5,10 @@ import RcInput from 'rc-input';
 import type { BaseInputProps } from 'rc-input/lib/interface';
 import { composeRef } from 'rc-util/lib/ref';
 import React, { forwardRef, useContext, useEffect, useRef } from 'react';
+import { CheckCircle, WarningCircle, XCircle } from 'phosphor-react';
 import { ConfigContext } from '../config-provider';
 import DisabledContext from '../config-provider/DisabledContext';
 import type { SizeType } from '../config-provider/SizeContext';
-import SizeContext from '../config-provider/SizeContext';
 import { FormItemInputContext, NoFormStyle } from '../form/context';
 import { NoCompactStyle, useCompactItemContext } from '../space/Compact';
 import type { InputStatus } from '../_util/statusUtils';
@@ -19,6 +19,9 @@ import { hasPrefixSuffix } from './utils';
 
 // CSSINJS
 import useStyle from './style';
+import type { PresetBarShapeType } from '../_util/shapes';
+import type { SWIconProps } from '../icon';
+import Icon from '../icon';
 
 export interface InputFocusOptions extends FocusOptions {
   cursor?: 'start' | 'end' | 'all';
@@ -125,24 +128,35 @@ export interface InputProps
   disabled?: boolean;
   status?: InputStatus;
   bordered?: boolean;
+  shape?: PresetBarShapeType;
+  label?: string;
+  containerClassName?: string;
   [key: `data-${string}`]: string | undefined;
 }
+
+const StatusIconMap: Record<string, SWIconProps['phosphorIcon']> = {
+  success: CheckCircle,
+  error: XCircle,
+  warning: WarningCircle,
+};
 
 const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const {
     prefixCls: customizePrefixCls,
-    bordered = true,
     status: customStatus,
-    size: customSize,
     disabled: customDisabled,
     onBlur,
     onFocus,
     suffix,
+    prefix,
     allowClear,
     addonAfter,
     addonBefore,
     className,
     onChange,
+    containerClassName,
+    shape = 'default',
+    label,
     ...rest
   } = props;
   const { getPrefixCls, direction, input } = React.useContext(ConfigContext);
@@ -154,18 +168,14 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   const [wrapSSR, hashId] = useStyle(prefixCls);
 
   // ===================== Compact Item =====================
-  const { compactSize, compactItemClassnames } = useCompactItemContext(prefixCls, direction);
-
-  // ===================== Size =====================
-  const size = React.useContext(SizeContext);
-  const mergedSize = compactSize || customSize || size;
+  const { compactItemClassnames } = useCompactItemContext(prefixCls, direction);
 
   // ===================== Disabled =====================
   const disabled = React.useContext(DisabledContext);
   const mergedDisabled = customDisabled ?? disabled;
 
   // ===================== Status =====================
-  const { status: contextStatus, hasFeedback, feedbackIcon } = useContext(FormItemInputContext);
+  const { status: contextStatus, hasFeedback } = useContext(FormItemInputContext);
   const mergedStatus = getMergedStatus(contextStatus, customStatus);
 
   // ===================== Focus warning =====================
@@ -200,10 +210,16 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     onChange?.(e);
   };
 
-  const suffixNode = (hasFeedback || suffix) && (
+  const suffixNode = (!!mergedStatus || suffix) && (
     <>
+      {!!mergedStatus && (
+        <Icon
+          phosphorIcon={StatusIconMap[mergedStatus]}
+          weight="fill"
+          className={`${prefixCls}-status-icon`}
+        />
+      )}
       {suffix}
-      {hasFeedback && feedbackIcon}
     </>
   );
 
@@ -216,72 +232,58 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   }
 
   return wrapSSR(
-    <RcInput
-      ref={composeRef(ref, inputRef)}
-      prefixCls={prefixCls}
-      autoComplete={input?.autoComplete}
-      {...rest}
-      disabled={mergedDisabled || undefined}
-      onBlur={handleBlur}
-      onFocus={handleFocus}
-      suffix={suffixNode}
-      allowClear={mergedAllowClear}
-      className={classNames(className, compactItemClassnames)}
-      onChange={handleChange}
-      addonAfter={
-        addonAfter && (
-          <NoCompactStyle>
-            <NoFormStyle override status>
-              {addonAfter}
-            </NoFormStyle>
-          </NoCompactStyle>
-        )
-      }
-      addonBefore={
-        addonBefore && (
-          <NoCompactStyle>
-            <NoFormStyle override status>
-              {addonBefore}
-            </NoFormStyle>
-          </NoCompactStyle>
-        )
-      }
-      inputClassName={classNames(
+    <div
+      className={classNames(
+        `${prefixCls}-container`,
         {
-          [`${prefixCls}-sm`]: mergedSize === 'small',
-          [`${prefixCls}-lg`]: mergedSize === 'large',
-          [`${prefixCls}-rtl`]: direction === 'rtl',
-          [`${prefixCls}-borderless`]: !bordered,
+          [`${containerClassName}`]: !!containerClassName,
+          [`-shape-${shape}`]: !!shape,
+          [`-rtl`]: direction === 'rtl',
+          '-has-prefix': !!prefix,
+          '-has-suffix': !!mergedStatus || !!suffix,
+          '-disabled': !!mergedDisabled,
         },
-        !inputHasPrefixSuffix && getStatusClassNames(prefixCls, mergedStatus),
+        getStatusClassNames('', mergedStatus, hasFeedback),
         hashId,
       )}
-      affixWrapperClassName={classNames(
-        {
-          [`${prefixCls}-affix-wrapper-sm`]: mergedSize === 'small',
-          [`${prefixCls}-affix-wrapper-lg`]: mergedSize === 'large',
-          [`${prefixCls}-affix-wrapper-rtl`]: direction === 'rtl',
-          [`${prefixCls}-affix-wrapper-borderless`]: !bordered,
-        },
-        getStatusClassNames(`${prefixCls}-affix-wrapper`, mergedStatus, hasFeedback),
-        hashId,
-      )}
-      wrapperClassName={classNames(
-        {
-          [`${prefixCls}-group-rtl`]: direction === 'rtl',
-        },
-        hashId,
-      )}
-      groupClassName={classNames(
-        {
-          [`${prefixCls}-group-wrapper-sm`]: mergedSize === 'small',
-          [`${prefixCls}-group-wrapper-lg`]: mergedSize === 'large',
-          [`${prefixCls}-group-wrapper-rtl`]: direction === 'rtl',
-        },
-        getStatusClassNames(`${prefixCls}-group-wrapper`, mergedStatus, hasFeedback),
-        hashId,
-      )}
-    />,
+    >
+      {!!label && <div className={`${prefixCls}-label`}>{label}</div>}
+      <div className={`${prefixCls}-wrapper`}>
+        <RcInput
+          ref={composeRef(ref, inputRef)}
+          prefixCls={prefixCls}
+          autoComplete={input?.autoComplete}
+          {...rest}
+          disabled={mergedDisabled || undefined}
+          onBlur={handleBlur}
+          onFocus={handleFocus}
+          suffix={suffixNode}
+          prefix={prefix}
+          allowClear={mergedAllowClear}
+          className={classNames(className, compactItemClassnames)}
+          onChange={handleChange}
+          addonAfter={
+            addonAfter && (
+              <NoCompactStyle>
+                <NoFormStyle override status>
+                  {addonAfter}
+                </NoFormStyle>
+              </NoCompactStyle>
+            )
+          }
+          addonBefore={
+            addonBefore && (
+              <NoCompactStyle>
+                <NoFormStyle override status>
+                  {addonBefore}
+                </NoFormStyle>
+              </NoCompactStyle>
+            )
+          }
+          inputClassName={hashId}
+        />
+      </div>
+    </div>,
   );
 });
 

@@ -5,6 +5,8 @@ import type { ResizableTextAreaRef } from 'rc-textarea/lib/ResizableTextArea';
 import useMergedState from 'rc-util/lib/hooks/useMergedState';
 import omit from 'rc-util/lib/omit';
 import * as React from 'react';
+import { CheckCircle, WarningCircle, XCircle } from 'phosphor-react';
+import type { PresetBarShapeType } from '../_util/shapes';
 import { ConfigContext } from '../config-provider';
 import DisabledContext from '../config-provider/DisabledContext';
 import type { SizeType } from '../config-provider/SizeContext';
@@ -16,6 +18,8 @@ import ClearableLabeledInput from './ClearableLabeledInput';
 import type { InputFocusOptions } from './Input';
 import { fixControlledValue, resolveOnChange, triggerFocus } from './Input';
 import useStyle from './style';
+import type { SWIconProps } from '../icon';
+import Icon from '../icon';
 
 interface ShowCountProps {
   formatter: (args: { value: string; count: number; maxLength?: number }) => string;
@@ -52,6 +56,8 @@ export interface TextAreaProps extends RcTextAreaProps {
   size?: SizeType;
   disabled?: boolean;
   status?: InputStatus;
+  shape?: PresetBarShapeType;
+  label?: string;
 }
 
 export interface TextAreaRef {
@@ -59,6 +65,12 @@ export interface TextAreaRef {
   blur: () => void;
   resizableTextArea?: ResizableTextAreaRef;
 }
+
+const StatusIconMap: Record<string, SWIconProps['phosphorIcon']> = {
+  success: CheckCircle,
+  error: XCircle,
+  warning: WarningCircle,
+};
 
 const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
   (
@@ -75,6 +87,8 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
       onCompositionEnd,
       onChange,
       status: customStatus,
+      shape = 'default',
+      label,
       ...props
     },
     ref,
@@ -86,11 +100,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     const disabled = React.useContext(DisabledContext);
     const mergedDisabled = customDisabled ?? disabled;
 
-    const {
-      status: contextStatus,
-      hasFeedback,
-      feedbackIcon,
-    } = React.useContext(FormItemInputContext);
+    const { status: contextStatus, hasFeedback } = React.useContext(FormItemInputContext);
     const mergedStatus = getMergedStatus(contextStatus, customStatus);
 
     const innerRef = React.useRef<RcTextArea>(null);
@@ -103,7 +113,6 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     const [value, setValue] = useMergedState(props.defaultValue, {
       value: props.value,
     });
-    const { hidden } = props;
 
     const handleSetValue = (val: string, callback?: () => void) => {
       if (props.value === undefined) {
@@ -232,40 +241,36 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
       />
     );
 
-    // Only show text area wrapper when needed
-    if (showCount || hasFeedback) {
-      const valueLength = [...val].length;
-
-      let dataCount = '';
-      if (typeof showCount === 'object') {
-        dataCount = showCount.formatter({ value: val, count: valueLength, maxLength });
-      } else {
-        dataCount = `${valueLength}${hasMaxLength ? ` / ${maxLength}` : ''}`;
-      }
-
-      return (
-        <div
-          hidden={hidden}
-          className={classNames(
-            `${prefixCls}-textarea`,
-            {
-              [`${prefixCls}-textarea-rtl`]: direction === 'rtl',
-              [`${prefixCls}-textarea-show-count`]: showCount,
-            },
-            getStatusClassNames(`${prefixCls}-textarea`, mergedStatus, hasFeedback),
-            className,
-            hashId,
-          )}
-          style={style}
-          data-count={dataCount}
-        >
+    return wrapSSR(
+      <div
+        className={classNames(
+          `${prefixCls}-container -textarea`,
+          {
+            [`-shape-${shape}`]: !!shape,
+            [`-rtl`]: direction === 'rtl',
+            '-has-suffix': !!mergedStatus,
+            '-disabled': !!mergedDisabled,
+          },
+          getStatusClassNames('', mergedStatus, hasFeedback),
+          hashId,
+        )}
+      >
+        {!!label && <div className={`${prefixCls}-label`}>{label}</div>}
+        <div className={`${prefixCls}-wrapper`}>
           {textareaNode}
-          {hasFeedback && <span className={`${prefixCls}-textarea-suffix`}>{feedbackIcon}</span>}
-        </div>
-      );
-    }
 
-    return wrapSSR(textareaNode);
+          {!!mergedStatus && (
+            <div className={`${prefixCls}-suffix`}>
+              <Icon
+                phosphorIcon={StatusIconMap[mergedStatus]}
+                weight="fill"
+                className={`${prefixCls}-status-icon`}
+              />
+            </div>
+          )}
+        </div>
+      </div>,
+    );
   },
 );
 

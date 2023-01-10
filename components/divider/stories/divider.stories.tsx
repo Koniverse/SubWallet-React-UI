@@ -5,7 +5,7 @@ import Typography from '../../typography';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Core/Divider',
+  title: 'Basic Components/Divider',
   component: Divider,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
