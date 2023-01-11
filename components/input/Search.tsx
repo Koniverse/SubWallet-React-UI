@@ -36,6 +36,7 @@ const Search = React.forwardRef<InputRef, SearchProps>((props, ref) => {
     onChange: customOnChange,
     onCompositionStart,
     onCompositionEnd,
+    containerClassName,
     ...restProps
   } = props;
 
@@ -96,8 +97,6 @@ const Search = React.forwardRef<InputRef, SearchProps>((props, ref) => {
     },
   );
 
-  const cls = classNames(prefixCls, className);
-
   const handleOnCompositionStart: React.CompositionEventHandler<HTMLInputElement> = (e) => {
     composedRef.current = true;
     onCompositionStart?.(e);
@@ -119,9 +118,9 @@ const Search = React.forwardRef<InputRef, SearchProps>((props, ref) => {
       prefixCls={inputPrefixCls}
       prefix={button}
       suffix={suffix}
-      containerClassName="-search"
+      containerClassName={classNames('-search', containerClassName)}
       onChange={onChange}
-      className={cls}
+      className={classNames(prefixCls, className)}
       disabled={disabled}
     />
   );
