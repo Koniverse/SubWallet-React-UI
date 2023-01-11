@@ -3,6 +3,7 @@ import type { ComponentToken as AnchorComponentToken } from '../../anchor/style'
 import type { ComponentToken as AvatarComponentToken } from '../../avatar/style';
 import type { ComponentToken as AccountCardComponentToken } from '../../web3block/account-card/style';
 import type { ComponentToken as AccountItemComponentToken } from '../../web3block/account-item/style';
+import type { ComponentToken as BalanceItemComponentToken } from '../../web3block/balance-item/style';
 import type { ComponentToken as ActivityIndicatorComponentToken } from '../../activity-indicator/style';
 import type { ComponentToken as BackTopComponentToken } from '../../back-top/style';
 import type { ComponentToken as ButtonComponentToken } from '../../button/style';
@@ -72,6 +73,7 @@ export interface ComponentTokenMap {
   Avatar?: AvatarComponentToken;
   AccountCard?: AccountCardComponentToken;
   AccountItem?: AccountItemComponentToken;
+  BalanceItem?: BalanceItemComponentToken;
   ActivityIndicator?: ActivityIndicatorComponentToken;
   BackTop?: BackTopComponentToken;
   Badge?: {};
