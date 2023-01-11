@@ -4,7 +4,7 @@ import BalanceItem from '..';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'Basic Components/BalanceItem',
+  title: 'SubWallet Components/BalanceItem',
   component: BalanceItem,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
