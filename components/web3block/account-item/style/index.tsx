@@ -12,20 +12,8 @@ const genAccountItemStyle = (token: AccountItemToken): CSSInterpolation => {
   return [
     {
       [componentCls]: {
-        display: 'flex',
-        backgroundColor: token.colorBgSecondary,
-        padding: token.paddingSM,
-        borderRadius: token.borderRadiusLG,
-
         '&:hover': {
           backgroundColor: token.colorBgInput,
-        },
-
-        [`${componentCls}-body`]: {
-          paddingLeft: token.paddingXS,
-          display: 'flex',
-          flex: 1,
-          alignItems: 'center',
         },
 
         [`${componentCls}-address`]: {
@@ -46,11 +34,6 @@ const genAccountItemStyle = (token: AccountItemToken): CSSInterpolation => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          marginRight: `-${token.marginXS}px`,
-        },
-
-        [`${componentCls}-btn`]: {
-          marginRight: `-${token.marginXS}px`,
         },
 
         [`&.-selected`]: {

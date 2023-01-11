@@ -1,10 +1,13 @@
 import * as React from 'react';
 import type { IconTheme } from '@polkadot/react-identicon/types';
 import classNames from 'classnames';
+import { CheckCircle } from 'phosphor-react';
 import { ConfigContext } from '../../config-provider';
 import { toShort } from '../../_util/address';
 import SwAvatar from '../../sw-avatar';
 import useStyle from './style';
+import Web3Block from '..';
+import Icon from '../../icon';
 
 export interface AccountItemProps {
   address: string;
@@ -39,21 +42,47 @@ const AccountItem: React.FC<AccountItemProps> = ({
   const classes = classNames(prefixCls, hashId, {
     '-selected': isSelected,
   });
-  return wrapSSR(
-    <div className={classes} onClick={onPressItem}>
-      <SwAvatar
-        value={address}
-        size={size}
-        theme={theme}
-        prefix={prefix}
-        isShowSubIcon={isShowSubIcon}
-        subIcon={subIcon}
-      />
-      <div className={`${prefixCls}-body`}>
-        <div className={`${prefixCls}-address`}>{toShort(address || '', preLength, subLength)}</div>
-      </div>
+
+  const getLeftItem = () => (
+    <SwAvatar
+      value={address}
+      size={size}
+      theme={theme}
+      prefix={prefix}
+      isShowSubIcon={isShowSubIcon}
+      subIcon={subIcon}
+    />
+  );
+
+  const getMiddleItem = () => (
+    <div className={`${prefixCls}-address`}>{toShort(address || '', preLength, subLength)}</div>
+  );
+
+  const getRightItem = () => (
+    <>
+      {isSelected && (
+        <div className={`${prefixCls}-icon`}>
+          <Icon
+            type="phosphor"
+            phosphorIcon={CheckCircle}
+            size="sm"
+            iconColor="#4CEAAC"
+            weight="fill"
+          />
+        </div>
+      )}
       {rightComponent}
-    </div>,
+    </>
+  );
+
+  return wrapSSR(
+    <Web3Block
+      className={classes}
+      leftItem={getLeftItem()}
+      bodyItem={getMiddleItem()}
+      rightItem={getRightItem()}
+      onClick={onPressItem}
+    />,
   );
 };
 

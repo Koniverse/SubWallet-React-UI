@@ -15,6 +15,7 @@ export interface LogoProps {
   subNetwork?: string;
   token?: string;
   subToken?: string;
+  className?: string;
 }
 
 const Logo: React.FC<LogoProps> = ({
@@ -27,6 +28,7 @@ const Logo: React.FC<LogoProps> = ({
   shape = 'circle',
   subLogoShape = 'circle',
   isShowSubLogo,
+  className,
 }: LogoProps) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('logo');
@@ -41,7 +43,7 @@ const Logo: React.FC<LogoProps> = ({
   );
 
   return wrapSSR(
-    <div className={classes}>
+    <div className={`${classes} ${className}`}>
       <InnerLogo shape={shape} size={size} network={network} token={token} />
       {getSubLogo()}
     </div>,
