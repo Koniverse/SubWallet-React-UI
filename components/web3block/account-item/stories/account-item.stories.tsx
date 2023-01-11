@@ -13,11 +13,11 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     address: { control: 'text', defaultValue: '5HbcGs2QXVAc6Q6eoTzLYNAJWpN17AkCFRLnWDaHCiGYXvNc' },
-    size: { control: 'number', defaultValue: 40 },
-    theme: { control: 'radio', options: ['polkadot', 'ethereum'], defaultValue: 'polkadot' },
-    prefix: { control: 'number', defaultValue: 42 },
-    preLength: { control: 'number', defaultValue: 9 },
-    subLength: { control: 'number', defaultValue: 9 },
+    avatarSize: { control: 'number', defaultValue: 40 },
+    avatarTheme: { control: 'radio', options: ['polkadot', 'ethereum'], defaultValue: 'polkadot' },
+    avatarIdentPrefix: { control: 'number', defaultValue: 42 },
+    addressPreLength: { control: 'number', defaultValue: 9 },
+    addressSufLength: { control: 'number', defaultValue: 9 },
     isSelected: { control: 'boolean', defaultValue: false },
     isShowSubIcon: { control: 'boolean', defaultValue: false },
   },

@@ -11,13 +11,13 @@ import Icon from '../../icon';
 
 export interface AccountCardProps {
   address: string;
-  size: number;
   accountName: string;
-  theme: IconTheme;
-  prefix: number;
-  isShowSubIcon: boolean;
-  preLength?: number;
-  subLength?: number;
+  avatarIdentPrefix: number;
+  avatarSize?: number;
+  avatarTheme?: IconTheme;
+  isShowSubIcon?: boolean;
+  addressPreLength?: number;
+  addressSufLength?: number;
   rightComponent?: React.ReactNode;
   subIcon?: React.ReactNode;
   isSelected?: boolean;
@@ -26,13 +26,13 @@ export interface AccountCardProps {
 
 const AccountCard: React.FC<AccountCardProps> = ({
   address,
-  size,
-  theme,
-  prefix,
+  avatarSize,
+  avatarTheme,
+  avatarIdentPrefix,
   isShowSubIcon,
   accountName,
-  preLength,
-  subLength,
+  addressPreLength,
+  addressSufLength,
   rightComponent,
   subIcon,
   isSelected,
@@ -48,18 +48,20 @@ const AccountCard: React.FC<AccountCardProps> = ({
   const getLeftItem = () => (
     <SwAvatar
       value={address}
-      size={size}
-      theme={theme}
-      prefix={prefix}
+      size={avatarSize}
+      theme={avatarTheme}
+      identPrefix={avatarIdentPrefix}
       isShowSubIcon={isShowSubIcon}
       subIcon={subIcon}
     />
   );
 
-  const getBodyItem = () => (
+  const getMiddleItem = () => (
     <>
       <div className={`${prefixCls}-name`}>{accountName}</div>
-      <div className={`${prefixCls}-address`}>{toShort(address || '', preLength, subLength)}</div>
+      <div className={`${prefixCls}-address`}>
+        {toShort(address || '', addressPreLength, addressSufLength)}
+      </div>
     </>
   );
 
@@ -84,7 +86,7 @@ const AccountCard: React.FC<AccountCardProps> = ({
     <Web3Block
       className={classes}
       leftItem={getLeftItem()}
-      bodyItem={getBodyItem()}
+      middleItem={getMiddleItem()}
       rightItem={getRightItem()}
       onClick={onPressItem}
     />,

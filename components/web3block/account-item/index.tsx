@@ -11,12 +11,12 @@ import Icon from '../../icon';
 
 export interface AccountItemProps {
   address: string;
-  size: number;
-  theme: IconTheme;
-  prefix: number;
-  isShowSubIcon: boolean;
-  preLength?: number;
-  subLength?: number;
+  avatarIdentPrefix: number;
+  avatarSize?: number;
+  avatarTheme?: IconTheme;
+  isShowSubIcon?: boolean;
+  addressPreLength?: number;
+  addressSufLength?: number;
   rightComponent?: React.ReactNode;
   subIcon?: React.ReactNode;
   isSelected?: boolean;
@@ -25,12 +25,12 @@ export interface AccountItemProps {
 
 const AccountItem: React.FC<AccountItemProps> = ({
   address,
-  size,
-  theme,
-  prefix,
+  avatarSize,
+  avatarTheme,
+  avatarIdentPrefix,
   isShowSubIcon,
-  preLength,
-  subLength,
+  addressPreLength,
+  addressSufLength,
   rightComponent,
   subIcon,
   isSelected,
@@ -46,16 +46,18 @@ const AccountItem: React.FC<AccountItemProps> = ({
   const getLeftItem = () => (
     <SwAvatar
       value={address}
-      size={size}
-      theme={theme}
-      prefix={prefix}
+      size={avatarSize}
+      theme={avatarTheme}
+      identPrefix={avatarIdentPrefix}
       isShowSubIcon={isShowSubIcon}
       subIcon={subIcon}
     />
   );
 
   const getMiddleItem = () => (
-    <div className={`${prefixCls}-address`}>{toShort(address || '', preLength, subLength)}</div>
+    <div className={`${prefixCls}-address`}>
+      {toShort(address || '', addressPreLength, addressSufLength)}
+    </div>
   );
 
   const getRightItem = () => (
@@ -79,7 +81,7 @@ const AccountItem: React.FC<AccountItemProps> = ({
     <Web3Block
       className={classes}
       leftItem={getLeftItem()}
-      bodyItem={getMiddleItem()}
+      middleItem={getMiddleItem()}
       rightItem={getRightItem()}
       onClick={onPressItem}
     />,

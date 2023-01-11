@@ -6,15 +6,22 @@ import useStyle from './style';
 import { ConfigContext } from '../config-provider';
 
 export interface SwAvatarProps {
-  theme: IconTheme;
-  size: number;
+  theme?: IconTheme;
+  size?: number;
   value: string | null;
-  prefix: number;
-  isShowSubIcon: boolean;
+  identPrefix: number;
+  isShowSubIcon?: boolean;
   subIcon?: React.ReactNode;
 }
 
-const SwAvatar = ({ size, value, prefix, theme, isShowSubIcon, subIcon }: SwAvatarProps) => {
+const SwAvatar = ({
+  size = 40,
+  value,
+  identPrefix = 42,
+  theme = 'polkadot',
+  isShowSubIcon,
+  subIcon,
+}: SwAvatarProps) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('sw-avatar');
   const [wrapSSR, hashId] = useStyle(prefixCls);
@@ -24,7 +31,13 @@ const SwAvatar = ({ size, value, prefix, theme, isShowSubIcon, subIcon }: SwAvat
       className={classes}
       style={{ padding: size * 0.1, borderWidth: size * 0.05, width: size, height: size }}
     >
-      <Identicon className="icon" size={size * 0.7} value={value} prefix={prefix} theme={theme} />
+      <Identicon
+        className="icon"
+        size={size * 0.7}
+        value={value}
+        prefix={identPrefix}
+        theme={theme}
+      />
       {isShowSubIcon && <div className="sub-icon">{subIcon}</div>}
     </div>,
   );
