@@ -1,8 +1,10 @@
 import type { ComponentToken as AlertComponentToken } from '../../alert/style';
 import type { ComponentToken as AnchorComponentToken } from '../../anchor/style';
 import type { ComponentToken as AvatarComponentToken } from '../../avatar/style';
-import type { ComponentToken as AccountCardComponentToken } from '../../web3block/account-card/style';
-import type { ComponentToken as AccountItemComponentToken } from '../../web3block/account-item/style';
+import type { ComponentToken as AccountCardComponentToken } from '../../web3-block/account-card/style';
+import type { ComponentToken as AccountItemComponentToken } from '../../web3-block/account-item/style';
+import type { ComponentToken as BalanceItemComponentToken } from '../../web3-block/balance-item/style';
+import type { ComponentToken as CrowdloanItemComponentToken } from '../../web3-block/crowdloan-item/style';
 import type { ComponentToken as ActivityIndicatorComponentToken } from '../../activity-indicator/style';
 import type { ComponentToken as BackTopComponentToken } from '../../back-top/style';
 import type { ComponentToken as ButtonComponentToken } from '../../button/style';
@@ -61,6 +63,7 @@ import type { ComponentToken as TypographyComponentToken } from '../../typograph
 import type { ComponentToken as UploadComponentToken } from '../../upload/style';
 import type { ComponentToken as TourComponentToken } from '../../tour/style';
 import type { ComponentToken as QRCodeComponentToken } from '../../qrcode/style';
+import type { ComponentToken as Web3BlockComponentToken } from '../../web3-block/base/style';
 import type { ComponentToken as AppComponentToken } from '../../app/style';
 import type { ComponentToken as WaveToken } from '../../_util/wave/style';
 
@@ -71,6 +74,8 @@ export interface ComponentTokenMap {
   Avatar?: AvatarComponentToken;
   AccountCard?: AccountCardComponentToken;
   AccountItem?: AccountItemComponentToken;
+  BalanceItem?: BalanceItemComponentToken;
+  CrowdloanItem?: CrowdloanItemComponentToken;
   ActivityIndicator?: ActivityIndicatorComponentToken;
   BackTop?: BackTopComponentToken;
   Badge?: {};
@@ -142,6 +147,7 @@ export interface ComponentTokenMap {
   Progress?: ProgressComponentToken;
   Tour?: TourComponentToken;
   QRCode?: QRCodeComponentToken;
+  Web3Block?: Web3BlockComponentToken;
   App?: AppComponentToken;
 
   /** @private Internal TS definition. Do not use. */
