@@ -12,7 +12,7 @@ export default {
   argTypes: {
     size: { control: 'number', defaultValue: 40 },
     value: { control: 'text', defaultValue: '5HbcGs2QXVAc6Q6eoTzLYNAJWpN17AkCFRLnWDaHCiGYXvNc' },
-    prefix: { control: 'number', defaultValue: 42 },
+    identPrefix: { control: 'number', defaultValue: 42 },
     theme: { control: 'radio', options: ['polkadot', 'ethereum'], defaultValue: 'polkadot' },
     isShowSubIcon: { control: 'boolean', defaultValue: true },
   },

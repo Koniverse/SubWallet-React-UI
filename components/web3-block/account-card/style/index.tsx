@@ -12,18 +12,8 @@ const genAccountCardStyle = (token: AccountCardToken): CSSInterpolation => {
   return [
     {
       [componentCls]: {
-        display: 'flex',
-        backgroundColor: token.colorBgSecondary,
-        padding: token.paddingSM,
-        borderRadius: token.borderRadiusLG,
-
         '&:hover': {
           backgroundColor: token.colorBgInput,
-        },
-
-        [`${componentCls}-body`]: {
-          paddingLeft: token.paddingXS,
-          flex: 1,
         },
 
         [`${componentCls}-name`]: {
@@ -40,17 +30,12 @@ const genAccountCardStyle = (token: AccountCardToken): CSSInterpolation => {
           color: token.colorTextLight4,
         },
 
-        [`${componentCls}-right-part`]: {
-          display: 'flex',
-          alignItems: 'center',
-        },
-
         [`${componentCls}-icon`]: {
           width: 40,
           height: 40,
           display: 'flex',
-          justifyContent: 'center',
           alignItems: 'center',
+          justifyContent: 'center',
         },
 
         [`&.-selected`]: {
