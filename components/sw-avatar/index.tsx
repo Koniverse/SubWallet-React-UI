@@ -17,7 +17,7 @@ export interface SwAvatarProps {
 const SwAvatar = ({
   size = 40,
   value,
-  identPrefix = 42,
+  identPrefix,
   theme = 'polkadot',
   isShowSubIcon,
   subIcon,
