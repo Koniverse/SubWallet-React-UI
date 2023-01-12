@@ -4,7 +4,7 @@ import type { SwListSectionProps } from '..';
 import SwList from '..';
 import type { DemoAccountType } from './data';
 import { DemoAccounts } from './data';
-import AccountCard from '../../web3block/account-card';
+import AccountCard from '../../web3-block/account-card';
 import Divider from '../../divider';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
@@ -31,15 +31,15 @@ export default {
   ],
 } as ComponentMeta<typeof SwList>;
 
-type AppDisplayType = 'default' | 'with_divider' | 'display_grid' | 'with_loading';
+type AppDisplayType = 'default' | 'with_divider' | 'display_grid';
 
 interface AppProps {
   displayType?: AppDisplayType;
 }
 
 const App = ({ displayType = 'default' }: AppProps) => {
-  // eslint-disable-next-line arrow-body-style
   const renderItem = useCallback(
+    // eslint-disable-next-line arrow-body-style
     (account: DemoAccountType) => {
       return (
         <div key={account.name} className='__item-wrapper'>
@@ -47,9 +47,8 @@ const App = ({ displayType = 'default' }: AppProps) => {
             address={account.address}
             accountName={account.name}
             isShowSubIcon={false}
-            prefix={0}
-            size={40}
-            theme="polkadot"
+            avatarIdentPrefix={0}
+            avatarSize={40}
           />
 
           {displayType === 'with_divider' && <Divider />}
@@ -85,12 +84,6 @@ const App = ({ displayType = 'default' }: AppProps) => {
     sectionProps.displayGrid = true;
     sectionProps.gridGap = '16px';
     sectionProps.minColumnWidth = '150px';
-  } else if (displayType === 'with_loading') {
-    sectionProps.displayRow = true;
-    sectionProps.rowGap = '16px';
-    sectionProps.renderOnScroll = false;
-    sectionProps.hasMoreItems = true;
-    sectionProps.limit = 4;
   }
 
   return <SwList.Section {...sectionProps} />;
@@ -113,10 +106,4 @@ export const DisplayGrid = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 DisplayGrid.args = {
   displayType: 'display_grid',
-};
-
-export const WithLoading = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-WithLoading.args = {
-  displayType: 'with_loading',
 };
