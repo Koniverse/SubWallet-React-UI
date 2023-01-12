@@ -1,6 +1,6 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { ConfigContext } from '../config-provider';
+import { ConfigContext } from '../../config-provider';
 import useStyle from './style';
 
 export interface Web3BlockProps {
@@ -19,7 +19,7 @@ const Web3Block: React.FC<Web3BlockProps> = ({
   className,
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
-  const prefixCls = getPrefixCls('web-3-block');
+  const prefixCls = getPrefixCls('web3-block');
   const [wrapSSR, hashId] = useStyle(prefixCls);
   const classes = classNames(prefixCls, hashId);
 

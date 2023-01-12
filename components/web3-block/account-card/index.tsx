@@ -6,7 +6,7 @@ import { ConfigContext } from '../../config-provider';
 import { toShort } from '../../_util/address';
 import SwAvatar from '../../sw-avatar';
 import useStyle from './style';
-import Web3Block from '..';
+import Web3Block from '../base';
 import Icon from '../../icon';
 
 export interface AccountCardProps {

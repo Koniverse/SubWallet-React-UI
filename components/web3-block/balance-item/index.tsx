@@ -4,7 +4,7 @@ import classNames from 'classnames';
 import { CaretRight } from 'phosphor-react';
 import Number from '../../number';
 import Logo from '../../logo';
-import Web3Block from '..';
+import Web3Block from '../base';
 import { ConfigContext } from '../../config-provider';
 import useStyle from './style';
 import Icon from '../../icon';
