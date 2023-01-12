@@ -4,7 +4,6 @@ import type { ComponentToken as AvatarComponentToken } from '../../avatar/style'
 import type { ComponentToken as AccountCardComponentToken } from '../../web3-block/account-card/style';
 import type { ComponentToken as AccountItemComponentToken } from '../../web3-block/account-item/style';
 import type { ComponentToken as BalanceItemComponentToken } from '../../web3-block/balance-item/style';
-import type { ComponentToken as CrowdloanItemComponentToken } from '../../web3-block/crowdloan-item/style';
 import type { ComponentToken as ActivityIndicatorComponentToken } from '../../activity-indicator/style';
 import type { ComponentToken as BackTopComponentToken } from '../../back-top/style';
 import type { ComponentToken as ButtonComponentToken } from '../../button/style';
@@ -75,7 +74,6 @@ export interface ComponentTokenMap {
   AccountCard?: AccountCardComponentToken;
   AccountItem?: AccountItemComponentToken;
   BalanceItem?: BalanceItemComponentToken;
-  CrowdloanItem?: CrowdloanItemComponentToken;
   ActivityIndicator?: ActivityIndicatorComponentToken;
   BackTop?: BackTopComponentToken;
   Badge?: {};
@@ -124,6 +122,8 @@ export interface ComponentTokenMap {
   SwScreenLayout?: SwScreenLayoutComponentToken;
   SwSubHeader?: SwSubHeaderComponentToken;
   SwTabBar?: SwTabBarComponentToken;
+  Web3Gallery?: {};
+
   Statistic?: {};
   Switch?: {};
   Tag?: TagComponentToken;
