@@ -72,21 +72,14 @@ const Wrapper: React.FC<WrapperProps> = ({ rightType, selectBackground, ...args 
       >
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 16 }}>
           {item.address === ALL_ACCOUNT_KEY ? (
-            <Logo
-              size="40px"
-              isShowSubLogo={false}
-              subLogoSize="0"
-              shape="circle"
-              subLogoShape="circle"
-            />
+            <Logo size={40} isShowSubLogo={false} shape="circle" subLogoShape="circle" />
           ) : (
             <SwAvatar
               theme={item.type}
               size={40}
               value={item.address}
-              prefix={42}
+              identPrefix={42}
               isShowSubIcon={false}
-              subIconType='phosphor'
             />
           )}
           <div>
@@ -120,21 +113,14 @@ const Wrapper: React.FC<WrapperProps> = ({ rightType, selectBackground, ...args 
       >
         <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 16 }}>
           {item.address === ALL_ACCOUNT_KEY ? (
-            <Logo
-              size="20px"
-              isShowSubLogo={false}
-              subLogoSize="0"
-              shape="circle"
-              subLogoShape="circle"
-            />
+            <Logo size={20} isShowSubLogo={false} shape="circle" subLogoShape="circle" />
           ) : (
             <SwAvatar
               theme={item.type}
               size={20}
               value={item.address}
-              prefix={42}
+              identPrefix={42}
               isShowSubIcon={false}
-              subIconType='phosphor'
             />
           )}
           {item.address === ALL_ACCOUNT_KEY ? (

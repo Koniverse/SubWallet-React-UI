@@ -226,24 +226,24 @@ const genSchemaStyles: GenerateStyle<ButtonToken, CSSObject> = (token) => {
       },
 
       '&.-schema-secondary': {
-        ...genSchemaStyle(token['gray-1'], token.colorSecondary),
-        '&:hover': genSchemaStyle(token['gray-2'], token.colorSecondary),
-        '&:active': genSchemaStyle(token['gray-1'], token.colorSecondary),
-        '&.-disabled, &:disabled': genSchemaStyle(token['gray-1'], token.colorSecondary),
+        ...genSchemaStyle(token['gray-1'], token.colorTextLight1),
+        '&:hover': genSchemaStyle(token['gray-2'], token.colorTextLight1),
+        '&:active': genSchemaStyle(token['gray-1'], token.colorTextLight1),
+        '&.-disabled, &:disabled': genSchemaStyle(token['gray-1'], token.colorTextLight5),
       },
 
       '&.-schema-warning': {
-        ...genSchemaStyle(token.colorWarning, token.colorTextDark2),
-        '&:hover': genSchemaStyle(token.colorWarningHover, token.colorTextDark2),
-        '&:active': genSchemaStyle(token.colorWarningActive, token.colorTextDark2),
-        '&.-disabled, &:disabled': genSchemaStyle(token.colorWarningActive, token.colorTextDark5),
+        ...genSchemaStyle(token['yellow-6'], token.colorTextDark2),
+        '&:hover': genSchemaStyle(token['yellow-7'], token.colorTextDark2),
+        '&:active': genSchemaStyle(token['yellow-8'], token.colorTextDark2),
+        '&.-disabled, &:disabled': genSchemaStyle(token['yellow-4'], token.colorTextDark5),
       },
 
       '&.-schema-danger, &.-schema-error': {
-        ...genSchemaStyle(token.colorError, token.colorTextLight1),
-        '&:hover': genSchemaStyle(token.colorErrorHover, token.colorTextLight1),
-        '&:active': genSchemaStyle(token.colorErrorActive, token.colorTextLight1),
-        '&.-disabled, &:disabled': genSchemaStyle(token.colorErrorActive, token.colorTextLight5),
+        ...genSchemaStyle(token['red-6'], token.colorTextLight1),
+        '&:hover': genSchemaStyle(token['red-7'], token.colorTextLight1),
+        '&:active': genSchemaStyle(token['red-8'], token.colorTextLight1),
+        '&.-disabled, &:disabled': genSchemaStyle(token['red-4'], token.colorTextLight5),
       },
     },
     [`${componentCls}-ghost`]: {

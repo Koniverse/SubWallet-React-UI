@@ -23,7 +23,7 @@ export interface SelectModalProps<T extends Record<string, any>> extends SwModal
   shape?: 'default' | 'square' | 'round';
   background?: 'default' | 'transparent';
   placeholder?: string;
-  size?: 'default' | 'sm' | 'medium' | 'large';
+  size?: 'default' | 'small' | 'medium' | 'large';
   inputWidth?: number | string;
 }
 

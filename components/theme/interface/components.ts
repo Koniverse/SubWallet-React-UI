@@ -66,6 +66,7 @@ import type { ComponentToken as QRCodeComponentToken } from '../../qrcode/style'
 import type { ComponentToken as Web3BlockComponentToken } from '../../web3-block/base/style';
 import type { ComponentToken as AppComponentToken } from '../../app/style';
 import type { ComponentToken as WaveToken } from '../../_util/wave/style';
+import type { ComponentToken as SwQrScannerToken } from '../../sw-qr-scanner/style';
 
 export interface ComponentTokenMap {
   Affix?: {};
@@ -151,4 +152,6 @@ export interface ComponentTokenMap {
 
   /** @private Internal TS definition. Do not use. */
   Wave?: WaveToken;
+
+  SwQrScanner?: SwQrScannerToken;
 }

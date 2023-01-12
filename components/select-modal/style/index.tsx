@@ -23,6 +23,11 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
         lineHeight: token.lineHeightLG,
         borderWidth: token.lineWidth * 2,
         borderStyle: token.lineType,
+        overflow: 'hidden',
+
+        [`${componentCls}-input-content`]: {
+          overflow: 'hidden',
+        },
 
         '&:hover': {
           borderColor: `${token['geekblue-4']} !important`,
