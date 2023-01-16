@@ -38,12 +38,12 @@ const genStakingNetworkItemStyle = (token: StakingValidatorToken): CSSInterpolat
           textOverflow: 'ellipsis',
         },
 
-        '.ant-web3-block-left-item': {
+        '& .ant-web3-block-left-item.ant-web3-block-left-item': {
           alignItems: 'flex-start',
           paddingRight: 12,
         },
 
-        '.ant-web3-block-right-item': {
+        '& .ant-web3-block-right-item.ant-web3-block-right-item': {
           alignItems: 'flex-start',
           marginRight: 0,
         },
