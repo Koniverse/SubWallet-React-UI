@@ -23,8 +23,8 @@ const genNetworkItemStyle = (token: NetworkItemToken): CSSInterpolation => {
           backgroundColor: 'transparent',
           borderRadius: 0,
 
-          '& .ant-web3-block-middle-item': {
-            paddingLeft: 12,
+          '& .ant-web3-block-left-item': {
+            paddingRight: 12,
           },
 
           '&:hover': {
