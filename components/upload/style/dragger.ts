@@ -77,7 +77,7 @@ const genDraggerStyle: GenerateStyle<UploadToken> = (token) => {
       border: `2px dotted ${token.colorBgDivider}`,
       transition: `border-color ${token.motionDurationSlow}`,
       borderRadius: token.borderRadiusLG,
-      padding: '32px 16px 10px 16px',
+      padding: '32px 16px',
 
       [`${componentCls}-btn`]: {
         display: 'block',
@@ -95,20 +95,16 @@ const genDraggerStyle: GenerateStyle<UploadToken> = (token) => {
         color: token.colorTextLight4,
         wordBreak: 'break-word',
       },
-      '&.-drag-hover': {
-        paddingBottom: 32,
+      '&:hover': {
+        borderColor: token['geekblue-4'],
+      },
+      '&:focus-within, &.-drag-hover': {
         borderColor: token['geekblue-6'],
       },
       '&.-uploaded': {
-        paddingBottom: 32,
-
         [`${componentCls}-drag__icon`]: {
           color: token.colorWarning,
         },
-      },
-
-      '&:hover': {
-        borderColor: token['geekblue-4'],
       },
     },
   };
