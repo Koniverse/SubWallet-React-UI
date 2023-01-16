@@ -5,6 +5,7 @@ import type { ComponentToken as AccountCardComponentToken } from '../../web3-blo
 import type { ComponentToken as AccountItemComponentToken } from '../../web3-block/account-item/style';
 import type { ComponentToken as BalanceItemComponentToken } from '../../web3-block/balance-item/style';
 import type { ComponentToken as CrowdloanItemComponentToken } from '../../web3-block/crowdloan-item/style';
+import type { ComponentToken as StakingItemComponentToken } from '../../web3-block/staking-item/style';
 import type { ComponentToken as ActivityIndicatorComponentToken } from '../../activity-indicator/style';
 import type { ComponentToken as BackTopComponentToken } from '../../back-top/style';
 import type { ComponentToken as ButtonComponentToken } from '../../button/style';
@@ -76,6 +77,7 @@ export interface ComponentTokenMap {
   AccountItem?: AccountItemComponentToken;
   BalanceItem?: BalanceItemComponentToken;
   CrowdloanItem?: CrowdloanItemComponentToken;
+  StakingItem?: StakingItemComponentToken;
   ActivityIndicator?: ActivityIndicatorComponentToken;
   BackTop?: BackTopComponentToken;
   Badge?: {};
