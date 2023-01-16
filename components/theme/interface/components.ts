@@ -131,6 +131,8 @@ export interface ComponentTokenMap {
   SwScreenLayout?: SwScreenLayoutComponentToken;
   SwSubHeader?: SwSubHeaderComponentToken;
   SwTabBar?: SwTabBarComponentToken;
+  Web3Gallery?: {};
+
   Statistic?: {};
   Switch?: {};
   Tag?: TagComponentToken;
