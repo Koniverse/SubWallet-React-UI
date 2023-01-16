@@ -124,6 +124,7 @@ export interface ComponentTokenMap {
   Spin?: SpinComponentToken;
 
   Squircle?: SquircleComponentToken;
+  SwList?: {};
   SwAvatar?: SwAvatarComponentToken;
   SwHeader?: SwHeaderComponentToken;
   SwModal?: SwModalComponentToken;
