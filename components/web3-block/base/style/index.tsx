@@ -14,6 +14,7 @@ const genAccountCardStyle = (token: Web3BlockToken): CSSInterpolation => {
       [componentCls]: {
         display: 'flex',
         padding: token.paddingSM,
+        cursor: 'pointer',
 
         '&:hover': {
           backgroundColor: token.colorBgInput,
@@ -22,13 +23,13 @@ const genAccountCardStyle = (token: Web3BlockToken): CSSInterpolation => {
         [`${componentCls}-left-item`]: {
           display: 'flex',
           alignItems: 'center',
+          paddingRight: token.paddingXS,
         },
         [`${componentCls}-middle-item`]: {
           display: 'flex',
           flex: 1,
           flexDirection: 'column',
           justifyContent: 'center',
-          paddingLeft: token.paddingXS,
         },
         [`${componentCls}-right-item`]: {
           display: 'flex',

@@ -4,7 +4,6 @@ import type { ComponentToken as AvatarComponentToken } from '../../avatar/style'
 import type { ComponentToken as AccountCardComponentToken } from '../../web3-block/account-card/style';
 import type { ComponentToken as AccountItemComponentToken } from '../../web3-block/account-item/style';
 import type { ComponentToken as BalanceItemComponentToken } from '../../web3-block/balance-item/style';
-import type { ComponentToken as BackgroundIconToken } from '../../background-icon/style';
 import type { ComponentToken as CrowdloanItemComponentToken } from '../../web3-block/crowdloan-item/style';
 import type { ComponentToken as StakingNetworkItemComponentToken } from '../../web3-block/staking-network-item/style';
 import type { ComponentToken as DappItemComponentToken } from '../../web3-block/dapp-item/style';
@@ -49,6 +48,7 @@ import type { ComponentToken as SkeletonComponentToken } from '../../skeleton/st
 import type { ComponentToken as SliderComponentToken } from '../../slider/style';
 import type { ComponentToken as SpaceComponentToken } from '../../space/style';
 import type { ComponentToken as SpinComponentToken } from '../../spin/style';
+import type { ComponentToken as SettingComponentToken } from '../../web3-block/setting-item/style';
 import type { ComponentToken as SquircleComponentToken } from '../../squircle/style';
 import type { ComponentToken as SwAvatarComponentToken } from '../../sw-avatar/style';
 import type { ComponentToken as SwHeaderComponentToken } from '../../sw-header/style';
@@ -79,7 +79,6 @@ export interface ComponentTokenMap {
   Avatar?: AvatarComponentToken;
   AccountCard?: AccountCardComponentToken;
   AccountItem?: AccountItemComponentToken;
-  BackgroundIcon?: BackgroundIconToken;
   BalanceItem?: BalanceItemComponentToken;
   CrowdloanItem?: CrowdloanItemComponentToken;
   StakingNetworkItem?: StakingNetworkItemComponentToken;
@@ -125,7 +124,7 @@ export interface ComponentTokenMap {
   Skeleton?: SkeletonComponentToken;
   Slider?: SliderComponentToken;
   Spin?: SpinComponentToken;
-
+  SettingItem?: SettingComponentToken;
   Squircle?: SquircleComponentToken;
   SwList?: {};
   SwAvatar?: SwAvatarComponentToken;
