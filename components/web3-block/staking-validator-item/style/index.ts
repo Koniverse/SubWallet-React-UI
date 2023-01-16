@@ -40,6 +40,7 @@ const genStakingNetworkItemStyle = (token: StakingValidatorToken): CSSInterpolat
 
         '.ant-web3-block-left-item': {
           alignItems: 'flex-start',
+          paddingRight: 12,
         },
 
         '.ant-web3-block-right-item': {
