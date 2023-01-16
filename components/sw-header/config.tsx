@@ -10,9 +10,7 @@ export interface SwHeaderConfigProps {
 
 export const SwHeaderConfig: SwHeaderConfigProps = {
   default: <Icon type="phosphor" phosphorIcon={List} size="sm" />,
-  logo: (
-    <Logo size="24px" isShowSubLogo={false} subLogoSize="0" shape="circle" subLogoShape="circle" />
-  ),
+  logo: <Logo size={24} isShowSubLogo={false} shape="circle" subLogoShape="circle" />,
 };
 
 export const changeHeaderLogo = (ele: React.ReactNode) => {
