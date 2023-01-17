@@ -49,7 +49,9 @@ const Password = React.forwardRef<InputRef, PasswordProps>((props, ref) => {
   // Remove Password value
   const removePasswordTimeout = useRemovePasswordTimeout(inputRef);
 
-  const onVisibleChange = () => {
+  const onVisibleChange = (e: MouseEvent) => {
+    e.stopPropagation();
+
     const { disabled } = props;
     if (disabled) {
       return;
