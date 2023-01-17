@@ -77,15 +77,14 @@ const genSharedButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token): CSS
         width: buttonSizeMap.md,
       },
 
-      [`&.-content-align-left`]: {
+      [`&.-content-align-left:not(.-icon-only)`]: {
         justifyContent: 'flex-start',
       },
 
-      // todo: icon may have different class name
       '.anticon': {
         height: 28,
         width: 28,
-        fontSize: 26,
+        fontSize: 28,
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: 'center',
@@ -242,7 +241,7 @@ const genSchemaStyles: GenerateStyle<ButtonToken, CSSObject> = (token) => {
       '&.-schema-danger, &.-schema-error': {
         ...genSchemaStyle(token['red-6'], token.colorTextLight1),
         '&:hover': genSchemaStyle(token['red-7'], token.colorTextLight1),
-        '&:active': genSchemaStyle(token['red-8'], token.colorTextLight1),
+        '&:active': genSchemaStyle(token['red-4'], token.colorTextLight1),
         '&.-disabled, &:disabled': genSchemaStyle(token['red-4'], token.colorTextLight5),
       },
     },
@@ -256,13 +255,13 @@ const genSchemaStyles: GenerateStyle<ButtonToken, CSSObject> = (token) => {
         opacity: 0.45,
 
         '&:hover': {
-          opacity: 0.65,
+          opacity: 0.85,
         },
         '&:active': {
-          opacity: 1,
+          opacity: 0.65,
         },
         '&.-disabled, &:disabled': {
-          opacity: 0.4,
+          opacity: 0.3,
         },
       },
     },
