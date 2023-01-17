@@ -14,7 +14,6 @@ const genStakingNetworkItemStyle = (token: StakingNetworkToken): CSSInterpolatio
       [componentCls]: {
         backgroundColor: token.colorBgSecondary,
         borderRadius: token.borderRadiusLG,
-        cursor: 'pointer',
 
         '&:hover': {
           [`${componentCls}-right-icon`]: {

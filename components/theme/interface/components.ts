@@ -50,6 +50,7 @@ import type { ComponentToken as SkeletonComponentToken } from '../../skeleton/st
 import type { ComponentToken as SliderComponentToken } from '../../slider/style';
 import type { ComponentToken as SpaceComponentToken } from '../../space/style';
 import type { ComponentToken as SpinComponentToken } from '../../spin/style';
+import type { ComponentToken as SettingComponentToken } from '../../web3-block/setting-item/style';
 import type { ComponentToken as SquircleComponentToken } from '../../squircle/style';
 import type { ComponentToken as SwAvatarComponentToken } from '../../sw-avatar/style';
 import type { ComponentToken as SwHeaderComponentToken } from '../../sw-header/style';
@@ -127,7 +128,7 @@ export interface ComponentTokenMap {
   Skeleton?: SkeletonComponentToken;
   Slider?: SliderComponentToken;
   Spin?: SpinComponentToken;
-
+  SettingItem?: SettingComponentToken;
   Squircle?: SquircleComponentToken;
   SwList?: {};
   SwAvatar?: SwAvatarComponentToken;

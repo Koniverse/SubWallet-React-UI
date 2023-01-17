@@ -12,7 +12,6 @@ const genDAppItemStyle = (token: DAppItemToken): CSSInterpolation => {
   return [
     {
       [componentCls]: {
-        cursor: 'pointer',
         '&:hover': {
           [`${componentCls}-content-wrapper`]: {
             background: 'transparent',
