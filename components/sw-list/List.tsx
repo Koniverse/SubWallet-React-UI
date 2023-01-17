@@ -4,6 +4,7 @@ import type { FlatListProps } from 'flatlist-react';
 import FlatList from 'flatlist-react';
 import { ConfigContext } from '../config-provider';
 import useStyle from './style';
+import LoadingIcon from '../button/LoadingIcon';
 
 export interface SwListProps<T = any> extends FlatListProps<T> {
   prefixCls?: string;
@@ -17,6 +18,8 @@ function SwList(props: SwListProps) {
     displayGrid,
     displayRow,
     renderOnScroll = true,
+    paginationLoadingIndicator,
+    paginationLoadingIndicatorPosition = 'center',
     ...baseFlatListProps
   } = props;
   const { getPrefixCls } = React.useContext(ConfigContext);
@@ -29,6 +32,8 @@ function SwList(props: SwListProps) {
     '-render-default': !renderOnScroll,
   });
 
+  const defaultLoadingIcon = <LoadingIcon existIcon={false} prefixCls={prefixCls} loading />;
+
   return wrapSSR(
     <div className={`${classes}`}>
       <FlatList
@@ -36,6 +41,8 @@ function SwList(props: SwListProps) {
         renderOnScroll={renderOnScroll}
         displayGrid={displayGrid}
         displayRow={displayRow}
+        paginationLoadingIndicator={paginationLoadingIndicator || defaultLoadingIcon}
+        paginationLoadingIndicatorPosition={paginationLoadingIndicatorPosition}
       />
     </div>,
   );

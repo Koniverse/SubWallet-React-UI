@@ -50,12 +50,14 @@ const SwListSection = (props: SwListSectionProps) => {
           <Input.Search onChange={onChange} placeholder={searchPlaceholder} value={searchText} />
         </div>
       )}
-      <SwList
-        {...restProps}
-        prefixCls={customizePrefixCls}
-        searchBy={searchBy}
-        searchTerm={searchText}
-      />
+      <div className={`${basePrefixCls}-wrapper`}>
+        <SwList
+          {...restProps}
+          prefixCls={customizePrefixCls}
+          searchBy={searchBy}
+          searchTerm={searchText}
+        />
+      </div>
     </div>,
   );
 };
