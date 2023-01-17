@@ -6,6 +6,7 @@ import type { ComponentToken as AccountItemComponentToken } from '../../web3-blo
 import type { ComponentToken as BalanceItemComponentToken } from '../../web3-block/balance-item/style';
 import type { ComponentToken as CrowdloanItemComponentToken } from '../../web3-block/crowdloan-item/style';
 import type { ComponentToken as StakingNetworkItemComponentToken } from '../../web3-block/staking-network-item/style';
+import type { ComponentToken as StakingValidatorItemComponentToken } from '../../web3-block/staking-validator-item/style';
 import type { ComponentToken as DappItemComponentToken } from '../../web3-block/dapp-item/style';
 import type { ComponentToken as StakingItemComponentToken } from '../../web3-block/staking-item/style';
 import type { ComponentToken as ActivityIndicatorComponentToken } from '../../activity-indicator/style';
@@ -82,6 +83,7 @@ export interface ComponentTokenMap {
   BalanceItem?: BalanceItemComponentToken;
   CrowdloanItem?: CrowdloanItemComponentToken;
   StakingNetworkItem?: StakingNetworkItemComponentToken;
+  StakingValidatorItem?: StakingValidatorItemComponentToken;
   DAppItem?: DappItemComponentToken;
   StakingItem?: StakingItemComponentToken;
   ActivityIndicator?: ActivityIndicatorComponentToken;
