@@ -31,7 +31,7 @@ export default {
   ],
 } as ComponentMeta<typeof SwList>;
 
-type AppDisplayType = 'default' | 'with_divider' | 'display_grid';
+type AppDisplayType = 'default' | 'with_divider' | 'display_grid' | 'with_loading';
 
 interface AppProps {
   displayType?: AppDisplayType;
@@ -75,6 +75,11 @@ const App = ({ displayType = 'default' }: AppProps) => {
     searchPlaceholder: 'Search or enter website',
     searchFunction: searchFunc,
     searchMinCharactersCount: 2,
+    renderOnScroll: false,
+    pagination: {
+      hasMore: true,
+      loadMore: () => {},
+    },
   };
 
   if (displayType === 'default') {
@@ -84,6 +89,17 @@ const App = ({ displayType = 'default' }: AppProps) => {
     sectionProps.displayGrid = true;
     sectionProps.gridGap = '16px';
     sectionProps.minColumnWidth = '150px';
+  } else if (displayType === 'with_loading') {
+    sectionProps.displayRow = true;
+    sectionProps.rowGap = '16px';
+    sectionProps.renderOnScroll = false;
+    sectionProps.hasMoreItems = true;
+    sectionProps.limit = 4;
+    sectionProps.renderOnScroll = false;
+    sectionProps.pagination = {
+      hasMore: true,
+      loadMore: () => {},
+    };
   }
 
   return <SwList.Section {...sectionProps} />;
@@ -106,4 +122,10 @@ export const DisplayGrid = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 DisplayGrid.args = {
   displayType: 'display_grid',
+};
+
+export const WithLoading = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+WithLoading.args = {
+  displayType: 'with_loading',
 };

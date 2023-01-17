@@ -28,6 +28,10 @@ const genListStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
             },
           },
         },
+        '.__infinite-loader': {
+          color: token.colorText,
+          fontSize: 24,
+        },
       },
     },
   ];
@@ -49,9 +53,14 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
           paddingRight: token.padding,
         },
 
-        [`${componentCls}`]: {
+        [`${componentCls}-wrapper`]: {
           flexGrow: 1,
+          overflow: 'hidden',
+        },
+
+        [`${componentCls}`]: {
           overflow: 'auto',
+          maxHeight: '100%',
           paddingLeft: token.padding,
           paddingRight: token.padding,
           paddingBottom: token.padding,
