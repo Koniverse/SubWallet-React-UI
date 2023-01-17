@@ -51,7 +51,7 @@ WithCheckCircle.args = {
       size="sm"
     />
   ),
-  rightComponent: (
+  rightItem: (
     <Icon
       type="phosphor"
       phosphorIcon={CheckCircle}
@@ -75,7 +75,7 @@ WithCaretRight.args = {
       size="sm"
     />
   ),
-  rightComponent: (
+  rightItem: (
     <Icon
       type="phosphor"
       phosphorIcon={CaretRight}
@@ -97,7 +97,7 @@ WithToggle.args = {
       size="sm"
     />
   ),
-  rightComponent: <Switch style={{ marginRight: 8 }} />,
+  rightItem: <Switch style={{ marginRight: 8 }} />,
 };
 
 export const NoIcon = Template.bind({});
@@ -107,7 +107,7 @@ NoIcon.args = {};
 export const NoLeftIcon = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 NoLeftIcon.args = {
-  rightComponent: (
+  rightItem: (
     <Icon
       type="phosphor"
       phosphorIcon={CheckCircle}

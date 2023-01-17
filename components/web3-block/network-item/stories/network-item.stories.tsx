@@ -33,7 +33,7 @@ export const WithCaretRight = Template.bind({});
 WithCaretRight.args = {
   networkMainLogoShape: 'circle',
   networkMainLogoSize: 28,
-  rightComponent: (
+  rightItem: (
     <Icon
       type="phosphor"
       phosphorIcon={CaretRight}
@@ -48,7 +48,7 @@ export const WithMinusCircle = Template.bind({});
 WithMinusCircle.args = {
   networkMainLogoShape: 'circle',
   networkMainLogoSize: 28,
-  rightComponent: (
+  rightItem: (
     <Icon
       type="phosphor"
       phosphorIcon={MinusCircle}
@@ -65,7 +65,7 @@ export const WithCheckCircle = Template.bind({});
 WithCheckCircle.args = {
   networkMainLogoShape: 'circle',
   networkMainLogoSize: 28,
-  rightComponent: (
+  rightItem: (
     <Icon
       type="phosphor"
       phosphorIcon={CheckCircle}
@@ -80,5 +80,5 @@ WithCheckCircle.args = {
 export const WithToggle = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 WithToggle.args = {
-  rightComponent: <Switch style={{ marginRight: 8 }} />,
+  rightItem: <Switch style={{ marginRight: 8 }} />,
 };

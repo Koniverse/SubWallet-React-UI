@@ -18,6 +18,11 @@ const genBalanceItemStyle = (token: BalanceItemToken): CSSInterpolation => {
           backgroundColor: 'transparent',
           borderRadius: 0,
 
+          [`${componentCls}-content`]: {
+            borderRadius: 0,
+            backgroundColor: 'transparent',
+          },
+
           '&:hover': {
             backgroundColor: 'transparent',
           },
@@ -30,6 +35,10 @@ const genBalanceItemStyle = (token: BalanceItemToken): CSSInterpolation => {
           },
         },
 
+        [`${componentCls}-content`]: {
+          borderRadius: token.borderRadiusLG,
+        },
+
         [`${componentCls}-name`]: {
           fontSize: token.fontSizeLG,
           lineHeight: token.lineHeightLG,
@@ -38,7 +47,6 @@ const genBalanceItemStyle = (token: BalanceItemToken): CSSInterpolation => {
         },
 
         [`${componentCls}-divider`]: {
-          paddingLeft: 60,
           '& .ant-divider-horizontal': {
             margin: 0,
           },

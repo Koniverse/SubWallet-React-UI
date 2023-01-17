@@ -31,8 +31,9 @@ export const Selection = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Selection.args = {
   subIcon: <Icon type="phosphor" phosphorIcon={QrCode} iconColor="#FFF" size="xs" weight="bold" />,
-  rightComponent: (
-    <div>
+  renderRightItem: (x: React.ReactNode) => (
+    <>
+      {x}
       <Button
         type="ghost"
         size="xs"
@@ -57,7 +58,7 @@ Selection.args = {
           />
         }
       />
-    </div>
+    </>
   ),
 };
 
@@ -65,5 +66,5 @@ export const Toggle = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Toggle.args = {
   subIcon: <Icon type="phosphor" phosphorIcon={QrCode} iconColor="#FFF" size="xs" weight="bold" />,
-  rightComponent: <Switch style={{ marginRight: 8 }} />,
+  renderRightItem: () => <Switch style={{ marginRight: 8 }} />,
 };

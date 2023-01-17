@@ -6,10 +6,11 @@ import { ConfigContext } from '../../config-provider';
 import { toShort } from '../../_util/address';
 import SwAvatar from '../../sw-avatar';
 import useStyle from './style';
+import type { Web3BlockProps } from '../base';
 import Web3Block from '../base';
 import Icon from '../../icon';
 
-export interface AccountCardProps {
+export interface AccountCardProps extends Web3BlockProps {
   address: string;
   accountName: string;
   avatarIdentPrefix: number;
@@ -18,7 +19,6 @@ export interface AccountCardProps {
   isShowSubIcon?: boolean;
   addressPreLength?: number;
   addressSufLength?: number;
-  rightComponent?: React.ReactNode;
   subIcon?: React.ReactNode;
   isSelected?: boolean;
   onPressItem?: () => void;
@@ -33,10 +33,13 @@ const AccountCard: React.FC<AccountCardProps> = ({
   accountName,
   addressPreLength,
   addressSufLength,
-  rightComponent,
   subIcon,
   isSelected,
   onPressItem,
+  leftItem,
+  middleItem,
+  rightItem,
+  ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('account-card');
@@ -45,49 +48,50 @@ const AccountCard: React.FC<AccountCardProps> = ({
     '-selected': isSelected,
   });
 
-  const getLeftItem = () => (
-    <SwAvatar
-      value={address}
-      size={avatarSize}
-      theme={avatarTheme}
-      identPrefix={avatarIdentPrefix}
-      isShowSubIcon={isShowSubIcon}
-      subIcon={subIcon}
-    />
-  );
-
-  const getMiddleItem = () => (
-    <>
-      <div className={`${prefixCls}-name`}>{accountName}</div>
-      <div className={`${prefixCls}-address`}>
-        {toShort(address || '', addressPreLength, addressSufLength)}
-      </div>
-    </>
-  );
-
-  const getRightItem = () => (
-    <>
-      {isSelected && (
-        <div className={`${prefixCls}-icon`}>
-          <Icon
-            type="phosphor"
-            phosphorIcon={CheckCircle}
-            size="sm"
-            iconColor="#4CEAAC"
-            weight="fill"
-          />
-        </div>
-      )}
-      {rightComponent}
-    </>
-  );
-
   return wrapSSR(
     <Web3Block
+      {...props}
       className={classes}
-      leftItem={getLeftItem()}
-      middleItem={getMiddleItem()}
-      rightItem={getRightItem()}
+      leftItem={
+        leftItem || (
+          <SwAvatar
+            value={address}
+            size={avatarSize}
+            theme={avatarTheme}
+            identPrefix={avatarIdentPrefix}
+            isShowSubIcon={isShowSubIcon}
+            subIcon={subIcon}
+          />
+        )
+      }
+      middleItem={
+        middleItem || (
+          <>
+            <div className={`${prefixCls}-name`}>{accountName}</div>
+            <div className={`${prefixCls}-address`}>
+              {toShort(address || '', addressPreLength, addressSufLength)}
+            </div>
+          </>
+        )
+      }
+      rightItem={
+        rightItem || (
+          // eslint-disable-next-line react/jsx-no-useless-fragment
+          <>
+            {isSelected && (
+              <div className={`${prefixCls}-icon`}>
+                <Icon
+                  type="phosphor"
+                  phosphorIcon={CheckCircle}
+                  size="sm"
+                  iconColor="#4CEAAC"
+                  weight="fill"
+                />
+              </div>
+            )}
+          </>
+        )
+      }
       onClick={onPressItem}
     />,
   );
