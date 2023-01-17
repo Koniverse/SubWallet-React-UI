@@ -533,15 +533,30 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
         borderRadius: 48,
       },
 
+      '&.-has-label': {
+        '&.-shape-round, &.-shape-round:before': {
+          borderRadius: token.borderRadiusLG,
+        },
+      },
+
       [`${componentCls}`]: {
         backgroundColor: 'transparent',
         border: 0,
         outline: 'none',
         padding: 0,
         flexGrow: 1,
+        fontWeight: 'inherit',
         height: 48,
         paddingBottom: 12,
         paddingTop: 12,
+      },
+
+      [`${componentCls}-clear-icon`]: {
+        order: 99,
+      },
+
+      [`${componentCls}-clear-icon-hidden`]: {
+        display: 'none',
       },
 
       [`${componentCls}-affix-wrapper`]: {
@@ -563,23 +578,24 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
 
       [`${componentCls}-suffix`]: {
         height: 48,
+        marginRight: -8,
       },
 
       [`${componentCls}-status-icon`]: {
         fontSize: 20,
         marginLeft: 8,
+        marginRight: 8,
       },
 
       [`.__input-action`]: {
         display: 'flex',
-        width: 28,
-        height: 28,
-        marginRight: -4,
+        width: 40,
+        height: 40,
         alignItems: 'center',
         justifyContent: 'center',
         cursor: 'pointer',
         transition: `color ${token.motionDurationSlow}`,
-        fontSize: 20,
+        fontSize: 24,
 
         '&:hover': {
           color: token.colorTextLight2,
@@ -677,13 +693,6 @@ const genSearchInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
   return {
     [`${componentCls}-container.-search`]: {
       [`${componentCls}-prefix`]: {
-        paddingRight: 6,
-      },
-
-      [`${componentCls}-prefix .__input-action`]: {
-        marginRight: 0,
-        marginLeft: -2,
-        fontSize: 24,
         color: token.colorTextLight2,
       },
     },
@@ -720,13 +729,23 @@ const genTextAreaStyle: GenerateStyle<InputToken> = (token) => {
 
   return {
     [`${componentCls}-container.-textarea`]: {
+      '&.-shape-round, &.-shape-round:before': {
+        borderRadius: token.borderRadiusLG,
+      },
+
+      [`${componentCls}-label`]: {
+        paddingTop: 8,
+        top: 0,
+      },
+
       [`${componentCls}`]: {
         height: 'auto',
-        minHeight: 51,
-        marginTop: 13,
-        paddingTop: 0,
-        paddingLeft: 12,
-        paddingRight: 12,
+        minHeight: 52,
+        paddingTop: 6,
+        paddingBottom: 6,
+        paddingLeft: 10,
+        paddingRight: 10,
+        border: '2px solid transparent',
       },
 
       [`&.-has-suffix ${componentCls}`]: {
