@@ -12,6 +12,8 @@ const genAccountItemStyle = (token: AccountItemToken): CSSInterpolation => {
   return [
     {
       [componentCls]: {
+        backgroundColor: token.colorBgSecondary,
+        borderRadius: token.borderRadiusLG,
         '&:hover': {
           backgroundColor: token.colorBgInput,
         },

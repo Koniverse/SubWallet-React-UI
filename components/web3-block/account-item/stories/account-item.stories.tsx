@@ -44,7 +44,7 @@ Selection.args = {
 export const WithChain = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 WithChain.args = {
-  rightComponent: (
+  renderRightItem: () => (
     <div style={{ paddingRight: 8 }}>
       <Logo size={24} network="polkadot" />
     </div>
