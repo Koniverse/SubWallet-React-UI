@@ -6,6 +6,7 @@ import type { ComponentToken as AccountItemComponentToken } from '../../web3-blo
 import type { ComponentToken as BalanceItemComponentToken } from '../../web3-block/balance-item/style';
 import type { ComponentToken as CrowdloanItemComponentToken } from '../../web3-block/crowdloan-item/style';
 import type { ComponentToken as StakingNetworkItemComponentToken } from '../../web3-block/staking-network-item/style';
+import type { ComponentToken as StakingValidatorItemComponentToken } from '../../web3-block/staking-validator-item/style';
 import type { ComponentToken as DappItemComponentToken } from '../../web3-block/dapp-item/style';
 import type { ComponentToken as StakingItemComponentToken } from '../../web3-block/staking-item/style';
 import type { ComponentToken as ActivityIndicatorComponentToken } from '../../activity-indicator/style';
@@ -33,6 +34,7 @@ import type { ComponentToken as MenuComponentToken } from '../../menu/style';
 import type { ComponentToken as MessageComponentToken } from '../../message/style';
 import type { ComponentToken as ModalComponentToken } from '../../modal/style';
 import type { ComponentToken as NotificationComponentToken } from '../../notification/style';
+import type { ComponentToken as NetworkItemComponentToken } from '../../web3-block/network-item/style';
 import type { ComponentToken as NumberComponentToken } from '../../number/style';
 import type { ComponentToken as PopconfirmComponentToken } from '../../popconfirm/style';
 import type { ComponentToken as PinCodeComponentToken } from '../../pincode/style';
@@ -48,6 +50,7 @@ import type { ComponentToken as SkeletonComponentToken } from '../../skeleton/st
 import type { ComponentToken as SliderComponentToken } from '../../slider/style';
 import type { ComponentToken as SpaceComponentToken } from '../../space/style';
 import type { ComponentToken as SpinComponentToken } from '../../spin/style';
+import type { ComponentToken as SettingComponentToken } from '../../web3-block/setting-item/style';
 import type { ComponentToken as SquircleComponentToken } from '../../squircle/style';
 import type { ComponentToken as SwAvatarComponentToken } from '../../sw-avatar/style';
 import type { ComponentToken as SwHeaderComponentToken } from '../../sw-header/style';
@@ -81,6 +84,7 @@ export interface ComponentTokenMap {
   BalanceItem?: BalanceItemComponentToken;
   CrowdloanItem?: CrowdloanItemComponentToken;
   StakingNetworkItem?: StakingNetworkItemComponentToken;
+  StakingValidatorItem?: StakingValidatorItemComponentToken;
   DAppItem?: DappItemComponentToken;
   StakingItem?: StakingItemComponentToken;
   ActivityIndicator?: ActivityIndicatorComponentToken;
@@ -110,6 +114,7 @@ export interface ComponentTokenMap {
   Logo?: LogoComponentToken;
   Mentions?: MentionsComponentToken;
   Notification?: NotificationComponentToken;
+  NetworkItem?: NetworkItemComponentToken;
   Number?: NumberComponentToken;
   Pagination?: {};
   PinCode?: PinCodeComponentToken;
@@ -123,7 +128,7 @@ export interface ComponentTokenMap {
   Skeleton?: SkeletonComponentToken;
   Slider?: SliderComponentToken;
   Spin?: SpinComponentToken;
-
+  SettingItem?: SettingComponentToken;
   Squircle?: SquircleComponentToken;
   SwList?: {};
   SwAvatar?: SwAvatarComponentToken;

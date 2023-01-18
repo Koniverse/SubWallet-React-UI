@@ -164,7 +164,7 @@ const Number: React.FC<SWNumberProps> = (props) => {
       {suffix && (
         <Typography.Text
           className={classNames(`${prefixCls}-suffix`)}
-          style={{ ...rightStyle, fontWeight: weight, fontSize: integerFontSize }}
+          style={{ ...rightStyle, fontWeight: weight, fontSize: decimalFontSize }}
         >
           &nbsp;{suffix}
         </Typography.Text>

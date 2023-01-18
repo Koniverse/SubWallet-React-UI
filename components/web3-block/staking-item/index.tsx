@@ -4,12 +4,13 @@ import classNames from 'classnames';
 import { CaretRight } from 'phosphor-react';
 import Number from '../../number';
 import Logo from '../../logo';
+import type { Web3BlockProps } from '../base';
 import Web3Block from '../base';
 import { ConfigContext } from '../../config-provider';
 import useStyle from './style';
 import Icon from '../../icon';
 
-export interface StakingItemProps {
+export interface StakingItemProps extends Web3BlockProps {
   stakingNetwork: string;
   stakingType?: string;
   convertedStakingValue: string | number | BigNumber;
@@ -37,64 +38,70 @@ const StakingItem: React.FC<StakingItemProps> = ({
   displayToken,
   className,
   onPressItem,
+  leftItem,
+  middleItem,
+  rightItem,
+  ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('staking-item');
   const [wrapSSR, hashId] = useStyle(prefixCls);
   const classes = classNames(prefixCls, hashId);
-  const getLeftItem = () => (
-    <Logo
-      size={networkMainLogoSize}
-      network={networkKey}
-      token={symbol}
-      shape={networkMainLogoShape}
-      isShowSubLogo={false}
-    />
-  );
-
-  const getMiddleItem = () => (
-    <>
-      <div className={`${prefixCls}-name`}>{stakingNetwork}</div>
-      {stakingType && <div className={`${prefixCls}-staking-type`}>{stakingType}</div>}
-    </>
-  );
-
-  const getRightItem = () => (
-    <>
-      <div className={`${prefixCls}-balance-info-wrapper`}>
-        <Number
-          value={stakingValue}
-          decimal={decimal}
-          suffix={displayToken}
-          leftColor="#FFF"
-          rightColor="#FFF"
-        />
-        <Number
-          size={12}
-          prefix="$"
-          value={convertedStakingValue}
-          decimal={0}
-          leftColor="#FFF"
-          leftOpacity={0.45}
-          rightColor="#FFF"
-          rightOpacity={0.45}
-        />
-      </div>
-      <Icon
-        className={`${prefixCls}-right-icon`}
-        type="phosphor"
-        phosphorIcon={CaretRight}
-        size="xs"
-      />
-    </>
-  );
 
   return wrapSSR(
     <Web3Block
+      {...props}
       className={`${classes} ${className}`}
-      leftItem={getLeftItem()}
-      middleItem={getMiddleItem()}
-      rightItem={getRightItem()}
+      leftItem={
+        leftItem || (
+          <Logo
+            size={networkMainLogoSize}
+            network={networkKey}
+            token={symbol}
+            shape={networkMainLogoShape}
+            isShowSubLogo={false}
+          />
+        )
+      }
+      middleItem={
+        middleItem || (
+          <>
+            <div className={`${prefixCls}-name`}>{stakingNetwork}</div>
+            {stakingType && <div className={`${prefixCls}-staking-type`}>{stakingType}</div>}
+          </>
+        )
+      }
+      rightItem={
+        rightItem || (
+          <>
+            <div className={`${prefixCls}-balance-info-wrapper`}>
+              <Number
+                value={stakingValue}
+                decimal={decimal}
+                suffix={displayToken}
+                leftColor="#FFF"
+                rightColor="#FFF"
+              />
+              <Number
+                size={12}
+                prefix="$"
+                value={convertedStakingValue}
+                decimal={0}
+                leftColor="#FFF"
+                leftOpacity={0.45}
+                rightColor="#FFF"
+                rightOpacity={0.45}
+              />
+            </div>
+            <Icon
+              className={`${prefixCls}-right-icon`}
+              type="phosphor"
+              phosphorIcon={CaretRight}
+              size="xs"
+            />
+          </>
+        )
+      }
       onClick={onPressItem}
     />,
   );

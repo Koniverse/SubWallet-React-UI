@@ -1,11 +1,10 @@
-import CloseCircleFilled from '@ant-design/icons/CloseCircleFilled';
 import classNames from 'classnames';
 import type { InputProps as RcInputProps, InputRef } from 'rc-input';
 import RcInput from 'rc-input';
 import type { BaseInputProps } from 'rc-input/lib/interface';
 import { composeRef } from 'rc-util/lib/ref';
 import React, { forwardRef, useContext, useEffect, useRef } from 'react';
-import { CheckCircle, WarningCircle, XCircle } from 'phosphor-react';
+import { CheckCircle, WarningCircle, X, XCircle } from 'phosphor-react';
 import { ConfigContext } from '../config-provider';
 import DisabledContext from '../config-provider/DisabledContext';
 import type { SizeType } from '../config-provider/SizeContext';
@@ -228,7 +227,13 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   if (typeof allowClear === 'object' && allowClear?.clearIcon) {
     mergedAllowClear = allowClear;
   } else if (allowClear) {
-    mergedAllowClear = { clearIcon: <CloseCircleFilled /> };
+    mergedAllowClear = {
+      clearIcon: (
+        <div className='__input-action'>
+          <Icon phosphorIcon={X} weight="bold" />
+        </div>
+      ),
+    };
   }
 
   return wrapSSR(
@@ -241,6 +246,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           [`-rtl`]: direction === 'rtl',
           '-has-prefix': !!prefix,
           '-has-suffix': !!mergedStatus || !!suffix,
+          '-has-label': !!label,
           '-disabled': !!mergedDisabled,
         },
         getStatusClassNames('', mergedStatus, hasFeedback),

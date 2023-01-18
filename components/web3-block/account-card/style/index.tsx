@@ -12,6 +12,8 @@ const genAccountCardStyle = (token: AccountCardToken): CSSInterpolation => {
   return [
     {
       [componentCls]: {
+        backgroundColor: token.colorBgSecondary,
+        borderRadius: token.borderRadiusLG,
         '&:hover': {
           backgroundColor: token.colorBgInput,
         },

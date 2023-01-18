@@ -4,9 +4,9 @@ import { genComponentStyleHook, mergeToken } from '../../../theme/internal';
 
 export interface ComponentToken {}
 
-interface BalanceItemToken extends FullToken<'BalanceItem'> {}
+interface SettingItemToken extends FullToken<'SettingItem'> {}
 
-const genBalanceItemStyle = (token: BalanceItemToken): CSSInterpolation => {
+const genBalanceItemStyle = (token: SettingItemToken): CSSInterpolation => {
   const { componentCls } = token;
 
   return [
@@ -18,13 +18,12 @@ const genBalanceItemStyle = (token: BalanceItemToken): CSSInterpolation => {
           backgroundColor: 'transparent',
           borderRadius: 0,
 
-          [`${componentCls}-content`]: {
-            borderRadius: 0,
-            backgroundColor: 'transparent',
-          },
-
           '&:hover': {
             backgroundColor: 'transparent',
+
+            [`${componentCls}-content`]: {
+              backgroundColor: 'transparent',
+            },
           },
         },
         '&:hover': {
@@ -33,10 +32,10 @@ const genBalanceItemStyle = (token: BalanceItemToken): CSSInterpolation => {
           [`${componentCls}-right-icon`]: {
             color: token.colorTextLight1,
           },
-        },
 
-        [`${componentCls}-content`]: {
-          borderRadius: token.borderRadiusLG,
+          [`${componentCls}-content`]: {
+            borderRadius: token.borderRadiusLG,
+          },
         },
 
         [`${componentCls}-name`]: {
@@ -47,6 +46,7 @@ const genBalanceItemStyle = (token: BalanceItemToken): CSSInterpolation => {
         },
 
         [`${componentCls}-divider`]: {
+          paddingLeft: 60,
           '& .ant-divider-horizontal': {
             margin: 0,
           },
@@ -82,7 +82,7 @@ const genBalanceItemStyle = (token: BalanceItemToken): CSSInterpolation => {
 };
 
 // ============================== Export ==============================
-export default genComponentStyleHook('BalanceItem', (token) => {
-  const accountItemToken = mergeToken<BalanceItemToken>(token);
-  return [genBalanceItemStyle(accountItemToken)];
+export default genComponentStyleHook('SettingItem', (token) => {
+  const settingItemToken = mergeToken<SettingItemToken>(token);
+  return [genBalanceItemStyle(settingItemToken)];
 });

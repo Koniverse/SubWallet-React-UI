@@ -25,5 +25,6 @@ const Template: ComponentStory<typeof BalanceItem> = (args) => <BalanceItem {...
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
+  dividerPadding: 60,
   subNetworkKey: 'kusama',
 };

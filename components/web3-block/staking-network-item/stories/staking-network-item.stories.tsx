@@ -26,9 +26,10 @@ const Template: ComponentStory<typeof StakingNetworkItem> = (args) => (
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
-  rightItem: (
+  renderRightItem: () => (
     <Button
       type="ghost"
+      size="xs"
       icon={
         <Icon
           type="phosphor"

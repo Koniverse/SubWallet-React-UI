@@ -4,9 +4,9 @@ import { genComponentStyleHook, mergeToken } from '../../../theme/internal';
 
 export interface ComponentToken {}
 
-interface BalanceItemToken extends FullToken<'BalanceItem'> {}
+interface NetworkItemToken extends FullToken<'NetworkItem'> {}
 
-const genBalanceItemStyle = (token: BalanceItemToken): CSSInterpolation => {
+const genNetworkItemStyle = (token: NetworkItemToken): CSSInterpolation => {
   const { componentCls } = token;
 
   return [
@@ -14,29 +14,34 @@ const genBalanceItemStyle = (token: BalanceItemToken): CSSInterpolation => {
       [componentCls]: {
         backgroundColor: token.colorBgSecondary,
         borderRadius: token.borderRadiusLG,
+
+        [`${componentCls}-content`]: {
+          borderRadius: token.borderRadiusLG,
+        },
+
         '&.-with-divider': {
           backgroundColor: 'transparent',
           borderRadius: 0,
 
-          [`${componentCls}-content`]: {
-            borderRadius: 0,
-            backgroundColor: 'transparent',
+          '& .ant-web3-block-left-item': {
+            paddingRight: 12,
           },
 
           '&:hover': {
             backgroundColor: 'transparent',
+
+            [`${componentCls}-content`]: {
+              backgroundColor: 'transparent',
+            },
           },
         },
         '&:hover': {
+          borderRadius: token.borderRadiusLG,
           backgroundColor: token.colorBgInput,
 
           [`${componentCls}-right-icon`]: {
             color: token.colorTextLight1,
           },
-        },
-
-        [`${componentCls}-content`]: {
-          borderRadius: token.borderRadiusLG,
         },
 
         [`${componentCls}-name`]: {
@@ -47,6 +52,7 @@ const genBalanceItemStyle = (token: BalanceItemToken): CSSInterpolation => {
         },
 
         [`${componentCls}-divider`]: {
+          paddingLeft: 64,
           '& .ant-divider-horizontal': {
             margin: 0,
           },
@@ -82,7 +88,7 @@ const genBalanceItemStyle = (token: BalanceItemToken): CSSInterpolation => {
 };
 
 // ============================== Export ==============================
-export default genComponentStyleHook('BalanceItem', (token) => {
-  const accountItemToken = mergeToken<BalanceItemToken>(token);
-  return [genBalanceItemStyle(accountItemToken)];
+export default genComponentStyleHook('NetworkItem', (token) => {
+  const accountItemToken = mergeToken<NetworkItemToken>(token);
+  return [genNetworkItemStyle(accountItemToken)];
 });

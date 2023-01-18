@@ -10,7 +10,6 @@ import SizeContext, { sizeNameMap } from '../config-provider/SizeContext';
 import { useCompactItemContext } from '../space/Compact';
 import { cloneElement, isFragment } from '../_util/reactNode';
 import warning from '../_util/warning';
-import Wave from '../_util/wave';
 import Group, { GroupSizeContext } from './button-group';
 import LoadingIcon from './LoadingIcon';
 import type { PresetBrandColorType, PresetStatusColorType } from '../_util/colors';
@@ -336,10 +335,6 @@ const InternalButton: React.ForwardRefRenderFunction<
         {buttonNode}
       </Squircle>
     );
-  }
-
-  if (!isUnBorderedButtonType(type)) {
-    buttonNode = <Wave disabled={!!innerLoading}>{buttonNode}</Wave>;
   }
 
   return wrapSSR(buttonNode);

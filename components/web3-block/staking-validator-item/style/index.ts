@@ -4,9 +4,9 @@ import { genComponentStyleHook, mergeToken } from '../../../theme/internal';
 
 export interface ComponentToken {}
 
-interface StakingNetworkToken extends FullToken<'StakingNetworkItem'> {}
+interface StakingValidatorToken extends FullToken<'StakingValidatorItem'> {}
 
-const genStakingNetworkItemStyle = (token: StakingNetworkToken): CSSInterpolation => {
+const genStakingNetworkItemStyle = (token: StakingValidatorToken): CSSInterpolation => {
   const { componentCls } = token;
 
   return [
@@ -14,6 +14,7 @@ const genStakingNetworkItemStyle = (token: StakingNetworkToken): CSSInterpolatio
       [componentCls]: {
         backgroundColor: token.colorBgSecondary,
         borderRadius: token.borderRadiusLG,
+        cursor: 'pointer',
 
         '&:hover': {
           [`${componentCls}-right-icon`]: {
@@ -37,21 +38,13 @@ const genStakingNetworkItemStyle = (token: StakingNetworkToken): CSSInterpolatio
           textOverflow: 'ellipsis',
         },
 
-        [`${componentCls}-staking-count`]: {
-          display: 'flex',
-          alignItems: 'center',
-          fontSize: token.fontSizeSM,
-          lineHeight: token.lineHeightSM,
-          color: token.colorTextLight4,
-          fontWeight: 500,
-
-          '.ant-number': {
-            fontSize: token.fontSizeSM,
-            paddingRight: 2,
-          },
+        '& .ant-web3-block-left-item.ant-web3-block-left-item': {
+          alignItems: 'flex-start',
+          paddingRight: 12,
         },
 
-        '.ant-web3-block-right-item': {
+        '& .ant-web3-block-right-item.ant-web3-block-right-item': {
+          alignItems: 'flex-start',
           marginRight: 0,
         },
 
@@ -59,13 +52,18 @@ const genStakingNetworkItemStyle = (token: StakingNetworkToken): CSSInterpolatio
           color: token.colorTextLight4,
           paddingLeft: token.paddingXS,
         },
+
+        [`${componentCls}-right-part`]: {
+          display: 'flex',
+          alignItems: 'center',
+        },
       },
     },
   ];
 };
 
 // ============================== Export ==============================
-export default genComponentStyleHook('StakingNetworkItem', (token) => {
-  const stakingNetworkToken = mergeToken<StakingNetworkToken>(token);
-  return [genStakingNetworkItemStyle(stakingNetworkToken)];
+export default genComponentStyleHook('StakingValidatorItem', (token) => {
+  const stakingValidatorToken = mergeToken<StakingValidatorToken>(token);
+  return [genStakingNetworkItemStyle(stakingValidatorToken)];
 });

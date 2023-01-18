@@ -4,13 +4,14 @@ import classNames from 'classnames';
 import { CaretRight } from 'phosphor-react';
 import Number from '../../number';
 import Logo from '../../logo';
+import type { Web3BlockProps } from '../base';
 import Web3Block from '../base';
 import { ConfigContext } from '../../config-provider';
 import useStyle from './style';
 import Icon from '../../icon';
 import Divider from '../../divider';
 
-export interface BalanceItemProps {
+export interface BalanceItemProps extends Web3BlockProps {
   name: string;
   price: string | number | BigNumber;
   convertedBalanceValue: string | number | BigNumber;
@@ -30,6 +31,7 @@ export interface BalanceItemProps {
   className?: string;
   onPressItem?: () => void;
   withDivider?: boolean;
+  dividerPadding?: number;
 }
 
 const BalanceItem: React.FC<BalanceItemProps> = ({
@@ -51,6 +53,11 @@ const BalanceItem: React.FC<BalanceItemProps> = ({
   className,
   onPressItem,
   withDivider = false,
+  dividerPadding = 12,
+  leftItem,
+  middleItem,
+  rightItem,
+  ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('balance-item');
@@ -58,76 +65,78 @@ const BalanceItem: React.FC<BalanceItemProps> = ({
   const classes = classNames(prefixCls, hashId, {
     '-with-divider': withDivider,
   });
-  const getLeftItem = () => (
-    <Logo
-      size={networkMainLogoSize}
-      network={networkKey}
-      token={symbol}
-      shape={networkMainLogoShape}
-      isShowSubLogo={isShowSubLogo}
-      subLogoShape={networkSubLogoShape}
-      subLogoSize={networkSubLogoSize}
-      subNetwork={subNetworkKey}
-      subToken={subSymbol}
-    />
-  );
-
-  const getMiddleItem = () => (
-    <>
-      <div className={`${prefixCls}-name`}>{name}</div>
-      <Number
-        size={12}
-        value={price}
-        decimal={0}
-        prefix="$"
-        leftColor="#4CEAAC"
-        rightColor="#4CEAAC"
-      />
-    </>
-  );
-
-  const getRightItem = () => (
-    <>
-      <div className={`${prefixCls}-balance-info-wrapper`}>
-        <Number
-          value={convertedBalanceValue}
-          decimal={0}
-          prefix="$"
-          leftColor="#FFF"
-          rightColor="#FFF"
-          rightOpacity={0.45}
-        />
-        <Number
-          size={12}
-          value={balanceValue}
-          decimal={decimal}
-          suffix={displayToken}
-          leftColor="#FFF"
-          leftOpacity={0.45}
-          rightColor="#FFF"
-          rightOpacity={0.45}
-        />
-      </div>
-      <Icon
-        className={`${prefixCls}-right-icon`}
-        type="phosphor"
-        phosphorIcon={CaretRight}
-        size="xs"
-      />
-    </>
-  );
 
   return wrapSSR(
     <div className={`${classes} ${className}`}>
       <Web3Block
+        {...props}
         className={`${prefixCls}-content`}
-        leftItem={getLeftItem()}
-        middleItem={getMiddleItem()}
-        rightItem={getRightItem()}
+        leftItem={
+          leftItem || (
+            <Logo
+              size={networkMainLogoSize}
+              network={networkKey}
+              token={symbol}
+              shape={networkMainLogoShape}
+              isShowSubLogo={isShowSubLogo}
+              subLogoShape={networkSubLogoShape}
+              subLogoSize={networkSubLogoSize}
+              subNetwork={subNetworkKey}
+              subToken={subSymbol}
+            />
+          )
+        }
+        middleItem={
+          middleItem || (
+            <>
+              <div className={`${prefixCls}-name`}>{name}</div>
+              <Number
+                size={12}
+                value={price}
+                decimal={0}
+                prefix="$"
+                leftColor="#4CEAAC"
+                rightColor="#4CEAAC"
+              />
+            </>
+          )
+        }
+        rightItem={
+          rightItem || (
+            <>
+              <div className={`${prefixCls}-balance-info-wrapper`}>
+                <Number
+                  value={convertedBalanceValue}
+                  decimal={0}
+                  prefix="$"
+                  leftColor="#FFF"
+                  rightColor="#FFF"
+                  rightOpacity={0.45}
+                />
+                <Number
+                  size={12}
+                  value={balanceValue}
+                  decimal={decimal}
+                  suffix={displayToken}
+                  leftColor="#FFF"
+                  leftOpacity={0.45}
+                  rightColor="#FFF"
+                  rightOpacity={0.45}
+                />
+              </div>
+              <Icon
+                className={`${prefixCls}-right-icon`}
+                type="phosphor"
+                phosphorIcon={CaretRight}
+                size="xs"
+              />
+            </>
+          )
+        }
         onClick={onPressItem}
       />
       {withDivider && (
-        <div className={`${prefixCls}-divider`}>
+        <div style={{ paddingLeft: dividerPadding }} className={`${prefixCls}-divider`}>
           <Divider />
         </div>
       )}

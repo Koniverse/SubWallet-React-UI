@@ -76,7 +76,7 @@ WithLabelAndStatus.args = {
 export const WithPrefix = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 WithPrefix.args = {
-  prefix: <Icon phosphorIcon={Key} customSize="20px" />,
+  prefix: <Icon phosphorIcon={Key} customSize="24px" />,
 };
 
 export const WithSuffix = Template.bind({});
@@ -99,7 +99,7 @@ WithPrefixSuffixStatusLabel.args = {
       <Icon phosphorIcon={Copy} />
     </div>
   ),
-  prefix: <Icon phosphorIcon={Key} customSize="20px" />,
+  prefix: <Icon phosphorIcon={Key} customSize="24px" />,
 };
 
 export const Disabled = Template.bind({});
@@ -112,7 +112,7 @@ Disabled.args = {
       <Icon phosphorIcon={Copy} />
     </div>
   ),
-  prefix: <Icon phosphorIcon={Key} customSize="20px" />,
+  prefix: <Icon phosphorIcon={Key} customSize="24px" />,
   value: 'Input value',
   disabled: true,
 };

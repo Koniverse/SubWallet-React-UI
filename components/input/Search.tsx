@@ -6,7 +6,6 @@ import Icon from '../icon';
 import { ConfigContext } from '../config-provider';
 import SizeContext from '../config-provider/SizeContext';
 import { useCompactItemContext } from '../space/Compact';
-import { cloneElement } from '../_util/reactNode';
 import type { InputProps, InputRef } from './Input';
 import Input from './Input';
 
@@ -29,7 +28,6 @@ const Search = React.forwardRef<InputRef, SearchProps>((props, ref) => {
     inputPrefixCls: customizeInputPrefixCls,
     className,
     size: customizeSize,
-    suffix,
     loading,
     disabled,
     onSearch: customOnSearch,
@@ -61,12 +59,6 @@ const Search = React.forwardRef<InputRef, SearchProps>((props, ref) => {
     }
   };
 
-  const onMouseDown: React.MouseEventHandler<HTMLElement> = (e) => {
-    if (document.activeElement === inputRef.current?.input) {
-      e.preventDefault();
-    }
-  };
-
   const onSearch = (e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLInputElement>) => {
     if (disabled) {
       return;
@@ -84,19 +76,6 @@ const Search = React.forwardRef<InputRef, SearchProps>((props, ref) => {
     onSearch(e);
   };
 
-  const button = cloneElement(
-    <div className="__input-action">
-      <Icon phosphorIcon={MagnifyingGlass} />
-    </div>,
-    {
-      onMouseDown,
-      onClick: (e: React.MouseEvent<HTMLButtonElement>) => {
-        onSearch(e);
-      },
-      key: 'enterButton',
-    },
-  );
-
   const handleOnCompositionStart: React.CompositionEventHandler<HTMLInputElement> = (e) => {
     composedRef.current = true;
     onCompositionStart?.(e);
@@ -113,11 +92,11 @@ const Search = React.forwardRef<InputRef, SearchProps>((props, ref) => {
       onPressEnter={onPressEnter}
       {...restProps}
       size={size}
+      allowClear
       onCompositionStart={handleOnCompositionStart}
       onCompositionEnd={handleOnCompositionEnd}
       prefixCls={inputPrefixCls}
-      prefix={button}
-      suffix={suffix}
+      prefix={<Icon phosphorIcon={MagnifyingGlass} customSize="24px" />}
       containerClassName={classNames('-search', containerClassName)}
       onChange={onChange}
       className={classNames(prefixCls, className)}
