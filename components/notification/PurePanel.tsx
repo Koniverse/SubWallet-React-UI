@@ -63,7 +63,6 @@ export function PureContent({
   btn,
 }: PureContentProps) {
   let iconNode: React.ReactNode = null;
-  console.log('type', type);
   if (icon) {
     iconNode = <span className={`${prefixCls}-icon`}>{icon}</span>;
   } else if (type) {

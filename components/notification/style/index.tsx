@@ -152,7 +152,7 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
     {
       [noticeCls]: {
         position: 'relative',
-        width: '100%',
+        width: 'max-content',
         maxWidth: `calc(100vw - ${notificationMarginEdge * 2}px)`,
         marginBottom: notificationMarginBottom,
         marginInlineStart: 'auto',
@@ -216,7 +216,6 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
           fontSize,
           lineHeight,
           fontWeight: token.bodyFontWeight,
-          whiteSpace: 'nowrap',
         },
 
         [`${noticeCls}-description`]: {
