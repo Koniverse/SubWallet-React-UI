@@ -52,7 +52,7 @@ const NotificationProvider = ({
       update,
     } = notificationProps;
     api.destroy();
-    if (type) {
+    if (type && api[type]) {
       api[type]({
         message,
         description,
