@@ -4,6 +4,7 @@ import type { ComponentToken as AvatarComponentToken } from '../../avatar/style'
 import type { ComponentToken as AccountCardComponentToken } from '../../web3-block/account-card/style';
 import type { ComponentToken as AccountItemComponentToken } from '../../web3-block/account-item/style';
 import type { ComponentToken as BalanceItemComponentToken } from '../../web3-block/balance-item/style';
+import type { ComponentToken as BackgroundIconComponentToken } from '../../background-icon/style';
 import type { ComponentToken as CrowdloanItemComponentToken } from '../../web3-block/crowdloan-item/style';
 import type { ComponentToken as StakingNetworkItemComponentToken } from '../../web3-block/staking-network-item/style';
 import type { ComponentToken as StakingValidatorItemComponentToken } from '../../web3-block/staking-validator-item/style';
@@ -82,6 +83,7 @@ export interface ComponentTokenMap {
   AccountCard?: AccountCardComponentToken;
   AccountItem?: AccountItemComponentToken;
   BalanceItem?: BalanceItemComponentToken;
+  BackgroundIcon?: BackgroundIconComponentToken;
   CrowdloanItem?: CrowdloanItemComponentToken;
   StakingNetworkItem?: StakingNetworkItemComponentToken;
   StakingValidatorItem?: StakingValidatorItemComponentToken;
