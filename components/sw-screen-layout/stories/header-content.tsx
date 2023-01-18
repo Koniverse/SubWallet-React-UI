@@ -44,9 +44,6 @@ export const renderHeaderContentItem = (item: Account, _selected: boolean): Reac
       alignItems: 'center',
       gap: 16,
       justifyContent: 'space-between',
-      padding: '12px 16px',
-      borderRadius: 8,
-      backgroundColor: '#252525',
     }}
   >
     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 16 }}>
