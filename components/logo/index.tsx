@@ -7,7 +7,6 @@ import useStyle from './style';
 
 export interface LogoProps {
   size: number;
-  subLogoSize?: number;
   shape?: PresetIconShapeType;
   subLogoShape?: PresetIconShapeType;
   isShowSubLogo?: boolean;
@@ -24,7 +23,6 @@ const Logo: React.FC<LogoProps> = ({
   subNetwork,
   token,
   subToken,
-  subLogoSize = 16,
   shape = 'circle',
   subLogoShape = 'circle',
   isShowSubLogo,
@@ -37,7 +35,7 @@ const Logo: React.FC<LogoProps> = ({
   const getSubLogo = () => (
     <div className="-sub-logo">
       {isShowSubLogo && (
-        <InnerLogo shape={subLogoShape} size={subLogoSize} network={subNetwork} token={subToken} />
+        <InnerLogo shape={subLogoShape} size={size / 2.5} network={subNetwork} token={subToken} />
       )}
     </div>
   );
