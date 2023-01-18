@@ -10,11 +10,19 @@ export default {
   component: SwAvatar,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    size: { control: 'number', defaultValue: 40 },
+    size: { control: 'number', defaultValue: 120 },
     value: { control: 'text', defaultValue: '5HbcGs2QXVAc6Q6eoTzLYNAJWpN17AkCFRLnWDaHCiGYXvNc' },
     identPrefix: { control: 'number', defaultValue: 42 },
     theme: { control: 'radio', options: ['polkadot', 'ethereum'], defaultValue: 'polkadot' },
     isShowSubIcon: { control: 'boolean', defaultValue: true },
+    isAllAccount: { control: 'boolean', defaultValue: false },
+    allAccountName: { control: 'text', defaultValue: 'All Account Name' },
+    allAccountVariant: {
+      control: 'radio',
+      options: ['marble', 'beam', 'pixel', 'sunset', 'ring', 'bauhaus'],
+      defaultValue: 'marble',
+    },
+    allAccountImg: { control: 'text', defaultValue: 'https://via.placeholder.com/40/004BFF' },
   },
 } as ComponentMeta<typeof SwAvatar>;
 
