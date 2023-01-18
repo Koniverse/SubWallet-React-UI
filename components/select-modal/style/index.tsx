@@ -31,9 +31,7 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
           alignItems: 'center',
           gap: 8,
           overflow: 'hidden',
-          padding: `${token.paddingContentVertical - 2}px ${token.paddingSM}px ${
-            token.paddingContentVertical
-          }px`,
+          padding: `${token.paddingContentVertical}px ${token.paddingSM}px`,
 
           [`${componentCls}-input-content`]: {
             overflow: 'hidden',
@@ -102,6 +100,10 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
         [`&${componentCls}-input-with-label`]: {
           [`${componentCls}-input-placeholder`]: {
             color: token.colorText,
+          },
+
+          [`${componentCls}-input-wrapper`]: {
+            paddingTop: token.paddingContentVertical - 2,
           },
         },
 
