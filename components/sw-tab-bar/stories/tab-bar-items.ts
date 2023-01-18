@@ -7,6 +7,7 @@ export const TabBarItems: Array<Omit<SwTabBarItem, 'onClick'>> = [
     icon: {
       type: 'phosphor',
       phosphorIcon: Wallet,
+      weight: 'fill',
     },
     label: 'Tokens',
     key: 'token',
@@ -15,6 +16,7 @@ export const TabBarItems: Array<Omit<SwTabBarItem, 'onClick'>> = [
     icon: {
       type: 'phosphor',
       phosphorIcon: Aperture,
+      weight: 'fill',
     },
     label: 'NFTs',
     key: 'nft',
@@ -23,6 +25,7 @@ export const TabBarItems: Array<Omit<SwTabBarItem, 'onClick'>> = [
     icon: {
       type: 'phosphor',
       phosphorIcon: Rocket,
+      weight: 'fill',
     },
     label: 'Crowdloands',
     key: 'crowdloands',
@@ -31,6 +34,7 @@ export const TabBarItems: Array<Omit<SwTabBarItem, 'onClick'>> = [
     icon: {
       type: 'phosphor',
       phosphorIcon: Database,
+      weight: 'fill',
     },
     label: 'Staking',
     key: 'staking',
@@ -39,6 +43,7 @@ export const TabBarItems: Array<Omit<SwTabBarItem, 'onClick'>> = [
     icon: {
       type: 'phosphor',
       phosphorIcon: Globe,
+      weight: 'fill',
     },
     label: 'Browser',
     key: 'browser',
