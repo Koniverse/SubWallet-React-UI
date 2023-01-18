@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import { useMemo } from 'react';
 import * as React from 'react';
 import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import { Warning, CheckCircle, XCircle } from 'phosphor-react';
 import { useToken } from '../theme/internal';
 import { ConfigContext } from '../config-provider';
@@ -71,7 +72,7 @@ export const SwConfirmContent = (
           result.icon = <Icon type="phosphor" phosphorIcon={XCircle} />;
           break;
         default:
-          result.icon = <Icon type="phosphor" phosphorIcon={CheckCircle} />;
+          result.icon = <Icon type="fontAwesome" fontawesomeIcon={faCheckCircle} />;
       }
     }
 
@@ -86,7 +87,7 @@ export const SwConfirmContent = (
 
   const mergedIcon = useMemo((): React.ReactNode => {
     if (!icon && icon !== null) {
-      const iconSize: SizeType = 'xs';
+      const iconSize: SizeType = 'sm';
       switch (type) {
         case 'info':
           return <Icon type="fontAwesome" fontawesomeIcon={faCircleInfo} size={iconSize} />;

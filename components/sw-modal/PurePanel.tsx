@@ -47,7 +47,7 @@ export function renderFooter(
 ) {
   const {
     okText,
-    okType = 'primary',
+    okType = 'default',
     cancelText,
     confirmLoading,
     onOk,
@@ -67,7 +67,7 @@ export function renderFooter(
       <LocaleReceiver componentName="Modal" defaultLocale={getConfirmLocale()}>
         {(locale) => (
           <>
-            <Button onClick={onCancel} {...cancelButtonProps}>
+            <Button onClick={onCancel} type="default" schema="secondary" {...cancelButtonProps}>
               {cancelText || locale!.cancelText}
             </Button>
             <Button

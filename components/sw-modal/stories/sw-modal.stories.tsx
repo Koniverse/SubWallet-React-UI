@@ -68,7 +68,8 @@ const Wrapper: React.FC<WrapperProps> = ({ footerElement, onCancel, onOk, ...arg
   const handleOpenWaringModal = useCallback(() => {
     const id = 'test-confirm';
     addConfirmModal({
-      closable: true,
+      closable: args.closable,
+      maskClosable: args.maskClosable,
       content: 'If someone has your secret phrase, they will have full control of your account',
       id,
       okText: 'Confirm',
@@ -82,12 +83,13 @@ const Wrapper: React.FC<WrapperProps> = ({ footerElement, onCancel, onOk, ...arg
       title: 'Confirmation',
       type: 'warning',
     });
-  }, [addConfirmModal, inactiveModal]);
+  }, [addConfirmModal, inactiveModal, args]);
 
   const handleOpenDangerModal = useCallback(() => {
     const id = 'test-warning';
     addConfirmModal({
-      closable: true,
+      closable: args.closable,
+      maskClosable: args.maskClosable,
       content: 'If someone has your secret phrase, they will have full control of your account',
       id,
       okText: 'Delete',
@@ -101,7 +103,7 @@ const Wrapper: React.FC<WrapperProps> = ({ footerElement, onCancel, onOk, ...arg
       title: 'Select account',
       type: 'error',
     });
-  }, [addConfirmModal]);
+  }, [addConfirmModal, args]);
 
   return (
     <div>

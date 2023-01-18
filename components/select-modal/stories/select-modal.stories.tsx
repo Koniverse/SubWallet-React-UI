@@ -17,6 +17,9 @@ export default {
     placeholder: {
       type: 'string',
     },
+    label: {
+      type: 'string',
+    },
     maskClosable: {
       type: 'boolean',
     },
@@ -28,10 +31,13 @@ export default {
       control: 'radio',
       options: ['default', 'transparent'],
     },
-    size: {
-      control: 'select',
-      options: ['default', 'small', 'medium', 'large'],
+    hideSuffix: {
+      type: 'boolean',
     },
+    // size: {
+    //   control: 'select',
+    //   options: ['default', 'small', 'medium', 'large'],
+    // },
   },
   // @ts-ignore
 } as ComponentMeta<typeof SelectModal>;
@@ -67,9 +73,6 @@ const Template: ComponentStory<typeof SelectModal> = ({ title, ...args }) => {
           alignItems: 'center',
           justifyContent: 'space-between',
           gap: 16,
-          padding: '14px 12px',
-          borderRadius: 8,
-          backgroundColor: '#252525',
         }}
       >
         <Typography.Text style={{ color: 'white' }}>{item.value}</Typography.Text>
@@ -126,7 +129,9 @@ Primary.args = {
   maskClosable: false,
   shape: 'default',
   background: 'default',
-  size: 'default',
+  // size: 'default',
   placeholder: 'Select Box',
   title: 'Select modal',
+  label: 'Label',
+  hideSuffix: false,
 };
