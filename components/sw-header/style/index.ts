@@ -51,6 +51,10 @@ const genContainerStyle: GenerateStyle<SwHeaderToken> = (token) => {
           flexDirection: 'row',
           flexGrow: 1,
           flex: 1,
+
+          [`&${componentCls}-center-part-pl`]: {
+            paddingLeft: token.padding,
+          },
         },
       },
 
