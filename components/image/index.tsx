@@ -27,7 +27,7 @@ export interface CompositionImage<P> extends React.FC<P> {
 
 const Image: CompositionImage<SwImageProps> = ({
   prefixCls: customizePrefixCls,
-  preview,
+  preview = false,
   rootClassName,
   shape = 'default',
   width = 'auto',

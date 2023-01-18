@@ -17,7 +17,8 @@ const { useToken } = theme;
 const QRCode: React.FC<QRCodeProps> = (props) => {
   const {
     value,
-    icon = '',
+    // eslint-disable-next-line global-require
+    icon = require('./QrCodeIcon.png'),
     size = 160,
     iconSize = 40,
     color = '#000',

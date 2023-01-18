@@ -15,7 +15,6 @@ export default {
     width: { control: 'text' },
     height: { control: 'text', if: { arg: 'height', truthy: true } },
     responsive: { control: 'boolean', defaultValue: true },
-    preview: { control: 'boolean', defaultValue: false },
   },
 } as ComponentMeta<typeof Image>;
 

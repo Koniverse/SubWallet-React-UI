@@ -114,6 +114,7 @@ export const genCommonStyle = (token: DerivativeToken, componentPrefixCls: strin
       fontFamily,
       fontSize,
       boxSizing: 'border-box',
+      fontWeight: token.bodyFontWeight,
 
       '&::before, &::after': {
         boxSizing: 'border-box',
