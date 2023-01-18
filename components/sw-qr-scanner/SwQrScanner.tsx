@@ -1,4 +1,4 @@
-import { faCheckCircle, faCamera, faImage } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faCamera } from '@fortawesome/free-solid-svg-icons';
 import { BrowserQRCodeReader } from '@zxing/browser';
 import classNames from 'classnames';
 import Dialog from 'rc-dialog';
