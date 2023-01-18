@@ -19,7 +19,6 @@ export interface CrowdloanItemProps extends Web3BlockProps {
   symbol?: string;
   subSymbol?: string;
   networkMainLogoSize?: number;
-  networkSubLogoSize?: number;
   networkMainLogoShape?: 'circle' | 'squircle';
   networkSubLogoShape?: 'circle' | 'squircle';
   isShowSubLogo?: boolean;
@@ -35,7 +34,6 @@ const CrowdloanItem: React.FC<CrowdloanItemProps> = ({
   symbol,
   subSymbol,
   networkMainLogoSize = 40,
-  networkSubLogoSize = 16,
   networkMainLogoShape = 'squircle',
   networkSubLogoShape = 'circle',
   isShowSubLogo,
@@ -67,7 +65,6 @@ const CrowdloanItem: React.FC<CrowdloanItemProps> = ({
             shape={networkMainLogoShape}
             isShowSubLogo={isShowSubLogo}
             subLogoShape={networkSubLogoShape}
-            subLogoSize={networkSubLogoSize}
             subNetwork={subNetworkKey}
             subToken={subSymbol}
           />

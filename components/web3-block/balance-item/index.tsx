@@ -18,7 +18,6 @@ export interface BalanceItemProps extends Web3BlockProps {
   balanceValue: string | number | BigNumber;
   decimal: number;
   networkMainLogoSize?: number;
-  networkSubLogoSize?: number;
   networkMainLogoShape?: 'circle' | 'squircle';
   networkSubLogoShape?: 'circle' | 'squircle';
   isShowSubLogo?: boolean;
@@ -37,7 +36,6 @@ export interface BalanceItemProps extends Web3BlockProps {
 const BalanceItem: React.FC<BalanceItemProps> = ({
   name,
   networkMainLogoSize = 40,
-  networkSubLogoSize = 16,
   networkMainLogoShape = 'squircle',
   networkSubLogoShape = 'circle',
   convertedBalanceValue,
@@ -80,7 +78,6 @@ const BalanceItem: React.FC<BalanceItemProps> = ({
               shape={networkMainLogoShape}
               isShowSubLogo={isShowSubLogo}
               subLogoShape={networkSubLogoShape}
-              subLogoSize={networkSubLogoSize}
               subNetwork={subNetworkKey}
               subToken={subSymbol}
             />
