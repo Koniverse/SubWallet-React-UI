@@ -264,6 +264,7 @@ export default genComponentStyleHook('Progress', (token) => {
     progressStepMarginInlineEnd,
     progressStepMinWidth: progressStepMarginInlineEnd,
     progressActiveMotionDuration: '2.4s',
+    colorInfo: token.colorPrimary,
   });
   return [
     genBaseStyle(progressToken),

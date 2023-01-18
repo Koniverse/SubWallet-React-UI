@@ -1,15 +1,10 @@
-import {
-  faCheckCircle,
-  faCamera,
-  faImage,
-  faCameraRotate,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle, faCamera, faImage } from '@fortawesome/free-solid-svg-icons';
 import { BrowserQRCodeReader } from '@zxing/browser';
 import classNames from 'classnames';
 import Dialog from 'rc-dialog';
 import type { ChangeEventHandler } from 'react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Info } from 'phosphor-react';
+import { Info, ImageSquare } from 'phosphor-react';
 import type { Result } from '@zxing/library';
 import SwModal from '../sw-modal';
 import { ModalContext } from '../sw-modal/provider';
@@ -303,7 +298,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                   />
                   <Button
                     onClick={onOpenFile}
-                    icon={<Icon type="fontAwesome" fontawesomeIcon={faImage} />}
+                    icon={<Icon type="phosphor" phosphorIcon={ImageSquare} />}
                     loading={loading}
                     schema='secondary'
                   >
@@ -311,7 +306,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                   </Button>
                   <Button
                     onClick={onOpenSelectCamera}
-                    icon={<Icon type="fontAwesome" fontawesomeIcon={faCameraRotate} />}
+                    icon={<Icon type="fontAwesome" fontawesomeIcon={faCamera} />}
                     schema='secondary'
                   />
                 </div>

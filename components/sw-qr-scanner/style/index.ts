@@ -71,6 +71,7 @@ const genScannerStyle = (token: SwQrScannerToken): CSSInterpolation => {
             fontSize: token.fontSizeHeading6,
             lineHeight: token.lineHeightHeading6,
             fontWeight: token.headingFontWeight,
+            padding: `0 ${token.padding}px`,
           },
         },
 
