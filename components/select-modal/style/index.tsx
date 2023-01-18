@@ -1,3 +1,4 @@
+import { resetComponent } from '../../style';
 import type { FullToken, GenerateStyle } from '../../theme/internal';
 import { genComponentStyleHook, mergeToken } from '../../theme/internal';
 
@@ -12,87 +13,146 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
 
   return [
     {
-      [`${componentCls}-input`]: {
+      [`${componentCls}-input-container`]: {
+        ...resetComponent(token),
         cursor: 'pointer',
         display: 'flex',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        flexDirection: 'column',
         gap: 8,
         color: token.colorTextTertiary,
         lineHeight: token.lineHeightLG,
-        borderWidth: token.lineWidth * 2,
-        borderStyle: token.lineType,
         overflow: 'hidden',
+        position: 'relative',
 
-        [`${componentCls}-input-content`]: {
+        [`${componentCls}-input-wrapper`]: {
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          gap: 8,
           overflow: 'hidden',
+          padding: `${token.paddingContentVertical}px ${token.paddingSM}px`,
+
+          [`${componentCls}-input-content`]: {
+            overflow: 'hidden',
+            flex: 1,
+          },
+        },
+
+        [`${componentCls}-input-label`]: {
+          fontSize: token.fontSizeSM,
+          lineHeight: token.lineHeightSM,
+          color: token.colorTextLight4,
+          paddingLeft: token.paddingSM,
+          paddingRight: token.paddingSM,
+          paddingTop: token.paddingXXS,
+          top: token.paddingXXS,
+          whiteSpace: 'nowrap',
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
+          position: 'relative',
+        },
+
+        '&::before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          display: 'block',
+          borderWidth: token.lineWidth * 2,
+          borderStyle: token.lineType,
+          borderColor: token.colorTransparent,
+          transition: `border-color ${token.motionDurationSlow}`,
+          zIndex: 0,
         },
 
         '&:hover': {
-          borderColor: `${token['geekblue-4']} !important`,
+          '&::before': {
+            borderColor: token['geekblue-4'],
+          },
+        },
+
+        [`&${componentCls}-input-disabled`]: {
+          cursor: 'not-allowed',
+
+          '&:hover': {
+            '&::before': {
+              borderColor: token.colorTransparent,
+            },
+          },
         },
 
         [`&${componentCls}-input-focus`]: {
-          borderColor: `${token['geekblue-6']} !important`,
+          '&::before': {
+            borderColor: `${token['geekblue-6']} !important`,
+          },
         },
 
         [`${componentCls}-input-placeholder`]: {
-          color: token.colorTextPlaceholder,
-          fontSize: token.fontSizeLG,
+          // color: token.colorTextPlaceholder,
+          color: token.colorText,
+          fontSize: token.fontSizeHeading6,
+          lineHeight: token.lineHeightHeading6,
         },
 
-        // Size
-        [`&${componentCls}-input-size-default`]: {
-          padding: `${token.paddingContentVertical - token.lineWidth * 2}px ${
-            token.paddingContentHorizontal - token.lineWidth * 2
-          }px`,
-        },
+        [`&${componentCls}-input-with-label`]: {
+          [`${componentCls}-input-placeholder`]: {
+            color: token.colorText,
+          },
 
-        [`&${componentCls}-input-size-small`]: {
-          padding: `${token.paddingContentVerticalSM - token.lineWidth * 2}px ${
-            token.paddingContentHorizontal - token.lineWidth * 2
-          }px`,
-        },
-
-        [`&${componentCls}-input-size-medium`]: {
-          padding: `${token.paddingContentVertical - token.lineWidth * 2}px ${
-            token.paddingContentHorizontal - token.lineWidth * 2
-          }px`,
-        },
-
-        [`&${componentCls}-input-size-large`]: {
-          padding: `${token.paddingContentVerticalLG - token.lineWidth * 2}px ${
-            token.paddingContentHorizontal - token.lineWidth * 2
-          }px`,
+          [`${componentCls}-input-wrapper`]: {
+            paddingTop: token.paddingContentVertical - 2,
+          },
         },
 
         // Border
         [`&${componentCls}-input-border-square`]: {
+          '&::before': {
+            borderRadius: 0,
+          },
           borderRadius: 0,
         },
 
         [`&${componentCls}-input-border-round`]: {
-          [`&${componentCls}-input-size-default`]: {
-            borderRadius: token.lineHeightLG + token.paddingContentVertical * 2,
+          '&::before': {
+            borderRadius: token.controlHeightLG + token.borderRadiusLG,
           },
-
-          [`&${componentCls}-input-size-small`]: {
-            borderRadius: token.lineHeightLG + token.paddingContentVerticalSM * 2,
-          },
-
-          [`&${componentCls}-input-size-medium`]: {
-            borderRadius: token.lineHeightLG + token.paddingContentVertical * 2,
-          },
-
-          [`&${componentCls}-input-size-large`]: {
-            borderRadius: token.lineHeightLG + token.paddingContentVerticalLG * 2,
-          },
+          borderRadius: token.controlHeightLG + token.borderRadiusLG,
         },
 
         [`&${componentCls}-input-border-default`]: {
+          '&::before': {
+            borderRadius: token.borderRadius,
+          },
           borderRadius: token.borderRadius,
         },
+
+        // Size
+        // [`&${componentCls}-input-size-default`]: {
+        //   [`${componentCls}-input-wrapper`]: {
+        //     padding: `${token.paddingContentVertical}px ${token.paddingContentHorizontal}px`,
+        //   },
+        // },
+        //
+        // [`&${componentCls}-input-size-small`]: {
+        //   [`${componentCls}-input-wrapper`]: {
+        //   padding: `${token.paddingContentVerticalSM}px ${token.paddingContentHorizontal}px`,
+        //   },
+        // },
+        //
+        // [`&${componentCls}-input-size-medium`]: {
+        //   [`${componentCls}-input-wrapper`]: {
+        //     padding: `${token.paddingContentVertical}px ${token.paddingContentHorizontal}px`,
+        //   },
+        // },
+        //
+        // [`&${componentCls}-input-size-large`]: {
+        //   [`${componentCls}-input-wrapper`]: {
+        //     padding: `${token.paddingContentVerticalLG}px ${token.paddingContentHorizontal}px`,
+        //   },
+        // },
 
         // Background
         [`&${componentCls}-input-bg-default`]: {
@@ -115,12 +175,17 @@ const genItemContainerStyle: GenerateStyle<SelectModalToken> = (token) => {
   return [
     {
       [`${componentCls}-item-container`]: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: token.paddingContentVerticalSM,
+        ...resetComponent(token),
 
         [`${componentCls}-item`]: {
           cursor: 'pointer',
+          padding: `${token.paddingContentHorizontalSM - 2}px ${token.paddingContentVertical}px`,
+          borderRadius: token.borderRadius,
+          backgroundColor: token.colorBgSecondary,
+
+          '&:hover': {
+            backgroundColor: token.colorBgInput,
+          },
         },
       },
     },
