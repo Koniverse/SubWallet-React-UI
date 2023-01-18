@@ -194,9 +194,6 @@ export default {
     showLeftButton: {
       type: 'boolean',
     },
-    multipleRightIcon: {
-      type: 'boolean',
-    },
     selectBackground: {
       control: 'radio',
       options: ['default', 'transparent'],

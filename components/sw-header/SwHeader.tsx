@@ -68,10 +68,16 @@ const SwHeader: React.FC<SwHeaderProps> = (props) => {
           <Button type="ghost" size='xs' icon={leftPart} onClick={onClickLeft} />
         </div>
       )}
-      {!showLeftButton && rightButtons.length && center && (
+      {!showLeftButton && !!rightButtons.length && center && (
         <div className={classNames(`${prefixCls}-left-part-min-width`)} />
       )}
-      <div className={classNames(`${prefixCls}-center-part`)}>{children}</div>
+      <div
+        className={classNames(`${prefixCls}-center-part`, {
+          [`${prefixCls}-center-part-pl`]: !showLeftButton && !center,
+        })}
+      >
+        {children}
+      </div>
       <div
         className={classNames(`${prefixCls}-right-part`, {
           [`${prefixCls}-right-part-no-content`]: !rightButtons.length,

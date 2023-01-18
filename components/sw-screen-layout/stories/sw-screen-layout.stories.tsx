@@ -1,16 +1,6 @@
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import {
-  Wallet,
-  Aperture,
-  Rocket,
-  Database,
-  Globe,
-  QrCode,
-  FunnelSimple,
-  MagnifyingGlass,
-  Gear,
-} from 'phosphor-react';
+import { QrCode, FunnelSimple, MagnifyingGlass, Gear } from 'phosphor-react';
 import React, { useCallback, useMemo, useState } from 'react';
 import Logo from '../../logo';
 import SelectModal from '../../select-modal';
@@ -20,6 +10,7 @@ import Typography from '../../typography';
 import type { SwScreenLayoutProps } from '../index';
 import type { ButtonProps } from '../../button';
 import SwScreenLayout from '../index';
+import { TabBarItems } from '../../sw-tab-bar/stories/tab-bar-items';
 
 interface WrapperProps extends SwScreenLayoutProps {
   subHeaderRightIconType: number;
@@ -207,53 +198,10 @@ const Wrapper: React.FC<WrapperProps> = ({
     <div style={{ margin: -16, width: 400, height: 600 }}>
       <SwScreenLayout
         {...args}
-        tabBarItems={[
-          {
-            icon: {
-              type: 'phosphor',
-              phosphorIcon: Wallet,
-            },
-            label: 'Tokens',
-            key: 'token',
-            onClick: onSelectTab('token'),
-          },
-          {
-            icon: {
-              type: 'phosphor',
-              phosphorIcon: Aperture,
-            },
-            label: 'NFTs',
-            key: 'nft',
-            onClick: onSelectTab('nft'),
-          },
-          {
-            icon: {
-              type: 'phosphor',
-              phosphorIcon: Rocket,
-            },
-            label: 'Crowdloands',
-            key: 'crowdloands',
-            onClick: onSelectTab('crowdloands'),
-          },
-          {
-            icon: {
-              type: 'phosphor',
-              phosphorIcon: Database,
-            },
-            label: 'Staking',
-            key: 'staking',
-            onClick: onSelectTab('staking'),
-          },
-          {
-            icon: {
-              type: 'phosphor',
-              phosphorIcon: Globe,
-            },
-            label: 'Browser',
-            key: 'browser',
-            onClick: onSelectTab('browser'),
-          },
-        ]}
+        tabBarItems={TabBarItems.map((item) => ({
+          ...item,
+          onClick: onSelectTab(item.key),
+        }))}
         selectedTabBarItem={selectedTab}
         subHeaderIcons={subHeaderIcons}
         headerIcons={headerIcons}

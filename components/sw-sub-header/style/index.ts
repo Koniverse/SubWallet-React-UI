@@ -51,8 +51,14 @@ const genContainerStyle: GenerateStyle<SwSubHeaderToken> = (token) => {
           flexDirection: 'row',
           flexGrow: 1,
           flex: 1,
+          overflow: 'hidden',
 
           [`${componentCls}-title`]: {
+            whiteSpace: 'nowrap',
+            width: '100%',
+          },
+
+          [`${componentCls}-title-content`]: {
             color: token.colorWhite,
             fontSize: token.fontSizeHeading4,
             lineHeight: token.lineHeightHeading4,

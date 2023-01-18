@@ -1,6 +1,6 @@
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import { Wallet, Aperture, Rocket, Database, Globe } from 'phosphor-react';
 import React, { useCallback, useState } from 'react';
+import { TabBarItems } from './tab-bar-items';
 import SwTabBar from '../index';
 
 export default {
@@ -25,53 +25,10 @@ const Template: ComponentStory<typeof SwTabBar> = (args) => {
     >
       <SwTabBar
         {...args}
-        items={[
-          {
-            icon: {
-              type: 'phosphor',
-              phosphorIcon: Wallet,
-            },
-            label: 'Tokens',
-            key: 'token',
-            onClick: onSelect('token'),
-          },
-          {
-            icon: {
-              type: 'phosphor',
-              phosphorIcon: Aperture,
-            },
-            label: 'NFTs',
-            key: 'nft',
-            onClick: onSelect('nft'),
-          },
-          {
-            icon: {
-              type: 'phosphor',
-              phosphorIcon: Rocket,
-            },
-            label: 'Crowdloands',
-            key: 'crowdloands',
-            onClick: onSelect('crowdloands'),
-          },
-          {
-            icon: {
-              type: 'phosphor',
-              phosphorIcon: Database,
-            },
-            label: 'Staking',
-            key: 'staking',
-            onClick: onSelect('staking'),
-          },
-          {
-            icon: {
-              type: 'phosphor',
-              phosphorIcon: Globe,
-            },
-            label: 'Browser',
-            key: 'browser',
-            onClick: onSelect('browser'),
-          },
-        ]}
+        items={TabBarItems.map((i) => ({
+          ...i,
+          onClick: onSelect(i.key),
+        }))}
         selected={selected}
       />
     </div>

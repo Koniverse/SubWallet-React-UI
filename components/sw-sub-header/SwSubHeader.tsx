@@ -1,11 +1,12 @@
 import classNames from 'classnames';
-import { ArrowLeft } from 'phosphor-react';
+import { CaretLeft } from 'phosphor-react';
 import React, { useMemo } from 'react';
 import Icon from '../icon';
 import useStyle from './style';
 import { ConfigContext } from '../config-provider';
 import type { ButtonProps } from '../button';
 import Button from '../button';
+import Typography from '../typography';
 
 export type SwSubHeaderBackground = 'default' | 'transparent';
 export interface SwSubHeaderProps {
@@ -53,12 +54,12 @@ const SwSubHeader: React.FC<SwSubHeaderProps> = (props) => {
           <Button
             type="ghost"
             size='xs'
-            icon={<Icon type="phosphor" phosphorIcon={ArrowLeft} size="sm" />}
+            icon={<Icon type="phosphor" phosphorIcon={CaretLeft} size="sm" />}
             onClick={onBack}
           />
         </div>
       )}
-      {!showBackButton && rightButtons.length && center && (
+      {!showBackButton && !!rightButtons.length && center && (
         <div className={classNames(`${prefixCls}-left-part-min-width`)} />
       )}
       <div
@@ -66,11 +67,15 @@ const SwSubHeader: React.FC<SwSubHeaderProps> = (props) => {
           [`${prefixCls}-center-part-pl`]: !showBackButton && !center,
         })}
       >
-        {typeof title === 'string' ? (
-          <span className={classNames(`${prefixCls}-title`)}>{title}</span>
-        ) : (
-          title
-        )}
+        <div className={classNames(`${prefixCls}-title`)}>
+          {typeof title === 'string' ? (
+            <Typography.Text ellipsis className={classNames(`${prefixCls}-title-content`)}>
+              {title}
+            </Typography.Text>
+          ) : (
+            title
+          )}
+        </div>
       </div>
       <div
         className={classNames(`${prefixCls}-right-part`, {
