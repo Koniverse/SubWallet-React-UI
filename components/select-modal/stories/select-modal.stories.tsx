@@ -1,4 +1,4 @@
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { CheckCircle } from 'phosphor-react';
 import React, { useCallback, useState } from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import SelectModal from '../index';
@@ -32,6 +32,9 @@ export default {
       options: ['default', 'transparent'],
     },
     hideSuffix: {
+      type: 'boolean',
+    },
+    disabled: {
       type: 'boolean',
     },
     // size: {
@@ -77,7 +80,13 @@ const Template: ComponentStory<typeof SelectModal> = ({ title, ...args }) => {
       >
         <Typography.Text style={{ color: 'white' }}>{item.value}</Typography.Text>
         {_selected && (
-          <Icon type="fontAwesome" fontawesomeIcon={faCheck} iconColor="#7CD383" size="xs" />
+          <Icon
+            type="phosphor"
+            phosphorIcon={CheckCircle}
+            iconColor="#7CD383"
+            size="sm"
+            weight="fill"
+          />
         )}
       </div>
     ),
@@ -134,4 +143,5 @@ Primary.args = {
   title: 'Select modal',
   label: 'Label',
   hideSuffix: false,
+  disabled: false,
 };

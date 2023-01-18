@@ -1,9 +1,7 @@
 import classNames from 'classnames';
 import { useMemo } from 'react';
 import * as React from 'react';
-import { faCircleInfo } from '@fortawesome/free-solid-svg-icons';
-import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
-import { Warning, CheckCircle, XCircle } from 'phosphor-react';
+import { Warning, CheckCircle, XCircle, Info } from 'phosphor-react';
 import { useToken } from '../theme/internal';
 import { ConfigContext } from '../config-provider';
 import type { ButtonProps, LegacyButtonType } from '../button/button';
@@ -68,10 +66,10 @@ export const SwConfirmContent = (
     if (!okButtonProps?.icon) {
       switch (okType) {
         case 'danger':
-          result.icon = <Icon type="phosphor" phosphorIcon={XCircle} />;
+          result.icon = <Icon type="phosphor" phosphorIcon={XCircle} weight="fill" />;
           break;
         default:
-          result.icon = <Icon type="fontAwesome" fontawesomeIcon={faCheckCircle} />;
+          result.icon = <Icon type="phosphor" phosphorIcon={CheckCircle} />;
       }
     }
 
@@ -89,7 +87,7 @@ export const SwConfirmContent = (
       const iconSize: string = '20px';
       switch (type) {
         case 'info':
-          return <Icon type="fontAwesome" fontawesomeIcon={faCircleInfo} customSize={iconSize} />;
+          return <Icon type="phosphor" phosphorIcon={Info} customSize={iconSize} />;
         case 'warning':
         case 'warn':
           return (

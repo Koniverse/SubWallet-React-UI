@@ -1,6 +1,6 @@
 import React, { useCallback, useContext } from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import { faCircleXmark, faCircleCheck } from '@fortawesome/free-solid-svg-icons';
+import { CheckCircle, XCircle } from 'phosphor-react';
 import { ModalContext } from '../provider';
 import Button from '../../button';
 import Modal from '../index';
@@ -40,7 +40,7 @@ const Wrapper: React.FC<WrapperProps> = ({ footerElement, onCancel, onOk, ...arg
             <Button
               block
               danger
-              icon={<Icon type='fontAwesome' fontawesomeIcon={faCircleXmark} />}
+              icon={<Icon type='phosphor' phosphorIcon={XCircle} />}
               // @ts-ignore
               onClick={handleCancel}
             >
@@ -51,7 +51,7 @@ const Wrapper: React.FC<WrapperProps> = ({ footerElement, onCancel, onOk, ...arg
           return (
             <Button
               block
-              icon={<Icon type='fontAwesome' fontawesomeIcon={faCircleCheck} />}
+              icon={<Icon type='phosphor' phosphorIcon={CheckCircle} />}
               // @ts-ignore
               onClick={handleCancel}
             >

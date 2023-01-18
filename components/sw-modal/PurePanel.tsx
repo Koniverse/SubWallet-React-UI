@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import { Panel } from 'rc-dialog';
 import type { PanelProps } from 'rc-dialog/lib/Dialog/Content/Panel';
 import * as React from 'react';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import { X } from 'phosphor-react';
 import Button from '../button';
 import { convertLegacyProps } from '../button/button';
 import { ConfigContext } from '../config-provider';
@@ -24,7 +24,7 @@ export interface PurePanelProps
 export function renderCloseIcon(prefixCls: string, closeIcon?: React.ReactNode) {
   return (
     <span className={`${prefixCls}-close-x`}>
-      {closeIcon || <Icon type="fontAwesome" fontawesomeIcon={faXmark} size="sm" />}
+      {closeIcon || <Icon type="phosphor" phosphorIcon={X} size="sm" weight='bold' />}
     </span>
   );
 }

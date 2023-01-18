@@ -1,4 +1,4 @@
-import { faAngleDown } from '@fortawesome/free-solid-svg-icons';
+import { CaretDown } from 'phosphor-react';
 import classNames from 'classnames';
 import { useCallback, useContext, useMemo } from 'react';
 import * as React from 'react';
@@ -32,9 +32,10 @@ export interface SelectModalProps<T extends Record<string, any>> extends SwModal
   label?: string;
   hideSuffix?: boolean;
   suffix?: React.ReactNode;
+  disabled?: boolean;
 }
 
-const DEFAULT_SUFFIX = <Icon type='fontAwesome' fontawesomeIcon={faAngleDown} size="xs" />;
+const DEFAULT_SUFFIX = <Icon type='phosphor' phosphorIcon={CaretDown} size="xs" />;
 const SelectModal = <T extends Record<string, any>>(
   props: SelectModalProps<T>,
 ): React.ReactNode => {
@@ -65,6 +66,7 @@ const SelectModal = <T extends Record<string, any>>(
     label = '',
     suffix = DEFAULT_SUFFIX,
     hideSuffix,
+    disabled,
     ...restProps
   } = props;
 
@@ -80,8 +82,10 @@ const SelectModal = <T extends Record<string, any>>(
   const [wrapSSR, hashId] = useStyle(prefixCls);
 
   const openModal = useCallback(() => {
-    activeModal(id);
-  }, [activeModal, id]);
+    if (!disabled) {
+      activeModal(id);
+    }
+  }, [activeModal, id, disabled]);
 
   const handleCancel = useCallback(() => {
     inactiveModal(id);
@@ -145,6 +149,7 @@ const SelectModal = <T extends Record<string, any>>(
             inputClassName,
             {
               [`${prefixCls}-input-focus`]: isActive,
+              [`${prefixCls}-input-disabled`]: disabled,
               [`${prefixCls}-input-with-label`]: label,
             },
           )}

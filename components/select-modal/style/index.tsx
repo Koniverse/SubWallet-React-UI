@@ -63,14 +63,26 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
           right: 0,
           bottom: 0,
           display: 'block',
-          border: '2px solid transparent',
-          transition: 'border-color 0.3s',
+          borderWidth: token.lineWidth * 2,
+          borderStyle: token.lineType,
+          borderColor: token.colorTransparent,
+          transition: `border-color ${token.motionDurationSlow}`,
           zIndex: 0,
         },
 
         '&:hover': {
           '&::before': {
-            borderColor: `${token['geekblue-4']}`,
+            borderColor: token['geekblue-4'],
+          },
+        },
+
+        [`&${componentCls}-input-disabled`]: {
+          cursor: 'not-allowed',
+
+          '&:hover': {
+            '&::before': {
+              borderColor: token.colorTransparent,
+            },
           },
         },
 
