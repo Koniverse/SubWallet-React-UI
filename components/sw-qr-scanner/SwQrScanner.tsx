@@ -1,16 +1,12 @@
-import {
-  faCheckCircle,
-  faCamera,
-  faImage,
-  faCameraRotate,
-} from '@fortawesome/free-solid-svg-icons';
 import { BrowserQRCodeReader } from '@zxing/browser';
 import classNames from 'classnames';
 import Dialog from 'rc-dialog';
 import type { ChangeEventHandler } from 'react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Info } from 'phosphor-react';
+import { Info, ImageSquare, Camera, CheckCircle } from 'phosphor-react';
 import type { Result } from '@zxing/library';
+import BackgroundIcon from '../background-icon';
+import { useToken } from '../theme/internal';
 import SwModal from '../sw-modal';
 import { ModalContext } from '../sw-modal/provider';
 import { getTransitionName } from '../_util/motion';
@@ -81,9 +77,11 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     overlay,
     footer,
   } = props;
+
   const { getPopupContainer: getContextPopupContainer, getPrefixCls } =
     React.useContext(ConfigContext);
   const { activeModal, inactiveModal } = React.useContext(ModalContext);
+  const [, token] = useToken();
 
   const rootPrefixCls = getPrefixCls();
   const prefixCls = getPrefixCls('sw-qr-scanner', customizePrefixCls);
@@ -303,7 +301,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                   />
                   <Button
                     onClick={onOpenFile}
-                    icon={<Icon type="fontAwesome" fontawesomeIcon={faImage} />}
+                    icon={<Icon type="phosphor" phosphorIcon={ImageSquare} weight='fill' />}
                     loading={loading}
                     schema='secondary'
                   >
@@ -311,7 +309,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                   </Button>
                   <Button
                     onClick={onOpenSelectCamera}
-                    icon={<Icon type="fontAwesome" fontawesomeIcon={faCameraRotate} />}
+                    icon={<Icon type="phosphor" phosphorIcon={Camera} weight="fill" />}
                     schema='secondary'
                   />
                 </div>
@@ -330,13 +328,18 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                   onClick={onSelectDevice(device)}
                   className={classNames(`${prefixCls}-camera-item`)}
                 >
-                  <div className={classNames(`${prefixCls}-camera-icon`)}>
-                    <Icon type="fontAwesome" fontawesomeIcon={faCamera} size="xs" />
-                  </div>
+                  <BackgroundIcon
+                    type="phosphor"
+                    phosphorIcon={Camera}
+                    weight="fill"
+                    size="sm"
+                    backgroundColor={token['gray-3']}
+                    shape='circle'
+                  />
                   <div className={classNames(`${prefixCls}-camera-label`)}>{device.label}</div>
                   {_selected && (
                     <div className={classNames(`${prefixCls}-camera-selected`)}>
-                      <Icon type="fontAwesome" fontawesomeIcon={faCheckCircle} size="xs" />
+                      <Icon type="phosphor" phosphorIcon={CheckCircle} size="sm" weight="fill" />
                     </div>
                   )}
                 </div>
