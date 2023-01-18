@@ -10,7 +10,6 @@ import Divider from '../../divider';
 export interface NetworkItemProps extends Web3BlockProps {
   name: string;
   networkMainLogoSize?: number;
-  networkSubLogoSize?: number;
   networkMainLogoShape?: 'circle' | 'squircle';
   networkSubLogoShape?: 'circle' | 'squircle';
   isShowSubLogo?: boolean;
@@ -28,7 +27,6 @@ export interface NetworkItemProps extends Web3BlockProps {
 const NetworkItem: React.FC<NetworkItemProps> = ({
   name,
   networkMainLogoSize = 40,
-  networkSubLogoSize = 16,
   networkMainLogoShape = 'squircle',
   networkSubLogoShape = 'circle',
   networkKey,
@@ -65,7 +63,6 @@ const NetworkItem: React.FC<NetworkItemProps> = ({
               shape={networkMainLogoShape}
               isShowSubLogo={isShowSubLogo}
               subLogoShape={networkSubLogoShape}
-              subLogoSize={networkSubLogoSize}
               subNetwork={subNetworkKey}
               subToken={subSymbol}
             />
