@@ -8,9 +8,10 @@ export default {
   component: ActivityIndicator,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    size: { control: 'number', defaultValue: 40 },
-    color: { control: 'text', defaultValue: '#888' },
+    size: { control: 'number', defaultValue: 16 },
+    existIcon: { control: 'boolean', defaultValue: true },
     loading: { control: 'boolean', defaultValue: true },
+    loadingIconColor: { control: 'text', defaultValue: '#FFF' },
   },
 } as ComponentMeta<typeof ActivityIndicator>;
 
