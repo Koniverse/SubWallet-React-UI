@@ -12,13 +12,14 @@ import Spin from '../spin';
 import Button from '../button';
 import theme from '../theme';
 
+const defaultIcon = require('./QrCodeIcon.png');
+
 const { useToken } = theme;
 
 const QRCode: React.FC<QRCodeProps> = (props) => {
   const {
     value,
-    // eslint-disable-next-line global-require
-    icon = require('./QrCodeIcon.png'),
+    icon = defaultIcon,
     size = 160,
     iconSize = 40,
     color = '#000',
