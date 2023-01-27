@@ -28,6 +28,8 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     address: { control: 'text', defaultValue: '0x25B12Fe4D6D7ACca1B4035b26b18B4602cA8b10F' },
+    preLength: { control: 'number', defaultValue: 6 },
+    subLength: { control: 'number', defaultValue: 6 },
   },
 } as ComponentMeta<typeof Address>;
 

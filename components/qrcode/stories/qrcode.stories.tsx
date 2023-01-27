@@ -23,13 +23,10 @@ const Template: ComponentStory<typeof QRCode> = (args) => <QRCode {...args} />;
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.args = {
-  // eslint-disable-next-line react/jsx-no-useless-fragment
-};
+Default.args = {};
 
-export const QRWithIcon = Template.bind({});
+export const QRWithoutIcon = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-QRWithIcon.args = {
-  // eslint-disable-next-line global-require
-  icon: require('../QrCodeIcon.png'),
+QRWithoutIcon.args = {
+  icon: '',
 };
