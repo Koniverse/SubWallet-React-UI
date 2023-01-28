@@ -655,7 +655,7 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
         },
       },
 
-      '&.-status-success': {
+      '&.-status-success.-display-success-status': {
         '&:before': {
           borderColor: token.colorSuccess,
         },

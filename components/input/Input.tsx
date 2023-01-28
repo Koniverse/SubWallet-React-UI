@@ -129,6 +129,7 @@ export interface InputProps
   bordered?: boolean;
   shape?: PresetBarShapeType;
   label?: string;
+  displaySuccessStatus?: boolean;
   containerClassName?: string;
   [key: `data-${string}`]: string | undefined;
 }
@@ -153,6 +154,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     addonBefore,
     className,
     onChange,
+    displaySuccessStatus = false,
     containerClassName,
     shape = 'default',
     label,
@@ -211,7 +213,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
 
   const suffixNode = (!!mergedStatus || suffix) && (
     <>
-      {!!mergedStatus && (
+      {!!mergedStatus && (mergedStatus !== 'success' || displaySuccessStatus) && (
         <Icon
           phosphorIcon={StatusIconMap[mergedStatus]}
           weight="fill"
@@ -248,6 +250,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           '-has-suffix': !!mergedStatus || !!suffix,
           '-has-label': !!label,
           '-disabled': !!mergedDisabled,
+          '-display-success-status': displaySuccessStatus,
         },
         getStatusClassNames('', mergedStatus, hasFeedback),
         hashId,

@@ -58,6 +58,7 @@ export interface TextAreaProps extends RcTextAreaProps {
   status?: InputStatus;
   shape?: PresetBarShapeType;
   label?: string;
+  displaySuccessStatus?: boolean;
 }
 
 export interface TextAreaRef {
@@ -89,6 +90,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
       status: customStatus,
       shape = 'default',
       label,
+      displaySuccessStatus = true,
       ...props
     },
     ref,
@@ -259,7 +261,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
         <div className={`${prefixCls}-wrapper`}>
           {textareaNode}
 
-          {!!mergedStatus && (
+          {!!mergedStatus && (mergedStatus !== 'success' || displaySuccessStatus) && (
             <div className={`${prefixCls}-suffix`}>
               <Icon
                 phosphorIcon={StatusIconMap[mergedStatus]}

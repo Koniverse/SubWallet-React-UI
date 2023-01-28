@@ -214,7 +214,9 @@ function InternalFormItem<Values = any>(props: FormItemProps<Values>): React.Rea
       <ItemHolder
         key="row"
         {...props}
-        className={classNames(className, hashId)}
+        className={classNames(className, hashId, {
+          '-no-child': !children,
+        })}
         prefixCls={prefixCls}
         fieldId={fieldId}
         isRequired={isRequired}

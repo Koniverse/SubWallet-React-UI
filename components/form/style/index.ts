@@ -122,6 +122,10 @@ const genFormItemStyle: GenerateStyle<FormToken> = (token) => {
       marginBottom: token.margin,
       verticalAlign: 'top',
 
+      '&.-no-child': {
+        marginBottom: 0,
+      },
+
       '&-with-help': {
         transition: 'none',
       },
@@ -244,7 +248,7 @@ const genFormItemStyle: GenerateStyle<FormToken> = (token) => {
           position: 'relative',
           display: 'flex',
           alignItems: 'center',
-          minHeight: token.controlHeight,
+          // minHeight: token.controlHeight,
 
           '&-content': {
             flex: 'auto',
@@ -281,14 +285,22 @@ const genFormItemStyle: GenerateStyle<FormToken> = (token) => {
           '&-warning': {
             color: token.colorWarning,
           },
+
+          '&-success': {
+            color: token.colorSuccess,
+          },
         },
       },
 
       [`&-with-help ${formItemCls}-explain`]: {
         height: 'auto',
         opacity: 1,
-        paddingTop: 8,
-        paddingBottom: 16,
+        paddingTop: token.paddingXS,
+        paddingBottom: token.padding,
+      },
+
+      [`&-with-help.-no-child ${formItemCls}-explain`]: {
+        paddingTop: 0,
       },
 
       // ==============================================================

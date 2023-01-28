@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import Form from '..';
 import Input from '../../input';
 import Button from '../../button';
+import type { ValidateStatus } from '../FormItem';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -12,26 +13,49 @@ export default {
   argTypes: {},
 } as ComponentMeta<typeof Form>;
 
+type SubmitResponse = {
+  status?: ValidateStatus;
+  message?: string;
+};
+
 const App = () => {
+  const [{ status: responseStatus, message: responseMessage }, setSubmitResponse] =
+    useState<SubmitResponse>({});
+
   const onFinish = (values: any) => {
-    console.log('Success:', values);
+    console.log('Form values:', values);
+
+    if (values.username === 'username' && values.password === 'username') {
+      setSubmitResponse({
+        status: 'success',
+        message: 'Validation Successfully!',
+      });
+    } else {
+      setSubmitResponse({
+        status: 'error',
+        message: 'User name or password is invalid!',
+      });
+    }
   };
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo);
   };
 
+  const onInputChange = () => {
+    setSubmitResponse({});
+  };
+
   return (
     <Form
       name="basic"
-      labelCol={{ span: 8 }}
-      wrapperCol={{ span: 16 }}
       initialValues={{ remember: true }}
       onFinish={onFinish}
       onFinishFailed={onFinishFailed}
       autoComplete="off"
     >
       <Form.Item
+        validateStatus={responseStatus}
         name="username"
         rules={[
           {
@@ -40,15 +64,28 @@ const App = () => {
           },
         ]}
       >
-        <Input label="Username" placeholder="Your username" />
+        <Input
+          label="Username"
+          placeholder="Your username"
+          onChange={onInputChange}
+          displaySuccessStatus={responseStatus === 'success'}
+        />
       </Form.Item>
 
       <Form.Item
+        validateStatus={responseStatus}
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
       >
-        <Input.Password label="Password" placeholder="Your password" />
+        <Input.Password
+          label="Password"
+          placeholder="Your password"
+          onChange={onInputChange}
+          displaySuccessStatus={responseStatus === 'success'}
+        />
       </Form.Item>
+
+      <Form.Item validateStatus={responseStatus} help={responseMessage} />
 
       <Form.Item>
         <Button htmlType="submit" block>
