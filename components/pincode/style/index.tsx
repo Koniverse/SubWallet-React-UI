@@ -14,6 +14,14 @@ const genSquircleStyle = (token: PinCodeToken): CSSInterpolation => {
     {
       [componentCls]: {
         display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+
+        [`& .pincode-input-container`]: {
+          display: 'flex',
+          width: 'fit-content',
+          justifyContent: 'center',
+        },
 
         [`& .pincode-input-wrapper`]: {
           width: 48,
@@ -29,6 +37,18 @@ const genSquircleStyle = (token: PinCodeToken): CSSInterpolation => {
           '&:focus-within': {
             background: token.colorPrimary,
           },
+        },
+
+        [`& .ant-pin-code-error-wrapper`]: {
+          textAlign: 'center',
+          padding: `${token.paddingXS}px ${token.paddingSM}px`,
+          marginTop: token.margin,
+        },
+
+        [`& .ant-pin-code-error-text`]: {
+          color: token.colorErrorText,
+          fontSize: token.fontSizeSM,
+          lineHeight: token.lineHeightSM,
         },
 
         [`& .pincode-input-text`]: {
