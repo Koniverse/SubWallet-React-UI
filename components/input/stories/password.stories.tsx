@@ -36,7 +36,9 @@ export default {
 } as ComponentMeta<typeof Password>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof Password> = (args) => <Password {...args} />;
+const Template: ComponentStory<typeof Password> = (args) => (
+  <Password {...args} displaySuccessStatus />
+);
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
