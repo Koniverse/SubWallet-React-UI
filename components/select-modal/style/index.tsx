@@ -31,7 +31,6 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
           alignItems: 'center',
           gap: 8,
           overflow: 'hidden',
-          padding: `${token.paddingContentVertical}px ${token.paddingSM}px`,
 
           [`${componentCls}-input-content`]: {
             overflow: 'hidden',
@@ -91,10 +90,23 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
         },
 
         [`${componentCls}-input-placeholder`]: {
-          // color: token.colorTextPlaceholder,
           color: token.colorText,
           fontSize: token.fontSizeHeading6,
           lineHeight: token.lineHeightHeading6,
+        },
+
+        // Size
+
+        [`&${componentCls}-input-size-small`]: {
+          [`${componentCls}-input-wrapper`]: {
+            padding: `${token.paddingContentVerticalSM}px ${token.paddingContentHorizontal}px`,
+          },
+        },
+
+        [`&${componentCls}-input-size-medium`]: {
+          [`${componentCls}-input-wrapper`]: {
+            padding: `${token.paddingContentVertical}px ${token.paddingContentHorizontal}px`,
+          },
         },
 
         [`&${componentCls}-input-with-label`]: {
@@ -103,7 +115,9 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
           },
 
           [`${componentCls}-input-wrapper`]: {
-            paddingTop: token.paddingContentVertical - 2,
+            padding: `${token.paddingContentVertical - 2}px ${token.paddingSM}px ${
+              token.paddingContentVertical
+            }px`,
           },
         },
 
@@ -128,31 +142,6 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
           },
           borderRadius: token.borderRadius,
         },
-
-        // Size
-        // [`&${componentCls}-input-size-default`]: {
-        //   [`${componentCls}-input-wrapper`]: {
-        //     padding: `${token.paddingContentVertical}px ${token.paddingContentHorizontal}px`,
-        //   },
-        // },
-        //
-        // [`&${componentCls}-input-size-small`]: {
-        //   [`${componentCls}-input-wrapper`]: {
-        //   padding: `${token.paddingContentVerticalSM}px ${token.paddingContentHorizontal}px`,
-        //   },
-        // },
-        //
-        // [`&${componentCls}-input-size-medium`]: {
-        //   [`${componentCls}-input-wrapper`]: {
-        //     padding: `${token.paddingContentVertical}px ${token.paddingContentHorizontal}px`,
-        //   },
-        // },
-        //
-        // [`&${componentCls}-input-size-large`]: {
-        //   [`${componentCls}-input-wrapper`]: {
-        //     padding: `${token.paddingContentVerticalLG}px ${token.paddingContentHorizontal}px`,
-        //   },
-        // },
 
         // Background
         [`&${componentCls}-input-bg-default`]: {

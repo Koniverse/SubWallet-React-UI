@@ -3,7 +3,6 @@ import classNames from 'classnames';
 import { useCallback, useContext, useMemo } from 'react';
 import * as React from 'react';
 import type { PresetBarShapeType } from '../_util/shapes';
-import type { SizeType } from '../config-provider/SizeContext';
 import { useToken } from '../theme/internal';
 import SwList from '../sw-list';
 import SwModal from '../sw-modal';
@@ -16,6 +15,7 @@ import useStyle from './style';
 import Icon from '../icon';
 import Typography from '../typography';
 
+export type SelectModalSize = 'small' | 'medium';
 export interface SelectModalProps<T extends Record<string, any>> extends SwModalProps {
   items: T[];
   itemKey: string;
@@ -24,18 +24,20 @@ export interface SelectModalProps<T extends Record<string, any>> extends SwModal
   renderSelected?: (item: T) => React.ReactNode;
   inputClassName?: string;
   onSelect: (value: string) => void;
-  size?: SizeType;
+  size?: SelectModalSize;
   shape?: PresetBarShapeType;
   background?: 'default' | 'transparent';
   placeholder?: string;
   inputWidth?: number | string;
   label?: string;
   hideSuffix?: boolean;
+  prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   disabled?: boolean;
 }
 
 const DEFAULT_SUFFIX = <Icon type='phosphor' phosphorIcon={CaretDown} size="xs" />;
+const DEFAULT_PLACEHOLDER = 'Select box';
 const SelectModal = <T extends Record<string, any>>(
   props: SelectModalProps<T>,
 ): React.ReactNode => {
@@ -58,15 +60,18 @@ const SelectModal = <T extends Record<string, any>>(
     onSelect,
     shape = 'default',
     background = 'default',
-    placeholder = 'Select box',
+    placeholder = DEFAULT_PLACEHOLDER,
     forceRenderFooter = false,
     inputWidth = '100%',
+    title = 'Select modal',
     id,
     onCancel,
     label = '',
     suffix = DEFAULT_SUFFIX,
+    prefix,
     hideSuffix,
     disabled,
+    size: inputSize = 'medium',
     ...restProps
   } = props;
 
@@ -97,7 +102,7 @@ const SelectModal = <T extends Record<string, any>>(
       if (!item) {
         return (
           <Typography.Text className={classNames(`${prefixCls}-input-placeholder`)}>
-            {placeholder}
+            {placeholder || DEFAULT_PLACEHOLDER}
           </Typography.Text>
         );
       }
@@ -145,7 +150,7 @@ const SelectModal = <T extends Record<string, any>>(
             `${prefixCls}-input-container`,
             `${prefixCls}-input-border-${shape}`,
             `${prefixCls}-input-bg-${background}`,
-            // `${prefixCls}-input-size-${inputSize}`,
+            `${prefixCls}-input-size-${inputSize}`,
             inputClassName,
             {
               [`${prefixCls}-input-focus`]: isActive,
@@ -157,6 +162,7 @@ const SelectModal = <T extends Record<string, any>>(
         >
           {label && <div className={classNames(`${prefixCls}-input-label`)}>{label}</div>}
           <div className={classNames(`${prefixCls}-input-wrapper`)}>
+            {prefix}
             <div className={classNames(`${prefixCls}-input-content`)}>
               {_renderInput(selectedItem)}
             </div>
@@ -165,6 +171,7 @@ const SelectModal = <T extends Record<string, any>>(
         </div>
         <SwModal
           {...restProps}
+          title={title}
           id={id}
           forceRenderFooter={forceRenderFooter}
           wrapClassName={wrapClassName}
