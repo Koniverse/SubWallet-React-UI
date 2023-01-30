@@ -13,8 +13,8 @@ export type BrowserType =
   | 'Brave';
 export const detectBrowser = (): BrowserType => {
   // Opera 8.0+
-  // @ts-ignore
   const isOpera =
+    // @ts-ignore
     (!!window.opr && !!opr.addons) || !!window.opera || navigator.userAgent.indexOf(' OPR/') >= 0;
 
   // Firefox 1.0+
@@ -22,11 +22,12 @@ export const detectBrowser = (): BrowserType => {
   const isFirefox = typeof InstallTrigger !== 'undefined';
 
   // Safari 3.0+ "[object HTMLElementConstructor]"
-  // @ts-ignore
   const isSafari =
+    // @ts-ignore
     /constructor/i.test(window.HTMLElement) ||
     (function (p) {
       return p.toString() === '[object SafariRemoteNotification]';
+      // @ts-ignore
     })(!window.safari || (typeof safari !== 'undefined' && window.safari.pushNotification));
 
   // Internet Explorer 6-11

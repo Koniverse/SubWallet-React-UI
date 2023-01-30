@@ -1,5 +1,6 @@
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
+import { PaperPlaneTilt } from 'phosphor-react';
 import Button from '../button';
 import SwSubHeader from '../sw-sub-header';
 import SwHeader from '../sw-header';
@@ -11,7 +12,6 @@ import type { SwHeaderBackground, SwHeaderLeftContent } from '../sw-header';
 import { ConfigContext } from '../config-provider';
 import useStyle from './style';
 import Icon from '../icon';
-import { PaperPlaneTilt } from 'phosphor-react';
 
 export interface SwScreenLayoutProps {
   // General
