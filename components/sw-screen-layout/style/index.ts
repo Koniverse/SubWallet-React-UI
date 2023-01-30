@@ -22,6 +22,12 @@ const genContainerStyle: GenerateStyle<SwScreenLayoutToken> = (token) => {
         flexDirection: 'column',
         overflow: 'hidden',
 
+        [`${componentCls}-header`]: {
+          '&-with-divider': {
+            borderBottom: `${token.lineWidth * 2}px ${token.lineType} ${token.colorSplit}`,
+          },
+        },
+
         [`${componentCls}-body`]: {
           flex: 1,
           overflow: 'auto',
@@ -29,35 +35,16 @@ const genContainerStyle: GenerateStyle<SwScreenLayoutToken> = (token) => {
           margin: `${token.padding}px 0`,
         },
 
-        [`${componentCls}-footer`]: {},
-
-        [`${componentCls}-item`]: {
-          flex: 1,
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          gap: token.marginXXS / 2,
-          padding: `${token.marginXXS / 2}px ${token.marginXXS}px`,
-          cursor: 'pointer',
-
-          [`${componentCls}-item-icon`]: {
-            color: token.colorTextDescription,
+        [`${componentCls}-footer`]: {
+          '&-button-container': {
+            padding: `0 ${token.padding}px`,
+            marginBottom: token.margin,
           },
-
-          [`${componentCls}-item-label`]: {
-            fontSize: token.fontSizeSM,
-            lineHeight: token.lineHeightSM,
-            color: token.colorTextDescription,
+          '&-button-container-alone': {
+            marginBottom: token.marginXL,
           },
-
-          [`&:hover, &${componentCls}-item-active`]: {
-            [`${componentCls}-item-icon`]: {
-              color: token.colorWhite,
-            },
-
-            [`${componentCls}-item-label`]: {
-              color: token.colorWhite,
-            },
+          '&-content': {
+            padding: `0 ${token.padding}px`,
           },
         },
       },

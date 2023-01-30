@@ -91,6 +91,7 @@ const NotificationProvider = ({
   };
 
   return (
+    // eslint-disable-next-line react/jsx-no-constructed-context-values
     <NotificationContext.Provider value={{ showNotification }}>
       {contextHolder}
       {children}

@@ -139,8 +139,10 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
           fontWeight: token.fontWeightStrong,
           fontSize: token.modalHeaderTitleFontSize,
           lineHeight: token.modalHeaderTitleLineHeight,
-          wordWrap: 'break-word',
+          whiteSpace: 'nowrap',
           textAlign: 'center',
+          textOverflow: 'ellipsis',
+          overflow: 'hidden',
         },
 
         [`${componentCls}-content`]: {
@@ -195,7 +197,7 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
           color: token.colorText,
           background: token.modalHeaderBg,
           borderRadius: `${token.borderRadiusLG}px ${token.borderRadiusLG}px 0 0`,
-          padding: `0 ${token.padding}px ${token.padding}px`,
+          padding: `0 ${token.paddingXXL}px ${token.padding}px`,
           margin: `0 -${token.padding}px ${token.padding}px`,
           borderBottom: `${token.lineWidth * 2}px ${token.modalHeaderBorderStyle} ${
             token.colorSplit
