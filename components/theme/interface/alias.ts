@@ -70,6 +70,7 @@ export interface AliasToken extends MapToken {
   paddingMD: number;
   paddingLG: number;
   paddingXL: number;
+  paddingXXL: number;
 
   // Padding Content
   paddingContentHorizontalLG: number;

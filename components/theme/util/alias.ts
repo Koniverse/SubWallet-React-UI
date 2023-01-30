@@ -106,6 +106,7 @@ export default function formatToken(derivativeToken: RawMergedToken): AliasToken
     paddingMD: mergedToken.sizeMD,
     paddingLG: mergedToken.sizeLG,
     paddingXL: mergedToken.sizeXL,
+    paddingXXL: mergedToken.sizeXXL,
 
     paddingContentHorizontalLG: mergedToken.sizeLG,
     paddingContentVerticalLG: mergedToken.sizeMS,
