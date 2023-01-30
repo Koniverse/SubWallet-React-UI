@@ -56,12 +56,15 @@ const genContainerStyle: GenerateStyle<SwSubHeaderToken> = (token) => {
           [`${componentCls}-title`]: {
             whiteSpace: 'nowrap',
             width: '100%',
+            display: 'flex',
+            justifyContent: 'center',
           },
 
           [`${componentCls}-title-content`]: {
             color: token.colorWhite,
             fontSize: token.fontSizeHeading4,
             lineHeight: token.lineHeightHeading4,
+            textAlign: 'center',
           },
 
           [`&${componentCls}-center-part-pl`]: {
