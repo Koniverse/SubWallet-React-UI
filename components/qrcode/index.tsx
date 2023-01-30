@@ -25,7 +25,6 @@ const QRCode: React.FC<QRCodeProps> = (props) => {
     color = '#000',
     errorLevel = 'M',
     status = 'active',
-    bordered = true,
     onRefresh,
     style,
     className,
@@ -69,9 +68,7 @@ const QRCode: React.FC<QRCodeProps> = (props) => {
     );
   }
 
-  const cls = classNames(prefixCls, className, hashId, {
-    [`${prefixCls}-borderless`]: !bordered,
-  });
+  const cls = classNames(prefixCls, className, hashId);
 
   return wrapSSR(
     <LocaleReceiver componentName="QRCode">
