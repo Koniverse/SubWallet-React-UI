@@ -1,5 +1,6 @@
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import React, { useCallback, useMemo, useState } from 'react';
+import { useToken } from '../../theme/internal';
 import SelectModal from '../../select-modal';
 import Typography from '../../typography';
 import type { SwScreenLayoutProps } from '../index';
@@ -18,15 +19,21 @@ interface WrapperProps extends SwScreenLayoutProps {
   subHeaderRightIconType: number;
   headerRightIconType: number;
   selectBackground: 'default' | 'transparent';
+  withFooter: boolean;
+  withButton: boolean;
 }
 
 const SELECT_MODAL_ID = 'select-account';
+
 const Wrapper: React.FC<WrapperProps> = ({
   subHeaderRightIconType,
   headerRightIconType,
   selectBackground,
+  withFooter,
+  withButton,
   ...args
 }) => {
+  const [, token] = useToken();
   const [selectedTab, setSelectedTab] = useState('token');
   const onSelectTab = useCallback(
     (key: string) => () => {
@@ -71,6 +78,27 @@ const Wrapper: React.FC<WrapperProps> = ({
 
   const [selectedAccount, setSelectedAccount] = useState<string>(ALL_ACCOUNT_KEY);
 
+  const footer = useMemo(
+    (): React.ReactNode => (
+      <div
+        style={{
+          color: token.colorTextDescription,
+          textAlign: 'center',
+          fontSize: token.fontSizeHeading6,
+          lineHeight: token.lineHeightHeading6,
+          padding: '14px 0',
+        }}
+      >
+        <div>By continuing, you agree to our</div>
+        <div>
+          <span style={{ color: token.colorText }}>Terms & Conditions</span>&nbsp;and&nbsp;
+          <span style={{ color: token.colorText }}>Privacy Policy</span>
+        </div>
+      </div>
+    ),
+    [token],
+  );
+
   return (
     <div style={{ margin: -16, width: 400, height: 600 }}>
       <SwScreenLayout
@@ -82,6 +110,8 @@ const Wrapper: React.FC<WrapperProps> = ({
         selectedTabBarItem={selectedTab}
         subHeaderIcons={subHeaderIcons}
         headerIcons={headerIcons}
+        footerButton={withButton ? {} : undefined}
+        footer={withFooter ? footer : undefined}
         headerContent={
           // @ts-ignore
           <SelectModal
@@ -204,4 +234,6 @@ Primary.args = {
   subHeaderRightIconType: 1,
 
   showTabBar: false,
+  withButton: false,
+  withFooter: false,
 };
