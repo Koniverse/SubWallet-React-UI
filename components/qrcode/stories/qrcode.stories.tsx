@@ -14,7 +14,6 @@ export default {
     color: { control: 'text', defaultValue: '#000' },
     errorLevel: { control: 'radio', options: ['M', 'L', 'Q', 'H'], defaultValue: 'M' },
     status: { control: 'radio', options: ['active', 'expired', 'loading'], defaultValue: 'active' },
-    bordered: { control: 'boolean', defaultValue: true },
   },
 } as ComponentMeta<typeof QRCode>;
 
