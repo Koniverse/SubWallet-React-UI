@@ -27,6 +27,7 @@ Default.args = {
   rightItem: (
     <Button
       type="ghost"
+      size='xs'
       icon={
         <Icon
           type="phosphor"
@@ -49,6 +50,7 @@ CategoryItem.args = {
   ),
   rightItem: (
     <Button
+      size='xs'
       type="ghost"
       icon={
         <Icon type="phosphor" phosphorIcon={Star} iconColor="rgba(255, 255, 255, 0.45)" size="sm" />

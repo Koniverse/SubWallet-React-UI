@@ -16,7 +16,7 @@ export default {
     withDivider: { control: 'boolean', defaultValue: false },
     dividerPadding: {
       control: 'number',
-      defaultValue: 12,
+      defaultValue: 44,
       if: { arg: 'withDivider', truthy: true },
     },
   },
