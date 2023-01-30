@@ -1,5 +1,6 @@
 import type { CSSInterpolation } from '@ant-design/cssinjs';
 import { TinyColor } from '@ctrl/tinycolor';
+import { getAlphaColor } from '../../theme/themes/default/colorAlgorithm';
 import { initSlideMotion } from '../../style/motion';
 import { resetComponent } from '../../style';
 import type { FullToken, GenerateStyle } from '../../theme/internal';
@@ -53,7 +54,8 @@ const genScannerStyle = (token: SwQrScannerToken): CSSInterpolation => {
           alignItems: 'center',
           position: 'absolute',
           width: '100%',
-          bottom: token.marginXL,
+          bottom: token.margin,
+          padding: token.padding,
 
           [`${componentCls}-hidden-input`]: {
             display: 'none',
@@ -85,11 +87,41 @@ const genScannerStyle = (token: SwQrScannerToken): CSSInterpolation => {
             borderRadius: token.connerRadius,
             position: 'relative',
             overflow: 'hidden',
+            padding: token.padding,
 
             [`${componentCls}-center-overlay`]: {
               width: '100%',
               height: '100%',
               position: 'relative',
+
+              [`${componentCls}-camera-block-container`]: {
+                display: 'flex',
+                height: '100%',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
+
+                [`${componentCls}-camera-block-content`]: {
+                  display: 'flex',
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  gap: token.controlPaddingHorizontalSM,
+                  backgroundColor: getAlphaColor(token.colorBgLayout, 0.75),
+                  borderRadius: token.borderRadiusLG,
+                  borderWidth: token.lineWidth * 2,
+                  borderStyle: token.lineType,
+                  borderColor: token.colorError,
+                  padding: `${token.paddingXS}px ${token.padding}px`,
+
+                  [`${componentCls}-camera-block-icon`]: {
+                    color: token.colorError,
+                  },
+
+                  [`${componentCls}-camera-block-text`]: {
+                    color: token.colorText,
+                  },
+                },
+              },
             },
           },
 
@@ -275,6 +307,7 @@ const genReaderStyle = (token: SwQrScannerToken): CSSInterpolation => {
           overflow: 'hidden',
           position: 'absolute',
           transform: undefined,
+          objectFit: 'cover',
         },
       },
     },

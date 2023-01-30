@@ -70,9 +70,9 @@ const Wrapper: React.FC<WrapperProps> = ({ isError, multipleFrame, ...args }) =>
         <div
           style={{
             position: 'absolute',
-            bottom: 24,
+            bottom: 8,
             width: '100%',
-            padding: '0 24px',
+            padding: '0 8px',
           }}
         >
           <Progress percent={40} showInfo={false} />
@@ -122,7 +122,11 @@ const Wrapper: React.FC<WrapperProps> = ({ isError, multipleFrame, ...args }) =>
 
     if (multipleFrame) {
       return (
-        <div>
+        <div
+          style={{
+            width: '100%',
+          }}
+        >
           <div
             style={{
               marginTop: 16,
@@ -135,7 +139,6 @@ const Wrapper: React.FC<WrapperProps> = ({ isError, multipleFrame, ...args }) =>
             style={{
               marginTop: 30,
               width: '100%',
-              padding: '0 16px',
             }}
           >
             <Button icon={<Icon type="fontAwesome" fontawesomeIcon={faCheckCircle} />} block>
