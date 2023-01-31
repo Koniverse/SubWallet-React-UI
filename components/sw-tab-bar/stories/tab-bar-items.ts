@@ -1,5 +1,5 @@
-import type { SwTabBarItem } from 'antd/es/sw-tab-bar';
 import { Aperture, Database, Globe, Rocket, Wallet } from 'phosphor-react';
+import type { SwTabBarItem } from '..';
 
 // eslint-disable-next-line import/prefer-default-export
 export const TabBarItems: Array<Omit<SwTabBarItem, 'onClick'>> = [

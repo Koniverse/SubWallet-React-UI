@@ -1,9 +1,9 @@
 import * as React from 'react';
 import SuperEllipse from 'react-superellipse';
-import { ConfigContext } from 'antd/es/config-provider';
 import classNames from 'classnames';
 import type { CSSProperties } from 'react';
 import { useMemo } from 'react';
+import { ConfigContext } from '../config-provider';
 import useStyle from './style';
 import type { SizeType } from '../config-provider/SizeContext';
 import { sizeNameMap } from '../config-provider/SizeContext';

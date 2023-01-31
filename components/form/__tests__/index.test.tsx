@@ -2,7 +2,7 @@ import type { ChangeEventHandler } from 'react';
 import React, { useState } from 'react';
 import scrollIntoView from 'scroll-into-view-if-needed';
 import classNames from 'classnames';
-import type { ColProps } from 'antd/es/grid';
+import type { ColProps } from '../../grid';
 import Form from '..';
 import * as Util from '../util';
 import Button from '../../button';
