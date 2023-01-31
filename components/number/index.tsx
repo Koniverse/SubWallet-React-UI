@@ -7,7 +7,7 @@ import type { NumberFormatter } from '../_util/number';
 import { balanceFormatter, formatNumber } from '../_util/number';
 import Typography from '../typography';
 
-export interface SWNumberProps {
+export interface SwNumberProps {
   value: string | number | BigNumber;
   decimal: number;
   size?: number;
@@ -59,7 +59,7 @@ const getNumberSeparators = () => {
 
 const { decimal: decimalSeparator, thousand: thousandSeparator } = getNumberSeparators();
 
-const Number: React.FC<SWNumberProps> = (props) => {
+const Number: React.FC<SwNumberProps> = (props) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
 
   const {

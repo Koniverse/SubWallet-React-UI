@@ -7,12 +7,12 @@ import type { Web3GalleryProps } from '../base';
 import Web3Gallery from '../base';
 import Icon from '../../icon';
 
-export interface ItemSelectionProps extends Omit<Web3GalleryProps, 'footerNode' | 'appendNode'> {
+export interface ImageSelectionProps extends Omit<Web3GalleryProps, 'footerNode' | 'appendNode'> {
   isSelected?: boolean;
   title: string;
 }
 
-const ItemSelection: React.FC<ItemSelectionProps> = ({
+const ItemSelection: React.FC<ImageSelectionProps> = ({
   className,
   isSelected,
   title,
