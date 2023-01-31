@@ -1,6 +1,6 @@
 import { generate } from '@ant-design/colors';
 import type { DerivativeFunc } from '@ant-design/cssinjs';
-import type { ThemePresetColorType } from 'antd/es/theme/interface/presetColors';
+import type { ThemePresetColorType } from '../../interface/presetColors';
 import type { ColorPalettes, MapToken, PresetColorType, SeedToken } from '../../interface';
 import { defaultPresetColors, themePresetColors } from '../seed';
 import genColorMapToken from '../shared/genColorMapToken';

@@ -1,4 +1,4 @@
-import type { Web3LogoMap } from 'antd/es/config-provider/context';
+import type { Web3LogoMap } from '../../config-provider/context';
 import polkadotImg from './logo/1.Polkadot.svg';
 import kusamaImg from './logo/2.Kusama.svg';
 

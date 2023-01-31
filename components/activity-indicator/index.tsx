@@ -2,7 +2,7 @@ import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
 import CSSMotion from 'rc-motion';
 import React from 'react';
 
-export interface LoadingIconProps {
+export interface ActivityIndicatorProps {
   prefixCls: string;
   existIcon: boolean;
   loading?: boolean | object;
@@ -16,7 +16,7 @@ const getRealWidth = (node: HTMLElement) => ({
   transform: 'scale(1)',
 });
 
-const LoadingIcon: React.FC<LoadingIconProps> = ({
+const ActivityIndicator: React.FC<ActivityIndicatorProps> = ({
   prefixCls,
   loading,
   existIcon,
@@ -59,4 +59,4 @@ const LoadingIcon: React.FC<LoadingIconProps> = ({
   );
 };
 
-export default LoadingIcon;
+export default ActivityIndicator;

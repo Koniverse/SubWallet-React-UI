@@ -1,10 +1,10 @@
 import * as React from 'react';
-import type { SizeType } from 'antd/es/config-provider/SizeContext';
 import type { IconWeight } from 'phosphor-react/src/lib';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { IconProps } from 'phosphor-react';
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
-import type { AntIconType } from 'antd/es/icon/stories/icon.stories';
+import type { SizeType } from '../config-provider/SizeContext';
+import type { AntIconType } from './stories/icon.stories';
 
 export interface SWIconProps {
   type?: 'fontAwesome' | 'phosphor' | 'antDesignIcon';

@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { ConfigContext } from 'antd/es/config-provider';
 import classNames from 'classnames';
+import { ConfigContext } from '../config-provider';
 import InnerLogo from './InnerLogo';
 import type { PresetIconShapeType } from '../_util/shapes';
 import useStyle from './style';

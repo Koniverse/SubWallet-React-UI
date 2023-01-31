@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import ItemSelection from '..';
+import ImageSelection from '..';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'SubWallet Components/Image Selection',
-  component: ItemSelection,
+  component: ImageSelection,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {},
-} as ComponentMeta<typeof ItemSelection>;
+} as ComponentMeta<typeof ImageSelection>;
 
 const blockList: string[] = Array.from(Array(10).keys()).map((i) => `${i + 1}`);
 
@@ -18,7 +18,7 @@ const App = () => {
   return (
     <div style={{ display: 'grid', gridGap: '16px', gridTemplateColumns: 'auto auto auto' }}>
       {blockList.map((i) => (
-        <ItemSelection
+        <ImageSelection
           key={i}
           imageSource='https://www.w3schools.com/css/paris.jpg'
           title={`Item ${i}`}
