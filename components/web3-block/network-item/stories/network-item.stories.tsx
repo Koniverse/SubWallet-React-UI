@@ -15,6 +15,11 @@ export default {
     symbol: { control: 'text', defaultValue: 'dot' },
     isShowSubLogo: { control: 'boolean', defaultValue: false },
     withDivider: { control: 'boolean', defaultValue: false },
+    dividerPadding: {
+      control: 'number',
+      defaultValue: 52,
+      if: { arg: 'withDivider', truthy: true },
+    },
   },
 } as ComponentMeta<typeof NetworkItem>;
 

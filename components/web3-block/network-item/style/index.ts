@@ -52,7 +52,6 @@ const genNetworkItemStyle = (token: NetworkItemToken): CSSInterpolation => {
         },
 
         [`${componentCls}-divider`]: {
-          paddingLeft: 64,
           '& .ant-divider-horizontal': {
             margin: 0,
           },
