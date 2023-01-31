@@ -21,6 +21,7 @@ export interface NetworkItemProps extends Web3BlockProps {
   className?: string;
   onPressItem?: () => void;
   withDivider?: boolean;
+  dividerPadding?: number | string;
   rightComponent?: React.ReactNode;
 }
 
@@ -40,6 +41,7 @@ const NetworkItem: React.FC<NetworkItemProps> = ({
   leftItem,
   middleItem,
   rightItem,
+  dividerPadding,
   ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
@@ -73,7 +75,7 @@ const NetworkItem: React.FC<NetworkItemProps> = ({
         onClick={onPressItem}
       />
       {withDivider && (
-        <div className={`${prefixCls}-divider`}>
+        <div className={`${prefixCls}-divider`} style={{ paddingLeft: dividerPadding }}>
           <Divider />
         </div>
       )}
