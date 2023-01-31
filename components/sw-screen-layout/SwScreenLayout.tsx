@@ -1,5 +1,7 @@
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
+import { PaperPlaneTilt } from 'phosphor-react';
+import Button from '../button';
 import SwSubHeader from '../sw-sub-header';
 import SwHeader from '../sw-header';
 import type { SwTabBarItem } from '../sw-tab-bar';
@@ -9,12 +11,14 @@ import type { SwSubHeaderBackground } from '../sw-sub-header';
 import type { SwHeaderBackground, SwHeaderLeftContent } from '../sw-header';
 import { ConfigContext } from '../config-provider';
 import useStyle from './style';
+import Icon from '../icon';
 
 export interface SwScreenLayoutProps {
   // General
   children: React.ReactNode | React.ReactNode[];
   prefixCls?: string;
   className?: string;
+  withDivider?: boolean;
 
   // Header
   showHeader?: boolean;
@@ -37,6 +41,10 @@ export interface SwScreenLayoutProps {
   subHeaderPaddingVertical?: boolean;
   subHeaderBackground?: SwSubHeaderBackground;
 
+  // Footer
+  footer?: React.ReactNode;
+  footerButton?: ButtonProps;
+
   // Tab bar
   tabBarItems: SwTabBarItem[];
   selectedTabBarItem: string;
@@ -49,6 +57,7 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
     prefixCls: customizePrefixCls,
     className,
     children,
+    withDivider = true,
     // Header,
     showHeader,
     headerBackground,
@@ -69,6 +78,11 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
     subHeaderPaddingVertical,
     subHeaderBackground,
     onBack,
+
+    // Footer
+    footer,
+    footerButton,
+
     // Tab bar
     tabBarItems,
     selectedTabBarItem,
@@ -85,7 +99,11 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
 
   return wrapSSR(
     <div className={classNames(classNameExtend)}>
-      <div className={classNames(`${prefixCls}-header`)}>
+      <div
+        className={classNames(`${prefixCls}-header`, {
+          [`${prefixCls}-header-with-divider`]: withDivider,
+        })}
+      >
         {showHeader && (
           <SwHeader
             showLeftButton={showLeftButton}
@@ -112,12 +130,34 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
         )}
       </div>
       <div className={classNames(`${prefixCls}-body`)}>{children}</div>
-      {showTabBar && (
-        <SwTabBar
-          className={classNames(`${prefixCls}-footer`)}
-          items={tabBarItems}
-          selected={selectedTabBarItem}
-        />
+      {(showTabBar || footerButton || footer) && (
+        <div className={classNames(`${prefixCls}-footer`)}>
+          {footerButton && (
+            <div
+              className={classNames(`${prefixCls}-footer-button-container`, {
+                [`${prefixCls}-footer-button-container-alone`]: !(footer || showTabBar),
+              })}
+            >
+              <Button
+                icon={<Icon type="phosphor" phosphorIcon={PaperPlaneTilt} />}
+                block
+                {...footerButton}
+              >
+                {footerButton.children || 'Default button'}
+              </Button>
+            </div>
+          )}
+          {!!footer && !showTabBar && (
+            <div className={classNames(`${prefixCls}-footer-content`)}>{footer}</div>
+          )}
+          {showTabBar && (
+            <SwTabBar
+              className={classNames(`${prefixCls}-footer`)}
+              items={tabBarItems}
+              selected={selectedTabBarItem}
+            />
+          )}
+        </div>
       )}
     </div>,
   );

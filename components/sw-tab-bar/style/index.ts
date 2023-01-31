@@ -20,7 +20,7 @@ const genContainerStyle: GenerateStyle<SwTabBarToken> = (token) => {
         width: '100%',
         backgroundColor: token.colorBgSecondary,
         borderRadius: `${token.tabBarBorderRadius}px ${token.tabBarBorderRadius}px 0 0`,
-        paddingTop: token.paddingSM,
+        paddingTop: token.paddingXS,
         paddingBottom: token.padding,
         display: 'flex',
         flexDirection: 'row',
@@ -32,7 +32,6 @@ const genContainerStyle: GenerateStyle<SwTabBarToken> = (token) => {
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: token.marginXXS / 2,
           padding: `${token.marginXXS / 2}px ${token.marginXXS}px`,
           cursor: 'pointer',
 

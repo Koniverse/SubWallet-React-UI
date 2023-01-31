@@ -51,7 +51,7 @@ const genStakingNetworkItemStyle = (token: StakingNetworkToken): CSSInterpolatio
           },
         },
 
-        '.ant-web3-block-right-item': {
+        '.ant-web3-block-right-item.ant-web3-block-right-item': {
           marginRight: 0,
         },
 

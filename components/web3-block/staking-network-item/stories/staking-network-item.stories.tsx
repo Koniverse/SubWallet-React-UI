@@ -1,9 +1,6 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import { DotsThree } from 'phosphor-react';
 import StakingNetworkItem from '..';
-import Button from '../../../button';
-import Icon from '../../../icon';
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'SubWallet Components/StakingNetworkItem',
@@ -25,19 +22,4 @@ const Template: ComponentStory<typeof StakingNetworkItem> = (args) => (
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.args = {
-  renderRightItem: () => (
-    <Button
-      type="ghost"
-      size="xs"
-      icon={
-        <Icon
-          type="phosphor"
-          phosphorIcon={DotsThree}
-          iconColor="rgba(255, 255, 255, 0.45)"
-          size="sm"
-        />
-      }
-    />
-  ),
-};
+Default.args = {};

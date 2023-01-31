@@ -13,6 +13,8 @@ export default {
       defaultValue: 6,
     },
     initialValue: { control: 'text', defaultValue: '' },
+    isError: { control: 'boolean', defaultValue: false },
+    errorText: { control: 'text', defaultValue: 'Invalid PINCode. There are 4 time left' },
   },
 } as ComponentMeta<typeof PinCode>;
 
