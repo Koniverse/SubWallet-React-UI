@@ -18,7 +18,7 @@ import ClearableLabeledInput from './ClearableLabeledInput';
 import type { InputFocusOptions } from './Input';
 import { fixControlledValue, resolveOnChange, triggerFocus } from './Input';
 import useStyle from './style';
-import type { SWIconProps } from '../icon';
+import type { SwIconProps } from '../icon';
 import Icon from '../icon';
 
 interface ShowCountProps {
@@ -67,7 +67,7 @@ export interface TextAreaRef {
   resizableTextArea?: ResizableTextAreaRef;
 }
 
-const StatusIconMap: Record<string, SWIconProps['phosphorIcon']> = {
+const StatusIconMap: Record<string, SwIconProps['phosphorIcon']> = {
   success: CheckCircle,
   error: XCircle,
   warning: WarningCircle,

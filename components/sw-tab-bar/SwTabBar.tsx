@@ -3,13 +3,13 @@ import React, { useMemo } from 'react';
 import { ConfigContext } from '../config-provider';
 import Icon from '../icon';
 import useStyle from './style';
-import type { SWIconProps } from '../icon';
+import type { SwIconProps } from '../icon';
 
 export interface SwTabBarItem {
   label: string;
   key: string;
   onClick: () => void;
-  icon: SWIconProps;
+  icon: SwIconProps;
 }
 
 export interface SwTabBarProps {
