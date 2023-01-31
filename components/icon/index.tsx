@@ -6,7 +6,7 @@ import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type AntIcon from '@ant-design/icons/es';
 import type { SizeType } from '../config-provider/SizeContext';
 
-type AntIconType = typeof AntIcon;
+export type AntIconType = typeof AntIcon;
 
 export interface SwIconProps {
   type?: 'fontAwesome' | 'phosphor' | 'antDesignIcon';
