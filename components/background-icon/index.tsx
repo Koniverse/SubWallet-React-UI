@@ -1,11 +1,8 @@
 import * as React from 'react';
 import type { IconWeight } from 'phosphor-react/src/lib';
-import type { IconProps } from 'phosphor-react';
-import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import classNames from 'classnames';
 import type { SizeType } from '../config-provider/SizeContext';
-import type { AntIconType } from '../icon/stories/icon.stories';
-import Icon from '../icon';
+import Icon, { SwIconProps } from '../icon';
 import { ConfigContext } from '../config-provider';
 import useStyle from './style';
 import type { ImageShape } from '../image';
@@ -15,9 +12,9 @@ export interface BackgroundIconProps {
   shape?: ImageShape;
   type?: 'fontAwesome' | 'phosphor' | 'antDesignIcon';
   size?: SizeType;
-  phosphorIcon?: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<SVGSVGElement>>;
-  fontawesomeIcon?: IconProp;
-  antDesignIcon?: AntIconType;
+  phosphorIcon?: SwIconProps['phosphorIcon'];
+  fontawesomeIcon?: SwIconProps['fontawesomeIcon'];
+  antDesignIcon?: SwIconProps['antDesignIcon'];
   weight?: IconWeight;
   iconColor?: string;
   className?: string;

@@ -19,7 +19,7 @@ import { hasPrefixSuffix } from './utils';
 // CSSINJS
 import useStyle from './style';
 import type { PresetBarShapeType } from '../_util/shapes';
-import type { SWIconProps } from '../icon';
+import type { SwIconProps } from '../icon';
 import Icon from '../icon';
 
 export interface InputFocusOptions extends FocusOptions {
@@ -134,7 +134,7 @@ export interface InputProps
   [key: `data-${string}`]: string | undefined;
 }
 
-const StatusIconMap: Record<string, SWIconProps['phosphorIcon']> = {
+const StatusIconMap: Record<string, SwIconProps['phosphorIcon']> = {
   success: CheckCircle,
   error: XCircle,
   warning: WarningCircle,

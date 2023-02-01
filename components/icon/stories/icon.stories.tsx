@@ -2,11 +2,9 @@ import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { CaretUp, MagnifyingGlass, WifiHigh } from 'phosphor-react';
 import { faChevronUp, faMagnifyingGlass, faWifi } from '@fortawesome/free-solid-svg-icons';
-import type { StepBackwardOutlined } from '@ant-design/icons';
 import { SearchOutlined, WifiOutlined, UpOutlined } from '@ant-design/icons';
 import Icon from '..';
 
-export type AntIconType = typeof StepBackwardOutlined;
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Basic Components/Icon',

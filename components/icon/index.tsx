@@ -3,10 +3,12 @@ import type { IconWeight } from 'phosphor-react/src/lib';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import type { IconProps } from 'phosphor-react';
 import type { IconProp } from '@fortawesome/fontawesome-svg-core';
+import type AntIcon from '@ant-design/icons/es';
 import type { SizeType } from '../config-provider/SizeContext';
-import type { AntIconType } from './stories/icon.stories';
 
-export interface SWIconProps {
+export type AntIconType = typeof AntIcon;
+
+export interface SwIconProps {
   type?: 'fontAwesome' | 'phosphor' | 'antDesignIcon';
   size?: SizeType;
   customSize?: string;
@@ -18,7 +20,7 @@ export interface SWIconProps {
   className?: string;
 }
 
-const Icon: React.FC<SWIconProps> = ({
+const Icon: React.FC<SwIconProps> = ({
   className,
   type = 'phosphor',
   size,
