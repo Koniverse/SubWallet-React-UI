@@ -66,12 +66,15 @@ type CameraState = 'Waiting' | 'Allowed' | 'Blocked' | 'NotFound';
 
 const CAMERA_ERROR = {
   name: {
-    blocked: 'NotAllowedError',
-    notFound: 'NotFoundError',
+    blocked: ['NotAllowedError'],
+    notFound: ['NotFoundError'],
   },
   message: {
-    blocked: 'Permission denied',
-    dismissed: 'Permission dismissed',
+    blocked: [
+      'Permission denied',
+      'The request is not allowed by the user agent or the platform in the current context.',
+    ],
+    dismissed: ['Permission dismissed'],
   },
 };
 
@@ -221,15 +224,15 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
         });
       })
       .catch((e: Error) => {
-        if (e.message.includes(CAMERA_ERROR.message.blocked)) {
+        if (CAMERA_ERROR.message.blocked.some((message) => e.message.includes(message))) {
           openGrantCameraPermissionDocument();
         }
 
-        if (e.name === CAMERA_ERROR.name.blocked) {
+        if (CAMERA_ERROR.name.blocked.includes(e.name)) {
           setCameraState('Blocked');
         }
 
-        if (e.name === CAMERA_ERROR.name.notFound) {
+        if (CAMERA_ERROR.name.blocked.includes(e.name)) {
           setCameraState('Blocked');
         }
       })
@@ -309,16 +312,16 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
       } catch (err) {
         const e = err as Error;
         if (amount) {
-          if (e.message.includes(CAMERA_ERROR.message.dismissed)) {
+          if (CAMERA_ERROR.message.dismissed.some((message) => e.message.includes(message))) {
             clearInterval(interval);
             blockInterval = true;
           }
 
-          if (e.name === CAMERA_ERROR.name.blocked) {
+          if (CAMERA_ERROR.name.blocked.includes(e.name)) {
             setCameraState('Blocked');
           }
 
-          if (e.name === CAMERA_ERROR.name.notFound) {
+          if (CAMERA_ERROR.name.notFound.includes(e.name)) {
             setCameraState('NotFound');
           }
         }
