@@ -13,7 +13,7 @@ import Icon from '../../icon';
 export interface StakingNetworkItemProps extends Web3BlockProps {
   stakingNetwork: string;
   stakingCount?: string | number | BigNumber;
-  expectedReturn: string | number | BigNumber;
+  expectedReturn?: string | number | BigNumber;
   networkMainLogoSize?: number;
   networkMainLogoShape?: 'circle' | 'squircle';
   networkKey?: string;
@@ -83,13 +83,15 @@ const StakingNetworkItem: React.FC<StakingNetworkItemProps> = ({
       rightItem={
         rightItem || (
           <>
-            <Number
-              value={expectedReturn}
-              decimal={0}
-              suffix="%"
-              leftColor="#4CEAAC"
-              rightColor="#4CEAAC"
-            />
+            {!!expectedReturn && (
+              <Number
+                value={expectedReturn}
+                decimal={0}
+                suffix="%"
+                leftColor="#4CEAAC"
+                rightColor="#4CEAAC"
+              />
+            )}
             <Icon
               className={`${prefixCls}-right-icon`}
               type="phosphor"
