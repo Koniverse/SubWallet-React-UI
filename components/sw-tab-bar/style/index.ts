@@ -48,11 +48,11 @@ const genContainerStyle: GenerateStyle<SwTabBarToken> = (token) => {
 
           [`&:hover, &${componentCls}-item-active`]: {
             [`${componentCls}-item-icon`]: {
-              color: token.colorWhite,
+              color: token.colorText,
             },
 
             [`${componentCls}-item-label`]: {
-              color: token.colorWhite,
+              color: token.colorText,
             },
           },
         },

@@ -61,6 +61,20 @@ const convertFunction = (device: MediaDeviceInfo): VideoDeviceInfo => ({
 const MODAL_ID = 'select-camera-modal';
 const VIDEO_ID = 'qr-scanner';
 const Z_INDEX = 1002;
+
+type CameraState = 'Waiting' | 'Allowed' | 'Blocked' | 'NotFound';
+
+const CAMERA_ERROR = {
+  name: {
+    blocked: 'NotAllowedError',
+    notFound: 'NotFoundError',
+  },
+  message: {
+    blocked: 'Permission denied',
+    dismissed: 'Permission dismissed',
+  },
+};
+
 const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
   const {
     prefixCls: customizePrefixCls,
@@ -104,7 +118,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
 
   const fileRef = useRef<HTMLInputElement>(null);
 
-  const [isCameraBlocked, setIsCameraBlocked] = useState<boolean>(false);
+  const [cameraState, setCameraState] = useState<CameraState>('Waiting');
   const [devices, setDevices] = useState<VideoDeviceInfo[]>([]);
   const [selectedDevice, setSelectedDevice] = useState<VideoDeviceInfo | undefined>(undefined);
   const [loadingCamera, setLoadingCamera] = useState<boolean>(true);
@@ -200,19 +214,23 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     navigator.mediaDevices
       .getUserMedia({ video: true })
       .then((stream) => {
-        setIsCameraBlocked(false);
+        setCameraState('Allowed');
 
         stream.getTracks().forEach((track) => {
           track.stop();
         });
       })
       .catch((e: Error) => {
-        if (e.message.includes('Permission denied')) {
+        if (e.message.includes(CAMERA_ERROR.message.blocked)) {
           openGrantCameraPermissionDocument();
         }
 
-        if (e.name === 'NotAllowedError') {
-          setIsCameraBlocked(true);
+        if (e.name === CAMERA_ERROR.name.blocked) {
+          setCameraState('Blocked');
+        }
+
+        if (e.name === CAMERA_ERROR.name.notFound) {
+          setCameraState('Blocked');
         }
       })
       .finally(() => {
@@ -256,7 +274,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     navigator.mediaDevices.removeEventListener('devicechange', updateDeviceList);
     updateDeviceList();
 
-    if (isCameraBlocked) {
+    if (cameraState === 'Blocked') {
       inactiveModal(MODAL_ID);
     }
 
@@ -264,7 +282,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
       amount = false;
       navigator.mediaDevices.removeEventListener('devicechange', updateDeviceList);
     };
-  }, [isCameraBlocked, inactiveModal]);
+  }, [cameraState, inactiveModal]);
 
   useEffect(() => {
     let amount = true;
@@ -282,7 +300,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
         const stream = await navigator.mediaDevices.getUserMedia({ video: true });
 
         if (amount) {
-          setIsCameraBlocked(false);
+          setCameraState('Allowed');
         }
 
         stream.getTracks().forEach((track) => {
@@ -291,14 +309,17 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
       } catch (err) {
         const e = err as Error;
         if (amount) {
-          if (e.message.includes('Permission dismissed')) {
-            console.log('dismissed', interval);
+          if (e.message.includes(CAMERA_ERROR.message.dismissed)) {
             clearInterval(interval);
             blockInterval = true;
           }
 
-          if (e.name === 'NotAllowedError') {
-            setIsCameraBlocked(true);
+          if (e.name === CAMERA_ERROR.name.blocked) {
+            setCameraState('Blocked');
+          }
+
+          if (e.name === CAMERA_ERROR.name.notFound) {
+            setCameraState('NotFound');
           }
         }
       }
@@ -349,7 +370,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
           zIndex={Z_INDEX}
         >
           <div className={classNames(`${prefixCls}-scanner`)}>
-            {!isCameraBlocked && !loadingCamera && (
+            {cameraState === 'Allowed' && !loadingCamera && (
               <QrReader
                 className="qr-scanner-container"
                 constraints={constraints}
@@ -381,7 +402,8 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
             </div>
             <div
               className={classNames(`${prefixCls}-center-part`, {
-                [`${prefixCls}-scan-error`]: isCameraBlocked || isError,
+                [`${prefixCls}-scan-error`]:
+                  cameraState === 'Blocked' || cameraState === 'NotFound' || isError,
               })}
             >
               <div className={classNames(`${prefixCls}-left-part`)}>
@@ -390,7 +412,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
               </div>
               <div className={classNames(`${prefixCls}-center-filter`)}>
                 <div className={classNames(`${prefixCls}-center-overlay`)}>
-                  {isCameraBlocked ? (
+                  {cameraState === 'Blocked' || cameraState === 'NotFound' ? (
                     <div className={classNames(`${prefixCls}-camera-block-container`)}>
                       <div className={classNames(`${prefixCls}-camera-block-content`)}>
                         <Icon
@@ -401,7 +423,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                           customSize={`${token.sizeXL}px`}
                         />
                         <div className={classNames(`${prefixCls}-camera-block-text`)}>
-                          No camera access
+                          {cameraState === 'Blocked' ? 'No camera access' : 'Camera not found'}
                         </div>
                       </div>
                     </div>
@@ -417,41 +439,41 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
             </div>
             <div className={classNames(`${prefixCls}-bottom-part`)}>
               <div className={classNames(`${prefixCls}-footer`)}>
-                {isCameraBlocked ? (
-                  <Button
-                    onClick={onGrantPermission}
-                    icon={<Icon type="phosphor" phosphorIcon={Camera} weight='fill' />}
-                    block
-                    loading={loadingGrantPermission}
-                  >
-                    Grant camera access
-                  </Button>
-                ) : (
-                  footer || (
-                    <>
-                      <input
-                        className={classNames(`${prefixCls}-hidden-input`)}
-                        type="file"
-                        onChange={onChangeFile}
-                        accept="image/*"
-                        ref={fileRef}
-                      />
+                {cameraState === 'Blocked' || cameraState === 'NotFound'
+                  ? cameraState === 'Blocked' && (
                       <Button
-                        onClick={onOpenFile}
-                        icon={<Icon type="phosphor" phosphorIcon={ImageSquare} weight='fill' />}
-                        loading={loadingImage}
-                        schema='secondary'
+                        onClick={onGrantPermission}
+                        icon={<Icon type="phosphor" phosphorIcon={Info} weight='fill' />}
+                        block
+                        loading={loadingGrantPermission}
                       >
-                        Upload from photos
+                        Grant camera access
                       </Button>
-                      <Button
-                        onClick={onOpenSelectCamera}
-                        icon={<Icon type="phosphor" phosphorIcon={Camera} weight="fill" />}
-                        schema='secondary'
-                      />
-                    </>
-                  )
-                )}
+                    )
+                  : footer || (
+                      <>
+                        <input
+                          className={classNames(`${prefixCls}-hidden-input`)}
+                          type="file"
+                          onChange={onChangeFile}
+                          accept="image/*"
+                          ref={fileRef}
+                        />
+                        <Button
+                          onClick={onOpenFile}
+                          icon={<Icon type="phosphor" phosphorIcon={ImageSquare} weight='fill' />}
+                          loading={loadingImage}
+                          schema='secondary'
+                        >
+                          Upload from photos
+                        </Button>
+                        <Button
+                          onClick={onOpenSelectCamera}
+                          icon={<Icon type="phosphor" phosphorIcon={Camera} weight="fill" />}
+                          schema='secondary'
+                        />
+                      </>
+                    )}
               </div>
             </div>
           </div>

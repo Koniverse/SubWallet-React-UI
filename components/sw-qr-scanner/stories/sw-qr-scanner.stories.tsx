@@ -174,28 +174,48 @@ export default {
   component: Wrapper,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    isError: {
-      type: 'boolean',
-    },
-    multipleFrame: {
-      type: 'boolean',
-    },
     title: {
       type: 'string',
     },
     description: {
       type: 'string',
     },
+    isError: {
+      control: false,
+    },
+    multipleFrame: {
+      control: false,
+    },
   },
 } as ComponentMeta<typeof Wrapper>;
 
 const Template: ComponentStory<typeof Wrapper> = (args) => <Wrapper {...args} />;
 
-export const Default = Template.bind({});
-// More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.args = {
-  isError: false,
-  multipleFrame: false,
+const DEFAULT_ARGS = {
   title: 'Custom title',
   description: 'Custom description',
+};
+
+export const Default = Template.bind({});
+
+Default.args = {
+  ...DEFAULT_ARGS,
+  isError: false,
+  multipleFrame: false,
+};
+
+export const WithError = Template.bind({});
+
+WithError.args = {
+  ...DEFAULT_ARGS,
+  isError: true,
+  multipleFrame: false,
+};
+
+export const MultipleFrame = Template.bind({});
+
+MultipleFrame.args = {
+  ...DEFAULT_ARGS,
+  isError: false,
+  multipleFrame: true,
 };
