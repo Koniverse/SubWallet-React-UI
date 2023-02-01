@@ -38,6 +38,7 @@ export interface SelectModalProps<T extends Record<string, any>> extends SwModal
 
 const DEFAULT_SUFFIX = <Icon type='phosphor' phosphorIcon={CaretDown} size="xs" />;
 const DEFAULT_PLACEHOLDER = 'Select box';
+const DEFAULT_TITLE = 'Select modal';
 const SelectModal = <T extends Record<string, any>>(
   props: SelectModalProps<T>,
 ): React.ReactNode => {
@@ -171,7 +172,7 @@ const SelectModal = <T extends Record<string, any>>(
         </div>
         <SwModal
           {...restProps}
-          title={title}
+          title={title || DEFAULT_TITLE}
           id={id}
           forceRenderFooter={forceRenderFooter}
           wrapClassName={wrapClassName}
