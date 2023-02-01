@@ -57,7 +57,6 @@ const genContainerStyle: GenerateStyle<SwSubHeaderToken> = (token) => {
             whiteSpace: 'nowrap',
             width: '100%',
             display: 'flex',
-            justifyContent: 'center',
           },
 
           [`${componentCls}-title-content`]: {
@@ -76,6 +75,9 @@ const genContainerStyle: GenerateStyle<SwSubHeaderToken> = (token) => {
       [`${componentCls}-container-center`]: {
         [`${componentCls}-center-part`]: {
           justifyContent: 'center',
+          [`${componentCls}-title`]: {
+            justifyContent: 'center',
+          },
         },
       },
 

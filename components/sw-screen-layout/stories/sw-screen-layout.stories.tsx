@@ -149,91 +149,172 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     // Header
+    headerCenter: {
+      control: false,
+    },
     showHeader: {
-      type: 'boolean',
+      control: false,
     },
     headerBackground: {
-      control: 'radio',
-      options: ['default', 'transparent'],
-    },
-    headerCenter: {
-      type: 'boolean',
+      control: false,
     },
     showLeftButton: {
-      type: 'boolean',
+      control: false,
     },
     headerPaddingVertical: {
-      type: 'boolean',
+      control: false,
     },
     headerRightIconType: {
-      type: 'number',
-      control: {
-        type: 'number',
-        min: 0,
-        max: 2,
-      },
-    },
-    selectBackground: {
-      control: 'radio',
-      options: ['default', 'transparent'],
+      control: false,
     },
 
     // Sub header
     showSubHeader: {
-      type: 'boolean',
+      control: false,
     },
     title: {
       type: 'string',
     },
     subHeaderBackground: {
-      control: 'radio',
-      options: ['default', 'transparent'],
+      control: false,
     },
     subHeaderCenter: {
-      type: 'boolean',
+      control: false,
     },
     showBackButton: {
-      type: 'boolean',
+      control: false,
     },
     subHeaderPaddingVertical: {
-      type: 'boolean',
+      control: false,
     },
     subHeaderRightIconType: {
-      type: 'number',
-      control: {
-        type: 'number',
-        min: 0,
-        max: 2,
-      },
+      control: false,
     },
+
+    // Footer
+    withDivider: {
+      control: false,
+    },
+    withButton: {
+      control: false,
+    },
+    withFooter: {
+      control: false,
+    },
+
     // Tab bar
     showTabBar: {
-      type: 'boolean',
+      control: false,
     },
   },
 } as ComponentMeta<typeof Wrapper>;
 
 const Template: ComponentStory<typeof Wrapper> = (args) => <Wrapper {...args} />;
 
-export const Primary = Template.bind({});
-
-Primary.args = {
+const DEFAULT_ARGS = {
   showHeader: true,
   headerBackground: 'default',
-  headerPaddingVertical: false,
   headerCenter: true,
-  showLeftButton: false,
+  showLeftButton: true,
+  headerPaddingVertical: true,
   headerRightIconType: 1,
 
   title: 'Screen title',
   subHeaderBackground: 'default',
-  subHeaderPaddingVertical: false,
-  subHeaderCenter: true,
+  subHeaderPaddingVertical: true,
+  subHeaderCenter: false,
   showSubHeader: false,
   showBackButton: false,
   subHeaderRightIconType: 1,
 
+  withDivider: false,
   showTabBar: false,
   withButton: false,
   withFooter: false,
+};
+export const HeaderWithTabBar = Template.bind({});
+
+HeaderWithTabBar.args = {
+  ...DEFAULT_ARGS,
+  showTabBar: true,
+};
+
+export const TwoHeaderWithTabBar = Template.bind({});
+
+TwoHeaderWithTabBar.args = {
+  ...DEFAULT_ARGS,
+  showSubHeader: true,
+  subHeaderBackground: 'transparent',
+  subHeaderPaddingVertical: false,
+  showTabBar: true,
+};
+
+export const TwoHeaderWithTabBarAndButton = Template.bind({});
+
+TwoHeaderWithTabBarAndButton.args = {
+  ...DEFAULT_ARGS,
+  showSubHeader: true,
+  subHeaderBackground: 'transparent',
+  subHeaderPaddingVertical: false,
+  withButton: true,
+  showTabBar: true,
+};
+
+export const SubHeaderWithButton = Template.bind({});
+
+SubHeaderWithButton.args = {
+  ...DEFAULT_ARGS,
+  showHeader: false,
+  showSubHeader: true,
+  subHeaderBackground: 'transparent',
+  showBackButton: true,
+  subHeaderRightIconType: 0,
+  subHeaderCenter: true,
+  withDivider: true,
+  withButton: true,
+};
+
+export const SubHeaderWithFooter = Template.bind({});
+
+SubHeaderWithFooter.args = {
+  ...DEFAULT_ARGS,
+  showHeader: false,
+  showSubHeader: true,
+  subHeaderBackground: 'transparent',
+  withDivider: true,
+  withFooter: true,
+};
+
+export const SubHeaderWithFooterAndButton = Template.bind({});
+
+SubHeaderWithFooterAndButton.args = {
+  ...DEFAULT_ARGS,
+  showHeader: false,
+  showSubHeader: true,
+  subHeaderBackground: 'transparent',
+  withDivider: true,
+  withFooter: true,
+  withButton: true,
+};
+
+export const SubHeaderOnly = Template.bind({});
+
+SubHeaderOnly.args = {
+  ...DEFAULT_ARGS,
+  showHeader: false,
+  showSubHeader: true,
+  subHeaderBackground: 'transparent',
+  subHeaderPaddingVertical: false,
+  withDivider: true,
+};
+export const TwoHeaderOnly = Template.bind({});
+
+TwoHeaderOnly.args = {
+  ...DEFAULT_ARGS,
+  showSubHeader: true,
+  subHeaderCenter: true,
+  showBackButton: true,
+  subHeaderBackground: 'transparent',
+  subHeaderPaddingVertical: false,
+  subHeaderRightIconType: 0,
 };
