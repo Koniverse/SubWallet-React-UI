@@ -4,9 +4,9 @@ import { genComponentStyleHook, mergeToken } from '../../../theme/internal';
 
 export interface ComponentToken {}
 
-interface NetworkItemToken extends FullToken<'NetworkItem'> {}
+interface TokenItemToken extends FullToken<'TokenItem'> {}
 
-const genNetworkItemStyle = (token: NetworkItemToken): CSSInterpolation => {
+const genTokenItemStyle = (token: TokenItemToken): CSSInterpolation => {
   const { componentCls } = token;
 
   return [
@@ -17,10 +17,6 @@ const genNetworkItemStyle = (token: NetworkItemToken): CSSInterpolation => {
 
         [`${componentCls}-content`]: {
           borderRadius: token.borderRadiusLG,
-        },
-
-        '& .ant-web3-block-left-item': {
-          paddingRight: 12,
         },
 
         '&.-with-divider': {
@@ -44,11 +40,23 @@ const genNetworkItemStyle = (token: NetworkItemToken): CSSInterpolation => {
           },
         },
 
+        [`${componentCls}-name-wrapper`]: {
+          display: 'flex',
+        },
+
         [`${componentCls}-name`]: {
           fontSize: token.fontSizeLG,
           lineHeight: token.lineHeightLG,
           fontWeight: 600,
           color: token.colorTextLight1,
+        },
+
+        [`${componentCls}-sub-name`]: {
+          fontSize: token.fontSizeLG,
+          lineHeight: token.lineHeightLG,
+          fontWeight: 600,
+          color: token.colorTextLight1,
+          paddingLeft: 2,
         },
 
         [`${componentCls}-divider`]: {
@@ -87,7 +95,7 @@ const genNetworkItemStyle = (token: NetworkItemToken): CSSInterpolation => {
 };
 
 // ============================== Export ==============================
-export default genComponentStyleHook('NetworkItem', (token) => {
-  const accountItemToken = mergeToken<NetworkItemToken>(token);
-  return [genNetworkItemStyle(accountItemToken)];
+export default genComponentStyleHook('TokenItem', (token) => {
+  const accountItemToken = mergeToken<TokenItemToken>(token);
+  return [genTokenItemStyle(accountItemToken)];
 });

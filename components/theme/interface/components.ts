@@ -36,6 +36,7 @@ import type { ComponentToken as MessageComponentToken } from '../../message/styl
 import type { ComponentToken as ModalComponentToken } from '../../modal/style';
 import type { ComponentToken as NotificationComponentToken } from '../../notification/style';
 import type { ComponentToken as NetworkItemComponentToken } from '../../web3-block/network-item/style';
+import type { ComponentToken as TokenItemComponentToken } from '../../web3-block/token-item/style';
 import type { ComponentToken as NumberComponentToken } from '../../number/style';
 import type { ComponentToken as PopconfirmComponentToken } from '../../popconfirm/style';
 import type { ComponentToken as PinCodeComponentToken } from '../../pincode/style';
@@ -117,6 +118,7 @@ export interface ComponentTokenMap {
   Mentions?: MentionsComponentToken;
   Notification?: NotificationComponentToken;
   NetworkItem?: NetworkItemComponentToken;
+  TokenItem?: TokenItemComponentToken;
   Number?: NumberComponentToken;
   Pagination?: {};
   PinCode?: PinCodeComponentToken;
