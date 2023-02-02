@@ -5,7 +5,7 @@ import SwList from '..';
 import type { DemoAccountType } from './data';
 import { DemoAccounts } from './data';
 import AccountCard from '../../web3-block/account-card';
-import Divider from '../../divider';
+import NetworkItem from '../../web3-block/network-item';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -41,6 +41,20 @@ const App = ({ displayType = 'default' }: AppProps) => {
   const renderItem = useCallback(
     // eslint-disable-next-line arrow-body-style
     (account: DemoAccountType) => {
+      if (displayType === 'with_divider') {
+        return (
+          <div key={account.name} className='__item-wrapper' style={{ marginBottom: 0 }}>
+            <NetworkItem
+              name='Polkadot'
+              networkKey="polkadot"
+              networkMainLogoShape="circle"
+              withDivider
+              dividerPadding={56}
+            />
+          </div>
+        );
+      }
+
       return (
         <div key={account.name} className='__item-wrapper'>
           <AccountCard
@@ -50,8 +64,6 @@ const App = ({ displayType = 'default' }: AppProps) => {
             avatarIdentPrefix={0}
             avatarSize={40}
           />
-
-          {displayType === 'with_divider' && <Divider />}
         </div>
       );
     },
