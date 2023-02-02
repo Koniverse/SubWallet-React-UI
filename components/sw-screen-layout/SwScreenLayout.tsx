@@ -57,7 +57,7 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
     prefixCls: customizePrefixCls,
     className,
     children,
-    withDivider = true,
+    withDivider,
     // Header,
     showHeader,
     headerBackground,
@@ -101,7 +101,7 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
     <div className={classNames(classNameExtend)}>
       <div
         className={classNames(`${prefixCls}-header`, {
-          [`${prefixCls}-header-with-divider`]: withDivider,
+          [`${prefixCls}-header-with-divider`]: withDivider && (showHeader || showSubHeader),
         })}
       >
         {showHeader && (

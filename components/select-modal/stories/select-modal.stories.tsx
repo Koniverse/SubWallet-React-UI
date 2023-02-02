@@ -225,6 +225,8 @@ export const CustomSuffix = Template.bind({});
 CustomSuffix.args = {
   ...DEFAULT_ARGS,
   suffixType: 2,
+  label: 'Label',
+  withLabel: true,
 };
 
 export const CustomPrefix = Template.bind({});
@@ -232,6 +234,8 @@ export const CustomPrefix = Template.bind({});
 CustomPrefix.args = {
   ...DEFAULT_ARGS,
   prefixType: 1,
+  label: 'Label',
+  withLabel: true,
 };
 
 export const FullCustom = Template.bind({});
@@ -241,4 +245,5 @@ FullCustom.args = {
   suffixType: 2,
   prefixType: 1,
   label: 'Label',
+  withLabel: true,
 };
