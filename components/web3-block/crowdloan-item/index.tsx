@@ -89,6 +89,7 @@ const CrowdloanItem: React.FC<CrowdloanItemProps> = ({
               decimal={decimal}
               leftColor="#FFF"
               rightColor="#FFF"
+              rightOpacity={0.45}
               suffix={displayToken}
             />
             <Number
