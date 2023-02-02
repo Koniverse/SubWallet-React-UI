@@ -63,7 +63,7 @@ const genNetworkItemStyle = (token: NetworkItemToken): CSSInterpolation => {
         },
 
         [`${componentCls}-right-icon`]: {
-          color: token.colorTextLight6,
+          color: token.colorTextLight4,
           paddingLeft: token.paddingXS,
           paddingRight: token.paddingXS,
         },
