@@ -426,7 +426,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                           customSize={`${token.sizeXL}px`}
                         />
                         <div className={classNames(`${prefixCls}-camera-block-text`)}>
-                          {cameraState === 'Blocked' ? 'No camera access' : 'Camera not found'}
+                          {cameraState === 'Blocked' ? 'No camera access' : 'Can’t find camera'}
                         </div>
                       </div>
                     </div>
