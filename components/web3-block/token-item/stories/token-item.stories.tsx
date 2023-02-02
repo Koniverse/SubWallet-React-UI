@@ -1,30 +1,31 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { CaretRight, CheckCircle, MinusCircle } from 'phosphor-react';
-import NetworkItem from '..';
+import TokenItem from '..';
 import Icon from '../../../icon';
 import Switch from '../../../switch';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
-  title: 'SubWallet Components/NetworkItem',
-  component: NetworkItem,
+  title: 'SubWallet Components/TokenItem',
+  component: TokenItem,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
-    name: { control: 'text', defaultValue: 'Polkadot' },
+    name: { control: 'text', defaultValue: 'DOT' },
+    subName: { control: 'text', defaultValue: 'Polkadot' },
     symbol: { control: 'text', defaultValue: 'dot' },
     isShowSubLogo: { control: 'boolean', defaultValue: false },
     withDivider: { control: 'boolean', defaultValue: false },
     dividerPadding: {
       control: 'number',
-      defaultValue: 52,
+      defaultValue: 48,
       if: { arg: 'withDivider', truthy: true },
     },
   },
-} as ComponentMeta<typeof NetworkItem>;
+} as ComponentMeta<typeof TokenItem>;
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
-const Template: ComponentStory<typeof NetworkItem> = (args) => <NetworkItem {...args} />;
+const Template: ComponentStory<typeof TokenItem> = (args) => <TokenItem {...args} />;
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
@@ -86,5 +87,5 @@ export const WithToggle = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 WithToggle.args = {
   rightItem: <Switch style={{ marginRight: 8 }} />,
-  dividerPadding: 60,
+  dividerPadding: 58,
 };

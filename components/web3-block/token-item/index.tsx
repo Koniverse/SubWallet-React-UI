@@ -7,8 +7,9 @@ import useStyle from './style';
 import Logo from '../../logo';
 import Divider from '../../divider';
 
-export interface NetworkItemProps extends Web3BlockProps {
+export interface TokenItemProps extends Web3BlockProps {
   name: string;
+  subName: string;
   networkMainLogoSize?: number;
   networkMainLogoShape?: 'circle' | 'squircle';
   networkSubLogoShape?: 'circle' | 'squircle';
@@ -25,8 +26,9 @@ export interface NetworkItemProps extends Web3BlockProps {
   rightComponent?: React.ReactNode;
 }
 
-const NetworkItem: React.FC<NetworkItemProps> = ({
+const TokenItem: React.FC<TokenItemProps> = ({
   name,
+  subName,
   networkMainLogoSize = 36,
   networkMainLogoShape = 'squircle',
   networkSubLogoShape = 'circle',
@@ -70,7 +72,14 @@ const NetworkItem: React.FC<NetworkItemProps> = ({
             />
           )
         }
-        middleItem={middleItem || <div className={`${prefixCls}-name`}>{name}</div>}
+        middleItem={
+          middleItem || (
+            <div className={`${prefixCls}-name-wrapper`}>
+              <div className={`${prefixCls}-name`}>{name}</div>
+              <div className={`${prefixCls}-sub-name`}>{`(${subName})`}</div>
+            </div>
+          )
+        }
         rightItem={rightItem}
         onClick={onPressItem}
       />
@@ -83,4 +92,4 @@ const NetworkItem: React.FC<NetworkItemProps> = ({
   );
 };
 
-export default NetworkItem;
+export default TokenItem;
