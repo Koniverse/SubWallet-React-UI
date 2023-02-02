@@ -1,6 +1,6 @@
 {
   "name": "@subwallet/react-ui",
-  "version": "5.1.2-b1",
+  "version": "5.1.2-b2",
   "description": "SubWallet React UI base on ant-design",
   "title": "SubWallet React UI",
   "keywords": [
@@ -78,7 +78,6 @@
     "prettier": "prettier -c --write **/*",
     "pub": "npm run version && npm run collect-token-statistic && npm run token-meta && antd-tools run pub",
     "rome:format": "rome format --write .",
-    "prepublishOnly": "antd-tools run guard",
     "postpublish": "node ./scripts/post-script.js",
     "site": "dumi build && cp .surgeignore _site",
     "sort": "npx sort-package-json",
