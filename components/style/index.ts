@@ -157,6 +157,10 @@ export const squircleSvgWrapper = {
 
 export function getScrollbarWidth() {
   // Creating invisible container
+  if (typeof window === 'undefined') {
+    return 4;
+  }
+
   const outer = document.createElement('div');
   outer.style.visibility = 'hidden';
   outer.style.overflow = 'scroll'; // forcing scrollbar to appear
