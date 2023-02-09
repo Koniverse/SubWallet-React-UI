@@ -8,6 +8,8 @@ export const PresetStatusColorTypes = [
   'danger',
 ] as const;
 
+export const PresetPositionColorTypes = ['header'] as const;
+
 export const PresetColorTypes = [
   'pink',
   'red',
@@ -29,3 +31,5 @@ export type PresetBrandColorType = typeof PresetBrandColorTypes[number];
 export type PresetColorType = typeof PresetColorTypes[number];
 
 export type PresetStatusColorType = typeof PresetStatusColorTypes[number];
+
+export type PresetPositionColorType = typeof PresetPositionColorTypes[number];
