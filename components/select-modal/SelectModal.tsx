@@ -4,6 +4,7 @@ import { useCallback, useContext, useMemo } from 'react';
 import * as React from 'react';
 import type { PresetBarShapeType } from '../_util/shapes';
 import { useToken } from '../theme/internal';
+import type { SwListProps } from '../sw-list';
 import SwList from '../sw-list';
 import SwModal from '../sw-modal';
 import type { SwModalProps } from '../sw-modal';
@@ -16,7 +17,9 @@ import Icon from '../icon';
 import Typography from '../typography';
 
 export type SelectModalSize = 'small' | 'medium';
-export interface SelectModalProps<T extends Record<string, any>> extends SwModalProps {
+export interface SelectModalProps<T extends Record<string, any>>
+  extends SwModalProps,
+    Pick<SwListProps, 'searchableMinCharactersCount'> {
   items: T[];
   itemKey: string;
   selected: string;
@@ -28,20 +31,24 @@ export interface SelectModalProps<T extends Record<string, any>> extends SwModal
   shape?: PresetBarShapeType;
   background?: 'default' | 'transparent';
   placeholder?: string;
+  customInput?: React.ReactNode;
   inputWidth?: number | string;
   label?: string;
   hideSuffix?: boolean;
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   disabled?: boolean;
+
+  // Search
+  searchPlaceholder?: string;
+  searchFunction?: (item: T, searchText: string) => boolean;
 }
 
 const DEFAULT_SUFFIX = <Icon type='phosphor' phosphorIcon={CaretDown} size="xs" />;
 const DEFAULT_PLACEHOLDER = 'Select box';
 const DEFAULT_TITLE = 'Select modal';
-const SelectModal = <T extends Record<string, any>>(
-  props: SelectModalProps<T>,
-): React.ReactNode => {
+const DEFAULT_SEARCH_PLACEHOLDER = 'Search';
+const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>): JSX.Element => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const [, token] = useToken();
 
@@ -73,6 +80,10 @@ const SelectModal = <T extends Record<string, any>>(
     hideSuffix,
     disabled,
     size: inputSize = 'medium',
+    customInput,
+    searchFunction,
+    searchPlaceholder,
+    searchableMinCharactersCount,
     ...restProps
   } = props;
 
@@ -144,32 +155,38 @@ const SelectModal = <T extends Record<string, any>>(
   return wrapSSR(
     <NoCompactStyle>
       <NoFormStyle status override>
-        <div
-          onClick={openModal}
-          className={classNames(
-            hashId,
-            `${prefixCls}-input-container`,
-            `${prefixCls}-input-border-${shape}`,
-            `${prefixCls}-input-bg-${background}`,
-            `${prefixCls}-input-size-${inputSize}`,
-            inputClassName,
-            {
-              [`${prefixCls}-input-focus`]: isActive,
-              [`${prefixCls}-input-disabled`]: disabled,
-              [`${prefixCls}-input-with-label`]: label,
-            },
-          )}
-          style={{ width: inputWidth }}
-        >
-          {label && <div className={classNames(`${prefixCls}-input-label`)}>{label}</div>}
-          <div className={classNames(`${prefixCls}-input-wrapper`)}>
-            {prefix}
-            <div className={classNames(`${prefixCls}-input-content`)}>
-              {_renderInput(selectedItem)}
-            </div>
-            {!hideSuffix && suffix}
+        {customInput ? (
+          <div className={classNames(`${prefixCls}-input-custom`)} onClick={openModal}>
+            {customInput}
           </div>
-        </div>
+        ) : (
+          <div
+            onClick={openModal}
+            className={classNames(
+              hashId,
+              `${prefixCls}-input-container`,
+              `${prefixCls}-input-border-${shape}`,
+              `${prefixCls}-input-bg-${background}`,
+              `${prefixCls}-input-size-${inputSize}`,
+              inputClassName,
+              {
+                [`${prefixCls}-input-focus`]: isActive,
+                [`${prefixCls}-input-disabled`]: disabled,
+                [`${prefixCls}-input-with-label`]: label,
+              },
+            )}
+            style={{ width: inputWidth }}
+          >
+            {label && <div className={classNames(`${prefixCls}-input-label`)}>{label}</div>}
+            <div className={classNames(`${prefixCls}-input-wrapper`)}>
+              {prefix}
+              <div className={classNames(`${prefixCls}-input-content`)}>
+                {_renderInput(selectedItem)}
+              </div>
+              {!hideSuffix && suffix}
+            </div>
+          </div>
+        )}
         <SwModal
           {...restProps}
           title={title || DEFAULT_TITLE}
@@ -179,13 +196,21 @@ const SelectModal = <T extends Record<string, any>>(
           onCancel={handleCancel}
           focusTriggerAfterClose={focusTriggerAfterClose}
           className={classNames(hashId, className)}
+          bodyStyle={{
+            display: 'flex',
+            padding: 0,
+          }}
         >
-          <SwList
+          <SwList.Section
             list={items}
             renderItem={_renderItem}
             displayRow
             rowGap={`${token.paddingContentVerticalSM}px`}
+            enableSearchInput={!!searchFunction}
+            searchFunction={searchFunction}
             className={classNames(hashId, `${prefixCls}-item-container`)}
+            searchPlaceholder={searchPlaceholder || DEFAULT_SEARCH_PLACEHOLDER}
+            searchableMinCharactersCount={searchableMinCharactersCount}
           />
         </SwModal>
       </NoFormStyle>

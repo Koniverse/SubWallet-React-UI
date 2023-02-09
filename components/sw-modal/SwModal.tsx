@@ -116,7 +116,7 @@ const SwModal: React.FC<SwModalProps> = (props) => {
     closeIcon,
     focusTriggerAfterClose = true,
     // Deprecated
-    width = 400,
+    width = 390,
     id,
     ...restProps
   } = props;
