@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import useStyle from './style';
-import { SwHeaderConfig } from './config';
+import { SwHeaderConfig } from './configs';
 import { ConfigContext } from '../config-provider';
 import type { ButtonProps } from '../button';
 import Button from '../button';
@@ -65,7 +65,7 @@ const SwHeader: React.FC<SwHeaderProps> = (props) => {
     <div className={classNames(classNameExtend)}>
       {showLeftButton && (
         <div className={classNames(`${prefixCls}-left-part`)}>
-          <Button type="ghost" size='xs' icon={leftPart} onClick={onClickLeft} />
+          <Button type="ghost" schema="header" size='xs' icon={leftPart} onClick={onClickLeft} />
         </div>
       )}
       {!showLeftButton && !!rightButtons.length && center && (
@@ -80,7 +80,7 @@ const SwHeader: React.FC<SwHeaderProps> = (props) => {
       >
         {rightButtons.map((args, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <Button key={index} {...args} type="ghost" size='xs' />
+          <Button key={index} {...args} type="ghost" schema='header' size='xs' />
         ))}
       </div>
     </div>,

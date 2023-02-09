@@ -7,10 +7,9 @@ import SwList from './List';
 import type { SwListProps } from './List';
 import Input from '../input';
 
-export interface SwListSectionProps<T = any>
-  extends Omit<SwListProps<T>, 'searchBy' | 'searchTerm'> {
+export interface SwListSectionProps<T> extends Omit<SwListProps<T>, 'searchBy' | 'searchTerm'> {
   listClassName?: string;
-  searchFunction: (item: T, searchText: string) => boolean;
+  searchFunction?: (item: T, searchText: string) => boolean;
   enableSearchInput?: boolean;
   searchPlaceholder?: string;
   height?: string;
@@ -18,7 +17,7 @@ export interface SwListSectionProps<T = any>
   renderItem: SwListProps<T>['renderItem'];
 }
 
-const SwListSection = (props: SwListSectionProps) => {
+const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
   const {
     prefixCls: customizePrefixCls,
     className,
@@ -39,7 +38,7 @@ const SwListSection = (props: SwListSectionProps) => {
   }, []);
 
   const searchBy = useCallback(
-    (item: SwListSectionProps) => searchFunction(item, searchText),
+    (item: T) => (searchFunction ? searchFunction(item, searchText) : true),
     [searchFunction, searchText],
   );
 

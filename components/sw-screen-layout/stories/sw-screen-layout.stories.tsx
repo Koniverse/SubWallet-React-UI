@@ -7,7 +7,7 @@ import type { SwScreenLayoutProps } from '../index';
 import type { ButtonProps } from '../../button';
 import SwScreenLayout from '../index';
 import { TabBarItems } from '../../sw-tab-bar/stories/tab-bar-items';
-import { HeaderIcons } from './header-icons';
+import { renderRightIcons } from './header-icons';
 import {
   ALL_ACCOUNT_KEY,
   PREDEFINED_ACCOUNTS,
@@ -42,39 +42,15 @@ const Wrapper: React.FC<WrapperProps> = ({
     [],
   );
 
-  const subHeaderIcons = useMemo((): ButtonProps[] => {
-    switch (subHeaderRightIconType) {
-      case 2:
-        return [HeaderIcons.icon1, HeaderIcons.icon2, HeaderIcons.icon3].map((icon) => ({
-          icon,
-        }));
-      case 1:
-        return [
-          {
-            icon: HeaderIcons.icon,
-          },
-        ];
-      default:
-        return [];
-    }
-  }, [subHeaderRightIconType]);
+  const subHeaderIcons = useMemo(
+    (): ButtonProps[] => renderRightIcons(subHeaderRightIconType),
+    [subHeaderRightIconType],
+  );
 
-  const headerIcons = useMemo((): ButtonProps[] => {
-    switch (headerRightIconType) {
-      case 2:
-        return [HeaderIcons.icon1, HeaderIcons.icon2, HeaderIcons.icon3].map((icon) => ({
-          icon,
-        }));
-      case 1:
-        return [
-          {
-            icon: HeaderIcons.icon,
-          },
-        ];
-      default:
-        return [];
-    }
-  }, [headerRightIconType]);
+  const headerIcons = useMemo(
+    (): ButtonProps[] => renderRightIcons(headerRightIconType),
+    [headerRightIconType],
+  );
 
   const [selectedAccount, setSelectedAccount] = useState<string>(ALL_ACCOUNT_KEY);
 
