@@ -54,6 +54,8 @@ const genContainerStyle: GenerateStyle<SwHeaderToken> = (token) => {
           flexGrow: 1,
           flex: 1,
           alignItems: 'center',
+          overflow: 'hidden',
+          paddingRight: token.paddingSM * 2,
         },
       },
 
@@ -67,6 +69,7 @@ const genContainerStyle: GenerateStyle<SwHeaderToken> = (token) => {
           right: 0,
           margin: 'auto',
           width: 246,
+          paddingRight: 0,
         },
       },
 
