@@ -45,12 +45,13 @@ const CrowdloanItem: React.FC<CrowdloanItemProps> = ({
   leftItem,
   middleItem,
   rightItem,
+  className,
   ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('balance-item');
   const [wrapSSR, hashId] = useStyle(prefixCls);
-  const classes = classNames(prefixCls, hashId);
+  const classes = classNames(prefixCls, hashId, className);
 
   return wrapSSR(
     <Web3Block

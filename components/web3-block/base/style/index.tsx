@@ -13,7 +13,7 @@ const genAccountCardStyle = (token: Web3BlockToken): CSSInterpolation => {
     {
       [componentCls]: {
         display: 'flex',
-        padding: `${token.padding}px ${token.paddingSM}px`,
+        padding: `${token.padding - 2}px ${token.paddingSM}px`,
         cursor: 'pointer',
 
         '&:hover': {

@@ -60,12 +60,17 @@ const BalanceItem: React.FC<BalanceItemProps> = ({
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('balance-item');
   const [wrapSSR, hashId] = useStyle(prefixCls);
-  const classes = classNames(prefixCls, hashId, {
-    '-with-divider': withDivider,
-  });
+  const classes = classNames(
+    prefixCls,
+    hashId,
+    {
+      '-with-divider': withDivider,
+    },
+    className,
+  );
 
   return wrapSSR(
-    <div className={`${classes} ${className}`}>
+    <div className={classes}>
       <Web3Block
         {...props}
         className={`${prefixCls}-content`}

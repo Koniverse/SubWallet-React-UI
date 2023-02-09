@@ -217,7 +217,9 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
         [`${componentCls}-footer`]: {
           textAlign: 'end',
           background: token.modalFooterBg,
-          marginTop: token.marginSM,
+          margin: `${token.marginSM}px -${token.margin}px 0`,
+          padding: `${token.marginSM}px ${token.margin}px 0`,
+          borderTop: `${token.lineWidth * 2}px ${token.modalHeaderBorderStyle} ${token.colorSplit}`,
 
           [`${token.antCls}-btn + ${token.antCls}-btn:not(${token.antCls}-dropdown-trigger)`]: {
             marginBottom: 0,
