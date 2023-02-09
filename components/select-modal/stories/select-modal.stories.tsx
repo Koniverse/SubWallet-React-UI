@@ -1,16 +1,20 @@
-import { CheckCircle } from 'phosphor-react';
+import { Camera, CheckCircle } from 'phosphor-react';
 import React, { useCallback, useMemo, useState } from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
+import SettingItem from '../../web3-block/setting-item';
 import SwAvatar from '../../sw-avatar';
 import { useToken } from '../../theme/internal';
 import SelectModal from '../index';
 import type { SelectModalProps } from '../index';
 import Icon from '../../icon';
 import Typography from '../../typography';
+import Button from '../../button';
 
 interface WrapperProps<T extends Record<string, any>> extends SelectModalProps<T> {
   suffixType: number;
   prefixType: number;
+  custom: boolean;
+  withSearch: boolean;
 }
 
 interface Item {
@@ -20,7 +24,7 @@ interface Item {
 
 const items: Item[] = [];
 
-for (let i = 0; i < 5; i++) {
+for (let i = 0; i < 20; i++) {
   items.push({ value: i.toString(), label: i.toString() });
 }
 
@@ -29,10 +33,18 @@ const icon = <SwAvatar value="" identPrefix={42} isAllAccount size={20} />;
 const Wrapper = <T extends Record<string, any>>({
   suffixType = 1,
   prefixType = 0,
+  custom,
+  withSearch,
   ...args
 }: WrapperProps<T>) => {
   const [selected, setSelected] = useState<string>('');
   const [, token] = useToken();
+
+  const onSearch = useCallback(
+    (item: Item, searchText: string): boolean =>
+      item.label.includes(searchText) || item.value.includes(searchText),
+    [],
+  );
 
   const renderSelected = useCallback(
     (item: Item) => (
@@ -43,33 +55,23 @@ const Wrapper = <T extends Record<string, any>>({
 
   const renderItem = useCallback(
     (item: Item, _selected: boolean) => (
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 16,
-        }}
-      >
-        <Typography.Text style={{ color: token.colorText }}>{item.value}</Typography.Text>
-        {_selected && (
-          <Icon
-            type="phosphor"
-            phosphorIcon={CheckCircle}
-            iconColor={token.colorSecondary}
-            size="sm"
-            weight="fill"
-          />
-        )}
-      </div>
+      <SettingItem
+        name={item.value}
+        rightItem={
+          _selected && (
+            <Icon
+              type="phosphor"
+              phosphorIcon={CheckCircle}
+              iconColor={token.colorSecondary}
+              size="sm"
+              weight="fill"
+            />
+          )
+        }
+      />
     ),
     [],
   );
-
-  const _onSelect = useCallback((value: string) => {
-    setSelected(value);
-  }, []);
 
   const additionalProps = useMemo((): Pick<
     SelectModalProps<T>,
@@ -101,17 +103,25 @@ const Wrapper = <T extends Record<string, any>>({
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-      {/* @ts-ignore */}
       <SelectModal
         {...args}
         {...additionalProps}
         items={items}
         renderSelected={renderSelected}
+        customInput={
+          custom && (
+            <Button
+              schema="secondary"
+              icon={<Icon type='phosphor' phosphorIcon={Camera} weight="fill" />}
+            />
+          )
+        }
         renderItem={renderItem}
         itemKey="value"
         selected={selected}
-        onSelect={_onSelect}
+        onSelect={setSelected}
         id="test-select-modal"
+        searchFunction={withSearch ? onSearch : undefined}
       />
     </div>
   );
@@ -172,6 +182,25 @@ export default {
     },
     prefixType: {
       control: false,
+    },
+    withSearch: {
+      control: false,
+    },
+    searchPlaceholder: {
+      control: {
+        if: {
+          arg: 'withSearch',
+          eq: true,
+        },
+      },
+    },
+    searchableMinCharactersCount: {
+      control: {
+        if: {
+          arg: 'withSearch',
+          eq: true,
+        },
+      },
     },
   },
   // @ts-ignore
@@ -246,4 +275,20 @@ FullCustom.args = {
   prefixType: 1,
   label: 'Label',
   withLabel: true,
+};
+
+export const CustomInput = Template.bind({});
+
+CustomInput.args = {
+  ...DEFAULT_ARGS,
+  custom: true,
+};
+
+export const WithSearch = Template.bind({});
+
+WithSearch.args = {
+  ...DEFAULT_ARGS,
+  withSearch: true,
+  searchableMinCharactersCount: 2,
+  searchPlaceholder: 'Search',
 };

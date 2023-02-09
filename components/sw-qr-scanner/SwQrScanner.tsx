@@ -5,10 +5,10 @@ import type { ChangeEventHandler } from 'react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Info, ImageSquare, Camera, CheckCircle, XCircle } from 'phosphor-react';
 import type { Result } from '@zxing/library';
-import { openGrantCameraPermissionDocument } from './config';
+import SelectModal from '../select-modal';
+import { openGrantCameraPermissionDocument } from './configs';
 import BackgroundIcon from '../background-icon';
 import { useToken } from '../theme/internal';
-import SwModal from '../sw-modal';
 import { ModalContext } from '../sw-modal/provider';
 import { getTransitionName } from '../_util/motion';
 import QrReader from './QrReader';
@@ -123,19 +123,37 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
 
   const [cameraState, setCameraState] = useState<CameraState>('Waiting');
   const [devices, setDevices] = useState<VideoDeviceInfo[]>([]);
-  const [selectedDevice, setSelectedDevice] = useState<VideoDeviceInfo | undefined>(undefined);
+  const [selected, setSelected] = useState<string>('');
   const [loadingCamera, setLoadingCamera] = useState<boolean>(true);
   const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [loadingGrantPermission, setLoadingGrantPermission] = useState<boolean>(false);
+
+  const device = useMemo((): VideoDeviceInfo | undefined => {
+    if (!selected) {
+      return devices[0];
+    }
+
+    if (!devices.length) {
+      return undefined;
+    }
+
+    const exists = devices.find((item) => selected === item.key);
+
+    if (exists) {
+      return exists;
+    }
+
+    return devices[0];
+  }, [devices, selected]);
 
   const constraints = useMemo(
     (): MediaTrackConstraints => ({
       facingMode: 'user',
       aspectRatio: 2 / 3,
-      deviceId: selectedDevice?.deviceId,
-      groupId: selectedDevice?.groupId,
+      deviceId: device?.deviceId,
+      groupId: device?.groupId,
     }),
-    [selectedDevice],
+    [device],
   );
 
   const onOpenFile = useCallback(() => {
@@ -162,17 +180,15 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     activeModal(MODAL_ID);
   }, [activeModal]);
 
-  const onCloseSelectCamera = useCallback(() => {
-    inactiveModal(MODAL_ID);
-  }, [inactiveModal]);
-
-  const onSelectDevice = useCallback(
-    (value: VideoDeviceInfo): (() => void) =>
-      () => {
-        setSelectedDevice(value);
-        inactiveModal(MODAL_ID);
-      },
-    [inactiveModal],
+  const customInput = useMemo(
+    (): React.ReactNode => (
+      <Button
+        onClick={onOpenSelectCamera}
+        icon={<Icon type="phosphor" phosphorIcon={Camera} weight="fill" />}
+        schema='secondary'
+      />
+    ),
+    [onOpenSelectCamera],
   );
 
   const onChangeFile: ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -241,25 +257,45 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
       });
   }, [loadingGrantPermission]);
 
+  const renderCameraItem = useCallback(
+    (_item: VideoDeviceInfo, _selected: boolean) => (
+      <div className={classNames(`${prefixCls}-camera-item`)}>
+        <BackgroundIcon
+          type="phosphor"
+          phosphorIcon={Camera}
+          weight="fill"
+          size="sm"
+          backgroundColor={token['gray-3']}
+          shape='circle'
+        />
+        <div className={classNames(`${prefixCls}-camera-label`)}>{_item.label}</div>
+        {_selected && (
+          <div className={classNames(`${prefixCls}-camera-selected`)}>
+            <Icon type="phosphor" phosphorIcon={CheckCircle} size="sm" weight="fill" />
+          </div>
+        )}
+      </div>
+    ),
+    [prefixCls],
+  );
+
   useEffect(() => {
-    setSelectedDevice((prevState) => {
+    setSelected((prevState) => {
       if (!prevState) {
-        return devices[0];
+        return devices[0]?.key || '';
       }
 
       if (!devices.length) {
-        return undefined;
+        return '';
       }
 
-      const exists = devices.find(
-        (device) => prevState.key === `${device.groupId}_${device.deviceId}`,
-      );
+      const exists = devices.find((item) => prevState === item.key);
 
       if (exists) {
-        return exists;
+        return exists.key;
       }
 
-      return devices[0];
+      return devices[0]?.key || '';
     });
   }, [devices]);
 
@@ -470,10 +506,18 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                         >
                           Upload from photos
                         </Button>
-                        <Button
-                          onClick={onOpenSelectCamera}
-                          icon={<Icon type="phosphor" phosphorIcon={Camera} weight="fill" />}
-                          schema='secondary'
+                        <SelectModal
+                          items={devices}
+                          itemKey="key"
+                          selected={selected}
+                          maskClosable
+                          renderItem={renderCameraItem}
+                          onSelect={setSelected}
+                          id={MODAL_ID}
+                          zIndex={Z_INDEX + 1}
+                          customInput={customInput}
+                          title="Select camera"
+                          className={classNames(hashId, `${prefixCls}-camera-items-container`)}
                         />
                       </>
                     )}
@@ -481,42 +525,6 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
             </div>
           </div>
         </Dialog>
-        <SwModal
-          id={MODAL_ID}
-          title="Select camera"
-          onCancel={onCloseSelectCamera}
-          maskClosable
-          zIndex={Z_INDEX + 1}
-        >
-          <div className={classNames(hashId, `${prefixCls}-camera-items-container`)}>
-            {devices.map((device) => {
-              const _selected = device.key === selectedDevice?.key;
-
-              return (
-                <div
-                  key={device.key}
-                  onClick={onSelectDevice(device)}
-                  className={classNames(`${prefixCls}-camera-item`)}
-                >
-                  <BackgroundIcon
-                    type="phosphor"
-                    phosphorIcon={Camera}
-                    weight="fill"
-                    size="sm"
-                    backgroundColor={token['gray-3']}
-                    shape='circle'
-                  />
-                  <div className={classNames(`${prefixCls}-camera-label`)}>{device.label}</div>
-                  {_selected && (
-                    <div className={classNames(`${prefixCls}-camera-selected`)}>
-                      <Icon type="phosphor" phosphorIcon={CheckCircle} size="sm" weight="fill" />
-                    </div>
-                  )}
-                </div>
-              );
-            })}
-          </div>
-        </SwModal>
       </NoFormStyle>
     </NoCompactStyle>,
   );

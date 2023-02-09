@@ -3,7 +3,7 @@ import React, { useMemo, useState } from 'react';
 import SelectModal from '../../select-modal';
 import type { ButtonProps } from '../../button';
 import SwHeader from '../index';
-import { HeaderIcons } from '../../sw-screen-layout/stories/header-icons';
+import { renderRightIcons, RIGHT_ICON_TYPES } from '../../sw-screen-layout/stories/header-icons';
 import {
   ALL_ACCOUNT_KEY,
   PREDEFINED_ACCOUNTS,
@@ -20,22 +20,7 @@ const SELECT_MODAL_ID = 'select-account';
 const Wrapper: React.FC<WrapperProps> = ({ rightType, selectBackground, ...args }) => {
   const [selected, setSelected] = useState<string>(ALL_ACCOUNT_KEY);
 
-  const rightButtons = useMemo((): ButtonProps[] => {
-    switch (rightType) {
-      case 2:
-        return [HeaderIcons.icon1, HeaderIcons.icon2, HeaderIcons.icon3].map((icon) => ({
-          icon,
-        }));
-      case 1:
-        return [
-          {
-            icon: HeaderIcons.icon,
-          },
-        ];
-      default:
-        return [];
-    }
-  }, [rightType]);
+  const rightButtons = useMemo((): ButtonProps[] => renderRightIcons(rightType), [rightType]);
 
   return (
     <SwHeader {...args} rightButtons={rightButtons}>
@@ -82,8 +67,8 @@ export default {
       type: 'number',
       control: {
         type: 'number',
-        min: 0,
-        max: 2,
+        min: RIGHT_ICON_TYPES.min,
+        max: RIGHT_ICON_TYPES.max,
         step: 1,
       },
     },

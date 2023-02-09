@@ -246,23 +246,16 @@ const genSchemaStyles: GenerateStyle<ButtonToken, CSSObject> = (token) => {
       },
     },
     [`${componentCls}-ghost`]: {
-      [`&.-icon-only`]: {
-        color: token.colorTextBase,
-      },
+      ...genSchemaStyle(token.colorTransparent, token['gray-4']),
+      '&:hover': genSchemaStyle(token.colorTransparent, token['gray-6']),
+      '&:active': genSchemaStyle(token.colorTransparent, token['gray-4']),
+      '&.-disabled, &:disabled': genSchemaStyle(token.colorTransparent, token['gray-2']),
 
-      [`&:not(.-icon-only)`]: {
-        color: token.colorTextBase,
-        opacity: 0.45,
-
-        '&:hover': {
-          opacity: 0.85,
-        },
-        '&:active': {
-          opacity: 0.65,
-        },
-        '&.-disabled, &:disabled': {
-          opacity: 0.3,
-        },
+      '&.-schema-header': {
+        ...genSchemaStyle(token.colorTransparent, token.colorTextBase),
+        '&:hover': genSchemaStyle(token.colorTransparent, token['gray-5']),
+        '&:active': genSchemaStyle(token.colorTransparent, token['gray-4']),
+        '&.-disabled, &:disabled': genSchemaStyle(token.colorTransparent, token['gray-2']),
       },
     },
   };

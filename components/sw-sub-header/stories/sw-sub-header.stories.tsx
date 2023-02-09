@@ -1,35 +1,17 @@
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
-import { QrCode, Gear, FunnelSimple, MagnifyingGlass } from 'phosphor-react';
 import React, { useMemo } from 'react';
+import { renderRightIcons, RIGHT_ICON_TYPES } from '../../sw-screen-layout/stories/header-icons';
 import type { ButtonProps } from '../../button';
-import Icon from '../../icon';
 import SwSubHeader from '../index';
-
-const rightIcon = <Icon type="phosphor" phosphorIcon={QrCode} size="sm" />;
-const rightIcon1 = <Icon type="phosphor" phosphorIcon={FunnelSimple} size="sm" />;
-const rightIcon2 = <Icon type="phosphor" phosphorIcon={MagnifyingGlass} size="sm" />;
-const rightIcon3 = <Icon type="phosphor" phosphorIcon={Gear} size="sm" />;
 
 interface WrapperProps extends React.ComponentProps<typeof SwSubHeader> {
   rightIconType: number;
 }
 const Wrapper: React.FC<WrapperProps> = ({ rightIconType, ...args }) => {
-  const rightButtons = useMemo((): ButtonProps[] => {
-    switch (rightIconType) {
-      case 2:
-        return [rightIcon1, rightIcon2, rightIcon3].map((icon) => ({
-          icon,
-        }));
-      case 1:
-        return [
-          {
-            icon: rightIcon,
-          },
-        ];
-      default:
-        return [];
-    }
-  }, [rightIconType]);
+  const rightButtons = useMemo(
+    (): ButtonProps[] => renderRightIcons(rightIconType),
+    [rightIconType],
+  );
 
   return <SwSubHeader {...args} rightButtons={rightButtons} />;
 };
@@ -52,8 +34,8 @@ export default {
       type: 'number',
       control: {
         type: 'number',
-        min: 0,
-        max: 2,
+        min: RIGHT_ICON_TYPES.min,
+        max: RIGHT_ICON_TYPES.max,
       },
     },
     title: {

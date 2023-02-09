@@ -7,7 +7,6 @@ import SwHeader from '../sw-header';
 import type { SwTabBarItem } from '../sw-tab-bar';
 import SwTabBar from '../sw-tab-bar';
 import type { ButtonProps } from '../button';
-import type { SwSubHeaderBackground } from '../sw-sub-header';
 import type { SwHeaderBackground, SwHeaderLeftContent } from '../sw-header';
 import { ConfigContext } from '../config-provider';
 import useStyle from './style';
@@ -39,7 +38,7 @@ export interface SwScreenLayoutProps {
   subHeaderCenter?: boolean;
   subHeaderIcons?: ButtonProps[];
   subHeaderPaddingVertical?: boolean;
-  subHeaderBackground?: SwSubHeaderBackground;
+  subHeaderBackground?: SwHeaderBackground;
 
   // Footer
   footer?: React.ReactNode;

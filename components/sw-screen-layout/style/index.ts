@@ -17,7 +17,7 @@ const genContainerStyle: GenerateStyle<SwScreenLayoutToken> = (token) => {
       [`${componentCls}-container`]: {
         width: '100%',
         height: '100%',
-        backgroundColor: token.colorBgBase,
+        backgroundColor: token.colorBgDefault,
         display: 'flex',
         flexDirection: 'column',
         overflow: 'hidden',
@@ -31,14 +31,14 @@ const genContainerStyle: GenerateStyle<SwScreenLayoutToken> = (token) => {
         [`${componentCls}-body`]: {
           flex: 1,
           overflow: 'auto',
-          padding: `0 ${token.padding}px`,
-          margin: `${token.padding}px 0`,
+          padding: 0,
+          margin: 0,
         },
 
         [`${componentCls}-footer`]: {
           '&-button-container': {
             padding: `0 ${token.padding}px`,
-            marginBottom: token.margin,
+            margin: `${token.margin}px 0`,
           },
           '&-button-container-alone': {
             marginBottom: token.marginXL,

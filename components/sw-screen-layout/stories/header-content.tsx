@@ -1,6 +1,6 @@
-import { CheckCircle } from 'phosphor-react';
 import React from 'react';
-import Icon from '../../icon';
+import type { IconTheme } from '@polkadot/react-identicon/types';
+import AccountCard from '../../web3-block/account-card';
 import Logo from '../../logo';
 import SwAvatar from '../../sw-avatar';
 import Typography from '../../typography';
@@ -8,7 +8,7 @@ import Typography from '../../typography';
 export interface Account {
   address: string;
   name: string;
-  type: 'polkadot' | 'ethereum';
+  type: IconTheme;
 }
 
 export const ALL_ACCOUNT_KEY = 'ALL';
@@ -36,48 +36,24 @@ export const PREDEFINED_ACCOUNTS: Account[] = [
   },
 ];
 
-export const renderHeaderContentItem = (item: Account, _selected: boolean): React.ReactNode => (
-  <div
-    style={{
-      display: 'flex',
-      flexDirection: 'row',
-      alignItems: 'center',
-      gap: 16,
-      justifyContent: 'space-between',
-    }}
-  >
-    <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', gap: 16 }}>
-      {item.address === ALL_ACCOUNT_KEY ? (
-        <Logo size={40} isShowSubLogo={false} shape="circle" subLogoShape="circle" />
-      ) : (
-        <SwAvatar
-          theme={item.type}
-          size={40}
-          value={item.address}
-          identPrefix={42}
-          isShowSubIcon={false}
-        />
-      )}
-      <div>
-        <Typography.Text>{item.name}</Typography.Text>
-        {item.address === ALL_ACCOUNT_KEY ? undefined : (
-          <Typography.Text>(...{item.address.substring(item.address.length - 2)})</Typography.Text>
-        )}
-      </div>
-    </div>
-    <div>
-      {_selected && (
-        <Icon
-          type="phosphor"
-          phosphorIcon={CheckCircle}
-          iconColor="#7CD383"
-          size="xs"
-          weight="fill"
-        />
-      )}
-    </div>
-  </div>
-);
+export const renderHeaderContentItem = (item: Account, _selected: boolean): React.ReactNode => {
+  const isAllAccount = item.address === ALL_ACCOUNT_KEY;
+
+  return (
+    <AccountCard
+      leftItem={
+        isAllAccount && (
+          <Logo size={40} isShowSubLogo={false} shape="circle" subLogoShape="circle" />
+        )
+      }
+      address={item.address}
+      isSelected={_selected}
+      avatarIdentPrefix={42}
+      avatarTheme={item.type}
+      accountName={item.name}
+    />
+  );
+};
 
 export const renderHeaderContentSelected = (item: Account): React.ReactNode => (
   <div

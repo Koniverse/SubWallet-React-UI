@@ -164,18 +164,7 @@ const genItemContainerStyle: GenerateStyle<SelectModalToken> = (token) => {
   return [
     {
       [`${componentCls}-item-container`]: {
-        ...resetComponent(token),
-
-        [`${componentCls}-item`]: {
-          cursor: 'pointer',
-          padding: `${token.paddingContentHorizontalSM - 2}px ${token.paddingContentVertical}px`,
-          borderRadius: token.borderRadius,
-          backgroundColor: token.colorBgSecondary,
-
-          '&:hover': {
-            backgroundColor: token.colorBgInput,
-          },
-        },
+        flex: 1,
       },
     },
   ];

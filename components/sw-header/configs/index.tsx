@@ -1,7 +1,6 @@
 import React from 'react';
-import { ListPlus } from 'phosphor-react';
 import Logo from '../../logo';
-import Icon from '../../icon';
+import MenuBar from '../icons/MenuBar';
 
 export interface SwHeaderConfigProps {
   default: React.ReactNode;
@@ -9,7 +8,7 @@ export interface SwHeaderConfigProps {
 }
 
 export const SwHeaderConfig: SwHeaderConfigProps = {
-  default: <Icon type="phosphor" phosphorIcon={ListPlus} size="sm" />,
+  default: <MenuBar />,
   logo: <Logo size={24} isShowSubLogo={false} shape="circle" subLogoShape="circle" />,
 };
 

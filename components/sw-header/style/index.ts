@@ -19,7 +19,9 @@ const genContainerStyle: GenerateStyle<SwHeaderToken> = (token) => {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
+        position: 'relative',
         minHeight: 40,
+        height: 'max-content',
 
         [`${componentCls}-left-part`]: {
           flexShrink: 1,
@@ -51,16 +53,23 @@ const genContainerStyle: GenerateStyle<SwHeaderToken> = (token) => {
           flexDirection: 'row',
           flexGrow: 1,
           flex: 1,
-
-          [`&${componentCls}-center-part-pl`]: {
-            paddingLeft: token.padding,
-          },
+          alignItems: 'center',
+          overflow: 'hidden',
+          paddingRight: token.paddingSM * 2,
         },
       },
 
       [`${componentCls}-container-center`]: {
         [`${componentCls}-center-part`]: {
           justifyContent: 'center',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          bottom: 0,
+          right: 0,
+          margin: 'auto',
+          width: 246,
+          paddingRight: 0,
         },
       },
 
