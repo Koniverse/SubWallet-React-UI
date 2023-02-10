@@ -156,6 +156,7 @@ const genSizeButtonStyle = (token: ButtonToken, size: ButtonSize): CSSInterpolat
 
         [`&.-icon-only`]: {
           width: buttonSizeMap[size],
+          minWidth: buttonSizeMap[size],
         },
       },
     },
