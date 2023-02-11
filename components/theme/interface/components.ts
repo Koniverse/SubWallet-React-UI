@@ -38,6 +38,7 @@ import type { ComponentToken as NotificationComponentToken } from '../../notific
 import type { ComponentToken as NetworkItemComponentToken } from '../../web3-block/network-item/style';
 import type { ComponentToken as TokenItemComponentToken } from '../../web3-block/token-item/style';
 import type { ComponentToken as NumberComponentToken } from '../../number/style';
+import type { ComponentToken as PageIconComponentToken } from '../../page-icon/style';
 import type { ComponentToken as PopconfirmComponentToken } from '../../popconfirm/style';
 import type { ComponentToken as PinCodeComponentToken } from '../../pincode/style';
 import type { ComponentToken as PopoverComponentToken } from '../../popover/style';
@@ -120,6 +121,7 @@ export interface ComponentTokenMap {
   NetworkItem?: NetworkItemComponentToken;
   TokenItem?: TokenItemComponentToken;
   Number?: NumberComponentToken;
+  PageIcon?: PageIconComponentToken;
   Pagination?: {};
   PinCode?: PinCodeComponentToken;
   Popover?: PopoverComponentToken;
