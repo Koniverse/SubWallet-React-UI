@@ -80,7 +80,7 @@ const SwHeader: React.FC<SwHeaderProps> = (props) => {
       >
         {rightButtons.map((args, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <Button key={index} {...args} type="ghost" schema='header' size='xs' />
+          <Button key={index} type="ghost" schema='header' size='xs' {...args} />
         ))}
       </div>
     </div>,

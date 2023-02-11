@@ -2,6 +2,7 @@ import classNames from 'classnames';
 import Dialog from 'rc-dialog';
 import { useContext } from 'react';
 import * as React from 'react';
+import Button from '../button';
 import { ModalContext } from './provider';
 import type { ButtonProps, LegacyButtonType } from '../button/button';
 import { ConfigContext } from '../config-provider';
@@ -67,6 +68,7 @@ export interface SwModalProps {
   wrapProps?: any;
   prefixCls?: string;
   closeIcon?: React.ReactNode;
+  rightIconProps?: ButtonProps;
   modalRender?: (node: React.ReactNode) => React.ReactNode;
   focusTriggerAfterClose?: boolean;
   children?: React.ReactNode;
@@ -118,6 +120,8 @@ const SwModal: React.FC<SwModalProps> = (props) => {
     // Deprecated
     width = 390,
     id,
+    children,
+    rightIconProps,
     ...restProps
   } = props;
 
@@ -160,7 +164,18 @@ const SwModal: React.FC<SwModalProps> = (props) => {
           transitionName={getTransitionName(rootPrefixCls, 'slide-down', props.transitionName)}
           maskTransitionName={getTransitionName(rootPrefixCls, 'fade', props.maskTransitionName)}
           className={classNames(hashId, className)}
-        />
+        >
+          {rightIconProps && (
+            <Button
+              className={classNames(`${prefixCls}-right-icon`)}
+              type="ghost"
+              schema='header'
+              size='xs'
+              {...rightIconProps}
+            />
+          )}
+          {children}
+        </Dialog>
       </NoFormStyle>
     </NoCompactStyle>,
   );

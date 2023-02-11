@@ -23,7 +23,6 @@ export interface SwModalToken extends FullToken<'SwModal'> {
   modalHeaderCloseSize: number;
   modalContentBg: string;
   modalHeadingColor: string;
-  modalCloseColor: string;
   modalCloseBtnSize: number;
   modalFooterBg: string;
   modalFooterBorderColorSplit: string;
@@ -32,7 +31,6 @@ export interface SwModalToken extends FullToken<'SwModal'> {
   modalFooterPaddingHorizontal: number;
   modalFooterBorderWidth: number;
   modalConfirmTitleFontSize: number;
-  modalIconHoverColor: string;
   modalConfirmIconSize: number;
 }
 
@@ -162,11 +160,11 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
           insetInlineStart: (token.modalHeaderCloseSize - token.modalCloseBtnSize) / 2,
           zIndex: token.zIndexPopupBase + 10,
           padding: 0,
-          color: token.modalCloseColor,
+          color: token.colorTextBase,
           fontWeight: token.fontWeightStrong,
           lineHeight: 1,
           textDecoration: 'none',
-          background: 'transparent',
+          background: token.colorTransparent,
           borderRadius: token.borderRadiusSM,
           width: token.modalHeaderCloseSize,
           height: token.modalHeaderCloseSize,
@@ -181,16 +179,21 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
           },
 
           '&:hover': {
-            color: token.modalIconHoverColor,
-            backgroundColor: token.wireframe ? 'transparent' : token.colorFillContent,
-            textDecoration: 'none',
+            color: token['gray-5'],
           },
 
           '&:active': {
-            backgroundColor: token.wireframe ? 'transparent' : token.colorFillContentHover,
+            color: token['gray-4'],
           },
 
           ...genFocusStyle(token),
+        },
+
+        [`${componentCls}-right-icon`]: {
+          position: 'absolute',
+          top: token.modalHeaderCloseSize / 4,
+          insetInlineEnd: (token.modalHeaderCloseSize - token.modalCloseBtnSize) / 2,
+          zIndex: token.zIndexPopupBase + 10,
         },
 
         [`${componentCls}-header`]: {
@@ -455,7 +458,6 @@ export default genComponentStyleHook('SwModal', (token) => {
     modalHeaderCloseSize: token.controlHeightLG,
     modalContentBg: token.colorBgElevated,
     modalHeadingColor: token.colorTextHeading,
-    modalCloseColor: token.colorText,
     modalFooterBg: 'transparent',
     modalFooterBorderColorSplit: token.colorSplit,
     modalFooterBorderStyle: token.lineType,
@@ -463,7 +465,6 @@ export default genComponentStyleHook('SwModal', (token) => {
     modalFooterPaddingHorizontal: token.padding,
     modalFooterBorderWidth: token.lineWidth,
     modalConfirmTitleFontSize: token.fontSizeLG,
-    modalIconHoverColor: token.colorIconHover,
     modalConfirmIconSize: token.fontSize * token.lineHeight,
     modalCloseBtnSize: token.controlHeightLG * 0.6,
   });
