@@ -256,6 +256,7 @@ const genSchemaStyles: GenerateStyle<ButtonToken, CSSObject> = (token) => {
         '&:hover': genSchemaStyle(token.colorTransparent, token['gray-5']),
         '&:active': genSchemaStyle(token.colorTransparent, token['gray-4']),
         '&.-disabled, &:disabled': genSchemaStyle(token.colorTransparent, token['gray-2']),
+        padding: `0 ${token.paddingXS}px`,
       },
     },
   };

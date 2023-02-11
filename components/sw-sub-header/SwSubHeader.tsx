@@ -15,7 +15,7 @@ export interface SwSubHeaderProps
   title?: string | React.ReactNode;
 }
 
-const BackIcon = <Icon type="phosphor" phosphorIcon={CaretLeft} size="xs" />;
+const BackIcon = <Icon type="phosphor" phosphorIcon={CaretLeft} size="sm" />;
 
 const SwSubHeader: React.FC<SwSubHeaderProps> = (props) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
