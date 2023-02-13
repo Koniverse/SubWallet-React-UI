@@ -156,6 +156,9 @@ export { default as QRCode } from './qrcode';
 export type { QRCodeProps, QRPropsCanvas } from './qrcode/interface';
 export { default as version } from './version';
 
+export { default as Field } from './field';
+export type { FieldProps } from './field';
+
 export { default as ActivityIndicator } from './activity-indicator';
 export type { ActivityIndicatorProps } from './activity-indicator';
 export { default as BackgroundIcon } from './background-icon';
