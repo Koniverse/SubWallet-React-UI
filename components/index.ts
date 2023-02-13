@@ -180,7 +180,7 @@ export type { SwHeaderProps } from './sw-header';
 export { default as SwList } from './sw-list';
 export type { SwListProps } from './sw-list';
 export { default as SwModal, ModalContext, ModalContextProvider } from './sw-modal';
-export type { SwModalProps, SwConfirmDialogProps } from './sw-modal';
+export type { SwModalProps, SwModalFuncProps } from './sw-modal';
 export { default as SwQrScanner, changeCameraDocumentURL } from './sw-qr-scanner';
 export type { SwQrScannerProps } from './sw-qr-scanner';
 export { default as SwScreenLayout } from './sw-screen-layout';
