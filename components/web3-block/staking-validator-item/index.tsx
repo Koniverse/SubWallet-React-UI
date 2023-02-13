@@ -77,14 +77,15 @@ const StakingValidatorItem: React.FC<StakingValidatorItemProps> = ({
               value={expectedReturn}
               decimal={0}
               suffix="%"
-              leftColor="#4CEAAC"
-              rightColor="#4CEAAC"
+              intColor="#4CEAAC"
+              decimalColor="#4CEAAC"
+              unitColor="#4CEAAC"
             />
             <Icon
               className={`${prefixCls}-right-icon`}
               type="phosphor"
               phosphorIcon={CaretRight}
-              size="xs"
+              size="sm"
             />
           </div>
         )

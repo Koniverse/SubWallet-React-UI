@@ -69,10 +69,9 @@ const StakingNetworkItem: React.FC<StakingNetworkItemProps> = ({
                   size={12}
                   value={stakingCount}
                   decimal={0}
-                  leftColor="#FFF"
-                  leftOpacity={0.45}
-                  rightColor="#FFF"
-                  rightOpacity={0.45}
+                  intOpacity={0.45}
+                  decimalOpacity={0.45}
+                  unitOpacity={0.45}
                 />
                 {validatorType}
               </span>
@@ -83,18 +82,21 @@ const StakingNetworkItem: React.FC<StakingNetworkItemProps> = ({
       rightItem={
         rightItem || (
           <>
-            <Number
-              value={expectedReturn}
-              decimal={0}
-              suffix="%"
-              leftColor="#4CEAAC"
-              rightColor="#4CEAAC"
-            />
+            {!!expectedReturn && (
+              <Number
+                value={expectedReturn}
+                decimal={0}
+                suffix="%"
+                intColor="#4CEAAC"
+                decimalColor="#4CEAAC"
+                unitColor="#4CEAAC"
+              />
+            )}
             <Icon
               className={`${prefixCls}-right-icon`}
               type="phosphor"
               phosphorIcon={CaretRight}
-              size="xs"
+              size="sm"
             />
           </>
         )

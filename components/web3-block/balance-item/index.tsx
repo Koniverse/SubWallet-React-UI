@@ -92,8 +92,9 @@ const BalanceItem: React.FC<BalanceItemProps> = ({
                 value={price}
                 decimal={0}
                 prefix="$"
-                leftColor="#4CEAAC"
-                rightColor="#4CEAAC"
+                intColor="#4CEAAC"
+                decimalColor="#4CEAAC"
+                unitColor="#4CEAAC"
               />
             </>
           )
@@ -106,26 +107,23 @@ const BalanceItem: React.FC<BalanceItemProps> = ({
                   value={convertedBalanceValue}
                   decimal={0}
                   prefix="$"
-                  leftColor="#FFF"
-                  rightColor="#FFF"
-                  rightOpacity={0.45}
+                  decimalOpacity={0.45}
                 />
                 <Number
                   size={12}
                   value={balanceValue}
                   decimal={decimal}
                   suffix={displayToken}
-                  leftColor="#FFF"
-                  leftOpacity={0.45}
-                  rightColor="#FFF"
-                  rightOpacity={0.45}
+                  intOpacity={0.45}
+                  decimalOpacity={0.45}
+                  unitOpacity={0.45}
                 />
               </div>
               <Icon
                 className={`${prefixCls}-right-icon`}
                 type="phosphor"
                 phosphorIcon={CaretRight}
-                size="xs"
+                size="sm"
               />
             </>
           )
