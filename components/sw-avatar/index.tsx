@@ -1,6 +1,4 @@
 import * as React from 'react';
-import Identicon from '@polkadot/react-identicon';
-import type { IconTheme } from '@polkadot/react-identicon/types';
 import classNames from 'classnames';
 import Avatar from 'boring-avatars';
 import useStyle from './style';
@@ -8,10 +6,7 @@ import { ConfigContext } from '../config-provider';
 import Image from '../image';
 
 export interface SwAvatarProps {
-  theme?: IconTheme;
   size?: number;
-  value: string | null;
-  identPrefix: number;
   isShowSubIcon?: boolean;
   subIcon?: React.ReactNode;
   isAllAccount?: boolean;
@@ -19,13 +14,11 @@ export interface SwAvatarProps {
   allAccountName?: string;
   allAccountVariant?: 'marble' | 'beam' | 'pixel' | 'sunset' | 'ring' | 'bauhaus';
   allAccountColors?: string[];
+  swAvatar?: React.ReactNode;
 }
 
 const SwAvatar = ({
   size = 40,
-  value,
-  identPrefix,
-  theme = 'polkadot',
   isShowSubIcon,
   subIcon,
   isAllAccount,
@@ -33,6 +26,7 @@ const SwAvatar = ({
   allAccountName,
   allAccountVariant = 'marble',
   allAccountColors = ['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90'],
+  swAvatar,
 }: SwAvatarProps) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('sw-avatar');
@@ -62,13 +56,7 @@ const SwAvatar = ({
           />
         )
       ) : (
-        <Identicon
-          className="icon"
-          size={size * 0.7}
-          value={value}
-          prefix={identPrefix}
-          theme={theme}
-        />
+        swAvatar
       )}
       {!isAllAccount && isShowSubIcon && <div className="sub-icon">{subIcon}</div>}
     </div>,
