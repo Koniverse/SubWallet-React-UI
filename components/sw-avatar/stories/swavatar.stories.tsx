@@ -15,14 +15,6 @@ export default {
     identPrefix: { control: 'number', defaultValue: 42 },
     theme: { control: 'radio', options: ['polkadot', 'ethereum'], defaultValue: 'polkadot' },
     isShowSubIcon: { control: 'boolean', defaultValue: true },
-    isAllAccount: { control: 'boolean', defaultValue: false },
-    allAccountName: { control: 'text', defaultValue: 'All Account Name' },
-    allAccountVariant: {
-      control: 'radio',
-      options: ['marble', 'beam', 'pixel', 'sunset', 'ring', 'bauhaus'],
-      defaultValue: 'marble',
-    },
-    allAccountImg: { control: 'text', defaultValue: 'https://via.placeholder.com/40/004BFF' },
   },
 } as ComponentMeta<typeof SwAvatar>;
 
