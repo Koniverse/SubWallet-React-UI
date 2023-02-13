@@ -12,9 +12,10 @@ export default {
       options: ['default', 'square', 'circle', 'squircle'],
       defaultValue: 'default',
     },
-    width: { control: 'text' },
-    height: { control: 'text', if: { arg: 'height', truthy: true } },
+    width: { control: 'number' },
+    height: { control: 'number', if: { arg: 'height', truthy: true } },
     responsive: { control: 'boolean', defaultValue: true },
+    isLoading: { control: 'boolean', defaultValue: false },
   },
 } as ComponentMeta<typeof Image>;
 
@@ -26,8 +27,8 @@ export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Default.args = {
   src: imgLink,
-  width: '200px',
-  height: '200px',
+  width: 200,
+  height: 200,
 };
 
 export const Square = Template.bind({});
@@ -35,7 +36,7 @@ export const Square = Template.bind({});
 Square.args = {
   src: imgLink,
   shape: 'square',
-  width: '200px',
+  width: 200,
 };
 
 export const Circle = Template.bind({});
@@ -43,13 +44,13 @@ export const Circle = Template.bind({});
 Circle.args = {
   src: imgLink,
   shape: 'circle',
-  width: '200px',
+  width: 200,
 };
 
 export const Squircle = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Squircle.args = {
   src: imgLink,
-  width: '200px',
+  width: 200,
   shape: 'squircle',
 };
