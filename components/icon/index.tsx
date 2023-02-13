@@ -40,6 +40,10 @@ const Icon: React.FC<SwIconProps> = ({
       return 16;
     }
     if (size === 'sm') {
+      return 20;
+    }
+
+    if (size === 'md') {
       return 24;
     }
 

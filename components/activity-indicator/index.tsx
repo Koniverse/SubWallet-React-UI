@@ -3,8 +3,8 @@ import CSSMotion from 'rc-motion';
 import React from 'react';
 
 export interface ActivityIndicatorProps {
-  prefixCls: string;
-  existIcon: boolean;
+  prefixCls?: string;
+  existIcon?: boolean;
   loading?: boolean | object;
   loadingIconColor?: string;
   size?: number | string;
@@ -18,9 +18,9 @@ const getRealWidth = (node: HTMLElement) => ({
 
 const ActivityIndicator: React.FC<ActivityIndicatorProps> = ({
   prefixCls,
-  loading,
-  existIcon,
-  loadingIconColor,
+  loading = true,
+  existIcon = true,
+  loadingIconColor = '#737373',
   size,
 }) => {
   const visible = !!loading;
