@@ -4,7 +4,7 @@ import { useCallback, useContext, useMemo } from 'react';
 import * as React from 'react';
 import type { PresetBarShapeType } from '../_util/shapes';
 import { useToken } from '../theme/internal';
-import type { SwListProps } from '../sw-list';
+import type { SwListSectionProps } from '../sw-list';
 import SwList from '../sw-list';
 import SwModal from '../sw-modal';
 import type { SwModalProps } from '../sw-modal';
@@ -19,7 +19,10 @@ import Typography from '../typography';
 export type SelectModalSize = 'small' | 'medium';
 export interface SelectModalProps<T extends Record<string, any>>
   extends SwModalProps,
-    Pick<SwListProps, 'searchableMinCharactersCount'> {
+    Pick<
+      SwListSectionProps<T>,
+      'searchableMinCharactersCount' | 'searchFunction' | 'searchPlaceholder' | 'renderWhenEmpty'
+    > {
   items: T[];
   itemKey: string;
   selected: string;
@@ -38,10 +41,6 @@ export interface SelectModalProps<T extends Record<string, any>>
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   disabled?: boolean;
-
-  // Search
-  searchPlaceholder?: string;
-  searchFunction?: (item: T, searchText: string) => boolean;
 }
 
 const DEFAULT_SUFFIX = <Icon type='phosphor' phosphorIcon={CaretDown} size="xs" />;
