@@ -15,7 +15,7 @@ import useStyle from './style';
 import { getCloseIcon, PureContent } from './PurePanel';
 
 const DEFAULT_OFFSET = 24;
-const DEFAULT_DURATION = 4.5;
+const DEFAULT_DURATION = 1.5;
 
 // ==============================================================================
 // ==                                  Holder                                  ==
