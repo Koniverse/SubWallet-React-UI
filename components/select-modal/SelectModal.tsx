@@ -19,9 +19,11 @@ import Typography from '../typography';
 export type SelectModalSize = 'small' | 'medium';
 export interface SelectModalProps<T extends Record<string, any>>
   extends SwModalProps,
-    Pick<
-      SwListSectionProps<T>,
-      'searchableMinCharactersCount' | 'searchFunction' | 'searchPlaceholder' | 'renderWhenEmpty'
+    Partial<
+      Pick<
+        SwListSectionProps<T>,
+        'searchableMinCharactersCount' | 'searchFunction' | 'searchPlaceholder' | 'renderWhenEmpty'
+      >
     > {
   items: T[];
   itemKey: string;
