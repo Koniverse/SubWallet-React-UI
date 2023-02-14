@@ -10,6 +10,7 @@ import Icon from '../../icon';
 import Number from '../../number';
 import { ConfigContext } from '../../config-provider';
 import useStyle from './style';
+import { useToken } from '../../theme/internal';
 
 export interface StakingValidatorItemProps extends Web3BlockProps {
   validatorAddress: string;
@@ -38,6 +39,7 @@ const StakingValidatorItem: React.FC<StakingValidatorItemProps> = ({
   const prefixCls = getPrefixCls('staking-validator-item');
   const [wrapSSR, hashId] = useStyle(prefixCls);
   const classes = classNames(prefixCls, hashId);
+  const [, token] = useToken();
 
   return wrapSSR(
     <Web3Block
@@ -62,7 +64,7 @@ const StakingValidatorItem: React.FC<StakingValidatorItemProps> = ({
                 type="phosphor"
                 phosphorIcon={CheckCircle}
                 size="xs"
-                iconColor="#4CEAAC"
+                iconColor={token.colorSecondary}
                 weight="fill"
               />
             </div>
@@ -77,9 +79,9 @@ const StakingValidatorItem: React.FC<StakingValidatorItemProps> = ({
               value={expectedReturn}
               decimal={0}
               suffix="%"
-              intColor="#4CEAAC"
-              decimalColor="#4CEAAC"
-              unitColor="#4CEAAC"
+              intColor={token.colorSecondary}
+              decimalColor={token.colorSecondary}
+              unitColor={token.colorSecondary}
             />
             <Icon
               className={`${prefixCls}-right-icon`}

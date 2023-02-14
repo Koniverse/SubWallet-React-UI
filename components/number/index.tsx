@@ -6,6 +6,7 @@ import useStyle from './style';
 import type { NumberFormatter } from '../_util/number';
 import { balanceFormatter, formatNumber } from '../_util/number';
 import Typography from '../typography';
+import { useToken } from '../theme/internal';
 
 export interface SwNumberProps {
   value: string | number | BigNumber;
@@ -63,6 +64,7 @@ const { decimal: decimalSeparator, thousand: thousandSeparator } = getNumberSepa
 
 const Number: React.FC<SwNumberProps> = (props) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
+  const [, token] = useToken();
 
   const {
     metadata,
@@ -76,11 +78,11 @@ const Number: React.FC<SwNumberProps> = (props) => {
     value,
     className,
     prefixCls: customizePrefixCls,
-    intColor = '#FFF',
+    intColor = token.colorTextLight1,
     intOpacity = 1,
-    decimalColor = '#FFF',
+    decimalColor = token.colorTextLight1,
     decimalOpacity = 1,
-    unitColor = '#FFF',
+    unitColor = token.colorTextLight1,
     unitOpacity = 1,
     weight = 500,
   } = props;

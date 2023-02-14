@@ -455,7 +455,7 @@ export default genComponentStyleHook('SwModal', (token) => {
     modalHeaderBorderColorSplit: token.colorSplit,
     modalHeaderCloseSize: token.controlHeightLG,
     modalContentBg: token.colorBgElevated,
-    modalHeadingColor: token.colorTextHeading,
+    modalHeadingColor: token.colorTextBase,
     modalFooterBg: 'transparent',
     modalFooterBorderColorSplit: token.colorSplit,
     modalFooterBorderStyle: token.lineType,

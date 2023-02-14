@@ -9,6 +9,7 @@ import useStyle from './style';
 import Logo from '../../logo';
 import Number from '../../number';
 import Icon from '../../icon';
+import { useToken } from '../../theme/internal';
 
 export interface StakingNetworkItemProps extends Web3BlockProps {
   stakingNetwork: string;
@@ -43,6 +44,7 @@ const StakingNetworkItem: React.FC<StakingNetworkItemProps> = ({
   const prefixCls = getPrefixCls('staking-network-item');
   const [wrapSSR, hashId] = useStyle(prefixCls);
   const classes = classNames(prefixCls, hashId);
+  const [, token] = useToken();
 
   return wrapSSR(
     <Web3Block
@@ -87,9 +89,9 @@ const StakingNetworkItem: React.FC<StakingNetworkItemProps> = ({
                 value={expectedReturn}
                 decimal={0}
                 suffix="%"
-                intColor="#4CEAAC"
-                decimalColor="#4CEAAC"
-                unitColor="#4CEAAC"
+                intColor={token.colorSecondary}
+                decimalColor={token.colorSecondary}
+                unitColor={token.colorSecondary}
               />
             )}
             <Icon
