@@ -9,7 +9,7 @@ export interface SwAvatarProps {
   theme?: IconTheme;
   size?: number;
   value: string | null;
-  identPrefix: number;
+  identPrefix?: number;
   isShowSubIcon?: boolean;
   subIcon?: React.ReactNode;
 }
@@ -17,7 +17,7 @@ export interface SwAvatarProps {
 const SwAvatar = ({
   size = 40,
   value,
-  identPrefix,
+  identPrefix = 42,
   theme = 'polkadot',
   isShowSubIcon,
   subIcon,
