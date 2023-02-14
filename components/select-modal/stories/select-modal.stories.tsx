@@ -28,7 +28,7 @@ for (let i = 0; i < 20; i++) {
   items.push({ value: i.toString(), label: i.toString() });
 }
 
-const icon = <SwAvatar value="" identPrefix={42} isAllAccount size={20} />;
+const icon = <SwAvatar value="" identPrefix={42} size={20} />;
 
 const Wrapper = <T extends Record<string, any>>({
   suffixType = 1,
