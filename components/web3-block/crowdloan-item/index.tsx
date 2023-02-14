@@ -48,7 +48,7 @@ const CrowdloanItem: React.FC<CrowdloanItemProps> = ({
   ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
-  const prefixCls = getPrefixCls('balance-item');
+  const prefixCls = getPrefixCls('crowdloan-item');
   const [wrapSSR, hashId] = useStyle(prefixCls);
   const classes = classNames(prefixCls, hashId);
 
@@ -87,9 +87,7 @@ const CrowdloanItem: React.FC<CrowdloanItemProps> = ({
             <Number
               value={balanceValue}
               decimal={decimal}
-              leftColor="#FFF"
-              rightColor="#FFF"
-              rightOpacity={0.45}
+              decimalOpacity={0.45}
               suffix={displayToken}
             />
             <Number
@@ -97,10 +95,9 @@ const CrowdloanItem: React.FC<CrowdloanItemProps> = ({
               decimal={0}
               value={convertedBalanceValue}
               prefix="$"
-              leftColor="#FFF"
-              leftOpacity={0.45}
-              rightColor="#FFF"
-              rightOpacity={0.45}
+              intOpacity={0.45}
+              decimalOpacity={0.45}
+              unitOpacity={0.45}
             />
           </div>
         )

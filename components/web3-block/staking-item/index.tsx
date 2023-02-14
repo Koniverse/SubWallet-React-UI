@@ -79,25 +79,23 @@ const StakingItem: React.FC<StakingItemProps> = ({
                 value={stakingValue}
                 decimal={decimal}
                 suffix={displayToken}
-                leftColor="#FFF"
-                rightColor="#FFF"
+                decimalOpacity={0.45}
               />
               <Number
                 size={12}
                 prefix="$"
                 value={convertedStakingValue}
                 decimal={0}
-                leftColor="#FFF"
-                leftOpacity={0.45}
-                rightColor="#FFF"
-                rightOpacity={0.45}
+                intOpacity={0.45}
+                decimalOpacity={0.45}
+                unitOpacity={0.45}
               />
             </div>
             <Icon
               className={`${prefixCls}-right-icon`}
               type="phosphor"
               phosphorIcon={CaretRight}
-              size="xs"
+              size="sm"
             />
           </>
         )

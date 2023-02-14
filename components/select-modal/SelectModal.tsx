@@ -85,6 +85,7 @@ const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>):
     searchFunction,
     searchPlaceholder,
     searchableMinCharactersCount,
+    renderWhenEmpty,
     ...restProps
   } = props;
 
@@ -212,6 +213,7 @@ const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>):
             className={classNames(hashId, `${prefixCls}-item-container`)}
             searchPlaceholder={searchPlaceholder || DEFAULT_SEARCH_PLACEHOLDER}
             searchableMinCharactersCount={searchableMinCharactersCount}
+            renderWhenEmpty={renderWhenEmpty}
           />
         </SwModal>
       </NoFormStyle>

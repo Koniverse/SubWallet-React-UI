@@ -17,11 +17,13 @@ const genSwAvatarStyle = (token: SwAvatarToken): CSSInterpolation => {
         justifyContent: 'center',
         position: 'relative',
         border: `2px solid ${token.colorPrimary}`,
+        backgroundColor: token.colorBgSecondary,
 
         '& .icon': {
           borderRadius: '50%',
           backgroundColor: token.colorBgSecondary,
           cursor: 'pointer',
+          overflow: 'hidden',
 
           '> img': {
             borderRadius: '50%',

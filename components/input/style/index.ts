@@ -551,10 +551,6 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
         paddingTop: 12,
       },
 
-      [`${componentCls}-clear-icon`]: {
-        order: 99,
-      },
-
       [`${componentCls}-clear-icon-hidden`]: {
         display: 'none',
       },
@@ -585,6 +581,7 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
         fontSize: 20,
         marginLeft: 8,
         marginRight: 8,
+        order: -1,
       },
 
       [`.__input-action`]: {

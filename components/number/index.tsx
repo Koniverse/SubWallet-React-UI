@@ -6,6 +6,7 @@ import useStyle from './style';
 import type { NumberFormatter } from '../_util/number';
 import { balanceFormatter, formatNumber } from '../_util/number';
 import Typography from '../typography';
+import { useToken } from '../theme/internal';
 
 export interface SwNumberProps {
   value: string | number | BigNumber;
@@ -21,10 +22,12 @@ export interface SwNumberProps {
   className?: string;
   prefixCls?: string;
 
-  leftOpacity?: number;
-  leftColor?: string;
-  rightOpacity?: number;
-  rightColor?: string;
+  intOpacity?: number;
+  intColor?: string;
+  decimalOpacity?: number;
+  decimalColor?: string;
+  unitOpacity?: number;
+  unitColor?: string;
 }
 
 interface LocaleNumberFormat {
@@ -61,6 +64,7 @@ const { decimal: decimalSeparator, thousand: thousandSeparator } = getNumberSepa
 
 const Number: React.FC<SwNumberProps> = (props) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
+  const [, token] = useToken();
 
   const {
     metadata,
@@ -74,27 +78,37 @@ const Number: React.FC<SwNumberProps> = (props) => {
     value,
     className,
     prefixCls: customizePrefixCls,
-    leftColor = '#FFF',
-    leftOpacity = 1,
-    rightColor = '#FFF',
-    rightOpacity = 1,
+    intColor = token.colorTextLight1,
+    intOpacity = 1,
+    decimalColor = token.colorTextLight1,
+    decimalOpacity = 1,
+    unitColor = token.colorTextLight1,
+    unitOpacity = 1,
     weight = 500,
   } = props;
 
-  const leftStyle = useMemo(
+  const intStyle = useMemo(
     (): React.CSSProperties => ({
-      color: leftColor,
-      opacity: leftOpacity,
+      color: intColor,
+      opacity: intOpacity,
     }),
-    [leftColor, leftOpacity],
+    [intColor, intOpacity],
   );
 
-  const rightStyle = useMemo(
+  const decimalStyle = useMemo(
     (): React.CSSProperties => ({
-      color: rightColor,
-      opacity: rightOpacity,
+      color: decimalColor,
+      opacity: decimalOpacity,
     }),
-    [rightColor, rightOpacity],
+    [decimalColor, decimalOpacity],
+  );
+
+  const unitStyle = useMemo(
+    (): React.CSSProperties => ({
+      color: unitColor,
+      opacity: unitOpacity,
+    }),
+    [unitColor, unitOpacity],
   );
 
   const prefixCls = getPrefixCls('number', customizePrefixCls);
@@ -141,21 +155,21 @@ const Number: React.FC<SwNumberProps> = (props) => {
       {prefix && (
         <Typography.Text
           className={classNames(`${prefixCls}-prefix`)}
-          style={{ ...leftStyle, fontWeight: weight, fontSize: integerFontSize }}
+          style={{ ...unitStyle, fontWeight: weight, fontSize: integerFontSize }}
         >
           {prefix}
         </Typography.Text>
       )}
       <Typography.Text
         className={classNames(`${prefixCls}-integer`)}
-        style={{ ...leftStyle, fontWeight: weight, fontSize: integerFontSize }}
+        style={{ ...intStyle, fontWeight: weight, fontSize: integerFontSize }}
       >
         {_int}
       </Typography.Text>
       {!!_dec && (
         <Typography.Text
           className={classNames(`${prefixCls}-decimal`)}
-          style={{ ...rightStyle, fontWeight: weight, fontSize: decimalFontSize }}
+          style={{ ...decimalStyle, fontWeight: weight, fontSize: decimalFontSize }}
         >
           {decimalSeparator}
           {_dec}
@@ -164,7 +178,7 @@ const Number: React.FC<SwNumberProps> = (props) => {
       {suffix && (
         <Typography.Text
           className={classNames(`${prefixCls}-suffix`)}
-          style={{ ...rightStyle, fontWeight: weight, fontSize: decimalFontSize }}
+          style={{ ...unitStyle, fontWeight: weight, fontSize: decimalFontSize }}
         >
           &nbsp;{suffix}
         </Typography.Text>

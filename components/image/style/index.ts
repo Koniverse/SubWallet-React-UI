@@ -256,6 +256,14 @@ const genImageStyle: GenerateStyle<ImageToken> = (token: ImageToken) => {
     [componentCls]: {
       position: 'relative',
       display: 'inline-block',
+
+      '.__loading-wrapper': {
+        backgroundColor: token.colorBgInput,
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+      },
+
       [`${componentCls}-img`]: {
         width: '100%',
         height: 'auto',
@@ -278,21 +286,21 @@ const genImageStyle: GenerateStyle<ImageToken> = (token: ImageToken) => {
       [`${componentCls}-placeholder`]: {
         ...genBoxStyle(),
       },
-      '> img': {
+      '> .ant-image-img': {
         borderRadius: token.borderRadiusLG,
       },
       '&.-shape-square': {
-        '> img': {
+        '> .ant-image-img': {
           borderRadius: '0px',
         },
       },
       '&.-shape-circle': {
-        '> img': {
+        '> .ant-image-img': {
           borderRadius: '50%',
         },
       },
       '&.-responsive': {
-        '> img': {
+        '> .ant-image-img': {
           maxWidth: '100%',
         },
       },

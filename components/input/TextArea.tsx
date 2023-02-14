@@ -90,7 +90,7 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
       status: customStatus,
       shape = 'default',
       label,
-      displaySuccessStatus = true,
+      displaySuccessStatus = false,
       ...props
     },
     ref,
@@ -201,7 +201,6 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
         className={classNames(
           {
             [`${prefixCls}-borderless`]: !bordered,
-            [className!]: className && !showCount,
             [`${prefixCls}-sm`]: size === 'small' || customizeSize === 'small',
             [`${prefixCls}-lg`]: size === 'large' || customizeSize === 'large',
           },
@@ -252,9 +251,11 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
             [`-rtl`]: direction === 'rtl',
             '-has-suffix': !!mergedStatus,
             '-disabled': !!mergedDisabled,
+            '-display-success-status': displaySuccessStatus,
           },
           getStatusClassNames('', mergedStatus, hasFeedback),
           hashId,
+          className,
         )}
       >
         {!!label && <div className={`${prefixCls}-label`}>{label}</div>}

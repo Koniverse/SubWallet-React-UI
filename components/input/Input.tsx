@@ -4,7 +4,7 @@ import RcInput from 'rc-input';
 import type { BaseInputProps } from 'rc-input/lib/interface';
 import { composeRef } from 'rc-util/lib/ref';
 import React, { forwardRef, useContext, useEffect, useRef } from 'react';
-import { CheckCircle, WarningCircle, X, XCircle } from 'phosphor-react';
+import { CheckCircle, WarningCircle, XCircle } from 'phosphor-react';
 import { ConfigContext } from '../config-provider';
 import DisabledContext from '../config-provider/DisabledContext';
 import type { SizeType } from '../config-provider/SizeContext';
@@ -232,7 +232,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     mergedAllowClear = {
       clearIcon: (
         <div className='__input-action'>
-          <Icon phosphorIcon={X} weight="bold" />
+          <Icon phosphorIcon={XCircle} weight="fill" />
         </div>
       ),
     };
@@ -242,6 +242,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     <div
       className={classNames(
         `${prefixCls}-container`,
+        className,
         {
           [`${containerClassName}`]: !!containerClassName,
           [`-shape-${shape}`]: !!shape,
@@ -269,7 +270,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           suffix={suffixNode}
           prefix={prefix}
           allowClear={mergedAllowClear}
-          className={classNames(className, compactItemClassnames)}
+          className={classNames(compactItemClassnames)}
           onChange={handleChange}
           addonAfter={
             addonAfter && (

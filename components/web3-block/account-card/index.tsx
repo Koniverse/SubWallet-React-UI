@@ -9,6 +9,7 @@ import useStyle from './style';
 import type { Web3BlockProps } from '../base';
 import Web3Block from '../base';
 import Icon from '../../icon';
+import { useToken } from '../../theme/internal';
 
 export interface AccountCardProps extends Web3BlockProps {
   address: string;
@@ -44,6 +45,7 @@ const AccountCard: React.FC<AccountCardProps> = ({
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('account-card');
   const [wrapSSR, hashId] = useStyle(prefixCls);
+  const [, token] = useToken();
   const classes = classNames(prefixCls, hashId, {
     '-selected': isSelected,
   });
@@ -84,7 +86,7 @@ const AccountCard: React.FC<AccountCardProps> = ({
                   type="phosphor"
                   phosphorIcon={CheckCircle}
                   size="sm"
-                  iconColor="#4CEAAC"
+                  iconColor={token.colorSecondary}
                   weight="fill"
                 />
               </div>
