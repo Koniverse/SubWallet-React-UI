@@ -156,6 +156,9 @@ export { default as QRCode } from './qrcode';
 export type { QRCodeProps, QRPropsCanvas } from './qrcode/interface';
 export { default as version } from './version';
 
+export { default as Field } from './field';
+export type { FieldProps } from './field';
+
 export { default as ActivityIndicator } from './activity-indicator';
 export type { ActivityIndicatorProps } from './activity-indicator';
 export { default as BackgroundIcon } from './background-icon';
@@ -172,13 +175,13 @@ export { default as Squircle } from './squircle';
 export type { SquircleProps } from './squircle';
 // export { default as SwAvatar } from './sw-avatar';
 // export type { SwAvatarProps } from './sw-avatar';
-export { default as SwHeader } from './sw-header';
+export { default as SwHeader, changeHeaderLogo, changeHeaderDefault } from './sw-header';
 export type { SwHeaderProps } from './sw-header';
 export { default as SwList } from './sw-list';
 export type { SwListProps } from './sw-list';
-export { default as SwModal } from './sw-modal';
-export type { SwModalProps } from './sw-modal';
-export { default as SwQrScanner } from './sw-qr-scanner';
+export { default as SwModal, ModalContext, ModalContextProvider } from './sw-modal';
+export type { SwModalProps, SwModalFuncProps } from './sw-modal';
+export { default as SwQrScanner, changeCameraDocumentURL } from './sw-qr-scanner';
 export type { SwQrScannerProps } from './sw-qr-scanner';
 export { default as SwScreenLayout } from './sw-screen-layout';
 export type { SwScreenLayoutProps } from './sw-screen-layout';

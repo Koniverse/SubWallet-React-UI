@@ -6,9 +6,12 @@ import SwConfirmDialog from '../SwConfirmDialog';
 interface ModalContextType {
   initModal: (id: string) => void;
   clearModal: (id: string) => void;
+  clearModals: (ids: string[]) => void;
+  getActiveModals: () => string[];
   checkActive: (id: string) => boolean;
   activeModal: (id: string) => void;
   inactiveModal: (id: string) => void;
+  inactiveModals: (ids: string[]) => void;
   addConfirmModal: (props: SwModalFuncProps) => void;
 }
 
@@ -39,13 +42,20 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
 
       return result.filter((value) => value !== id);
     });
-
-    setVisibleList((prevState) => {
-      const result = [...prevState];
-
-      return result.filter((value) => value !== id);
-    });
   }, []);
+
+  const clearModals = useCallback(
+    (ids: string[]) => {
+      setGlobalList((prevState) => {
+        const result = [...prevState];
+
+        return result.filter((value) => !ids.includes(value));
+      });
+    },
+    [visibleList],
+  );
+
+  const getActiveModals = useCallback((): string[] => visibleList, [visibleList]);
 
   const checkActive = useCallback(
     (id: string): boolean => {
@@ -68,6 +78,10 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
 
   const inactiveModal = useCallback((id: string) => {
     setVisibleList((prevState) => [...prevState].filter((value) => value !== id));
+  }, []);
+
+  const inactiveModals = useCallback((ids: string[]) => {
+    setVisibleList((prevState) => [...prevState].filter((value) => !ids.includes(value)));
   }, []);
 
   const addConfirmModal = useCallback((_props: SwModalFuncProps) => {
@@ -108,7 +122,17 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
   return (
     <ModalContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
-      value={{ initModal, clearModal, activeModal, inactiveModal, checkActive, addConfirmModal }}
+      value={{
+        initModal,
+        clearModal,
+        clearModals,
+        activeModal,
+        inactiveModal,
+        inactiveModals,
+        checkActive,
+        getActiveModals,
+        addConfirmModal,
+      }}
     >
       {children}
       {externalList.map((props) => (
