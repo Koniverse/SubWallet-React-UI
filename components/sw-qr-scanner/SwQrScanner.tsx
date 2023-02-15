@@ -49,7 +49,7 @@ export interface SwQrScannerProps {
 }
 
 const filterVideoMediaFunction = (devices: MediaDeviceInfo[]): MediaDeviceInfo[] =>
-  devices.filter((device) => device.kind === 'videoinput');
+  devices.filter((device) => device.kind === 'videoinput' && device.label);
 
 const convertFunction = (device: MediaDeviceInfo): VideoDeviceInfo => ({
   label: device.label,
@@ -301,35 +301,34 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
 
   useEffect(() => {
     let amount = true;
+    let checking = false;
+    let interval: NodeJS.Timer;
     const updateDeviceList = () => {
-      navigator.mediaDevices.enumerateDevices().then((_devices) => {
-        if (amount) {
-          const filtered = filterVideoMediaFunction(_devices);
-          setDevices(filtered.map(convertFunction));
-
-          // re-get info for firefox
-          setTimeout(() => {
-            navigator.mediaDevices.enumerateDevices().then((items) => {
-              if (amount) {
-                const _filtered = filterVideoMediaFunction(items);
-                setDevices(_filtered.map(convertFunction));
-              }
-            });
-          }, 500);
-        }
-      });
+      if (!checking && amount) {
+        checking = true;
+        navigator.mediaDevices.enumerateDevices().then((_devices) => {
+          if (amount) {
+            const filtered = filterVideoMediaFunction(_devices);
+            if (filtered.length) {
+              setDevices(filtered.map(convertFunction));
+              clearInterval(interval);
+            }
+          }
+          checking = false;
+        });
+      }
     };
-
-    navigator.mediaDevices.removeEventListener('devicechange', updateDeviceList);
-    updateDeviceList();
 
     if (cameraState === 'Blocked') {
       inactiveModal(MODAL_ID);
+    } else if (cameraState === 'Allowed') {
+      interval = setInterval(() => {
+        updateDeviceList();
+      }, 1000);
     }
 
     return () => {
       amount = false;
-      navigator.mediaDevices.removeEventListener('devicechange', updateDeviceList);
     };
   }, [cameraState, inactiveModal]);
 
