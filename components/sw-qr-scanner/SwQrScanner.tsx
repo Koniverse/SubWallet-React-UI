@@ -306,6 +306,16 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
         if (amount) {
           const filtered = filterVideoMediaFunction(_devices);
           setDevices(filtered.map(convertFunction));
+
+          // re-get info for firefox
+          setTimeout(() => {
+            navigator.mediaDevices.enumerateDevices().then((items) => {
+              if (amount) {
+                const _filtered = filterVideoMediaFunction(items);
+                setDevices(_filtered.map(convertFunction));
+              }
+            });
+          }, 500);
         }
       });
     };
@@ -325,8 +335,6 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
 
   useEffect(() => {
     let amount = true;
-    let interval: NodeJS.Timer;
-    let blockInterval = false;
     let checking = false;
 
     const checkPermission = async () => {
@@ -349,8 +357,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
         const e = err as Error;
         if (amount) {
           if (CAMERA_ERROR.message.dismissed.some((message) => e.message.includes(message))) {
-            clearInterval(interval);
-            blockInterval = true;
+            // Block re-check
           }
 
           if (CAMERA_ERROR.name.blocked.includes(e.name)) {
@@ -367,23 +374,9 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
       checking = false;
     };
 
-    const initCheck = async () => {
-      if (open) {
-        await checkPermission();
-
-        if (!blockInterval) {
-          interval = setInterval(() => {
-            if (amount) {
-              checkPermission().then();
-            } else {
-              clearInterval(interval);
-            }
-          }, 1000);
-        }
-      }
-    };
-
-    initCheck().then();
+    if (open) {
+      checkPermission().then();
+    }
 
     return () => {
       amount = false;
