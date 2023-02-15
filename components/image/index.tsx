@@ -11,16 +11,18 @@ import { getTransitionName } from '../_util/motion';
 import PreviewGroup, { icons } from './PreviewGroup';
 import ActivityIndicator from '../activity-indicator';
 import { FAULT_TOLERANT } from '../_util/constant';
+import { formatPxNumbers } from '../_util/dimension';
 
 const ImageShapes = ['default', 'square', 'circle', 'squircle'] as const;
 export type ImageShape = typeof ImageShapes[number];
 
 export interface SwImageProps extends ImageProps {
   shape?: ImageShape;
-  width?: number;
-  height?: number;
+  width?: string | number;
+  height?: string | number;
   responsive?: boolean;
   isLoading?: boolean;
+  activityIndicatorSize?: number | string;
 }
 
 export interface CompositionImage<P> extends React.FC<P> {
@@ -32,10 +34,11 @@ const Image: CompositionImage<SwImageProps> = ({
   preview = false,
   rootClassName,
   shape = 'default',
-  width = 358,
-  height = 358,
+  width = 'auto',
+  height = 'auto',
   responsive,
   isLoading,
+  activityIndicatorSize = 16,
   ...otherProps
 }) => {
   const {
@@ -43,6 +46,8 @@ const Image: CompositionImage<SwImageProps> = ({
     locale: contextLocale = defaultLocale,
     getPopupContainer: getContextPopupContainer,
   } = React.useContext(ConfigContext);
+
+  [width, height] = formatPxNumbers([width, height]);
 
   const prefixCls = getPrefixCls('image', customizePrefixCls);
   const rootPrefixCls = getPrefixCls();
@@ -82,7 +87,7 @@ const Image: CompositionImage<SwImageProps> = ({
         <Squircle customSize={width}>
           <div className={`${prefixCls} ${mergedRootClassName}`}>
             <div className={`${prefixCls}-img __loading-wrapper`} style={{ width, height: width }}>
-              <ActivityIndicator prefixCls={prefixCls} size={width / 5.59375} existIcon />
+              <ActivityIndicator prefixCls={prefixCls} size={activityIndicatorSize} existIcon />
             </div>
           </div>
         </Squircle>,
@@ -110,7 +115,7 @@ const Image: CompositionImage<SwImageProps> = ({
           className={`${prefixCls}-img __loading-wrapper`}
           style={{ width, height: shape === 'circle' ? width : height }}
         >
-          <ActivityIndicator prefixCls={prefixCls} size={width / 5.59375} existIcon />
+          <ActivityIndicator prefixCls={prefixCls} size={activityIndicatorSize} existIcon />
         </div>
       </div>,
     );
