@@ -18,7 +18,7 @@ const genBalanceItemStyle = (token: PageIconToken): CSSInterpolation => {
         width: 'min-content',
         overflow: 'hidden',
 
-        '&::after': {
+        '&::before': {
           content: "''",
           backgroundColor: 'var(--color)',
           width: '100%',
@@ -26,7 +26,6 @@ const genBalanceItemStyle = (token: PageIconToken): CSSInterpolation => {
           position: 'absolute',
           top: 0,
           left: 0,
-          zIndex: -1,
           opacity: 0.1,
         },
       },

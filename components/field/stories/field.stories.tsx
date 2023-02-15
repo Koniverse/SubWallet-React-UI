@@ -9,7 +9,7 @@ interface WrapperProps extends FieldProps {
   prefixType: number;
 }
 
-const icon = <SwAvatar value="" identPrefix={42} isAllAccount size={20} />;
+const icon = <SwAvatar value="" identPrefix={42} size={20} />;
 
 const Wrapper = ({ suffixType = 1, prefixType = 0, ...args }: WrapperProps) => {
   const additionalProps = useMemo((): Pick<FieldProps, 'prefix' | 'suffix'> => {

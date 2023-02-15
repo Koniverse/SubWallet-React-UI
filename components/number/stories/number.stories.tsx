@@ -34,7 +34,7 @@ export default {
     subFloatNumber: {
       type: 'boolean',
     },
-    leftOpacity: {
+    intOpacity: {
       type: 'number',
       control: {
         type: 'number',
@@ -43,10 +43,10 @@ export default {
         step: 0.1,
       },
     },
-    leftColor: {
+    intColor: {
       control: 'color',
     },
-    rightOpacity: {
+    decimalOpacity: {
       type: 'number',
       control: {
         type: 'number',
@@ -55,7 +55,19 @@ export default {
         step: 0.1,
       },
     },
-    rightColor: {
+    decimalColor: {
+      control: 'color',
+    },
+    unitOpacity: {
+      type: 'number',
+      control: {
+        type: 'number',
+        min: 0,
+        max: 1,
+        step: 0.1,
+      },
+    },
+    unitColor: {
       control: 'color',
     },
   },
