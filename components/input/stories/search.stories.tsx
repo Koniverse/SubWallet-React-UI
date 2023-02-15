@@ -1,6 +1,8 @@
 import React from 'react';
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
+import { FadersHorizontal } from 'phosphor-react';
 import Input from '..';
+import Icon from '../../icon';
 
 const { Search } = Input;
 
@@ -46,7 +48,13 @@ const Template: ComponentStory<typeof Search> = (args) => (
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.args = {};
+Default.args = {
+  suffix: (
+    <div className='__input-action'>
+      <Icon phosphorIcon={FadersHorizontal} weight="fill" />
+    </div>
+  ),
+};
 
 export const Square = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args

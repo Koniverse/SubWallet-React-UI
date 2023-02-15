@@ -177,7 +177,7 @@ const SwConfirmDialog = (props: SwConfirmDialogProps) => {
   const prefixCls = getPrefixCls('sw-modal', customizePrefixCls);
   const confirmPrefixCls = `${prefixCls}-confirm`;
 
-  const width = props.width || 400;
+  const width = props.width || 390;
   const style = props.style || {};
 
   const classString = classNames(

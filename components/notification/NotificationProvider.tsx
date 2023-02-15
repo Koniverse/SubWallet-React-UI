@@ -40,7 +40,7 @@ const NotificationProvider = ({
       description,
       icon,
       style,
-      duration = 0,
+      duration = 1.5,
       placement = 'top',
       direction,
       btn,

@@ -9,16 +9,18 @@ import useStyle from './style';
 import defaultLocale from '../locale/en_US';
 import { getTransitionName } from '../_util/motion';
 import PreviewGroup, { icons } from './PreviewGroup';
-import { formatPxNumbers } from '../_util/dimension';
+import ActivityIndicator from '../activity-indicator';
+import { FAULT_TOLERANT } from '../_util/constant';
 
 const ImageShapes = ['default', 'square', 'circle', 'squircle'] as const;
 export type ImageShape = typeof ImageShapes[number];
 
 export interface SwImageProps extends ImageProps {
   shape?: ImageShape;
-  width?: string | number;
-  height?: string | number;
+  width?: number;
+  height?: number;
   responsive?: boolean;
+  isLoading?: boolean;
 }
 
 export interface CompositionImage<P> extends React.FC<P> {
@@ -30,9 +32,10 @@ const Image: CompositionImage<SwImageProps> = ({
   preview = false,
   rootClassName,
   shape = 'default',
-  width = 'auto',
-  height = 'auto',
+  width = 358,
+  height = 358,
   responsive,
+  isLoading,
   ...otherProps
 }) => {
   const {
@@ -40,8 +43,6 @@ const Image: CompositionImage<SwImageProps> = ({
     locale: contextLocale = defaultLocale,
     getPopupContainer: getContextPopupContainer,
   } = React.useContext(ConfigContext);
-
-  [width, height] = formatPxNumbers([width, height]);
 
   const prefixCls = getPrefixCls('image', customizePrefixCls);
   const rootPrefixCls = getPrefixCls();
@@ -76,6 +77,18 @@ const Image: CompositionImage<SwImageProps> = ({
     };
   }, [preview, imageLocale]);
   if (shape === 'squircle') {
+    if (isLoading) {
+      return wrapSSR(
+        <Squircle customSize={width}>
+          <div className={`${prefixCls} ${mergedRootClassName}`}>
+            <div className={`${prefixCls}-img __loading-wrapper`} style={{ width, height: width }}>
+              <ActivityIndicator prefixCls={prefixCls} size={width / 5.59375} existIcon />
+            </div>
+          </div>
+        </Squircle>,
+      );
+    }
+
     return wrapSSR(
       <Squircle customSize={width}>
         <RcImage
@@ -83,9 +96,23 @@ const Image: CompositionImage<SwImageProps> = ({
           preview={false}
           prefixCls={`${prefixCls}`}
           rootClassName={mergedRootClassName}
+          fallback={FAULT_TOLERANT}
           {...otherProps}
         />
       </Squircle>,
+    );
+  }
+
+  if (isLoading) {
+    return wrapSSR(
+      <div className={`${prefixCls} ${mergedRootClassName}`}>
+        <div
+          className={`${prefixCls}-img __loading-wrapper`}
+          style={{ width, height: shape === 'circle' ? width : height }}
+        >
+          <ActivityIndicator prefixCls={prefixCls} size={width / 5.59375} existIcon />
+        </div>
+      </div>,
     );
   }
 
@@ -95,6 +122,7 @@ const Image: CompositionImage<SwImageProps> = ({
       preview={mergedPreview}
       prefixCls={`${prefixCls}`}
       rootClassName={mergedRootClassName}
+      fallback={FAULT_TOLERANT}
       {...otherProps}
     />,
   );

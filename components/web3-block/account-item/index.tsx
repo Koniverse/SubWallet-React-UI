@@ -9,6 +9,7 @@ import useStyle from './style';
 import type { Web3BlockProps } from '../base';
 import Web3Block from '../base';
 import Icon from '../../icon';
+import { useToken } from '../../theme/internal';
 
 export interface AccountItemProps extends Web3BlockProps {
   address: string;
@@ -44,6 +45,7 @@ const AccountItem: React.FC<AccountItemProps> = ({
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('account-item');
+  const [, token] = useToken();
   const [wrapSSR, hashId] = useStyle(prefixCls);
   const classes = classNames(
     prefixCls,
@@ -86,7 +88,7 @@ const AccountItem: React.FC<AccountItemProps> = ({
                   type="phosphor"
                   phosphorIcon={CheckCircle}
                   size="sm"
-                  iconColor="#4CEAAC"
+                  iconColor={token.colorSecondary}
                   weight="fill"
                 />
               </div>

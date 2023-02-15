@@ -9,6 +9,7 @@ import useStyle from './style';
 import Logo from '../../logo';
 import Number from '../../number';
 import Icon from '../../icon';
+import { useToken } from '../../theme/internal';
 
 export interface StakingNetworkItemProps extends Web3BlockProps {
   stakingNetwork: string;
@@ -43,6 +44,7 @@ const StakingNetworkItem: React.FC<StakingNetworkItemProps> = ({
   const prefixCls = getPrefixCls('staking-network-item');
   const [wrapSSR, hashId] = useStyle(prefixCls);
   const classes = classNames(prefixCls, hashId);
+  const [, token] = useToken();
 
   return wrapSSR(
     <Web3Block
@@ -69,10 +71,9 @@ const StakingNetworkItem: React.FC<StakingNetworkItemProps> = ({
                   size={12}
                   value={stakingCount}
                   decimal={0}
-                  leftColor="#FFF"
-                  leftOpacity={0.45}
-                  rightColor="#FFF"
-                  rightOpacity={0.45}
+                  intOpacity={0.45}
+                  decimalOpacity={0.45}
+                  unitOpacity={0.45}
                 />
                 {validatorType}
               </span>
@@ -83,18 +84,21 @@ const StakingNetworkItem: React.FC<StakingNetworkItemProps> = ({
       rightItem={
         rightItem || (
           <>
-            <Number
-              value={expectedReturn}
-              decimal={0}
-              suffix="%"
-              leftColor="#4CEAAC"
-              rightColor="#4CEAAC"
-            />
+            {!!expectedReturn && (
+              <Number
+                value={expectedReturn}
+                decimal={0}
+                suffix="%"
+                intColor={token.colorSecondary}
+                decimalColor={token.colorSecondary}
+                unitColor={token.colorSecondary}
+              />
+            )}
             <Icon
               className={`${prefixCls}-right-icon`}
               type="phosphor"
               phosphorIcon={CaretRight}
-              size="xs"
+              size="sm"
             />
           </>
         )
