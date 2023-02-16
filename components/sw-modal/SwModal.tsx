@@ -68,7 +68,7 @@ export interface SwModalProps {
   wrapProps?: any;
   prefixCls?: string;
   closeIcon?: React.ReactNode;
-  rightButtonProps?: ButtonProps;
+  rightIconProps?: ButtonProps;
   modalRender?: (node: React.ReactNode) => React.ReactNode;
   focusTriggerAfterClose?: boolean;
   children?: React.ReactNode;
@@ -121,7 +121,7 @@ const SwModal: React.FC<SwModalProps> = (props) => {
     width = 390,
     id,
     children,
-    rightButtonProps,
+    rightIconProps,
     ...restProps
   } = props;
 
@@ -165,13 +165,13 @@ const SwModal: React.FC<SwModalProps> = (props) => {
           maskTransitionName={getTransitionName(rootPrefixCls, 'fade', props.maskTransitionName)}
           className={classNames(hashId, className)}
         >
-          {rightButtonProps && (
+          {rightIconProps && (
             <Button
               className={classNames(`${prefixCls}-right-icon`)}
               type="ghost"
               schema='header'
               size='xs'
-              {...rightButtonProps}
+              {...rightIconProps}
             />
           )}
           {children}

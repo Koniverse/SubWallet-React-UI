@@ -246,7 +246,6 @@ SubHeaderWithButton.args = {
   showBackButton: true,
   subHeaderRightIconType: 0,
   subHeaderCenter: true,
-  withDivider: true,
   withButton: true,
 };
 
@@ -257,7 +256,6 @@ SubHeaderWithFooter.args = {
   showHeader: false,
   showSubHeader: true,
   subHeaderBackground: 'transparent',
-  withDivider: true,
   withFooter: true,
 };
 
@@ -268,7 +266,6 @@ SubHeaderWithFooterAndButton.args = {
   showHeader: false,
   showSubHeader: true,
   subHeaderBackground: 'transparent',
-  withDivider: true,
   withFooter: true,
   withButton: true,
 };
@@ -280,8 +277,7 @@ SubHeaderOnly.args = {
   showHeader: false,
   showSubHeader: true,
   subHeaderBackground: 'transparent',
-  subHeaderPaddingVertical: false,
-  withDivider: true,
+  subHeaderPaddingVertical: true,
 };
 export const TwoHeaderOnly = Template.bind({});
 
