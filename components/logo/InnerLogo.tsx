@@ -27,7 +27,15 @@ const InnerLogo: React.FC<SWLogoProps> = ({ size, shape, token, network }: SWLog
       src = theme.logoMap.network[network];
     }
 
-    return <Image width={size} src={src || theme.logoMap.default} preview={false} shape={shape} />;
+    return (
+      <Image
+        width={size}
+        height={size}
+        src={src || theme.logoMap.default}
+        preview={false}
+        shape={shape}
+      />
+    );
   }
 
   return <div className={classes} />;
