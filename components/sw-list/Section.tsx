@@ -6,12 +6,16 @@ import useStyle from './style';
 import SwList from './List';
 import type { SwListProps } from './List';
 import Input from '../input';
+import Button from '../button';
 
 export interface SwListSectionProps<T> extends Omit<SwListProps<T>, 'searchBy' | 'searchTerm'> {
   listClassName?: string;
   searchFunction?: (item: T, searchText: string) => boolean;
   enableSearchInput?: boolean;
   searchPlaceholder?: string;
+  showActionBtn?: boolean;
+  actionBtnIcon?: React.ReactNode;
+  onClickActionBtn?: () => void;
   height?: string;
   list: SwListProps<T>['list'];
   renderItem: SwListProps<T>['renderItem'];
@@ -25,6 +29,9 @@ const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
     searchPlaceholder,
     height,
     enableSearchInput,
+    showActionBtn,
+    actionBtnIcon,
+    onClickActionBtn,
     ...restProps
   } = props;
   const { getPrefixCls } = React.useContext(ConfigContext);
@@ -46,7 +53,24 @@ const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
     <div className={classes} style={{ height }}>
       {enableSearchInput && (
         <div className={`${basePrefixCls}-search-input`}>
-          <Input.Search onChange={onChange} placeholder={searchPlaceholder} value={searchText} />
+          <Input.Search
+            onChange={onChange}
+            placeholder={searchPlaceholder}
+            value={searchText}
+            suffix={
+              showActionBtn && (
+                <div className={`__input-action ${basePrefixCls}-action-btn-wrapper`}>
+                  <Button
+                    onClick={onClickActionBtn}
+                    className={`${basePrefixCls}-action-btn`}
+                    size='xs'
+                    type='ghost'
+                    icon={actionBtnIcon}
+                  />
+                </div>
+              )
+            }
+          />
         </div>
       )}
       <div className={`${basePrefixCls}-wrapper`}>

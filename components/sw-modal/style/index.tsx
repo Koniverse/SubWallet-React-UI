@@ -149,7 +149,6 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
           backgroundClip: 'padding-box',
           border: 0,
           borderRadius: `${token.borderRadiusXXL}px ${token.borderRadiusXXL}px 0 0`,
-          boxShadow: token.boxShadowSecondary,
           pointerEvents: 'auto',
           padding: token.padding,
         },
@@ -307,6 +306,7 @@ const genModalConfirmStyle: GenerateStyle<SwModalToken> = (token) => {
           fontSize: token.fontSize,
           lineHeight: token.lineHeight,
           marginTop: token.marginMD,
+          padding: `0 ${token.padding}px`,
           textAlign: 'center',
         },
 

@@ -1,11 +1,13 @@
 import React, { useCallback } from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
+import { FadersHorizontal } from 'phosphor-react';
 import type { SwListSectionProps } from '..';
 import SwList from '..';
 import type { DemoAccountType } from './data';
 import { DemoAccounts } from './data';
 import AccountCard from '../../web3-block/account-card';
 import NetworkItem from '../../web3-block/network-item';
+import Icon from '../../icon';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -35,9 +37,17 @@ type AppDisplayType = 'default' | 'with_divider' | 'display_grid' | 'with_loadin
 
 interface AppProps {
   displayType?: AppDisplayType;
+  showActionBtn?: boolean;
+  actionBtnIcon?: React.ReactNode;
+  onClickActionBtn?: () => void;
 }
 
-const App = ({ displayType = 'default' }: AppProps) => {
+const App = ({
+  displayType = 'default',
+  showActionBtn,
+  actionBtnIcon,
+  onClickActionBtn,
+}: AppProps) => {
   const renderItem = useCallback(
     // eslint-disable-next-line arrow-body-style
     (account: DemoAccountType) => {
@@ -84,6 +94,9 @@ const App = ({ displayType = 'default' }: AppProps) => {
     list: DemoAccounts,
     enableSearchInput: true,
     height: '100%',
+    showActionBtn,
+    actionBtnIcon,
+    onClickActionBtn,
     searchPlaceholder: 'Search or enter website',
     searchFunction: searchFunc,
     searchMinCharactersCount: 2,
@@ -140,4 +153,13 @@ export const WithLoading = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 WithLoading.args = {
   displayType: 'with_loading',
+};
+
+export const WithFilter = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+WithFilter.args = {
+  displayType: 'default',
+  showActionBtn: true,
+  actionBtnIcon: <Icon phosphorIcon={FadersHorizontal} />,
+  onClickActionBtn: () => console.log('on click action'),
 };

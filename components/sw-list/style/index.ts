@@ -53,6 +53,14 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
           paddingLeft: token.padding,
           paddingRight: token.padding,
         },
+        [`${componentCls}-action-btn`]: {
+          position: 'absolute',
+          right: 4,
+          top: 0,
+          bottom: 0,
+          margin: 'auto 0',
+          zIndex: 10,
+        },
 
         [`${componentCls}-wrapper`]: {
           flexGrow: 1,
