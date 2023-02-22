@@ -33,7 +33,11 @@ function isUnBorderedButtonType(type: ButtonType | undefined) {
 }
 
 // Insert one space between two chinese characters automatically.
-function insertSpace(child: React.ReactElement | string | number, needInserted: boolean) {
+function insertSpace(
+  child: React.ReactElement | string | number,
+  needInserted: boolean,
+  childClassName?: string,
+) {
   // Check the child if is undefined or null.
   if (child === null || child === undefined) {
     return;
@@ -54,12 +58,12 @@ function insertSpace(child: React.ReactElement | string | number, needInserted: 
     return isTwoCNChar(child) ? <span>{child.split('').join(SPACE)}</span> : <span>{child}</span>;
   }
   if (isFragment(child)) {
-    return <span>{child}</span>;
+    return <span className={childClassName}>{child}</span>;
   }
   return child;
 }
 
-function spaceChildren(children: React.ReactNode, needInserted: boolean) {
+function spaceChildren(children: React.ReactNode, needInserted: boolean, childClassName?: string) {
   let isPrevChildPure: boolean = false;
   const childList: React.ReactNode[] = [];
   React.Children.forEach(children, (child) => {
@@ -78,7 +82,7 @@ function spaceChildren(children: React.ReactNode, needInserted: boolean) {
 
   // Pass to React.Children.map to auto fill key
   return React.Children.map(childList, (child) =>
-    insertSpace(child as React.ReactElement | string | number, needInserted),
+    insertSpace(child as React.ReactElement | string | number, needInserted, childClassName),
   );
 }
 
@@ -307,7 +311,7 @@ const InternalButton: React.ForwardRefRenderFunction<
 
   const kids =
     children || children === 0
-      ? spaceChildren(children, isNeedInserted() && autoInsertSpace)
+      ? spaceChildren(children, isNeedInserted() && autoInsertSpace, `${prefixCls}-content-wrapper`)
       : null;
 
   if (linkButtonRestProps.href !== undefined) {

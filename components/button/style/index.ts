@@ -74,7 +74,6 @@ const genSharedButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token): CSS
       [`&.-icon-only`]: {
         paddingInlineStart: 0,
         paddingInlineEnd: 0,
-        width: buttonSizeMap.md,
       },
 
       [`&.-content-align-left:not(.-icon-only)`]: {
@@ -136,11 +135,11 @@ const genSizeButtonStyle = (token: ButtonToken, size: ButtonSize): CSSInterpolat
           lineHeight: `${buttonSizeMap[size]}px`,
 
           [`&.-icon-only`]: {
-            width: buttonSizeMap[size],
+            minWidth: buttonSizeMap[size],
             '.anticon': {
               height: 24,
               width: 24,
-              fontSize: 22,
+              fontSize: 24,
             },
           },
         },
@@ -155,7 +154,6 @@ const genSizeButtonStyle = (token: ButtonToken, size: ButtonSize): CSSInterpolat
         lineHeight: `${buttonSizeMap[size]}px`,
 
         [`&.-icon-only`]: {
-          width: buttonSizeMap[size],
           minWidth: buttonSizeMap[size],
         },
       },

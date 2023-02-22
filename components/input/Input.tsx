@@ -147,7 +147,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     disabled: customDisabled,
     onBlur,
     onFocus,
-    suffix,
+    suffix = <span />,
     prefix,
     allowClear,
     addonAfter,
