@@ -26,6 +26,7 @@ const genBalanceItemStyle = (token: PageIconToken): CSSInterpolation => {
           position: 'absolute',
           top: 0,
           left: 0,
+          zIndex: 1,
           opacity: 0.1,
         },
       },
