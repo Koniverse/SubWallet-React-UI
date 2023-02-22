@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import React, { useMemo } from 'react';
-import { PaperPlaneTilt } from 'phosphor-react';
 import Button from '../button';
 import SwSubHeader from '../sw-sub-header';
 import SwHeader from '../sw-header';
@@ -10,7 +9,6 @@ import type { ButtonProps } from '../button';
 import type { SwHeaderBackground, SwHeaderLeftContent } from '../sw-header';
 import { ConfigContext } from '../config-provider';
 import useStyle from './style';
-import Icon from '../icon';
 
 export interface SwScreenLayoutProps {
   // General
@@ -42,7 +40,8 @@ export interface SwScreenLayoutProps {
 
   // Footer
   footer?: React.ReactNode;
-  footerButton?: ButtonProps;
+  leftFooterButton?: ButtonProps;
+  rightFooterButton?: ButtonProps;
 
   // Tab bar
   tabBarItems: SwTabBarItem[];
@@ -80,7 +79,8 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
 
     // Footer
     footer,
-    footerButton,
+    leftFooterButton,
+    rightFooterButton,
 
     // Tab bar
     tabBarItems,
@@ -129,21 +129,30 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
         )}
       </div>
       <div className={classNames(`${prefixCls}-body`)}>{children}</div>
-      {(showTabBar || footerButton || footer) && (
+      {(showTabBar || leftFooterButton || rightFooterButton || footer) && (
         <div className={classNames(`${prefixCls}-footer`)}>
-          {footerButton && (
+          {(leftFooterButton || rightFooterButton) && (
             <div
               className={classNames(`${prefixCls}-footer-button-container`, {
                 [`${prefixCls}-footer-button-container-alone`]: !(footer || showTabBar),
               })}
             >
-              <Button
-                icon={<Icon type="phosphor" phosphorIcon={PaperPlaneTilt} />}
-                block
-                {...footerButton}
-              >
-                {footerButton.children || 'Default button'}
-              </Button>
+              {leftFooterButton && (
+                <Button
+                  className={`${prefixCls}-footer-left-button`}
+                  block
+                  schema='secondary'
+                  {...leftFooterButton}
+                >
+                  {leftFooterButton.children || 'Default button'}
+                </Button>
+              )}
+
+              {rightFooterButton && (
+                <Button className={`${prefixCls}-footer-right-button`} block {...rightFooterButton}>
+                  {rightFooterButton.children || 'Default button'}
+                </Button>
+              )}
             </div>
           )}
           {!!footer && !showTabBar && (

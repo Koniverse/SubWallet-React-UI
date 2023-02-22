@@ -20,7 +20,8 @@ interface WrapperProps extends SwScreenLayoutProps {
   headerRightIconType: number;
   selectBackground: 'default' | 'transparent';
   withFooter: boolean;
-  withButton: boolean;
+  withFooterLeftButton: boolean;
+  withFooterRightButton: boolean;
 }
 
 const SELECT_MODAL_ID = 'select-account';
@@ -30,7 +31,8 @@ const Wrapper: React.FC<WrapperProps> = ({
   headerRightIconType,
   selectBackground,
   withFooter,
-  withButton,
+  withFooterLeftButton,
+  withFooterRightButton,
   ...args
 }) => {
   const [, token] = useToken();
@@ -86,7 +88,8 @@ const Wrapper: React.FC<WrapperProps> = ({
         selectedTabBarItem={selectedTab}
         subHeaderIcons={subHeaderIcons}
         headerIcons={headerIcons}
-        footerButton={withButton ? {} : undefined}
+        leftFooterButton={withFooterLeftButton ? {} : undefined}
+        rightFooterButton={withFooterRightButton ? {} : undefined}
         footer={withFooter ? footer : undefined}
         headerContent={
           // @ts-ignore
@@ -171,7 +174,10 @@ export default {
     withDivider: {
       control: false,
     },
-    withButton: {
+    withFooterLeftButton: {
+      control: false,
+    },
+    withFooterRightButton: {
       control: false,
     },
     withFooter: {
@@ -205,7 +211,8 @@ const DEFAULT_ARGS = {
 
   withDivider: false,
   showTabBar: false,
-  withButton: false,
+  withFooterLeftButton: false,
+  withFooterRightButton: false,
   withFooter: false,
 };
 export const HeaderWithTabBar = Template.bind({});
@@ -232,7 +239,8 @@ TwoHeaderWithTabBarAndButton.args = {
   showSubHeader: true,
   subHeaderBackground: 'transparent',
   subHeaderPaddingVertical: false,
-  withButton: true,
+  withFooterLeftButton: true,
+  withFooterRightButton: true,
   showTabBar: true,
 };
 
@@ -246,7 +254,22 @@ SubHeaderWithButton.args = {
   showBackButton: true,
   subHeaderRightIconType: 0,
   subHeaderCenter: true,
-  withButton: true,
+  withFooterRightButton: true,
+};
+
+export const SubHeaderWithTwoButton = Template.bind({});
+
+SubHeaderWithTwoButton.args = {
+  ...DEFAULT_ARGS,
+  showHeader: false,
+  showSubHeader: true,
+  subHeaderBackground: 'transparent',
+  showBackButton: true,
+  subHeaderRightIconType: 0,
+  subHeaderCenter: true,
+  withDivider: true,
+  withFooterLeftButton: true,
+  withFooterRightButton: true,
 };
 
 export const SubHeaderWithFooter = Template.bind({});
@@ -267,7 +290,7 @@ SubHeaderWithFooterAndButton.args = {
   showSubHeader: true,
   subHeaderBackground: 'transparent',
   withFooter: true,
-  withButton: true,
+  withFooterRightButton: true,
 };
 
 export const SubHeaderOnly = Template.bind({});
