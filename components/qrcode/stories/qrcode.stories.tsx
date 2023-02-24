@@ -10,7 +10,6 @@ export default {
   argTypes: {
     value: { control: 'text', defaultValue: '123123123123' },
     size: { control: 'number', defaultValue: 160 },
-    iconSize: { control: 'number', defaultValue: 40 },
     color: { control: 'text', defaultValue: '#000' },
     errorLevel: { control: 'radio', options: ['M', 'L', 'Q', 'H'], defaultValue: 'M' },
     status: { control: 'radio', options: ['active', 'expired', 'loading'], defaultValue: 'active' },

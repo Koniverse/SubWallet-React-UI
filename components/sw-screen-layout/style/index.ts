@@ -37,8 +37,17 @@ const genContainerStyle: GenerateStyle<SwScreenLayoutToken> = (token) => {
 
         [`${componentCls}-footer`]: {
           '&-button-container': {
-            padding: `0 ${token.padding}px`,
+            padding: `0 ${token.paddingSM - 2}px`,
+            display: 'flex',
             margin: `${token.margin}px 0`,
+          },
+          '&-left-button': {
+            flex: 1,
+            margin: `0 ${token.paddingSM / 2}px`,
+          },
+          '&-right-button': {
+            flex: 1,
+            margin: `0 ${token.paddingSM / 2}px`,
           },
           '&-button-container-alone': {
             marginBottom: token.marginXL,

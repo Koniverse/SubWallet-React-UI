@@ -22,12 +22,13 @@ const DappItem: React.FC<DappItemProps> = ({
   leftItem,
   middleItem,
   rightItem,
+  className,
   ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('dapp-item');
   const [wrapSSR, hashId] = useStyle(prefixCls);
-  const classes = classNames(prefixCls, hashId);
+  const classes = classNames(prefixCls, hashId, className);
 
   return wrapSSR(
     <div className={classes}>

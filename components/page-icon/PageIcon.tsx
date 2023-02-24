@@ -21,7 +21,7 @@ const PageIcon: React.FC<PageIconProps> = ({ color, iconProps }: PageIconProps) 
       // @ts-ignore
       style={{ '--color': color }}
     >
-      <Icon {...iconProps} iconColor={color} customSize='40px' />
+      <Icon {...iconProps} iconColor={color} customSize='64px' />
     </div>,
   );
 };

@@ -40,15 +40,21 @@ const AccountItem: React.FC<AccountItemProps> = ({
   leftItem,
   middleItem,
   rightItem,
+  className,
   ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('account-item');
   const [, token] = useToken();
   const [wrapSSR, hashId] = useStyle(prefixCls);
-  const classes = classNames(prefixCls, hashId, {
-    '-selected': isSelected,
-  });
+  const classes = classNames(
+    prefixCls,
+    hashId,
+    {
+      '-selected': isSelected,
+    },
+    className,
+  );
 
   return wrapSSR(
     <Web3Block

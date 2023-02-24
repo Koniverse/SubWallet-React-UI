@@ -149,7 +149,6 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
           backgroundClip: 'padding-box',
           border: 0,
           borderRadius: `${token.borderRadiusXXL}px ${token.borderRadiusXXL}px 0 0`,
-          boxShadow: token.boxShadowSecondary,
           pointerEvents: 'auto',
           padding: token.padding,
         },
@@ -220,7 +219,9 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
         [`${componentCls}-footer`]: {
           textAlign: 'end',
           background: token.modalFooterBg,
-          marginTop: token.marginSM,
+          margin: `${token.marginSM}px -${token.margin}px 0`,
+          padding: `${token.marginSM}px ${token.margin}px 0`,
+          borderTop: `${token.lineWidth * 2}px ${token.modalHeaderBorderStyle} ${token.colorSplit}`,
 
           [`${token.antCls}-btn + ${token.antCls}-btn:not(${token.antCls}-dropdown-trigger)`]: {
             marginBottom: 0,
@@ -305,6 +306,7 @@ const genModalConfirmStyle: GenerateStyle<SwModalToken> = (token) => {
           fontSize: token.fontSize,
           lineHeight: token.lineHeight,
           marginTop: token.marginMD,
+          padding: `0 ${token.padding}px`,
           textAlign: 'center',
         },
 

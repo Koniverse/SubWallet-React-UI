@@ -40,13 +40,14 @@ const AccountCard: React.FC<AccountCardProps> = ({
   leftItem,
   middleItem,
   rightItem,
+  className,
   ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('account-card');
   const [wrapSSR, hashId] = useStyle(prefixCls);
   const [, token] = useToken();
-  const classes = classNames(prefixCls, hashId, {
+  const classes = classNames(prefixCls, hashId, className, {
     '-selected': isSelected,
   });
 

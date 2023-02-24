@@ -9,7 +9,6 @@ import Divider from '../../divider';
 export interface SettingItemProps extends Web3BlockProps {
   name: string;
   subIcon?: React.ReactNode;
-  className?: string;
   onPressItem?: () => void;
   withDivider?: boolean;
   leftItemIcon?: React.ReactNode;
@@ -30,12 +29,17 @@ const SettingItem: React.FC<SettingItemProps> = ({
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('setting-item');
   const [wrapSSR, hashId] = useStyle(prefixCls);
-  const classes = classNames(prefixCls, hashId, {
-    '-with-divider': withDivider,
-  });
+  const classes = classNames(
+    prefixCls,
+    hashId,
+    {
+      '-with-divider': withDivider,
+    },
+    className,
+  );
 
   return wrapSSR(
-    <div className={`${classes} ${className}`}>
+    <div className={classes}>
       <Web3Block
         {...props}
         className={`${prefixCls}-content`}

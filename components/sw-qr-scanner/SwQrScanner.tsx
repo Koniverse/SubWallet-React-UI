@@ -49,7 +49,7 @@ export interface SwQrScannerProps {
 }
 
 const filterVideoMediaFunction = (devices: MediaDeviceInfo[]): MediaDeviceInfo[] =>
-  devices.filter((device) => device.kind === 'videoinput');
+  devices.filter((device) => device.kind === 'videoinput' && device.label);
 
 const convertFunction = (device: MediaDeviceInfo): VideoDeviceInfo => ({
   label: device.label,
@@ -301,32 +301,39 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
 
   useEffect(() => {
     let amount = true;
+    let checking = false;
+    let interval: NodeJS.Timer;
     const updateDeviceList = () => {
-      navigator.mediaDevices.enumerateDevices().then((_devices) => {
-        if (amount) {
-          const filtered = filterVideoMediaFunction(_devices);
-          setDevices(filtered.map(convertFunction));
-        }
-      });
+      if (!checking && amount) {
+        checking = true;
+        navigator.mediaDevices.enumerateDevices().then((_devices) => {
+          if (amount) {
+            const filtered = filterVideoMediaFunction(_devices);
+            if (filtered.length) {
+              setDevices(filtered.map(convertFunction));
+              clearInterval(interval);
+            }
+          }
+          checking = false;
+        });
+      }
     };
-
-    navigator.mediaDevices.removeEventListener('devicechange', updateDeviceList);
-    updateDeviceList();
 
     if (cameraState === 'Blocked') {
       inactiveModal(MODAL_ID);
+    } else if (cameraState === 'Allowed') {
+      interval = setInterval(() => {
+        updateDeviceList();
+      }, 1000);
     }
 
     return () => {
       amount = false;
-      navigator.mediaDevices.removeEventListener('devicechange', updateDeviceList);
     };
   }, [cameraState, inactiveModal]);
 
   useEffect(() => {
     let amount = true;
-    let interval: NodeJS.Timer;
-    let blockInterval = false;
     let checking = false;
 
     const checkPermission = async () => {
@@ -349,8 +356,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
         const e = err as Error;
         if (amount) {
           if (CAMERA_ERROR.message.dismissed.some((message) => e.message.includes(message))) {
-            clearInterval(interval);
-            blockInterval = true;
+            // Block re-check
           }
 
           if (CAMERA_ERROR.name.blocked.includes(e.name)) {
@@ -367,23 +373,9 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
       checking = false;
     };
 
-    const initCheck = async () => {
-      if (open) {
-        await checkPermission();
-
-        if (!blockInterval) {
-          interval = setInterval(() => {
-            if (amount) {
-              checkPermission().then();
-            } else {
-              clearInterval(interval);
-            }
-          }, 1000);
-        }
-      }
-    };
-
-    initCheck().then();
+    if (open) {
+      checkPermission().then();
+    }
 
     return () => {
       amount = false;
