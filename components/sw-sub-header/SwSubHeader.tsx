@@ -9,7 +9,7 @@ import { ConfigContext } from '../config-provider';
 import Typography from '../typography';
 
 export interface SwSubHeaderProps
-  extends Omit<SwHeaderProps, 'showLeftButton' | 'onClickLeft' | 'children' | 'left'> {
+  extends Omit<SwHeaderProps, 'showLeftButton' | 'onClickLeft' | 'children'> {
   showBackButton?: boolean;
   onBack?: () => void;
   title?: string | React.ReactNode;
@@ -26,6 +26,7 @@ const SwSubHeader: React.FC<SwSubHeaderProps> = (props) => {
     title,
     className,
     center,
+    left,
     ...restProps
   } = props;
 
@@ -44,7 +45,7 @@ const SwSubHeader: React.FC<SwSubHeaderProps> = (props) => {
     <SwHeader
       {...restProps}
       className={classNameExtend}
-      left={BackIcon}
+      left={left || BackIcon}
       showLeftButton={showBackButton}
       onClickLeft={onBack}
       center={center}

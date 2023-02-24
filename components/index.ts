@@ -165,6 +165,8 @@ export { default as ActivityIndicator } from './activity-indicator';
 export type { ActivityIndicatorProps } from './activity-indicator';
 export { default as BackgroundIcon } from './background-icon';
 export type { BackgroundIconProps } from './background-icon';
+export { default as SwAlert } from './sw-alert';
+export type { SwAlertProps } from './sw-alert';
 export { default as Logo } from './logo';
 export type { LogoProps } from './logo';
 export { default as Number } from './number';

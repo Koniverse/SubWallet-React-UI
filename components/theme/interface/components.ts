@@ -57,6 +57,7 @@ import type { ComponentToken as SpinComponentToken } from '../../spin/style';
 import type { ComponentToken as SettingComponentToken } from '../../web3-block/setting-item/style';
 import type { ComponentToken as SquircleComponentToken } from '../../squircle/style';
 import type { ComponentToken as SwAvatarComponentToken } from '../../sw-avatar/style';
+import type { ComponentToken as SwAlertComponentToken } from '../../sw-alert/style';
 import type { ComponentToken as SwHeaderComponentToken } from '../../sw-header/style';
 import type { ComponentToken as SwModalComponentToken } from '../../sw-modal/style';
 import type { ComponentToken as SwScreenLayoutComponentToken } from '../../sw-screen-layout/style';
@@ -140,6 +141,7 @@ export interface ComponentTokenMap {
   Squircle?: SquircleComponentToken;
   SwList?: {};
   SwAvatar?: SwAvatarComponentToken;
+  SwAlert?: SwAlertComponentToken;
   SwHeader?: SwHeaderComponentToken;
   SwModal?: SwModalComponentToken;
   SwScreenLayout?: SwScreenLayoutComponentToken;

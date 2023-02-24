@@ -165,7 +165,7 @@ const InternalButton: React.ForwardRefRenderFunction<
     type = 'default',
     danger,
     shape = 'default',
-    size: customizeSize,
+    size: customizeSize = 'md',
     disabled: customDisabled,
     contentAlign,
     className,
