@@ -25,6 +25,7 @@ interface FormItemInputMiscProps {
       },
     ) => React.ReactNode;
   };
+  hideError?: boolean;
 }
 
 export interface FormItemInputProps {
@@ -46,6 +47,7 @@ const FormItemInput: React.FC<FormItemInputProps & FormItemInputMiscProps> = (pr
     _internalItemRender: formItemRender,
     extra,
     help,
+    hideError = false,
     fieldId,
     marginBottom,
     onErrorVisibleChanged,
@@ -72,17 +74,19 @@ const FormItemInput: React.FC<FormItemInputProps & FormItemInputMiscProps> = (pr
   const errorListDom =
     marginBottom !== null || errors.length || warnings.length ? (
       <div style={{ display: 'flex', flexWrap: 'nowrap' }}>
-        <FormItemPrefixContext.Provider value={formItemContext}>
-          <ErrorList
-            fieldId={fieldId}
-            errors={errors}
-            warnings={warnings}
-            help={help}
-            helpStatus={status}
-            className={`${baseClassName}-explain-connected`}
-            onVisibleChanged={onErrorVisibleChanged}
-          />
-        </FormItemPrefixContext.Provider>
+        {!hideError && (
+          <FormItemPrefixContext.Provider value={formItemContext}>
+            <ErrorList
+              fieldId={fieldId}
+              errors={errors}
+              warnings={warnings}
+              help={help}
+              helpStatus={status}
+              className={`${baseClassName}-explain-connected`}
+              onVisibleChanged={onErrorVisibleChanged}
+            />
+          </FormItemPrefixContext.Provider>
+        )}
         {!!marginBottom && <div style={{ width: 0, height: marginBottom }} />}
       </div>
     ) : null;

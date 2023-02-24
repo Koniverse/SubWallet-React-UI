@@ -76,6 +76,7 @@ const App = () => {
         validateStatus={responseStatus}
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
+        hideError
       >
         <Input.Password
           label="Password"

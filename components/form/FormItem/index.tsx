@@ -69,6 +69,7 @@ export interface FormItemProps<Values = any>
   tooltip?: LabelTooltipType;
   /** @deprecated No need anymore */
   fieldKey?: React.Key | React.Key[];
+  hideError?: boolean;
 }
 
 function hasValidName(name?: NamePath): Boolean {

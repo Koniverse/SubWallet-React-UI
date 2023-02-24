@@ -9,6 +9,7 @@ export default {
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
     children: { control: 'text', defaultValue: 'Label 1' },
+    disabled: { control: 'boolean', defaultValue: false },
   },
 } as ComponentMeta<typeof Checkbox>;
 
@@ -17,6 +18,4 @@ const Template: ComponentStory<typeof Checkbox> = (args) => <Checkbox {...args} 
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.args = {
-};
-
+Default.args = {};

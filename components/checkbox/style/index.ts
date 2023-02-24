@@ -177,11 +177,11 @@ export const genCheckboxStyle: GenerateStyle<CheckboxToken> = (token) => {
 
       [`${wrapperCls}:not(${wrapperCls}-disabled)`]: {
         [`&:hover ${checkboxCls}-checked:not(${checkboxCls}-disabled) ${checkboxCls}-inner`]: {
-          backgroundColor: token.colorPrimaryHover,
+          backgroundColor: token.colorPrimary,
           borderColor: 'transparent',
         },
         [`&:hover ${checkboxCls}-checked:not(${checkboxCls}-disabled):after`]: {
-          borderColor: token.colorPrimaryHover,
+          borderColor: token.colorPrimary,
         },
       },
     },
@@ -225,11 +225,11 @@ export const genCheckboxStyle: GenerateStyle<CheckboxToken> = (token) => {
         ${checkboxCls}-checked:not(${checkboxCls}-disabled)
       `]: {
         [`&:hover ${checkboxCls}-inner`]: {
-          backgroundColor: token.colorPrimaryHover,
+          backgroundColor: token['geekblue-4'],
           borderColor: 'transparent',
         },
         [`&:hover ${checkboxCls}:after`]: {
-          borderColor: token.colorPrimaryHover,
+          borderColor: token['geekblue-4'],
         },
       },
     },
