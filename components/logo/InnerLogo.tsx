@@ -23,6 +23,9 @@ const InnerLogo: React.FC<SWLogoProps> = ({ size, shape, token, network }: SWLog
   if (theme && theme.logoMap) {
     if (token) {
       src = theme.logoMap.symbol[token];
+      if (!src && network) {
+        src = theme.logoMap.network[network];
+      }
     } else if (network) {
       src = theme.logoMap.network[network];
     }
