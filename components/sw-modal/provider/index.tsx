@@ -7,7 +7,7 @@ interface ModalContextType {
   initModal: (id: string) => void;
   clearModal: (id: string) => void;
   clearModals: (ids: string[]) => void;
-  getActiveModals: () => string[];
+  activeList: string[];
   checkActive: (id: string) => boolean;
   activeModal: (id: string) => void;
   inactiveModal: (id: string) => void;
@@ -23,7 +23,7 @@ export const ModalContext = React.createContext({} as ModalContextType);
 export const ModalContextProvider = ({ children }: ModalContextProviderProps) => {
   const [externalList, setExternalList] = useState<SwConfirmDialogProps[]>([]);
   const [, setGlobalList] = useState<string[]>([]);
-  const [visibleList, setVisibleList] = useState<string[]>([]);
+  const [activeList, setActiveList] = useState<string[]>([]);
 
   const initModal = useCallback((id: string) => {
     setGlobalList((prevState) => {
@@ -52,24 +52,22 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
         return result.filter((value) => !ids.includes(value));
       });
     },
-    [visibleList],
+    [activeList],
   );
-
-  const getActiveModals = useCallback((): string[] => visibleList, [visibleList]);
 
   const checkActive = useCallback(
     (id: string): boolean => {
-      if (visibleList.length) {
-        return visibleList[visibleList.length - 1] === id;
+      if (activeList.length) {
+        return activeList[activeList.length - 1] === id;
       }
 
       return false;
     },
-    [visibleList],
+    [activeList],
   );
 
   const activeModal = useCallback((id: string) => {
-    setVisibleList((prevState) => {
+    setActiveList((prevState) => {
       const result = [...prevState].filter((value) => value !== id);
       result.push(id);
       return result;
@@ -77,11 +75,11 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
   }, []);
 
   const inactiveModal = useCallback((id: string) => {
-    setVisibleList((prevState) => [...prevState].filter((value) => value !== id));
+    setActiveList((prevState) => [...prevState].filter((value) => value !== id));
   }, []);
 
   const inactiveModals = useCallback((ids: string[]) => {
-    setVisibleList((prevState) => [...prevState].filter((value) => !ids.includes(value)));
+    setActiveList((prevState) => [...prevState].filter((value) => !ids.includes(value)));
   }, []);
 
   const addConfirmModal = useCallback((_props: SwModalFuncProps) => {
@@ -112,7 +110,7 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
       return result;
     });
 
-    setVisibleList((prevState) => {
+    setActiveList((prevState) => {
       const result = [...prevState].filter((value) => value !== id);
       result.push(id);
       return result;
@@ -130,7 +128,7 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
         inactiveModal,
         inactiveModals,
         checkActive,
-        getActiveModals,
+        activeList,
         addConfirmModal,
       }}
     >
