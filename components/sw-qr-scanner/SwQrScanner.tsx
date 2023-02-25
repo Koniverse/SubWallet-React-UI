@@ -173,7 +173,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
         onError(error.message);
       }
     },
-    [onError, onError],
+    [onSuccess, onError],
   );
 
   const onOpenSelectCamera = useCallback(() => {
