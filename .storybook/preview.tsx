@@ -34,8 +34,8 @@ export const parameters = {
   },
   viewport: {
     viewports: {
-      extension: { name: 'Extension', styles: { width: '400px', height: '600px', type: 'other' } },
-      mobile: { name: 'Mobile', styles: { width: '400px', height: '856px', type: 'mobile' } },
+      extension: { name: 'Extension', styles: { width: '390px', height: '600px', type: 'other' } },
+      mobile: { name: 'Mobile', styles: { width: '390px', height: '856px', type: 'mobile' } },
       ...INITIAL_VIEWPORTS,
     },
     defaultViewport: 'extension',

@@ -291,6 +291,8 @@ const genReaderStyle = (token: SwQrScannerToken): CSSInterpolation => {
   return [
     {
       [`${componentCls}-wrapper`]: {
+        height: '100%',
+
         [`${componentCls}-container`]: {
           width: '100%',
           paddingTop: '100%',
@@ -353,6 +355,8 @@ const genModalStyle: GenerateStyle<SwQrScannerToken> = (token) => {
         bottom: 0,
         left: 0,
         right: 0,
+        height: '100%',
+        width: '100%',
 
         [`${componentCls}-content`]: {
           position: 'relative',
@@ -361,6 +365,8 @@ const genModalStyle: GenerateStyle<SwQrScannerToken> = (token) => {
           border: 0,
           boxShadow: token.boxShadowSecondary,
           pointerEvents: 'auto',
+          height: '100%',
+          width: '100%',
         },
 
         [`${componentCls}-body`]: {
@@ -368,7 +374,8 @@ const genModalStyle: GenerateStyle<SwQrScannerToken> = (token) => {
           lineHeight: token.lineHeight,
           wordWrap: 'break-word',
           overflow: 'auto',
-          height: '100vh',
+          height: '100%',
+          width: '100%',
         },
 
         [`${componentCls}-open`]: {

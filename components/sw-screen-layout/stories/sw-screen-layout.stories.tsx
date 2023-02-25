@@ -78,7 +78,7 @@ const Wrapper: React.FC<WrapperProps> = ({
   );
 
   return (
-    <div style={{ margin: -16, width: 400, height: 600 }}>
+    <div style={{ margin: -16, width: 390, height: 600 }}>
       <SwScreenLayout
         {...args}
         tabBarItems={TabBarItems.map((item) => ({

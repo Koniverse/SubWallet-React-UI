@@ -46,6 +46,7 @@ export interface SwQrScannerProps {
   description?: string;
   footer?: React.ReactNode;
   overlay?: React.ReactNode;
+  ratio?: number;
 }
 
 const filterVideoMediaFunction = (devices: MediaDeviceInfo[]): MediaDeviceInfo[] =>
@@ -87,7 +88,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     open,
     onClose,
     getContainer,
-    width = 400,
+    width,
     wrapClassName,
     rightIconProps,
     isError,
@@ -95,11 +96,12 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     description,
     overlay,
     footer,
+    ratio = 390 / 600,
   } = props;
 
   const { getPopupContainer: getContextPopupContainer, getPrefixCls } =
     React.useContext(ConfigContext);
-  const { activeModal, inactiveModal } = React.useContext(ModalContext);
+  const { activeModal, inactiveModal, setScannerOpen } = React.useContext(ModalContext);
   const [, token] = useToken();
 
   const rootPrefixCls = getPrefixCls();
@@ -149,7 +151,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
   const constraints = useMemo(
     (): MediaTrackConstraints => ({
       facingMode: 'user',
-      aspectRatio: 2 / 3,
+      aspectRatio: ratio,
       deviceId: device?.deviceId,
       groupId: device?.groupId,
     }),
@@ -382,6 +384,10 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     };
   }, [open]);
 
+  useEffect(() => {
+    setScannerOpen(open);
+  }, [open]);
+
   return wrapSSR(
     <NoCompactStyle>
       <NoFormStyle status override>
@@ -408,7 +414,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                 onResult={onScan}
                 scanDelay={150}
                 videoId={VIDEO_ID}
-                videoContainerStyle={{ paddingTop: '150%' }}
+                videoContainerStyle={{ paddingTop: `${100 / ratio}%` }}
               />
             )}
           </div>

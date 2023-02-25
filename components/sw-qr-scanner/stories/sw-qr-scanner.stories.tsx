@@ -153,10 +153,18 @@ const Wrapper: React.FC<WrapperProps> = ({ isError, multipleFrame, ...args }) =>
   }, [multipleFrame, isError]);
 
   return (
-    <div>
+    <div
+      id='scanner-container'
+      style={{
+        position: 'relative',
+        margin: -16,
+        padding: 16,
+      }}
+    >
       <Button onClick={onOpen}>Open</Button>
       <SwQrScanner
         {...args}
+        getContainer='#scanner-container'
         overlay={overlay}
         footer={footer}
         isError={isError}
