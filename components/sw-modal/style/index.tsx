@@ -151,6 +151,9 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
           borderRadius: `${token.borderRadiusXXL}px ${token.borderRadiusXXL}px 0 0`,
           pointerEvents: 'auto',
           padding: token.padding,
+          maxHeight: 600 - 56,
+          display: 'flex',
+          flexDirection: 'column',
         },
 
         [`${componentCls}-close`]: {
@@ -211,9 +214,8 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
           lineHeight: token.lineHeight,
           wordWrap: 'break-word',
           overflow: 'auto',
-          maxHeight: '80vh',
-          margin: `0 -${token.padding}px`,
-          padding: `0 ${token.padding}px ${token.padding}px`,
+          margin: `0 -${token.padding}px ${token.padding}px`,
+          padding: `0 ${token.padding}px`,
         },
 
         [`${componentCls}-footer`]: {
