@@ -13,6 +13,8 @@ interface ModalContextType {
   inactiveModal: (id: string) => void;
   inactiveModals: (ids: string[]) => void;
   addConfirmModal: (props: SwModalFuncProps) => void;
+  scannerOpen: boolean;
+  setScannerOpen: (value: boolean) => void;
 }
 
 interface ModalContextProviderProps {
@@ -24,6 +26,7 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
   const [externalList, setExternalList] = useState<SwConfirmDialogProps[]>([]);
   const [, setGlobalList] = useState<string[]>([]);
   const [activeList, setActiveList] = useState<string[]>([]);
+  const [scannerOpen, setScannerOpen] = useState(false);
 
   const initModal = useCallback((id: string) => {
     setGlobalList((prevState) => {
@@ -130,6 +133,8 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
         checkActive,
         activeList,
         addConfirmModal,
+        scannerOpen,
+        setScannerOpen,
       }}
     >
       {children}
