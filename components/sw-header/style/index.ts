@@ -40,6 +40,7 @@ const genContainerStyle: GenerateStyle<SwHeaderToken> = (token) => {
 
           [`&${componentCls}-right-part-no-content`]: {
             marginRight: 0,
+            minHeight: token.controlHeightLG,
           },
 
           [`&${componentCls}-right-part-min-width`]: {
