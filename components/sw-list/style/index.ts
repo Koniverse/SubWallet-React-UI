@@ -51,23 +51,6 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
         overflow: 'hidden',
         flexDirection: 'column',
 
-        '&.-boxed-mode .ant-sw-list-wrapper': {
-          position: 'relative',
-
-          '&::before': {
-            content: '""',
-            display: 'block',
-            position: 'absolute',
-            left: token.padding,
-            right: token.padding,
-            top: 0,
-            bottom: 0,
-            backgroundColor: token.colorBgContainer,
-            zIndex: -1,
-            borderRadius: token.borderRadius,
-          },
-        },
-
         [`${componentCls}-search-input`]: {
           padding: token.padding,
           paddingTop: 0,
@@ -96,6 +79,30 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
 
           '&.-display-grid, &.-display-row': {
             paddingBottom: 0,
+          },
+        },
+
+        [`&.-boxed-mode`]: {
+          [`${componentCls}-wrapper`]: {
+            position: 'relative',
+
+            '&::before': {
+              content: '""',
+              display: 'block',
+              position: 'absolute',
+              left: token.padding,
+              right: token.padding,
+              top: 0,
+              bottom: 0,
+              backgroundColor: token.colorBgContainer,
+              zIndex: -1,
+              borderRadius: token.borderRadius,
+            },
+          },
+
+          [`${componentCls}`]: {
+            paddingRight: token.padding * 2,
+            paddingLeft: token.padding * 2,
           },
         },
       },
