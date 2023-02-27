@@ -1,7 +1,6 @@
 import type { CSSInterpolation } from '@ant-design/cssinjs';
 import type { FullToken } from '../../theme/internal';
 import { genComponentStyleHook } from '../../theme/internal';
-import { getScrollbarWidth } from '../../style';
 
 const genListStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
   const { componentCls } = token;
@@ -49,10 +48,10 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
         flexDirection: 'column',
 
         [`${componentCls}-search-input`]: {
-          marginBottom: token.margin,
-          paddingLeft: token.padding,
-          paddingRight: token.padding,
+          padding: token.padding,
+          paddingTop: 0,
         },
+
         [`${componentCls}-action-btn`]: {
           position: 'absolute',
           right: 4,
@@ -71,7 +70,7 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
           overflow: 'auto',
           maxHeight: '100%',
           paddingLeft: token.padding,
-          paddingRight: token.padding - getScrollbarWidth(),
+          paddingRight: token.padding,
           paddingBottom: token.padding,
 
           '&.-display-grid, &.-display-row': {

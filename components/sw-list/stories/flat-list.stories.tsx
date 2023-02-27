@@ -100,11 +100,7 @@ const App = ({
     searchPlaceholder: 'Search or enter website',
     searchFunction: searchFunc,
     searchMinCharactersCount: 2,
-    renderOnScroll: false,
-    pagination: {
-      hasMore: true,
-      loadMore: () => {},
-    },
+    renderOnScroll: true,
   };
 
   if (displayType === 'default') {
