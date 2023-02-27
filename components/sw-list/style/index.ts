@@ -1,6 +1,7 @@
 import type { CSSInterpolation } from '@ant-design/cssinjs';
 import type { FullToken } from '../../theme/internal';
 import { genComponentStyleHook } from '../../theme/internal';
+import { getScrollbarWidth } from '../../style';
 
 const genListStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
   const { componentCls } = token;
@@ -28,6 +29,9 @@ const genListStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
             },
           },
         },
+        '&.-ignore-scrollbar > .__item-wrapper': {
+          marginRight: -getScrollbarWidth(),
+        },
         '.__infinite-loader': {
           color: token.colorText,
           fontSize: 24,
@@ -46,6 +50,23 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
         display: 'flex',
         overflow: 'hidden',
         flexDirection: 'column',
+
+        '&.-boxed-mode .ant-sw-list-wrapper': {
+          position: 'relative',
+
+          '&::before': {
+            content: '""',
+            display: 'block',
+            position: 'absolute',
+            left: token.padding,
+            right: token.padding,
+            top: 0,
+            bottom: 0,
+            backgroundColor: token.colorBgContainer,
+            zIndex: -1,
+            borderRadius: token.borderRadius,
+          },
+        },
 
         [`${componentCls}-search-input`]: {
           padding: token.padding,

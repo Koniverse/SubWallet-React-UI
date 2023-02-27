@@ -9,6 +9,7 @@ import LoadingIcon from '../button/LoadingIcon';
 export interface SwListProps<T = any> extends FlatListProps<T> {
   prefixCls?: string;
   className?: string;
+  ignoreScrollbar?: boolean;
 }
 
 function SwList(props: SwListProps) {
@@ -17,6 +18,7 @@ function SwList(props: SwListProps) {
     className,
     displayGrid,
     displayRow,
+    ignoreScrollbar,
     renderOnScroll = true,
     paginationLoadingIndicator,
     paginationLoadingIndicatorPosition = 'center',
@@ -30,6 +32,7 @@ function SwList(props: SwListProps) {
     '-display-row': displayRow,
     '-render-on-scroll': renderOnScroll,
     '-render-default': !renderOnScroll,
+    '-ignore-scrollbar': ignoreScrollbar,
   });
 
   const defaultLoadingIcon = <LoadingIcon existIcon={false} prefixCls={prefixCls} loading />;

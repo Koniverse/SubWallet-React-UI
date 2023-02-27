@@ -40,10 +40,12 @@ interface AppProps {
   showActionBtn?: boolean;
   actionBtnIcon?: React.ReactNode;
   onClickActionBtn?: () => void;
+  mode: string;
 }
 
 const App = ({
   displayType = 'default',
+  mode = 'default',
   showActionBtn,
   actionBtnIcon,
   onClickActionBtn,
@@ -94,6 +96,7 @@ const App = ({
     list: DemoAccounts,
     enableSearchInput: true,
     height: '100%',
+    mode,
     showActionBtn,
     actionBtnIcon,
     onClickActionBtn,
@@ -101,6 +104,7 @@ const App = ({
     searchFunction: searchFunc,
     searchMinCharactersCount: 2,
     renderOnScroll: true,
+    ignoreScrollbar: true,
   };
 
   if (displayType === 'default') {
@@ -137,6 +141,7 @@ export const WithDivider = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 WithDivider.args = {
   displayType: 'with_divider',
+  mode: 'boxed',
 };
 
 export const DisplayGrid = Template.bind({});

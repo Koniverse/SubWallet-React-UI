@@ -28,6 +28,7 @@ const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
     searchFunction,
     searchPlaceholder,
     height,
+    mode = 'default',
     enableSearchInput,
     showActionBtn,
     actionBtnIcon,
@@ -37,7 +38,9 @@ const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const basePrefixCls = getPrefixCls('sw-list', customizePrefixCls);
   const [wrapSSR, hashId] = useStyle(basePrefixCls);
-  const classes = classNames(`${basePrefixCls}-section`, hashId, className);
+  const classes = classNames(`${basePrefixCls}-section`, hashId, className, {
+    '-boxed-mode': mode === 'boxed',
+  });
   const [searchText, setSearchText] = useState<string>('');
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
