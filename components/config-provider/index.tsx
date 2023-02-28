@@ -47,6 +47,7 @@ export const configConsumerProps = [
 // These props is used by `useContext` directly in sub component
 const PASSED_PROPS: Exclude<keyof ConfigConsumerProps, 'rootPrefixCls' | 'getPrefixCls'>[] = [
   'getTargetContainer',
+  'getTooltipContainer',
   'getPopupContainer',
   'renderEmpty',
   'pageHeader',
@@ -59,6 +60,7 @@ const PASSED_PROPS: Exclude<keyof ConfigConsumerProps, 'rootPrefixCls' | 'getPre
 export interface ConfigProviderProps {
   getTargetContainer?: () => HTMLElement | Window;
   getPopupContainer?: (triggerNode?: HTMLElement) => HTMLElement;
+  getTooltipContainer?: (triggerNode?: HTMLElement) => HTMLElement;
   prefixCls?: string;
   iconPrefixCls?: string;
   children?: React.ReactNode;
