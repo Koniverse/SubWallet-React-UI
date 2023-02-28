@@ -29,9 +29,6 @@ const genListStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
             },
           },
         },
-        '&.-ignore-scrollbar > .__item-wrapper': {
-          marginRight: -getScrollbarWidth(),
-        },
         '.__infinite-loader': {
           color: token.colorText,
           fontSize: 24,
@@ -72,10 +69,15 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
 
         [`${componentCls}`]: {
           overflow: 'auto',
+          height: '100%',
           maxHeight: '100%',
           paddingLeft: token.padding,
           paddingRight: token.padding,
           paddingBottom: token.padding,
+
+          '&.-ignore-scrollbar': {
+            paddingRight: token.padding - getScrollbarWidth(),
+          },
 
           '&.-display-grid, &.-display-row': {
             paddingBottom: 0,
@@ -94,15 +96,20 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
               right: token.padding,
               top: 0,
               bottom: 0,
-              backgroundColor: token.colorBgContainer,
+              backgroundColor: token.colorBgSecondary,
               zIndex: -1,
               borderRadius: token.borderRadius,
             },
           },
 
           [`${componentCls}`]: {
+            paddingTop: token.padding,
             paddingRight: token.padding * 2,
             paddingLeft: token.padding * 2,
+
+            '&.-ignore-scrollbar': {
+              paddingRight: token.padding * 2 - getScrollbarWidth(),
+            },
           },
         },
       },
