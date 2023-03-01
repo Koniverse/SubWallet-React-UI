@@ -43,6 +43,8 @@ const genBalanceItemStyle = (token: SettingItemToken): CSSInterpolation => {
           lineHeight: token.lineHeightLG,
           fontWeight: 600,
           color: token.colorTextLight1,
+          overflow: 'hidden',
+          textOverflow: 'ellipsis',
         },
 
         [`${componentCls}-divider`]: {

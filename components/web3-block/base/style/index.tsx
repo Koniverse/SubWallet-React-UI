@@ -30,6 +30,7 @@ const genAccountCardStyle = (token: Web3BlockToken): CSSInterpolation => {
           flex: 1,
           flexDirection: 'column',
           justifyContent: 'center',
+          width: 200, // Can apply any value not too long
         },
         [`${componentCls}-right-item`]: {
           display: 'flex',
