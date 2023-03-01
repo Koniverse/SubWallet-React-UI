@@ -61,7 +61,7 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
   const checkActive = useCallback(
     (id: string): boolean => {
       if (activeList.length) {
-        return activeList[activeList.length - 1] === id;
+        return activeList.includes(id);
       }
 
       return false;
