@@ -69,7 +69,6 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
 
         [`${componentCls}`]: {
           overflow: 'auto',
-          height: '100%',
           maxHeight: '100%',
           paddingLeft: token.padding,
           paddingRight: token.padding,
