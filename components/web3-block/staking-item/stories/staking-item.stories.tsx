@@ -1,6 +1,9 @@
 import React from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
+import { Users } from 'phosphor-react';
 import StakingItem from '..';
+import Tag from '../../../tag';
+import Icon from '../../../icon';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -13,7 +16,6 @@ export default {
     displayToken: { control: 'text', defaultValue: 'DOT' },
     convertedStakingValue: { control: 'number', defaultValue: 4993.33 },
     stakingValue: { control: 'number', defaultValue: 600 },
-    stakingType: { control: 'text', defaultValue: 'Staking Balance' },
   },
 } as ComponentMeta<typeof StakingItem>;
 
@@ -22,4 +24,14 @@ const Template: ComponentStory<typeof StakingItem> = (args) => <StakingItem {...
 
 export const Default = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
-Default.args = {};
+Default.args = {
+  stakingType: (
+    <Tag
+      style={{ width: 'fit-content' }}
+      icon={<Icon phosphorIcon={Users} iconColor="#4cd9ac" />}
+      color="success"
+    >
+      Nominated
+    </Tag>
+  ),
+};

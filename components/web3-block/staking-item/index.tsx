@@ -1,7 +1,7 @@
 import * as React from 'react';
 import type BigNumber from 'bignumber.js';
 import classNames from 'classnames';
-import { CaretRight } from 'phosphor-react';
+import { DotsThree } from 'phosphor-react';
 import Number from '../../number';
 import Logo from '../../logo';
 import type { Web3BlockProps } from '../base';
@@ -9,10 +9,11 @@ import Web3Block from '../base';
 import { ConfigContext } from '../../config-provider';
 import useStyle from './style';
 import Icon from '../../icon';
+import Button from '../../button';
 
 export interface StakingItemProps extends Web3BlockProps {
   stakingNetwork: string;
-  stakingType?: string;
+  stakingType?: React.ReactNode;
   convertedStakingValue: string | number | BigNumber;
   stakingValue: string | number | BigNumber;
   decimal: number;
@@ -23,6 +24,7 @@ export interface StakingItemProps extends Web3BlockProps {
   displayToken?: string;
   className?: string;
   onPressItem?: () => void;
+  onClickRightIcon?: () => void;
 }
 
 const StakingItem: React.FC<StakingItemProps> = ({
@@ -41,6 +43,7 @@ const StakingItem: React.FC<StakingItemProps> = ({
   leftItem,
   middleItem,
   rightItem,
+  onClickRightIcon,
   ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
@@ -67,7 +70,7 @@ const StakingItem: React.FC<StakingItemProps> = ({
         middleItem || (
           <>
             <div className={`${prefixCls}-name`}>{stakingNetwork}</div>
-            {stakingType && <div className={`${prefixCls}-staking-type`}>{stakingType}</div>}
+            {!!stakingType && stakingType}
           </>
         )
       }
@@ -91,11 +94,11 @@ const StakingItem: React.FC<StakingItemProps> = ({
                 unitOpacity={0.45}
               />
             </div>
-            <Icon
-              className={`${prefixCls}-right-icon`}
-              type="phosphor"
-              phosphorIcon={CaretRight}
-              size="sm"
+            <Button
+              size='xs'
+              onClick={onClickRightIcon}
+              type='ghost'
+              icon={<Icon phosphorIcon={DotsThree} />}
             />
           </>
         )
