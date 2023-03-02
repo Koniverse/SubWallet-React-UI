@@ -2,7 +2,6 @@ import type { CSSInterpolation } from '@ant-design/cssinjs';
 import { TinyColor } from '@ctrl/tinycolor';
 import { getAlphaColor } from '../../theme/themes/default/colorAlgorithm';
 import { initSlideMotion } from '../../style/motion';
-import { resetComponent } from '../../style';
 import type { FullToken, GenerateStyle } from '../../theme/internal';
 import { genComponentStyleHook, mergeToken } from '../../theme/internal';
 
@@ -121,6 +120,14 @@ const genScannerStyle = (token: SwQrScannerToken): CSSInterpolation => {
                     color: token.colorText,
                   },
                 },
+              },
+
+              [`${componentCls}-loading-container`]: {
+                display: 'flex',
+                height: '100%',
+                width: '100%',
+                alignItems: 'center',
+                justifyContent: 'center',
               },
             },
           },
@@ -317,48 +324,17 @@ const genReaderStyle = (token: SwQrScannerToken): CSSInterpolation => {
 };
 
 const genModalStyle: GenerateStyle<SwQrScannerToken> = (token) => {
-  const { componentCls } = token;
+  const { componentCls, antCls } = token;
+
+  const swModalCls = `${antCls}-sw-modal`;
 
   return [
-    // ======================== Root =========================
-    {
-      [`${componentCls}-root`]: {
-        [`${componentCls}-wrap`]: {
-          zIndex: token.zIndexPopupBase,
-          position: 'fixed',
-          inset: 0,
-          overflow: 'auto',
-          outline: 0,
-          WebkitOverflowScrolling: 'touch',
-        },
-
-        [`${componentCls}-d-none`]: {
-          display: 'none',
-        },
-
-        [`@media (max-width: ${token.screenSMMax})`]: {
-          [componentCls]: {
-            maxWidth: 'calc(100vw - 16px)',
-            margin: `${token.marginXS} auto`,
-          },
-        },
-      },
-    },
-
     // ======================== Modal ========================
     {
-      [componentCls]: {
-        ...resetComponent(token),
-        pointerEvents: 'none',
-        margin: '0 auto',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
-        right: 0,
+      [`${componentCls}${swModalCls}`]: {
         height: '100%',
-        width: '100%',
 
-        [`${componentCls}-content`]: {
+        [`${swModalCls}-content`]: {
           position: 'relative',
           backgroundColor: token.modalContentBg,
           backgroundClip: 'padding-box',
@@ -367,41 +343,19 @@ const genModalStyle: GenerateStyle<SwQrScannerToken> = (token) => {
           pointerEvents: 'auto',
           height: '100%',
           width: '100%',
+          padding: 0,
+          maxHeight: 'unset',
         },
 
-        [`${componentCls}-body`]: {
+        [`${swModalCls}-body`]: {
           fontSize: token.fontSize,
           lineHeight: token.lineHeight,
           wordWrap: 'break-word',
           overflow: 'auto',
           height: '100%',
           width: '100%',
-        },
-
-        [`${componentCls}-open`]: {
-          overflow: 'hidden',
-        },
-      },
-    },
-
-    // ======================== Pure =========================
-    {
-      [`${componentCls}-pure-panel`]: {
-        top: 'auto',
-        padding: 0,
-        display: 'flex',
-        flexDirection: 'column',
-
-        [`${componentCls}-content,
-          ${componentCls}-body,
-          ${componentCls}-confirm-body-wrapper`]: {
-          display: 'flex',
-          flexDirection: 'column',
-          flex: 'auto',
-        },
-
-        [`${componentCls}-confirm-body`]: {
-          marginBottom: 'auto',
+          margin: 0,
+          padding: 0,
         },
       },
     },
@@ -414,10 +368,6 @@ const genItemContainerStyle: GenerateStyle<SwQrScannerToken> = (token) => {
   return [
     {
       [`${componentCls}-camera-items-container`]: {
-        display: 'flex',
-        flexDirection: 'column',
-        gap: token.paddingContentVerticalSM,
-
         [`${componentCls}-camera-item`]: {
           cursor: 'pointer',
           display: 'flex',

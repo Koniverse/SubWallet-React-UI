@@ -18,6 +18,7 @@ const useQrReader: UseQrReaderHook = ({
   constraints: video,
   onResult,
   videoId,
+  setLoading,
 }): void => {
   useEffect(() => {
     const codeReader = new BrowserQRCodeReader(undefined, {
@@ -39,6 +40,7 @@ const useQrReader: UseQrReaderHook = ({
           }
         })
         .then((value: IScannerControls) => {
+          setLoading(false);
           streamList.push(value);
         })
         .catch((error: Error) => {
@@ -55,7 +57,7 @@ const useQrReader: UseQrReaderHook = ({
 
       streamList = [];
     };
-  }, [delayBetweenScanAttempts, onResult, video, videoId]);
+  }, [delayBetweenScanAttempts, onResult, video, videoId, setLoading]);
 };
 
 export default useQrReader;

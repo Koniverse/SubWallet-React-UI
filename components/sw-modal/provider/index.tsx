@@ -15,6 +15,8 @@ interface ModalContextType {
   addConfirmModal: (props: SwModalFuncProps) => void;
   scannerOpen: boolean;
   setScannerOpen: (value: boolean) => void;
+  addExclude: (id: string) => void;
+  removeExclude: (id: string) => void;
 }
 
 interface ModalContextProviderProps {
@@ -26,6 +28,7 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
   const [externalList, setExternalList] = useState<SwConfirmDialogProps[]>([]);
   const [, setGlobalList] = useState<string[]>([]);
   const [activeList, setActiveList] = useState<string[]>([]);
+  const [excludeCheckList, setExcludeCheckList] = useState<string[]>([]);
   const [scannerOpen, setScannerOpen] = useState(false);
 
   const initModal = useCallback((id: string) => {
@@ -61,12 +64,16 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
   const checkActive = useCallback(
     (id: string): boolean => {
       if (activeList.length) {
-        return activeList.includes(id);
+        if (activeList.includes(id)) {
+          if (excludeCheckList.includes(id)) {
+            return true;
+          }
+          return activeList[activeList.length - 1] === id;
+        }
       }
-
       return false;
     },
-    [activeList],
+    [activeList, excludeCheckList],
   );
 
   const activeModal = useCallback((id: string) => {
@@ -120,6 +127,18 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
     });
   }, []);
 
+  const addExclude = useCallback((id: string) => {
+    setExcludeCheckList((prevState) => {
+      const result = [...prevState].filter((value) => value !== id);
+      result.push(id);
+      return result;
+    });
+  }, []);
+
+  const removeExclude = useCallback((id: string) => {
+    setExcludeCheckList((prevState) => [...prevState].filter((value) => value !== id));
+  }, []);
+
   return (
     <ModalContext.Provider
       // eslint-disable-next-line react/jsx-no-constructed-context-values
@@ -135,6 +154,8 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
         addConfirmModal,
         scannerOpen,
         setScannerOpen,
+        addExclude,
+        removeExclude,
       }}
     >
       {children}

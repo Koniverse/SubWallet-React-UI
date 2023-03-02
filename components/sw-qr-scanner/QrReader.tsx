@@ -16,6 +16,7 @@ const QrReader: React.FC<QrReaderProps> = ({
   className,
   onResult,
   videoId,
+  setLoading,
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
 
@@ -29,6 +30,7 @@ const QrReader: React.FC<QrReaderProps> = ({
     scanDelay,
     onResult,
     videoId,
+    setLoading,
   });
 
   return wrapSSR(

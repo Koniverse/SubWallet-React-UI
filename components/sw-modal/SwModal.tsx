@@ -138,7 +138,6 @@ const SwModal: React.FC<SwModalProps> = (props) => {
 
   const wrapClassNameExtended = classNames(wrapClassName, {
     [`${prefixCls}-wrap-rtl`]: direction === 'rtl',
-    [`${prefixCls}-d-none`]: !isActive,
   });
 
   return wrapSSR(
