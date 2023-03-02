@@ -1,16 +1,16 @@
 import { BrowserQRCodeReader } from '@zxing/browser';
 import classNames from 'classnames';
-import Dialog from 'rc-dialog';
 import type { ChangeEventHandler } from 'react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Info, ImageSquare, Camera, CheckCircle, XCircle } from 'phosphor-react';
 import type { Result } from '@zxing/library';
+import SwModal, { ModalContext, useExcludeModal } from '../sw-modal';
+import type { SwModalProps } from '../sw-modal';
+import ActivityIndicator from '../activity-indicator';
 import SelectModal from '../select-modal';
 import { openGrantCameraPermissionDocument } from './configs';
 import BackgroundIcon from '../background-icon';
 import { useToken } from '../theme/internal';
-import { ModalContext } from '../sw-modal/provider';
-import { getTransitionName } from '../_util/motion';
 import QrReader from './QrReader';
 import Icon from '../icon';
 import SwSubHeader from '../sw-sub-header';
@@ -18,28 +18,27 @@ import type { ButtonProps } from '../button';
 import Button from '../button';
 import { ConfigContext } from '../config-provider';
 import useStyle from './style';
-import { NoCompactStyle } from '../space/Compact';
 import { NoFormStyle } from '../form/context';
+import { NoCompactStyle } from '../space/Compact';
 
 interface VideoDeviceInfo extends Pick<MediaDeviceInfo, 'deviceId' | 'groupId' | 'label'> {
   key: string;
 }
+
 export interface ScannerResult {
   text: string;
   raw: Uint8Array;
 }
 
-type getContainerFunc = () => HTMLElement;
-export interface SwQrScannerProps {
-  className?: string;
-  prefixCls?: string;
+export interface SwQrScannerProps
+  extends Pick<
+    SwModalProps,
+    'className' | 'prefixCls' | 'getContainer' | 'width' | 'wrapClassName' | 'zIndex'
+  > {
+  id?: string;
   onSuccess: (value: ScannerResult) => void;
   onError: (value: string) => void;
-  onClose: () => void;
-  open: boolean;
-  getContainer?: string | HTMLElement | getContainerFunc | false;
-  width?: number | string;
-  wrapClassName?: string;
+  onClose?: () => void;
   rightIconProps?: ButtonProps;
   isError?: boolean;
   title?: string;
@@ -59,10 +58,6 @@ const convertFunction = (device: MediaDeviceInfo): VideoDeviceInfo => ({
   key: `${device.groupId}_${device.deviceId}`,
 });
 
-const MODAL_ID = 'select-camera-modal';
-const VIDEO_ID = 'qr-scanner';
-const Z_INDEX = 1002;
-
 type CameraState = 'Waiting' | 'Allowed' | 'Blocked' | 'NotFound';
 
 const CAMERA_ERROR = {
@@ -79,46 +74,51 @@ const CAMERA_ERROR = {
   },
 };
 
+const MODAL_ID = 'qr-scanner-modal';
+const SELECT_CAMERA_PREFIX = 'select-camera-';
+const VIDEO_ID = 'qr-scanner';
+const Z_INDEX = 1002;
+
 const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
   const {
     prefixCls: customizePrefixCls,
     className,
     onError,
     onSuccess,
-    open,
-    onClose,
-    getContainer,
-    width,
-    wrapClassName,
     rightIconProps,
+    onClose,
     isError,
     title = 'Scan QR code',
     description,
     overlay,
     footer,
     ratio = 390 / 600,
+    id: mainId = MODAL_ID,
+    zIndex: mainZIndex = Z_INDEX,
+    wrapClassName,
+    ...restProps
   } = props;
 
-  const { getPopupContainer: getContextPopupContainer, getPrefixCls } =
-    React.useContext(ConfigContext);
-  const { activeModal, inactiveModal, setScannerOpen } = React.useContext(ModalContext);
+  const { getPrefixCls } = React.useContext(ConfigContext);
+  const { inactiveModal, checkActive } = React.useContext(ModalContext);
   const [, token] = useToken();
 
-  const rootPrefixCls = getPrefixCls();
+  const open = checkActive(mainId);
+
+  useExcludeModal(mainId);
+
   const prefixCls = getPrefixCls('sw-qr-scanner', customizePrefixCls);
   const [wrapSSR, hashId] = useStyle(prefixCls);
 
-  const wrapClassNameExtended = useMemo(
-    (): string =>
-      classNames(hashId, wrapClassName, `${prefixCls}-container`, {
-        [`${prefixCls}-hidden`]: !open,
-      }),
-    [hashId, wrapClassName, prefixCls],
-  );
+  const selectCameraModalId = useMemo(() => `${SELECT_CAMERA_PREFIX}${mainId}`, [mainId]);
 
   const classNameExtended = useMemo(
     (): string => classNames(hashId, className, `${prefixCls}-container`),
     [hashId, className, prefixCls],
+  );
+  const wrapClassNameExtended = useMemo(
+    () => classNames(wrapClassName, prefixCls, hashId, `${prefixCls}-container`),
+    [wrapClassName, prefixCls, hashId],
   );
 
   const fileRef = useRef<HTMLInputElement>(null);
@@ -149,14 +149,22 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
   }, [devices, selected]);
 
   const constraints = useMemo(
-    (): MediaTrackConstraints => ({
-      facingMode: 'user',
-      aspectRatio: ratio,
-      deviceId: device?.deviceId,
-      groupId: device?.groupId,
-    }),
+    (): MediaTrackConstraints | null =>
+      device
+        ? {
+            facingMode: 'user',
+            aspectRatio: ratio,
+            deviceId: device?.deviceId,
+            groupId: device?.groupId,
+          }
+        : null,
     [device],
   );
+
+  const _onClose = useCallback(() => {
+    inactiveModal(mainId);
+    onClose?.();
+  }, [mainId, inactiveModal, onClose]);
 
   const onOpenFile = useCallback(() => {
     fileRef.current?.click();
@@ -178,19 +186,14 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     [onSuccess, onError],
   );
 
-  const onOpenSelectCamera = useCallback(() => {
-    activeModal(MODAL_ID);
-  }, [activeModal]);
-
   const customInput = useMemo(
     (): React.ReactNode => (
       <Button
-        onClick={onOpenSelectCamera}
-        icon={<Icon type="phosphor" phosphorIcon={Camera} weight="fill" />}
+        icon={<Icon type='phosphor' phosphorIcon={Camera} weight='fill' />}
         schema='secondary'
       />
     ),
-    [onOpenSelectCamera],
+    [],
   );
 
   const onChangeFile: ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -263,17 +266,17 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     (_item: VideoDeviceInfo, _selected: boolean) => (
       <div className={classNames(`${prefixCls}-camera-item`)}>
         <BackgroundIcon
-          type="phosphor"
+          type='phosphor'
           phosphorIcon={Camera}
-          weight="fill"
-          size="sm"
+          weight='fill'
+          size='sm'
           backgroundColor={token['gray-3']}
           shape='circle'
         />
         <div className={classNames(`${prefixCls}-camera-label`)}>{_item.label}</div>
         {_selected && (
           <div className={classNames(`${prefixCls}-camera-selected`)}>
-            <Icon type="phosphor" phosphorIcon={CheckCircle} size="sm" weight="fill" />
+            <Icon type='phosphor' phosphorIcon={CheckCircle} size='sm' weight='fill' />
           </div>
         )}
       </div>
@@ -338,6 +341,8 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     let amount = true;
     let checking = false;
 
+    setLoadingCamera(true);
+
     const checkPermission = async () => {
       if (checking) {
         return;
@@ -368,10 +373,11 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
           if (CAMERA_ERROR.name.notFound.includes(e.name)) {
             setCameraState('NotFound');
           }
+
+          setLoadingCamera(false);
         }
       }
 
-      setLoadingCamera(false);
       checking = false;
     };
 
@@ -384,37 +390,28 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     };
   }, [open]);
 
-  useEffect(() => {
-    setScannerOpen(open);
-  }, [open]);
-
   return wrapSSR(
     <NoCompactStyle>
       <NoFormStyle status override>
-        <Dialog
-          width={width}
-          getContainer={getContainer === undefined ? getContextPopupContainer : getContainer}
-          prefixCls={prefixCls}
-          rootClassName={hashId}
+        <SwModal
+          {...restProps}
           wrapClassName={wrapClassNameExtended}
+          id={mainId}
+          className={classNames(hashId, className, prefixCls)}
+          zIndex={mainZIndex}
           closable={false}
-          visible={open}
-          onClose={onClose}
-          transitionName={getTransitionName(rootPrefixCls, 'slide-down')}
-          maskTransitionName={getTransitionName(rootPrefixCls, 'fade')}
-          className={classNames(hashId, className)}
           destroyOnClose
-          zIndex={Z_INDEX}
         >
           <div className={classNames(`${prefixCls}-scanner`)}>
-            {cameraState === 'Allowed' && !loadingCamera && (
+            {cameraState === 'Allowed' && constraints && (
               <QrReader
-                className="qr-scanner-container"
+                className='qr-scanner-container'
                 constraints={constraints}
                 onResult={onScan}
                 scanDelay={150}
                 videoId={VIDEO_ID}
                 videoContainerStyle={{ paddingTop: `${100 / ratio}%` }}
+                setLoading={setLoadingCamera}
               />
             )}
           </div>
@@ -424,13 +421,13 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                 center
                 showBackButton
                 paddingVertical
-                onBack={onClose}
-                background="transparent"
+                onBack={_onClose}
+                background='transparent'
                 title={title}
                 rightButtons={
                   rightIconProps
                     ? [rightIconProps]
-                    : [{ icon: <Icon type="phosphor" phosphorIcon={Info} /> }]
+                    : [{ icon: <Icon type='phosphor' phosphorIcon={Info} /> }]
                 }
               />
               {description && (
@@ -449,24 +446,31 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
               </div>
               <div className={classNames(`${prefixCls}-center-filter`)}>
                 <div className={classNames(`${prefixCls}-center-overlay`)}>
-                  {cameraState === 'Blocked' || cameraState === 'NotFound' ? (
-                    <div className={classNames(`${prefixCls}-camera-block-container`)}>
-                      <div className={classNames(`${prefixCls}-camera-block-content`)}>
-                        <Icon
-                          className={classNames(`${prefixCls}-camera-block-icon`)}
-                          type="phosphor"
-                          phosphorIcon={XCircle}
-                          weight="fill"
-                          customSize={`${token.sizeXL}px`}
-                        />
-                        <div className={classNames(`${prefixCls}-camera-block-text`)}>
-                          {cameraState === 'Blocked' ? 'No camera access' : 'Can’t find camera'}
+                  {
+                    // eslint-disable-next-line no-nested-ternary
+                    loadingCamera ? (
+                      <div className={classNames(`${prefixCls}-loading-container`)}>
+                        <ActivityIndicator size={token.controlHeightLG} />
+                      </div>
+                    ) : cameraState === 'Blocked' || cameraState === 'NotFound' ? (
+                      <div className={classNames(`${prefixCls}-camera-block-container`)}>
+                        <div className={classNames(`${prefixCls}-camera-block-content`)}>
+                          <Icon
+                            className={classNames(`${prefixCls}-camera-block-icon`)}
+                            type='phosphor'
+                            phosphorIcon={XCircle}
+                            weight='fill'
+                            customSize={`${token.sizeXL}px`}
+                          />
+                          <div className={classNames(`${prefixCls}-camera-block-text`)}>
+                            {cameraState === 'Blocked' ? 'No camera access' : 'Can’t find camera'}
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  ) : (
-                    overlay
-                  )}
+                    ) : (
+                      overlay
+                    )
+                  }
                 </div>
               </div>
               <div className={classNames(`${prefixCls}-right-part`)}>
@@ -480,7 +484,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                   ? cameraState === 'Blocked' && (
                       <Button
                         onClick={onGrantPermission}
-                        icon={<Icon type="phosphor" phosphorIcon={Info} weight='fill' />}
+                        icon={<Icon type='phosphor' phosphorIcon={Info} weight='fill' />}
                         block
                         loading={loadingGrantPermission}
                       >
@@ -491,14 +495,14 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                       <>
                         <input
                           className={classNames(`${prefixCls}-hidden-input`)}
-                          type="file"
+                          type='file'
                           onChange={onChangeFile}
-                          accept="image/*"
+                          accept='image/*'
                           ref={fileRef}
                         />
                         <Button
                           onClick={onOpenFile}
-                          icon={<Icon type="phosphor" phosphorIcon={ImageSquare} weight='fill' />}
+                          icon={<Icon type='phosphor' phosphorIcon={ImageSquare} weight='fill' />}
                           loading={loadingImage}
                           schema='secondary'
                         >
@@ -506,23 +510,25 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                         </Button>
                         <SelectModal
                           items={devices}
-                          itemKey="key"
+                          itemKey='key'
                           selected={selected}
                           maskClosable
                           renderItem={renderCameraItem}
                           onSelect={setSelected}
-                          id={MODAL_ID}
-                          zIndex={Z_INDEX + 1}
+                          id={selectCameraModalId}
+                          zIndex={mainZIndex + 1}
                           customInput={customInput}
-                          title="Select camera"
+                          title='Select camera'
                           className={classNames(hashId, `${prefixCls}-camera-items-container`)}
+                          getContainer={props.getContainer}
+                          destroyOnClose
                         />
                       </>
                     )}
               </div>
             </div>
           </div>
-        </Dialog>
+        </SwModal>
       </NoFormStyle>
     </NoCompactStyle>,
   );

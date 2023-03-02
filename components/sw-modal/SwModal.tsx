@@ -95,7 +95,7 @@ export interface SwModalLocale {
 
 const SwModal: React.FC<SwModalProps> = (props) => {
   const {
-    getPopupContainer: getContextPopupContainer,
+    getModalContainer: getContextModalContainer,
     getPrefixCls,
     direction,
   } = React.useContext(ConfigContext);
@@ -138,7 +138,6 @@ const SwModal: React.FC<SwModalProps> = (props) => {
 
   const wrapClassNameExtended = classNames(wrapClassName, {
     [`${prefixCls}-wrap-rtl`]: direction === 'rtl',
-    [`${prefixCls}-d-none`]: !isActive,
   });
 
   return wrapSSR(
@@ -147,7 +146,7 @@ const SwModal: React.FC<SwModalProps> = (props) => {
         <Dialog
           width={width}
           {...restProps}
-          getContainer={getContainer === undefined ? getContextPopupContainer : getContainer}
+          getContainer={getContainer === undefined ? getContextModalContainer : getContainer}
           prefixCls={prefixCls}
           rootClassName={hashId}
           wrapClassName={wrapClassNameExtended}

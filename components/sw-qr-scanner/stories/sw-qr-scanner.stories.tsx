@@ -1,5 +1,5 @@
 import type { ComponentMeta, ComponentStory } from '@storybook/react';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useContext, useMemo, useState } from 'react';
 import { faXmarkCircle } from '@fortawesome/free-solid-svg-icons';
 import { faCheckCircle } from '@fortawesome/free-regular-svg-icons';
 import SwQrScanner from '../index';
@@ -7,21 +7,24 @@ import type { ScannerResult, SwQrScannerProps } from '../index';
 import Button from '../../button';
 import Icon from '../../icon';
 import Progress from '../../progress';
+import { ModalContext } from '../../sw-modal';
 
 interface WrapperProps extends SwQrScannerProps {
   multipleFrame: boolean;
 }
 
+const modalId = 'qr-scanner-modal';
+
 const Wrapper: React.FC<WrapperProps> = ({ isError, multipleFrame, ...args }) => {
-  const [open, setOpen] = useState(true);
+  const { activeModal } = useContext(ModalContext);
+
   const [result, setResult] = useState('');
 
   const onOpen = useCallback(() => {
-    setOpen(true);
-  }, []);
+    activeModal(modalId);
+  }, [activeModal]);
 
   const onClose = useCallback(() => {
-    setOpen(false);
     setResult('');
   }, []);
 
@@ -164,11 +167,11 @@ const Wrapper: React.FC<WrapperProps> = ({ isError, multipleFrame, ...args }) =>
       <Button onClick={onOpen}>Open</Button>
       <SwQrScanner
         {...args}
+        id={modalId}
         getContainer='#scanner-container'
         overlay={overlay}
         footer={footer}
         isError={isError}
-        open={open}
         onSuccess={onSuccess}
         onError={console.log}
         onClose={onClose}

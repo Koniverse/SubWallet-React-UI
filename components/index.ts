@@ -183,7 +183,13 @@ export { default as SwHeader, changeHeaderLogo, changeHeaderDefault } from './sw
 export type { SwHeaderProps } from './sw-header';
 export { default as SwList } from './sw-list';
 export type { SwListProps } from './sw-list';
-export { default as SwModal, ModalContext, ModalContextProvider } from './sw-modal';
+export {
+  default as SwModal,
+  ModalContext,
+  ModalContextProvider,
+  useExcludeModal,
+  useInitModal,
+} from './sw-modal';
 export type { SwModalProps, SwModalFuncProps } from './sw-modal';
 export { default as SwQrScanner, changeCameraDocumentURL } from './sw-qr-scanner';
 export type { SwQrScannerProps } from './sw-qr-scanner';

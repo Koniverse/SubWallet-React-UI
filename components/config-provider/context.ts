@@ -42,8 +42,8 @@ export interface ThemeConfig {
 
 export interface ConfigConsumerProps {
   getTargetContainer?: () => HTMLElement;
+  getModalContainer?: (triggerNode?: HTMLElement) => HTMLElement;
   getPopupContainer?: (triggerNode?: HTMLElement) => HTMLElement;
-  getTooltipContainer?: (triggerNode?: HTMLElement) => HTMLElement;
   rootPrefixCls?: string;
   iconPrefixCls: string;
   getPrefixCls: (suffixCls?: string, customizePrefixCls?: string) => string;

@@ -170,8 +170,30 @@ const genItemContainerStyle: GenerateStyle<SelectModalToken> = (token) => {
   ];
 };
 
+const genModalStyle: GenerateStyle<SelectModalToken> = (token) => {
+  const { componentCls, antCls } = token;
+
+  const swModalCls = `${antCls}-sw-modal`;
+
+  return [
+    {
+      [`${componentCls}${swModalCls}`]: {
+        [`${swModalCls}-body`]: {
+          display: 'flex',
+          paddingLeft: 0,
+          paddingRight: 0,
+        },
+      },
+    },
+  ];
+};
+
 // ============================== Export ==============================
 export default genComponentStyleHook('SelectModal', (token) => {
   const selectModalToken = mergeToken<SelectModalToken>(token);
-  return [genInputStyle(selectModalToken), genItemContainerStyle(selectModalToken)];
+  return [
+    genInputStyle(selectModalToken),
+    genItemContainerStyle(selectModalToken),
+    genModalStyle(selectModalToken),
+  ];
 });

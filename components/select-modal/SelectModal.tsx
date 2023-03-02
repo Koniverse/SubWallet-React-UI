@@ -197,11 +197,7 @@ const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>):
           wrapClassName={wrapClassName}
           onCancel={handleCancel}
           focusTriggerAfterClose={focusTriggerAfterClose}
-          className={classNames(hashId, className)}
-          bodyStyle={{
-            display: 'flex',
-            padding: 0,
-          }}
+          className={classNames(hashId, className, prefixCls)}
         >
           <SwList.Section
             list={items}
