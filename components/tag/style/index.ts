@@ -3,7 +3,6 @@ import type React from 'react';
 import type { PresetBrandColorType, PresetStatusColorType } from '../../_util/colors';
 import type { FullToken, PresetColorType } from '../../theme/internal';
 import { genComponentStyleHook, mergeToken, PresetColors } from '../../theme/internal';
-import capitalize from '../../_util/capitalize';
 import { resetComponent } from '../../style';
 
 export interface ComponentToken {}
@@ -25,25 +24,34 @@ const genTagStatusStyle = (
   token: TagToken,
   status: PresetBrandColorType | PresetStatusColorType,
   cssVariableType: CssVariableType,
-): CSSInterpolation => {
-  const capitalizedCssVariableType = capitalize<CssVariableType>(cssVariableType);
-  return {
-    [`${token.componentCls}-${status}`]: {
-      color: token[`color${cssVariableType}`],
-      background: token[`color${capitalizedCssVariableType}Bg`],
-      borderColor: token[`color${capitalizedCssVariableType}Border`],
+): CSSInterpolation => ({
+  [`${token.componentCls}-${status}`]: {
+    position: 'relative',
+    color: token[`color${cssVariableType}`],
+    '&::before': {
+      content: "''",
+      backgroundColor: token[`color${cssVariableType}`],
+      width: '100%',
+      height: '100%',
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      zIndex: 1,
+      opacity: 0.1,
+    },
 
-      [`&${token.componentCls}-bg-gray`]: {
-        background: token['gray-1'],
-      },
-
-      [`&${token.componentCls}-bg-filled`]: {
-        color: token.colorText,
-        background: token[`color${cssVariableType}`],
+    [`&${token.componentCls}-bg-gray`]: {
+      '&::before': {
+        backgroundColor: token['gray-1'],
       },
     },
-  };
-};
+
+    [`&${token.componentCls}-bg-filled`]: {
+      color: token.colorText,
+      background: token[`color${cssVariableType}`],
+    },
+  },
+});
 
 // FIXME: special preset colors
 const genTagColorStyle = (token: TagToken): CSSInterpolation =>
