@@ -203,7 +203,7 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
           background: token.modalHeaderBg,
           borderRadius: `${token.borderRadiusLG}px ${token.borderRadiusLG}px 0 0`,
           padding: `0 ${token.paddingXXL}px ${token.padding}px`,
-          margin: `0 -${token.padding}px ${token.padding}px`,
+          margin: `0 -${token.padding}px`,
           borderBottom: `${token.lineWidth * 2}px ${token.modalHeaderBorderStyle} ${
             token.colorSplit
           }`,
@@ -214,15 +214,15 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
           lineHeight: token.lineHeight,
           wordWrap: 'break-word',
           overflow: 'auto',
-          margin: `0 -${token.padding}px ${token.padding}px`,
-          padding: `0 ${token.padding}px`,
+          margin: `0 -${token.margin}px`,
+          padding: `${token.padding}px`,
         },
 
         [`${componentCls}-footer`]: {
           textAlign: 'end',
           background: token.modalFooterBg,
-          margin: `${token.marginSM}px -${token.margin}px 0`,
-          padding: `${token.marginSM}px ${token.margin}px 0`,
+          margin: `0 -${token.margin}px`,
+          padding: `${token.padding}px ${token.padding}px`,
           borderTop: `${token.lineWidth * 2}px ${token.modalHeaderBorderStyle} ${token.colorSplit}`,
 
           [`${token.antCls}-btn + ${token.antCls}-btn:not(${token.antCls}-dropdown-trigger)`]: {
