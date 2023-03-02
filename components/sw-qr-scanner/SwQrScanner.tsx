@@ -99,7 +99,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     ratio = 390 / 600,
   } = props;
 
-  const { getPopupContainer: getContextPopupContainer, getPrefixCls } =
+  const { getModalContainer: getContextModalContainer, getPrefixCls } =
     React.useContext(ConfigContext);
   const { activeModal, inactiveModal, setScannerOpen } = React.useContext(ModalContext);
   const [, token] = useToken();
@@ -393,7 +393,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
       <NoFormStyle status override>
         <Dialog
           width={width}
-          getContainer={getContainer === undefined ? getContextPopupContainer : getContainer}
+          getContainer={getContainer === undefined ? getContextModalContainer : getContainer}
           prefixCls={prefixCls}
           rootClassName={hashId}
           wrapClassName={wrapClassNameExtended}

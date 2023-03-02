@@ -172,7 +172,7 @@ const Tooltip = React.forwardRef<unknown, TooltipProps>((props, ref) => {
   } = props;
 
   const {
-    getTooltipContainer: getContextTooltipContainer,
+    getPopupContainer: getContextPopupContainer,
     getPrefixCls,
     direction,
   } = React.useContext(ConfigContext);
@@ -321,7 +321,7 @@ const Tooltip = React.forwardRef<unknown, TooltipProps>((props, ref) => {
         ...arrowContentStyle,
         ...overlayStyle,
       }}
-      getTooltipContainer={getPopupContainer || getTooltipContainer || getContextTooltipContainer}
+      getTooltipContainer={getPopupContainer || getTooltipContainer || getContextPopupContainer}
       ref={ref}
       builtinPlacements={getTooltipPlacements()}
       overlay={getOverlay()}
