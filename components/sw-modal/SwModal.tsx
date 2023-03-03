@@ -148,7 +148,7 @@ const SwModal: React.FC<SwModalProps> = (props) => {
           {...restProps}
           getContainer={getContainer === undefined ? getContextModalContainer : getContainer}
           prefixCls={prefixCls}
-          rootClassName={hashId}
+          rootClassName={`${hashId} modal-id-${id}`}
           wrapClassName={wrapClassNameExtended}
           footer={renderFooter({
             ...props,
