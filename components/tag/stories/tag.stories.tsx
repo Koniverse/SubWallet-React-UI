@@ -7,7 +7,6 @@ import {
 } from '../../_util/colors';
 import Tag from '..';
 import { PresetBarShapeTypes } from '../../_util/shapes';
-
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
   title: 'Basic Components/Tag',

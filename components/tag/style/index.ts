@@ -1,4 +1,4 @@
-import type { CSSInterpolation, CSSObject } from '@ant-design/cssinjs';
+import type { CSSInterpolation } from '@ant-design/cssinjs';
 import type React from 'react';
 import type { PresetBrandColorType, PresetStatusColorType } from '../../_util/colors';
 import type { FullToken, PresetColorType } from '../../theme/internal';
@@ -34,6 +34,7 @@ const genTagStatusStyle = (
       width: '100%',
       height: '100%',
       position: 'absolute',
+      borderRadius: token.borderRadiusLG,
       top: 0,
       left: 0,
       zIndex: 1,
@@ -55,40 +56,50 @@ const genTagStatusStyle = (
 
 // FIXME: special preset colors
 const genTagColorStyle = (token: TagToken): CSSInterpolation =>
-  PresetColors.reduce((prev: CSSObject, colorKey: keyof PresetColorType) => {
-    const lightColor = token[`${colorKey}-1`];
-    const lightBorderColor = token[`${colorKey}-3`];
-    const darkColor = token[`${colorKey}-6`];
-    const textColor = token[`${colorKey}-7`];
+  PresetColors.reduce((prev: CSSInterpolation, colorKey: keyof PresetColorType) => {
+    const textColor = token[`${colorKey}-6`];
+    // @ts-ignore
     return {
       ...prev,
       [`${token.componentCls}-${colorKey}`]: {
+        position: 'relative',
         color: textColor,
-        background: lightColor,
-        borderColor: lightBorderColor,
+        '&::before': {
+          content: "''",
+          backgroundColor: textColor,
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          borderRadius: token.borderRadiusLG,
+          top: 0,
+          left: 0,
+          zIndex: 1,
+          opacity: 0.1,
+        },
 
         [`&${token.componentCls}-bg-gray`]: {
-          background: token['gray-1'],
+          '&::before': {
+            backgroundColor: token['gray-1'],
+          },
         },
 
         [`&${token.componentCls}-bg-filled`]: {
           color: token.colorText,
-          background: darkColor,
+          background: textColor,
         },
       },
       [`${token.componentCls}-${colorKey}-inverse`]: {
         color: token.colorTextLightSolid,
-        background: darkColor,
-        borderColor: darkColor,
+        background: textColor,
+        borderColor: textColor,
       },
     };
-  }, {} as CSSObject);
+  }, {} as CSSInterpolation);
 
 const genBaseStyle = (token: TagToken): CSSInterpolation => {
   const { paddingXXS, lineWidth, tagPaddingHorizontal } = token;
   const paddingInline = tagPaddingHorizontal - lineWidth;
   const iconMarginInline = paddingXXS - lineWidth;
-
   return {
     // Result
     [token.componentCls]: {
@@ -96,11 +107,11 @@ const genBaseStyle = (token: TagToken): CSSInterpolation => {
       display: 'inline-block',
       height: 'auto',
       marginInlineEnd: token.marginXS,
-      paddingInline,
-      fontSize: token.tagFontSize,
-      lineHeight: `${token.tagLineHeight}px`,
+      padding: '2px 8px',
+      fontSize: token.fontSizeXS,
+      lineHeight: token.lineHeightXS,
       whiteSpace: 'nowrap',
-      background: token.tagDefaultBg,
+      background: 'transparent',
       border: 0,
       borderRadius: token.borderRadiusLG,
       opacity: 1,
@@ -178,9 +189,15 @@ const genBaseStyle = (token: TagToken): CSSInterpolation => {
 
       // Shape
       '&-shape-round': {
+        '&&::before': {
+          borderRadius: `${token.tagLineHeight}px`,
+        },
         borderRadius: `${token.tagLineHeight}px`,
       },
       '&-shape-square': {
+        '&&::before': {
+          borderRadius: 0,
+        },
         borderRadius: 0,
       },
     },
