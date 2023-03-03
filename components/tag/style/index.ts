@@ -58,8 +58,8 @@ const genTagStatusStyle = (
 const genTagColorStyle = (token: TagToken): CSSInterpolation =>
   PresetColors.reduce((prev: CSSInterpolation, colorKey: keyof PresetColorType) => {
     const textColor = token[`${colorKey}-6`];
-    // @ts-ignore
     return {
+      // @ts-ignore
       ...prev,
       [`${token.componentCls}-${colorKey}`]: {
         position: 'relative',
