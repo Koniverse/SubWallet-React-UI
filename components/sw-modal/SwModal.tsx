@@ -99,6 +99,7 @@ const SwModal: React.FC<SwModalProps> = (props) => {
     getPrefixCls,
     direction,
   } = React.useContext(ConfigContext);
+  const { checkActive } = useContext(ModalContext);
 
   const handleCancel = () => {
     const { onCancel } = props;
@@ -127,10 +128,6 @@ const SwModal: React.FC<SwModalProps> = (props) => {
 
   useInitModal(id);
 
-  const { checkActive } = useContext(ModalContext);
-
-  const isActive = checkActive(id);
-
   const prefixCls = getPrefixCls('sw-modal', customizePrefixCls);
   const rootPrefixCls = getPrefixCls();
   // Style
@@ -155,7 +152,7 @@ const SwModal: React.FC<SwModalProps> = (props) => {
             onOk: handleOk,
             onCancel: handleCancel,
           })}
-          visible={isActive}
+          visible={checkActive(id)}
           mousePosition={restProps.mousePosition ?? mousePosition}
           onClose={handleCancel}
           closeIcon={renderCloseIcon(prefixCls, closeIcon)}

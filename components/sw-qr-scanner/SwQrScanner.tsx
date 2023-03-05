@@ -33,7 +33,13 @@ export interface ScannerResult {
 export interface SwQrScannerProps
   extends Pick<
     SwModalProps,
-    'className' | 'prefixCls' | 'getContainer' | 'width' | 'wrapClassName' | 'zIndex'
+    | 'className'
+    | 'prefixCls'
+    | 'getContainer'
+    | 'width'
+    | 'wrapClassName'
+    | 'zIndex'
+    | 'transitionName'
   > {
   id?: string;
   onSuccess: (value: ScannerResult) => void;
@@ -96,6 +102,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     id: mainId = MODAL_ID,
     zIndex: mainZIndex = Z_INDEX,
     wrapClassName,
+    transitionName = 'fade',
     ...restProps
   } = props;
 
@@ -122,7 +129,6 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
   );
 
   const fileRef = useRef<HTMLInputElement>(null);
-
   const [cameraState, setCameraState] = useState<CameraState>('Waiting');
   const [devices, setDevices] = useState<VideoDeviceInfo[]>([]);
   const [selected, setSelected] = useState<string>('');
@@ -401,6 +407,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
           zIndex={mainZIndex}
           closable={false}
           destroyOnClose
+          transitionName={transitionName}
         >
           <div className={classNames(`${prefixCls}-scanner`)}>
             {cameraState === 'Allowed' && constraints && (
