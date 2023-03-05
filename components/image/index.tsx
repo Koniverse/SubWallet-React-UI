@@ -13,7 +13,7 @@ import ActivityIndicator from '../activity-indicator';
 import { FAULT_TOLERANT } from '../_util/constant';
 import { formatPxNumbers } from '../_util/dimension';
 
-const ImageShapes = ['default', 'square', 'circle', 'squircle'] as const;
+const ImageShapes = ['default', 'square', 'circle', 'squircle', 'none'] as const;
 export type ImageShape = typeof ImageShapes[number];
 
 export interface SwImageProps extends ImageProps {

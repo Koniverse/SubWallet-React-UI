@@ -1,6 +1,6 @@
 export const PresetBarShapeTypes = ['default', 'square', 'round'] as const;
 
-export const PresetIconShapeTypes = ['circle', 'squircle'] as const;
+export const PresetIconShapeTypes = ['circle', 'squircle', 'square', 'none'] as const;
 
 export const PresetShapeTypes = [...PresetBarShapeTypes, ...PresetIconShapeTypes] as const;
 

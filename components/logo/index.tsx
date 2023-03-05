@@ -23,8 +23,8 @@ const Logo: React.FC<LogoProps> = ({
   subNetwork,
   token,
   subToken,
-  shape = 'circle',
-  subLogoShape = 'circle',
+  shape = 'none',
+  subLogoShape = 'none',
   isShowSubLogo,
   className,
 }: LogoProps) => {
