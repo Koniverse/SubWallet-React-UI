@@ -23,16 +23,13 @@ interface ModalContextProviderProps {
   children?: React.ReactNode | React.ReactNode[];
 }
 
-function forceHideModal(modalId: string) {
-  // Set style for all div inside tag with class name modalId
-  setTimeout(() => {
-    const modal = document.querySelectorAll(`.modal-id-${modalId} > .ant-sw-modal-wrap`);
-    for (let i = 0; i < modal.length; i++) {
-      const element = modal[i] as HTMLElement;
-      element.style.display = 'none';
-    }
-  }, 333);
-}
+// function forceHideModal(modalId: string) {
+//   const modal = document.querySelectorAll(`.modal-id-${modalId} > .ant-sw-modal-wrap`);
+//   for (let i = 0; i < modal.length; i++) {
+//     const element = modal[i] as HTMLElement;
+//     element.style.display = 'none';
+//   }
+// }
 
 export const ModalContext = React.createContext({} as ModalContextType);
 export const ModalContextProvider = ({ children }: ModalContextProviderProps) => {
@@ -97,12 +94,10 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
 
   const inactiveModal = useCallback((id: string) => {
     setActiveList((prevState) => [...prevState].filter((value) => value !== id));
-    forceHideModal(id);
   }, []);
 
   const inactiveModals = useCallback((ids: string[]) => {
     setActiveList((prevState) => [...prevState].filter((value) => !ids.includes(value)));
-    ids.forEach(forceHideModal);
   }, []);
 
   const addConfirmModal = useCallback((_props: SwModalFuncProps) => {
