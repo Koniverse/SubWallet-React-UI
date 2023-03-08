@@ -43,6 +43,9 @@ export interface SelectModalProps<T extends Record<string, any>>
   prefix?: React.ReactNode;
   suffix?: React.ReactNode;
   disabled?: boolean;
+  actionBtnIcon?: React.ReactNode;
+  showActionBtn?: boolean;
+  onClickActionBtn?: () => void;
 }
 
 const DEFAULT_SUFFIX = <Icon type='phosphor' phosphorIcon={CaretDown} size="xs" />;
@@ -86,6 +89,9 @@ const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>):
     searchPlaceholder,
     searchableMinCharactersCount,
     renderWhenEmpty,
+    actionBtnIcon,
+    showActionBtn,
+    onClickActionBtn,
     ...restProps
   } = props;
 
@@ -210,6 +216,9 @@ const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>):
             searchPlaceholder={searchPlaceholder || DEFAULT_SEARCH_PLACEHOLDER}
             searchableMinCharactersCount={searchableMinCharactersCount}
             renderWhenEmpty={renderWhenEmpty}
+            actionBtnIcon={actionBtnIcon}
+            showActionBtn={showActionBtn}
+            onClickActionBtn={onClickActionBtn}
           />
         </SwModal>
       </NoFormStyle>
