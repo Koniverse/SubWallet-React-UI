@@ -37,6 +37,7 @@ export interface SwScreenLayoutProps {
   subHeaderIcons?: ButtonProps[];
   subHeaderPaddingVertical?: boolean;
   subHeaderBackground?: SwHeaderBackground;
+  subHeaderLeft?: SwHeaderLeftContent;
 
   // Footer
   footer?: React.ReactNode;
@@ -71,10 +72,11 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
     showSubHeader,
     title,
     showBackButton,
-    subHeaderIcons,
-    subHeaderCenter,
-    subHeaderPaddingVertical,
     subHeaderBackground,
+    subHeaderCenter,
+    subHeaderIcons,
+    subHeaderLeft,
+    subHeaderPaddingVertical,
     onBack,
 
     // Footer
@@ -118,13 +120,14 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
         )}
         {showSubHeader && (
           <SwSubHeader
-            title={title}
-            showBackButton={showBackButton}
-            onBack={onBack}
-            center={subHeaderCenter}
-            rightButtons={subHeaderIcons}
             background={subHeaderBackground}
+            center={subHeaderCenter}
+            left={subHeaderLeft}
+            onBack={onBack}
             paddingVertical={subHeaderPaddingVertical}
+            rightButtons={subHeaderIcons}
+            showBackButton={showBackButton}
+            title={title}
           />
         )}
       </div>
