@@ -21,7 +21,6 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
         gap: 8,
         color: token.colorTextTertiary,
         lineHeight: token.lineHeightLG,
-        overflow: 'hidden',
         position: 'relative',
 
         [`${componentCls}-input-wrapper`]: {

@@ -18,7 +18,6 @@ const genFieldStyle: GenerateStyle<FieldToken> = (token) => {
         gap: 8,
         color: token.colorTextTertiary,
         lineHeight: token.lineHeightLG,
-        overflow: 'hidden',
         position: 'relative',
 
         [`${componentCls}-wrapper`]: {
