@@ -23,6 +23,7 @@ export const balanceFormatter: NumberFormatter = (
   const absGteOne = new BigNumber(input).abs().gte(1);
   const minNumberFormat = metadata?.minNumberFormat || 2;
   const maxNumberFormat = metadata?.maxNumberFormat || 6;
+
   const [int, decimal] = input.split('.');
   let _decimal = '';
 
@@ -36,7 +37,9 @@ export const balanceFormatter: NumberFormatter = (
     }
 
     // Get only minNumberFormat number at decimal
-    if (decimal.length <= minNumberFormat) {
+    if (decimal === undefined) {
+      _decimal = '0';
+    } else if (decimal.length <= minNumberFormat) {
       _decimal = decimal;
     } else {
       _decimal = decimal.slice(0, minNumberFormat);
