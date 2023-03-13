@@ -118,13 +118,15 @@ const SwModal: React.FC<SwModalProps> = (props) => {
     getContainer,
     closeIcon,
     focusTriggerAfterClose = true,
-    // Deprecated
+    destroyOnClose,
     width = 390,
     id,
     children,
     rightIconProps,
     ...restProps
   } = props;
+
+  const isActive = checkActive(id);
 
   useInitModal(id);
 
@@ -135,7 +137,12 @@ const SwModal: React.FC<SwModalProps> = (props) => {
 
   const wrapClassNameExtended = classNames(wrapClassName, {
     [`${prefixCls}-wrap-rtl`]: direction === 'rtl',
+    [`${prefixCls}-d-none`]: !isActive,
   });
+
+  if (destroyOnClose && !isActive) {
+    return null;
+  }
 
   return wrapSSR(
     <NoCompactStyle>
@@ -152,7 +159,7 @@ const SwModal: React.FC<SwModalProps> = (props) => {
             onOk: handleOk,
             onCancel: handleCancel,
           })}
-          visible={checkActive(id)}
+          visible={isActive}
           mousePosition={restProps.mousePosition ?? mousePosition}
           onClose={handleCancel}
           closeIcon={renderCloseIcon(prefixCls, closeIcon)}
