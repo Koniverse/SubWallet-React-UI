@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import type { InputRef } from 'rc-input';
 import { ConfigContext } from '../config-provider';
 import useStyle from './style';
 import SwList from './List';
@@ -19,10 +20,12 @@ export interface SwListSectionProps<T> extends Omit<SwListProps<T>, 'searchBy' |
   height?: string;
   list: SwListProps<T>['list'];
   renderItem: SwListProps<T>['renderItem'];
+  autoFocusSearch?: boolean;
 }
 
 const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
   const {
+    autoFocusSearch = true,
     prefixCls: customizePrefixCls,
     className,
     searchFunction,
@@ -35,6 +38,7 @@ const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
     onClickActionBtn,
     ...restProps
   } = props;
+  const searchRef = useRef<InputRef>(null);
   const { getPrefixCls } = React.useContext(ConfigContext);
   const basePrefixCls = getPrefixCls('sw-list', customizePrefixCls);
   const [wrapSSR, hashId] = useStyle(basePrefixCls);
@@ -52,6 +56,12 @@ const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
     [searchFunction, searchText],
   );
 
+  useEffect(() => {
+    if (autoFocusSearch) {
+      searchRef.current?.focus();
+    }
+  }, []);
+
   return wrapSSR(
     <div className={classes} style={{ height }}>
       {enableSearchInput && (
@@ -60,6 +70,7 @@ const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
             onChange={onChange}
             placeholder={searchPlaceholder}
             value={searchText}
+            ref={searchRef}
             suffix={
               showActionBtn && (
                 <div className={`__input-action ${basePrefixCls}-action-btn-wrapper`}>
