@@ -57,10 +57,10 @@ const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
   );
 
   useEffect(() => {
-    if (autoFocusSearch) {
+    if (enableSearchInput && autoFocusSearch) {
       searchRef.current?.focus();
     }
-  }, []);
+  }, [searchRef, enableSearchInput, autoFocusSearch]);
 
   return wrapSSR(
     <div className={classes} style={{ height }}>

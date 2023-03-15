@@ -10,6 +10,7 @@ export interface SwListProps<T = any> extends FlatListProps<T> {
   prefixCls?: string;
   className?: string;
   ignoreScrollbar?: boolean;
+  ignoreScrollbarMethod?: 'padding' | 'hide';
 }
 
 function SwList(props: SwListProps) {
@@ -19,6 +20,7 @@ function SwList(props: SwListProps) {
     displayGrid,
     displayRow,
     ignoreScrollbar,
+    ignoreScrollbarMethod = 'hide',
     renderOnScroll = true,
     paginationLoadingIndicator,
     paginationLoadingIndicatorPosition = 'center',
@@ -32,7 +34,8 @@ function SwList(props: SwListProps) {
     '-display-row': displayRow,
     '-render-on-scroll': renderOnScroll,
     '-render-default': !renderOnScroll,
-    '-ignore-scrollbar': ignoreScrollbar,
+    '-ignore-scrollbar-hide': ignoreScrollbar && ignoreScrollbarMethod === 'hide',
+    '-ignore-scrollbar-padding': ignoreScrollbar && ignoreScrollbarMethod === 'padding',
   });
 
   const defaultLoadingIcon = <LoadingIcon existIcon={false} prefixCls={prefixCls} loading />;

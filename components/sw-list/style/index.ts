@@ -40,6 +40,7 @@ const genListStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
 
 const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
   const { componentCls } = token;
+  const scrollbarWidth = getScrollbarWidth();
 
   return [
     {
@@ -74,8 +75,12 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
           paddingRight: token.padding,
           paddingBottom: token.padding,
 
-          '&.-ignore-scrollbar': {
-            paddingRight: token.padding - getScrollbarWidth(),
+          '&.-ignore-scrollbar-padding': {
+            paddingRight: token.padding - scrollbarWidth,
+          },
+
+          '&.-ignore-scrollbar-hide': {
+            marginRight: -scrollbarWidth,
           },
 
           '&.-display-grid, &.-display-row': {
@@ -106,8 +111,8 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
             paddingRight: token.padding * 2,
             paddingLeft: token.padding * 2,
 
-            '&.-ignore-scrollbar': {
-              paddingRight: token.padding * 2 - getScrollbarWidth(),
+            '&.-ignore-scrollbar-padding': {
+              paddingRight: token.padding * 2 - scrollbarWidth,
             },
           },
         },
