@@ -55,7 +55,11 @@ function insertSpace(
     });
   }
   if (typeof child === 'string') {
-    return isTwoCNChar(child) ? <span>{child.split('').join(SPACE)}</span> : <span>{child}</span>;
+    return isTwoCNChar(child) ? (
+      <span className={childClassName}>{child.split('').join(SPACE)}</span>
+    ) : (
+      <span className={childClassName}>{child}</span>
+    );
   }
   if (isFragment(child)) {
     return <span className={childClassName}>{child}</span>;

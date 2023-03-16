@@ -43,7 +43,6 @@ const genSharedButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token): CSS
       touchAction: 'manipulation',
       padding: '0 16px',
       color: token.colorText,
-      fontSize: token.fontSizeLG,
       height: buttonSizeMap.md,
       lineHeight: `${buttonSizeMap.md}px`,
       alignItems: 'center',
@@ -51,6 +50,10 @@ const genSharedButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token): CSS
 
       [`&${componentCls}-block`]: {
         width: '100%',
+      },
+
+      [`${componentCls}-content-wrapper`]: {
+        fontSize: token.fontSizeLG,
       },
 
       '> span': {
