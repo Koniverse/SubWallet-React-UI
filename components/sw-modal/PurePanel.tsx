@@ -21,12 +21,8 @@ export interface PurePanelProps
   style?: React.CSSProperties;
 }
 
-export function renderCloseIcon(prefixCls: string, closeIcon?: React.ReactNode) {
-  return (
-    <span className={`${prefixCls}-close-x`}>
-      {closeIcon || <Icon type="phosphor" phosphorIcon={X} size="sm" weight='bold' />}
-    </span>
-  );
+export function renderCloseIcon(closeIcon?: React.ReactNode) {
+  return closeIcon || <Icon type="phosphor" phosphorIcon={X} size="md" />;
 }
 
 export function renderFooter(
@@ -137,7 +133,7 @@ export default function PurePanel(props: PurePanelProps) {
         className,
       )}
       {...restProps}
-      closeIcon={renderCloseIcon(prefixCls, closeIcon)}
+      closeIcon={renderCloseIcon(closeIcon)}
       closable={closable}
       {...additionalProps}
     />

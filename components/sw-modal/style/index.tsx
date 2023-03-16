@@ -191,18 +191,11 @@ const genModalStyle: GenerateStyle<SwModalToken> = (token) => {
           ...genFocusStyle(token),
         },
 
-        [`${componentCls}-right-icon`]: {
-          position: 'absolute',
-          top: token.modalHeaderCloseSize / 4,
-          insetInlineEnd: (token.modalHeaderCloseSize - token.modalCloseBtnSize) / 2,
-          zIndex: token.zIndexPopupBase + 10,
-        },
-
         [`${componentCls}-header`]: {
           color: token.colorText,
           background: token.modalHeaderBg,
           borderRadius: `${token.borderRadiusLG}px ${token.borderRadiusLG}px 0 0`,
-          padding: `0 ${token.paddingXXL}px ${token.padding}px`,
+          paddingBottom: token.padding,
           margin: `0 -${token.padding}px`,
           borderBottom: `${token.lineWidth * 2}px ${token.modalHeaderBorderStyle} ${
             token.colorSplit
