@@ -108,7 +108,6 @@ const genBaseStyle = (token: TagToken): CSSInterpolation => {
       height: 'auto',
       marginInlineEnd: token.marginXS,
       padding: '2px 8px',
-      fontSize: token.fontSizeXS,
       lineHeight: token.lineHeightXS,
       whiteSpace: 'nowrap',
       background: 'transparent',
@@ -118,6 +117,10 @@ const genBaseStyle = (token: TagToken): CSSInterpolation => {
       transition: `all ${token.motionDurationMid}`,
       textAlign: 'start',
       fontWeight: 600,
+
+      '&&': {
+        fontSize: token.fontSizeXS,
+      },
 
       // RTL
       '&&-rtl': {
