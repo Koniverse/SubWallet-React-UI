@@ -27,6 +27,7 @@ const genContainerStyle: GenerateStyle<SwSubHeaderToken> = (token) => {
 
         [`${componentCls}-title-content`]: {
           color: token.colorWhite,
+          fontWeight: token.headingFontWeight,
           fontSize: token.fontSizeHeading4,
           lineHeight: token.lineHeightHeading4,
           textAlign: 'center',
