@@ -22,7 +22,12 @@ export interface SelectModalProps<T extends Record<string, any>>
     Partial<
       Pick<
         SwListSectionProps<T>,
-        'searchableMinCharactersCount' | 'searchFunction' | 'searchPlaceholder' | 'renderWhenEmpty'
+        | 'searchableMinCharactersCount'
+        | 'searchFunction'
+        | 'searchPlaceholder'
+        | 'renderWhenEmpty'
+        | 'ignoreScrollbar'
+        | 'ignoreScrollbarMethod'
       >
     > {
   items: T[];
@@ -89,6 +94,8 @@ const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>):
     searchPlaceholder,
     searchableMinCharactersCount,
     renderWhenEmpty,
+    ignoreScrollbar,
+    ignoreScrollbarMethod,
     actionBtnIcon,
     showActionBtn,
     onClickActionBtn,
@@ -212,6 +219,8 @@ const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>):
             rowGap={`${token.paddingContentVerticalSM}px`}
             enableSearchInput={!!searchFunction}
             searchFunction={searchFunction}
+            ignoreScrollbar={ignoreScrollbar}
+            ignoreScrollbarMethod={ignoreScrollbarMethod}
             className={classNames(hashId, `${prefixCls}-item-container`)}
             searchPlaceholder={searchPlaceholder || DEFAULT_SEARCH_PLACEHOLDER}
             searchableMinCharactersCount={searchableMinCharactersCount}
