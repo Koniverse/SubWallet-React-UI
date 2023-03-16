@@ -290,6 +290,11 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     [prefixCls],
   );
 
+  const onChangeCamera = useCallback((_selected: string) => {
+    setSelected(_selected);
+    setLoadingCamera(true);
+  }, []);
+
   useEffect(() => {
     setSelected((prevState) => {
       if (!prevState) {
@@ -521,7 +526,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                           selected={selected}
                           maskClosable
                           renderItem={renderCameraItem}
-                          onSelect={setSelected}
+                          onSelect={onChangeCamera}
                           id={selectCameraModalId}
                           zIndex={mainZIndex + 1}
                           customInput={customInput}
