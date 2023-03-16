@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import Dialog from 'rc-dialog';
 import { useContext } from 'react';
 import * as React from 'react';
-import Button from '../button';
+import SwSubHeader from '../sw-sub-header';
 import { ModalContext } from './provider';
 import type { ButtonProps, LegacyButtonType } from '../button/button';
 import { ConfigContext } from '../config-provider';
@@ -123,6 +123,8 @@ const SwModal: React.FC<SwModalProps> = (props) => {
     id,
     children,
     rightIconProps,
+    closable = true,
+    title: _title,
     ...restProps
   } = props;
 
@@ -140,6 +142,24 @@ const SwModal: React.FC<SwModalProps> = (props) => {
     [`${prefixCls}-d-none`]: !isActive,
   });
 
+  const renderTitle = (): React.ReactNode => {
+    if (closable || _title || rightIconProps) {
+      return (
+        <SwSubHeader
+          onBack={handleCancel}
+          showBackButton={closable}
+          title={_title || 'Modal'}
+          rightButtons={rightIconProps ? [rightIconProps] : undefined}
+          background='transparent'
+          center
+          left={renderCloseIcon(closeIcon)}
+        />
+      );
+    }
+
+    return null;
+  };
+
   if (destroyOnClose && !isActive) {
     return null;
   }
@@ -149,6 +169,7 @@ const SwModal: React.FC<SwModalProps> = (props) => {
       <NoFormStyle status override>
         <Dialog
           width={width}
+          closable={false}
           {...restProps}
           getContainer={getContainer === undefined ? getContextModalContainer : getContainer}
           prefixCls={prefixCls}
@@ -162,21 +183,12 @@ const SwModal: React.FC<SwModalProps> = (props) => {
           visible={isActive}
           mousePosition={restProps.mousePosition ?? mousePosition}
           onClose={handleCancel}
-          closeIcon={renderCloseIcon(prefixCls, closeIcon)}
           focusTriggerAfterClose={focusTriggerAfterClose}
           transitionName={getTransitionName(rootPrefixCls, 'slide-down', props.transitionName)}
           maskTransitionName={getTransitionName(rootPrefixCls, 'fade', props.maskTransitionName)}
           className={classNames(hashId, className)}
+          title={renderTitle()}
         >
-          {rightIconProps && (
-            <Button
-              className={classNames(`${prefixCls}-right-icon`)}
-              type="ghost"
-              schema='header'
-              size='xs'
-              {...rightIconProps}
-            />
-          )}
           {children}
         </Dialog>
       </NoFormStyle>
