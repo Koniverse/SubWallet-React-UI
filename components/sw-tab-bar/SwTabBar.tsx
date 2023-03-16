@@ -41,7 +41,7 @@ const SwTabBar: React.FC<SwTabBarProps> = (props) => {
           onClick={item.onClick}
           key={item.key}
         >
-          <Icon className={classNames(`${prefixCls}-item-icon`)} {...item.icon} size="sm" />
+          <Icon className={classNames(`${prefixCls}-item-icon`)} {...item.icon} size="md" />
           <span className={classNames(`${prefixCls}-item-label`)}>{item.label}</span>
         </div>
       ))}
