@@ -1,6 +1,6 @@
 import { CaretDown } from 'phosphor-react';
 import classNames from 'classnames';
-import { useCallback, useContext, useMemo } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import * as React from 'react';
 import type { PresetBarShapeType } from '../_util/shapes';
 import { useToken } from '../theme/internal';
@@ -104,6 +104,8 @@ const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>):
 
   const isActive = checkActive(id);
 
+  const [focusSearch, setFocusSearch] = useState(false);
+
   const selectedItem = useMemo<T | undefined>(
     () => items.find((item) => (item[itemKey] as string) === selected),
     [selected, items, itemKey],
@@ -167,6 +169,22 @@ const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>):
     [_onSelect, renderItem, itemKey, selected],
   );
 
+  useEffect(() => {
+    let timeOut: NodeJS.Timer;
+
+    if (isActive) {
+      timeOut = setTimeout(() => {
+        setFocusSearch(true);
+      }, 200);
+    } else {
+      setFocusSearch(false);
+    }
+
+    return () => {
+      clearTimeout(timeOut);
+    };
+  }, [isActive]);
+
   return wrapSSR(
     <NoCompactStyle>
       <NoFormStyle status override>
@@ -228,6 +246,7 @@ const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>):
             actionBtnIcon={actionBtnIcon}
             showActionBtn={showActionBtn}
             onClickActionBtn={onClickActionBtn}
+            autoFocusSearch={focusSearch}
           />
         </SwModal>
       </NoFormStyle>
