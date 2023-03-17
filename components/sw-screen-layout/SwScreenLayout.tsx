@@ -27,8 +27,10 @@ export interface SwScreenLayoutProps {
   headerCenter?: boolean;
   headerContent?: React.ReactNode | React.ReactNode[];
   headerIcons?: ButtonProps[];
+  headerDisableLeft?: boolean;
 
   // Sub header
+  disableBack?: boolean;
   title?: string | React.ReactNode;
   showSubHeader?: boolean;
   showBackButton?: boolean;
@@ -57,6 +59,7 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
     className,
     children,
     withDivider,
+
     // Header,
     showHeader,
     headerBackground,
@@ -67,8 +70,10 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
     headerIcons,
     headerPaddingVertical,
     headerCenter,
+    headerDisableLeft,
 
     // Sub header
+    disableBack,
     showSubHeader,
     title,
     showBackButton,
@@ -114,6 +119,7 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
             paddingVertical={headerPaddingVertical}
             onClickLeft={headerOnClickLeft}
             left={headerLeft}
+            disableLeft={headerDisableLeft}
           >
             {headerContent}
           </SwHeader>
@@ -128,6 +134,7 @@ const SwScreenLayout: React.FC<SwScreenLayoutProps> = (props) => {
             rightButtons={subHeaderIcons}
             showBackButton={showBackButton}
             title={title}
+            disableBack={disableBack}
           />
         )}
       </div>

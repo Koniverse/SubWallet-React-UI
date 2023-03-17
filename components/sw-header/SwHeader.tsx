@@ -20,6 +20,7 @@ export interface SwHeaderProps {
   children?: React.ReactNode | React.ReactNode[];
   paddingVertical?: boolean;
   center?: boolean;
+  disableLeft?: boolean;
 }
 
 const SwHeader: React.FC<SwHeaderProps> = (props) => {
@@ -35,6 +36,7 @@ const SwHeader: React.FC<SwHeaderProps> = (props) => {
     children,
     paddingVertical,
     center = true,
+    disableLeft,
   } = props;
 
   const prefixCls = getPrefixCls('sw-header', customizePrefixCls);
@@ -65,7 +67,14 @@ const SwHeader: React.FC<SwHeaderProps> = (props) => {
     <div className={classNames(classNameExtend)}>
       {showLeftButton && (
         <div className={classNames(`${prefixCls}-left-part`)}>
-          <Button type="ghost" schema="header" size='xs' icon={leftPart} onClick={onClickLeft} />
+          <Button
+            type="ghost"
+            schema="header"
+            size='sm'
+            icon={leftPart}
+            onClick={onClickLeft}
+            disabled={disableLeft}
+          />
         </div>
       )}
       {!showLeftButton && !!rightButtons.length && center && (
