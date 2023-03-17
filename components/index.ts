@@ -198,7 +198,7 @@ export type { SwScreenLayoutProps } from './sw-screen-layout';
 export { default as SwSubHeader } from './sw-sub-header';
 export type { SwSubHeaderProps } from './sw-sub-header';
 export { default as SwTabBar } from './sw-tab-bar';
-export type { SwTabBarProps } from './sw-tab-bar';
+export type { SwTabBarProps, SwTabBarItem } from './sw-tab-bar';
 export { default as Icon } from './icon';
 export type { SwIconProps } from './icon';
 
