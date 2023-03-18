@@ -229,7 +229,5 @@ export { default as Web3Gallery } from './web3-gallery/base';
 export type { Web3GalleryProps } from './web3-gallery/base';
 export { default as ImageSelection } from './web3-gallery/image-selection';
 export type { ImageSelectionProps } from './web3-gallery/image-selection';
-export { default as NftCollection } from './web3-gallery/nft-collection';
-export type { NftCollectionProps } from './web3-gallery/nft-collection';
 export { default as NftItem } from './web3-gallery/nft-item';
 export type { NftItemProps } from './web3-gallery/nft-item';

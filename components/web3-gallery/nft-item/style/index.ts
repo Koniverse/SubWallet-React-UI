@@ -9,19 +9,37 @@ const genStyle = (token: FullToken<'Web3Gallery'>): CSSInterpolation => {
     {
       [componentCls]: {
         '.__footer-wrapper': {
-          paddingLeft: 12,
-          paddingRight: 12,
+          paddingLeft: 4,
+          paddingRight: 4,
           height: 48,
           display: 'flex',
           overflow: 'hidden',
-          alignItems: 'center',
         },
-        '.__item-title': {
-          color: token.colorTextLight1,
+        '.__footer-left, .__footer-right': {
+          display: 'flex',
+          paddingLeft: 8,
+          paddingRight: 8,
+          alignItems: 'center',
+          overflow: 'hidden',
+        },
+
+        '.__footer-left': {
+          flex: 1,
+        },
+
+        '.__collection-title, .__collection-count': {
           fontWeight: token.headingFontWeight,
           textOverflow: 'ellipsis',
           whiteSpace: 'nowrap',
           overflow: 'hidden',
+        },
+
+        '.__collection-title': {
+          color: token.colorTextLight1,
+        },
+
+        '.__collection-count': {
+          color: token.colorTextLight4,
         },
       },
     },

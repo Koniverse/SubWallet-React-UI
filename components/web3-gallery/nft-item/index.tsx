@@ -7,9 +7,10 @@ import Web3Gallery from '../base';
 
 export interface NftItemProps extends Omit<Web3GalleryProps, 'footerNode' | 'appendNode'> {
   title: string;
+  count?: number;
 }
 
-const NftItem: React.FC<NftItemProps> = ({ className, title, ...restProps }) => {
+const NftItem: React.FC<NftItemProps> = ({ className, title, count, ...restProps }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('nft-item');
   const [wrapSSR, hashId] = useStyle(prefixCls);
@@ -19,7 +20,18 @@ const NftItem: React.FC<NftItemProps> = ({ className, title, ...restProps }) => 
     <Web3Gallery
       {...restProps}
       className={classes}
-      footerNode={<div className="__item-title">{title}</div>}
+      footerNode={
+        <>
+          <div className="__footer-left">
+            <div className="__collection-title">{title}</div>
+          </div>
+          {count !== undefined && (
+            <div className="__footer-right">
+              <div className="__collection-count">{count}</div>
+            </div>
+          )}
+        </>
+      }
     />,
   );
 };

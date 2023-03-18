@@ -13,6 +13,7 @@ export default {
       control: 'text',
       defaultValue: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed non',
     },
+    count: { control: 'number', defaultValue: undefined },
   },
 } as ComponentMeta<typeof NftItem>;
 
