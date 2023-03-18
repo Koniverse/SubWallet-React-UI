@@ -70,7 +70,7 @@ const SwHeader: React.FC<SwHeaderProps> = (props) => {
           <Button
             type="ghost"
             schema="header"
-            size='sm'
+            size='xs'
             icon={leftPart}
             onClick={onClickLeft}
             disabled={disableLeft}
