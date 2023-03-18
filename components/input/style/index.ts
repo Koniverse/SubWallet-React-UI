@@ -503,6 +503,7 @@ export const genInputGroupStyle = (token: InputToken): CSSObject => {
   };
 };
 
+// @ts-ignore
 const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
   const { componentCls } = token;
 
@@ -539,6 +540,10 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
         },
       },
 
+      '--webkit-autofill-border-color': token.colorBgSecondary,
+      '--webkit-autofill-background-color': token.colorBgSecondary,
+      '--webkit-autofill-text-color': token.colorText,
+
       [`${componentCls}`]: {
         backgroundColor: 'transparent',
         border: 0,
@@ -549,6 +554,16 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
         height: 48,
         paddingBottom: 12,
         paddingTop: 12,
+
+        '&:-webkit-autofill': {
+          marginRight: token.marginXXS,
+          borderBottomStyle: token.lineType,
+          borderBottomWidth: token.lineWidth * 2,
+          borderColor: 'var(--webkit-autofill-border-color)',
+          transition: 'border-color 0.3s',
+          boxShadow: '0 0 0 1000px var(--webkit-autofill-background-color) inset',
+          '-webkit-text-fill-color': 'var(--webkit-autofill-text-color) !important',
+        },
       },
 
       [`${componentCls}-clear-icon-hidden`]: {
@@ -624,15 +639,25 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
         },
       },
 
-      '&:hover:before': {
-        borderColor: token['geekblue-4'],
+      '&:hover': {
+        '--webkit-autofill-border-color': token['geekblue-4'],
+
+        '&:before': {
+          borderColor: token['geekblue-4'],
+        },
       },
 
-      '&:focus-within:before': {
-        borderColor: token['geekblue-6'],
+      '&:focus-within': {
+        '--webkit-autofill-border-color': token['geekblue-6'],
+
+        '&:before': {
+          borderColor: token['geekblue-6'],
+        },
       },
 
       '&.-status-warning': {
+        '--webkit-autofill-border-color': token.colorWarning,
+
         '&:before': {
           borderColor: token.colorWarning,
         },
@@ -643,6 +668,8 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
       },
 
       '&.-status-error': {
+        '--webkit-autofill-border-color': token.colorError,
+
         '&:before': {
           borderColor: token.colorError,
         },
@@ -653,6 +680,8 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
       },
 
       '&.-status-success.-display-success-status': {
+        '--webkit-autofill-border-color': token.colorSuccess,
+
         '&:before': {
           borderColor: token.colorSuccess,
         },
@@ -663,6 +692,8 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
       },
 
       '&.-disabled': {
+        '--webkit-autofill-text-color': token.colorTextLight5,
+
         '&:before': {
           borderColor: 'transparent',
         },
