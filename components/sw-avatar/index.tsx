@@ -1,3 +1,5 @@
+import { decodeAddress, encodeAddress, isEthereumAddress } from '@polkadot/util-crypto';
+import { useMemo } from 'react';
 import * as React from 'react';
 import Identicon from '@polkadot/react-identicon';
 import type { IconTheme } from '@polkadot/react-identicon/types';
@@ -17,7 +19,6 @@ export interface SwAvatarProps {
 const SwAvatar = ({
   size = 40,
   value,
-  identPrefix = 42,
   theme = 'polkadot',
   isShowSubIcon,
   subIcon,
@@ -26,6 +27,20 @@ const SwAvatar = ({
   const prefixCls = getPrefixCls('sw-avatar');
   const [wrapSSR, hashId] = useStyle(prefixCls);
   const classes = classNames(prefixCls, hashId);
+
+  const formattedAddress = useMemo((): string | null => {
+    try {
+      return encodeAddress(decodeAddress(value || ''));
+    } catch (e) {
+      return value;
+    }
+  }, [value]);
+
+  const defaultTheme = useMemo(
+    (): IconTheme => (isEthereumAddress(value || '') ? 'ethereum' : 'polkadot'),
+    [value],
+  );
+
   return wrapSSR(
     <div
       className={classes}
@@ -34,9 +49,9 @@ const SwAvatar = ({
       <Identicon
         className="icon"
         size={size * 0.7}
-        value={value}
-        prefix={identPrefix}
-        theme={theme}
+        value={formattedAddress}
+        prefix={42}
+        theme={theme || defaultTheme}
       />
       {isShowSubIcon && <div className="sub-icon">{subIcon}</div>}
     </div>,
