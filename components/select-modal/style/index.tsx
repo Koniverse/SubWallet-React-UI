@@ -104,7 +104,7 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
 
         [`&${componentCls}-input-size-medium`]: {
           [`${componentCls}-input-wrapper`]: {
-            padding: `${token.paddingContentVertical}px ${token.paddingContentHorizontal}px`,
+            padding: `${token.paddingContentVertical + 1}px ${token.paddingContentHorizontal}px`,
           },
         },
 

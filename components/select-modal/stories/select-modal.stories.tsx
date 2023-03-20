@@ -5,7 +5,7 @@ import SettingItem from '../../web3-block/setting-item';
 import SwAvatar from '../../sw-avatar';
 import { useToken } from '../../theme/internal';
 import SelectModal from '../index';
-import type { SelectModalProps } from '../index';
+import type { SelectModalProps, SelectModalItem } from '../index';
 import Icon from '../../icon';
 import Typography from '../../typography';
 import Button from '../../button';
@@ -17,7 +17,7 @@ interface WrapperProps<T extends Record<string, any>> extends SelectModalProps<T
   withSearch: boolean;
 }
 
-interface Item {
+interface Item extends SelectModalItem {
   label: string;
   value: string;
 }
@@ -25,7 +25,7 @@ interface Item {
 const items: Item[] = [];
 
 for (let i = 0; i < 20; i++) {
-  items.push({ value: i.toString(), label: i.toString() });
+  items.push({ value: i.toString(), label: i.toString(), disabled: i % 5 === 0 });
 }
 
 const icon = <SwAvatar value="" identPrefix={42} size={20} />;

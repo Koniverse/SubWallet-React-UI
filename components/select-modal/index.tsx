@@ -1,6 +1,11 @@
 import OriginSelectModal from './SelectModal';
 
-export type { SelectModalProps } from './SelectModal';
+export type {
+  SelectModalProps,
+  SelectModalItem,
+  SelectModalRenderItemFunc,
+  SelectModalRenderSelectedFunc,
+} from './SelectModal';
 
 type SelectModalType = typeof OriginSelectModal;
 

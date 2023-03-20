@@ -17,7 +17,18 @@ import Icon from '../icon';
 import Typography from '../typography';
 
 export type SelectModalSize = 'small' | 'medium';
-export interface SelectModalProps<T extends Record<string, any>>
+
+export interface SelectModalItem extends Record<string, any> {
+  disabled?: boolean;
+}
+
+export type SelectModalRenderItemFunc<T extends SelectModalItem> = (
+  item: T,
+  selected: boolean,
+) => React.ReactNode;
+export type SelectModalRenderSelectedFunc<T extends SelectModalItem> = (item: T) => React.ReactNode;
+
+export interface SelectModalProps<T extends SelectModalItem>
   extends SwModalProps,
     Partial<
       Pick<
@@ -33,8 +44,8 @@ export interface SelectModalProps<T extends Record<string, any>>
   items: T[];
   itemKey: string;
   selected: string;
-  renderItem: (item: T, selected: boolean) => React.ReactNode;
-  renderSelected?: (item: T) => React.ReactNode;
+  renderItem: SelectModalRenderItemFunc<T>;
+  renderSelected?: SelectModalRenderSelectedFunc<T>;
   inputClassName?: string;
   onSelect: (value: string) => void;
   size?: SelectModalSize;
@@ -57,7 +68,7 @@ const DEFAULT_SUFFIX = <Icon type='phosphor' phosphorIcon={CaretDown} size="xs" 
 const DEFAULT_PLACEHOLDER = 'Select box';
 const DEFAULT_TITLE = 'Select modal';
 const DEFAULT_SEARCH_PLACEHOLDER = 'Search';
-const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>): JSX.Element => {
+const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX.Element => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const [, token] = useToken();
 
@@ -147,8 +158,10 @@ const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>):
 
   const _onSelect = useCallback(
     (item: T) => () => {
-      onSelect(item[itemKey] as string);
-      inactiveModal(id);
+      if (!item.disabled) {
+        onSelect(item[itemKey] as string);
+        inactiveModal(id);
+      }
     },
     [itemKey, onSelect, inactiveModal, id],
   );
@@ -231,22 +244,22 @@ const SelectModal = <T extends Record<string, any>>(props: SelectModalProps<T>):
           className={classNames(hashId, className, prefixCls)}
         >
           <SwList.Section
-            list={items}
-            renderItem={_renderItem}
+            actionBtnIcon={actionBtnIcon}
+            autoFocusSearch={focusSearch}
+            className={classNames(hashId, `${prefixCls}-item-container`)}
             displayRow
-            rowGap={`${token.paddingContentVerticalSM}px`}
             enableSearchInput={!!searchFunction}
-            searchFunction={searchFunction}
             ignoreScrollbar={ignoreScrollbar}
             ignoreScrollbarMethod={ignoreScrollbarMethod}
-            className={classNames(hashId, `${prefixCls}-item-container`)}
+            list={items}
+            onClickActionBtn={onClickActionBtn}
+            renderItem={_renderItem}
+            renderWhenEmpty={renderWhenEmpty}
+            rowGap={`${token.paddingContentVerticalSM}px`}
+            searchFunction={searchFunction}
             searchPlaceholder={searchPlaceholder || DEFAULT_SEARCH_PLACEHOLDER}
             searchableMinCharactersCount={searchableMinCharactersCount}
-            renderWhenEmpty={renderWhenEmpty}
-            actionBtnIcon={actionBtnIcon}
             showActionBtn={showActionBtn}
-            onClickActionBtn={onClickActionBtn}
-            autoFocusSearch={focusSearch}
           />
         </SwModal>
       </NoFormStyle>

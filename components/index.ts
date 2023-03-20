@@ -174,7 +174,12 @@ export type { SwNumberProps } from './number';
 export { default as PinCode } from './pincode';
 export type { PinCodeProps } from './pincode';
 export { default as SelectModal } from './select-modal';
-export type { SelectModalProps } from './select-modal';
+export type {
+  SelectModalProps,
+  SelectModalItem,
+  SelectModalRenderItemFunc,
+  SelectModalRenderSelectedFunc,
+} from './select-modal';
 export { default as Squircle } from './squircle';
 export type { SquircleProps } from './squircle';
 // export { default as SwAvatar } from './sw-avatar';
