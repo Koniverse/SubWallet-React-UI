@@ -154,6 +154,15 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
         },
       },
     },
+    {
+      [`${componentCls}-input-custom`]: {
+        width: 'fit-content',
+
+        [`&${componentCls}-input-disabled`]: {
+          cursor: 'not-allowed',
+        },
+      },
+    },
   ];
 };
 

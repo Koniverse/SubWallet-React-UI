@@ -164,13 +164,7 @@ export default {
         eq: '',
       },
     },
-    disabled: {
-      type: 'boolean',
-      if: {
-        arg: 'withDisabled',
-        eq: true,
-      },
-    },
+    disabled: { type: 'boolean' },
     withLabel: {
       control: false,
     },

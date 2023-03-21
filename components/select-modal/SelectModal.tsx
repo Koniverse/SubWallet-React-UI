@@ -202,7 +202,13 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
     <NoCompactStyle>
       <NoFormStyle status override>
         {customInput ? (
-          <div className={classNames(`${prefixCls}-input-custom`)} onClick={openModal}>
+          <div
+            className={classNames(hashId, `${prefixCls}-input-custom`, {
+              [`${prefixCls}-input-focus`]: isActive,
+              [`${prefixCls}-input-disabled`]: disabled,
+            })}
+            onClick={openModal}
+          >
             {customInput}
           </div>
         ) : (
