@@ -222,4 +222,5 @@ export interface SeedToken extends PresetColorType {
    */
   wireframe: boolean;
   colorTransparent: string;
+  opacityDisable: number;
 }
