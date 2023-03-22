@@ -1,6 +1,7 @@
 import * as React from 'react';
 import classNames from 'classnames';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import type { ForwardedRef } from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 import type { InputRef } from 'rc-input';
 import { ConfigContext } from '../config-provider';
 import useStyle from './style';
@@ -23,7 +24,14 @@ export interface SwListSectionProps<T> extends Omit<SwListProps<T>, 'searchBy' |
   autoFocusSearch?: boolean;
 }
 
-const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
+export interface SwListSectionRef {
+  setSearchValue: (value: string) => void;
+}
+
+const SwListSection = <T extends any>(
+  props: SwListSectionProps<T>,
+  ref: ForwardedRef<SwListSectionRef>,
+) => {
   const {
     autoFocusSearch = true,
     prefixCls: customizePrefixCls,
@@ -45,16 +53,18 @@ const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
   const classes = classNames(`${basePrefixCls}-section`, hashId, className, {
     '-boxed-mode': mode === 'boxed',
   });
-  const [searchText, setSearchText] = useState<string>('');
+  const [searchValue, setSearchValue] = useState<string>('');
 
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+    setSearchValue(e.target.value);
   }, []);
 
   const searchBy = useCallback(
-    (item: T) => (searchFunction ? searchFunction(item, searchText) : true),
-    [searchFunction, searchText],
+    (item: T) => (searchFunction ? searchFunction(item, searchValue) : true),
+    [searchFunction, searchValue],
   );
+
+  useImperativeHandle(ref, () => ({ setSearchValue }));
 
   useEffect(() => {
     if (enableSearchInput && autoFocusSearch) {
@@ -69,7 +79,7 @@ const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
           <Input.Search
             onChange={onChange}
             placeholder={searchPlaceholder}
-            value={searchText}
+            value={searchValue}
             ref={searchRef}
             suffix={
               showActionBtn && (
@@ -77,8 +87,8 @@ const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
                   <Button
                     onClick={onClickActionBtn}
                     className={`${basePrefixCls}-action-btn`}
-                    size='xs'
-                    type='ghost'
+                    size="xs"
+                    type="ghost"
                     icon={actionBtnIcon}
                   />
                 </div>
@@ -92,11 +102,11 @@ const SwListSection = <T extends any>(props: SwListSectionProps<T>) => {
           {...restProps}
           prefixCls={customizePrefixCls}
           searchBy={searchBy}
-          searchTerm={searchText}
+          searchTerm={searchValue}
         />
       </div>
     </div>,
   );
 };
 
-export default SwListSection;
+export default forwardRef(SwListSection);

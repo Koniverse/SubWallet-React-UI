@@ -217,7 +217,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
               onScan(value, null);
             })
             .catch((error: Error) => {
-              if (error.name === 'NotFoundException') {
+              if (error.name === 'NotFoundException' || !error.message) {
                 error.message = 'Invalid QR code, please try again';
               }
               onScan(null, error);
