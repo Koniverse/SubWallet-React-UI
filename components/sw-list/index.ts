@@ -4,7 +4,7 @@ import InternalList from './List';
 import Section from './Section';
 
 export type { SwListProps } from './List';
-export type { SwListSectionProps } from './Section';
+export type { SwListSectionProps, SwListSectionRef } from './Section';
 
 type CompoundedComponent<T = any> = React.ForwardRefExoticComponent<
   SwListProps<T> & React.RefAttributes<HTMLElement>
