@@ -1,10 +1,10 @@
 import { CaretDown } from 'phosphor-react';
 import classNames from 'classnames';
-import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import * as React from 'react';
 import type { PresetBarShapeType } from '../_util/shapes';
 import { useToken } from '../theme/internal';
-import type { SwListSectionProps } from '../sw-list';
+import type { SwListSectionRef, SwListSectionProps } from '../sw-list';
 import SwList from '../sw-list';
 import SwModal from '../sw-modal';
 import type { SwModalProps } from '../sw-modal';
@@ -39,6 +39,7 @@ export interface SelectModalProps<T extends SelectModalItem>
         | 'renderWhenEmpty'
         | 'ignoreScrollbar'
         | 'ignoreScrollbarMethod'
+        | 'filterBy'
       >
     > {
   items: T[];
@@ -64,7 +65,7 @@ export interface SelectModalProps<T extends SelectModalItem>
   onClickActionBtn?: () => void;
 }
 
-const DEFAULT_SUFFIX = <Icon type='phosphor' phosphorIcon={CaretDown} size="xs" />;
+const DEFAULT_SUFFIX = <Icon type="phosphor" phosphorIcon={CaretDown} size="xs" />;
 const DEFAULT_PLACEHOLDER = 'Select box';
 const DEFAULT_TITLE = 'Select modal';
 const DEFAULT_SEARCH_PLACEHOLDER = 'Search';
@@ -110,6 +111,7 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
     actionBtnIcon,
     showActionBtn,
     onClickActionBtn,
+    filterBy,
     ...restProps
   } = props;
 
@@ -126,16 +128,27 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
   // Style
   const [wrapSSR, hashId] = useStyle(prefixCls);
 
+  const sectionRef = useRef<SwListSectionRef>(null);
+
+  const enableSearchInput = !!searchFunction;
+
   const openModal = useCallback(() => {
     if (!disabled) {
       activeModal(id);
     }
   }, [activeModal, id, disabled]);
 
+  const clearSearchInput = useCallback(() => {
+    if (enableSearchInput) {
+      sectionRef.current?.setSearchValue('');
+    }
+  }, [enableSearchInput]);
+
   const handleCancel = useCallback(() => {
     inactiveModal(id);
     onCancel?.();
-  }, [onCancel, id, inactiveModal]);
+    clearSearchInput();
+  }, [onCancel, id, inactiveModal, clearSearchInput]);
 
   const _renderInput = useCallback(
     (item: T | undefined) => {
@@ -161,9 +174,10 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
       if (!item.disabled) {
         onSelect(item[itemKey] as string);
         inactiveModal(id);
+        clearSearchInput();
       }
     },
-    [itemKey, onSelect, inactiveModal, id],
+    [itemKey, onSelect, inactiveModal, id, clearSearchInput],
   );
 
   const _renderItem = useCallback(
@@ -250,11 +264,13 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
           className={classNames(hashId, className, prefixCls)}
         >
           <SwList.Section
+            ref={sectionRef}
             actionBtnIcon={actionBtnIcon}
             autoFocusSearch={focusSearch}
             className={classNames(hashId, `${prefixCls}-item-container`)}
             displayRow
-            enableSearchInput={!!searchFunction}
+            enableSearchInput={enableSearchInput}
+            filterBy={filterBy}
             ignoreScrollbar={ignoreScrollbar}
             ignoreScrollbarMethod={ignoreScrollbarMethod}
             list={items}
