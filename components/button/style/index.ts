@@ -133,9 +133,12 @@ const genSizeButtonStyle = (token: ButtonToken, size: ButtonSize): CSSInterpolat
     return [
       {
         [`${componentCls}.-size-xs`]: {
-          fontSize: token.fontSize,
           height: buttonSizeMap[size],
           lineHeight: `${buttonSizeMap[size]}px`,
+
+          [`${componentCls}-content-wrapper`]: {
+            fontSize: token.fontSize,
+          },
 
           [`&.-icon-only`]: {
             minWidth: buttonSizeMap[size],
