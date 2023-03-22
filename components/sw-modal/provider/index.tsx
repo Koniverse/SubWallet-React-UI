@@ -56,6 +56,7 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
 
       return result.filter((value) => value !== id);
     });
+    setActiveList((prevState) => [...prevState].filter((value) => value !== id));
   }, []);
 
   const clearModals = useCallback(
