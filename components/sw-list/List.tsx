@@ -34,7 +34,7 @@ function SwList(props: SwListProps) {
     '-display-row': displayRow,
     '-render-on-scroll': renderOnScroll,
     '-render-default': !renderOnScroll,
-    '-ignore-scrollbar-hide': ignoreScrollbar && ignoreScrollbarMethod === 'hide',
+    'hide-scrollbar': ignoreScrollbar && ignoreScrollbarMethod === 'hide',
     '-ignore-scrollbar-padding': ignoreScrollbar && ignoreScrollbarMethod === 'padding',
   });
 

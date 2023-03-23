@@ -276,3 +276,14 @@ mark {
   scrollbar-color: rgba(128,128,128, 0.5) transparent;
   scrollbar-gutter: auto;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}

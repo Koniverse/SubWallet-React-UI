@@ -79,10 +79,6 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
             paddingRight: token.padding - scrollbarWidth,
           },
 
-          '&.-ignore-scrollbar-hide': {
-            marginRight: -scrollbarWidth,
-          },
-
           '&.-display-grid, &.-display-row': {
             paddingBottom: 0,
           },
