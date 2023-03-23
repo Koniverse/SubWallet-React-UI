@@ -64,7 +64,7 @@ const genSectionStyle = (token: FullToken<'SwList'>): CSSInterpolation => {
         },
 
         [`${componentCls}-wrapper`]: {
-          flexGrow: 1,
+          flex: '1 1 100vh',
           overflow: 'hidden',
         },
 
