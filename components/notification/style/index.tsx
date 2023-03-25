@@ -211,6 +211,11 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
           cursor: 'pointer',
         },
 
+        [`${noticeCls}-main-content`]: {
+          paddingTop: token.paddingXXS,
+          paddingBottom: token.paddingXS - 2,
+        },
+
         [`${noticeCls}-message`]: {
           color: colorTextHeading,
           fontSize,
@@ -280,8 +285,9 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
         },
 
         [`${noticeCls}-btn`]: {
-          float: 'right',
-          marginTop: token.marginSM,
+          float: 'left',
+          marginTop: token.marginXXS,
+          marginBottom: token.marginXXS,
         },
       },
     },

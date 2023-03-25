@@ -72,7 +72,7 @@ export function PureContent({
         type="phosphor"
         phosphorIcon={typeToIcon[type]}
         weight="fill"
-        size="md"
+        size="lg"
       />
     );
   }
@@ -86,7 +86,7 @@ export function PureContent({
       role="alert"
     >
       {iconNode}
-      <div>
+      <div className={`${prefixCls}-main-content`}>
         <div className={`${prefixCls}-message`}>{message}</div>
         {description && <div className={`${prefixCls}-description`}>{description}</div>}
         {btn && <div className={`${prefixCls}-btn`}>{btn}</div>}

@@ -121,6 +121,18 @@ WithIcon.args = {
   icon: <Icon type="phosphor" phosphorIcon={Info} iconColor="#FFF" size="md" />,
 };
 
+export const WithButton = Template.bind({});
+// More on args: https://storybook.js.org/docs/react/writing-stories/args
+WithButton.args = {
+  message: 'This is very very long title for this modal',
+  type: 'warning',
+  btn: (
+    <Button schema="warning" size="xs">
+      Click here!
+    </Button>
+  ),
+};
+
 export const Vertical = Template.bind({});
 // More on args: https://storybook.js.org/docs/react/writing-stories/args
 Vertical.args = {
