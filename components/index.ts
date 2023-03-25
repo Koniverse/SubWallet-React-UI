@@ -236,3 +236,6 @@ export { default as ImageSelection } from './web3-gallery/image-selection';
 export type { ImageSelectionProps } from './web3-gallery/image-selection';
 export { default as NftItem } from './web3-gallery/nft-item';
 export type { NftItemProps } from './web3-gallery/nft-item';
+
+export { balanceFormatter, formatNumber, PREDEFINED_FORMATTER } from './_util/number';
+export type { NumberFormatter } from './_util/number';

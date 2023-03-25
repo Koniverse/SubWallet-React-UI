@@ -165,6 +165,7 @@ export default {
       },
     },
     disabled: { type: 'boolean' },
+    loading: { type: 'boolean' },
     withLabel: {
       control: false,
     },
@@ -212,6 +213,7 @@ const DEFAULT_ARGS = {
   placeholder: 'Select Box',
   title: 'Select modal',
   disabled: false,
+  loading: false,
   label: '',
 };
 export const Default = Template.bind({});

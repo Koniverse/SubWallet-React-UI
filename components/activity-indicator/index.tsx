@@ -1,6 +1,7 @@
 import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
 import CSSMotion from 'rc-motion';
 import React from 'react';
+import { ConfigContext } from '../config-provider';
 
 export interface ActivityIndicatorProps {
   prefixCls?: string;
@@ -17,12 +18,15 @@ const getRealWidth = (node: HTMLElement) => ({
 });
 
 const ActivityIndicator: React.FC<ActivityIndicatorProps> = ({
-  prefixCls,
+  prefixCls: customizePrefixCls,
   loading = true,
   existIcon = true,
   loadingIconColor = '#737373',
   size,
 }) => {
+  const { getPrefixCls } = React.useContext(ConfigContext);
+  const prefixCls = getPrefixCls('activity-indicator', customizePrefixCls);
+
   const visible = !!loading;
 
   if (existIcon) {
