@@ -16,13 +16,7 @@ export interface SwAvatarProps {
   subIcon?: React.ReactNode;
 }
 
-const SwAvatar = ({
-  size = 40,
-  value,
-  theme = 'polkadot',
-  isShowSubIcon,
-  subIcon,
-}: SwAvatarProps) => {
+const SwAvatar = ({ size = 40, value, theme, isShowSubIcon, subIcon }: SwAvatarProps) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('sw-avatar');
   const [wrapSSR, hashId] = useStyle(prefixCls);
