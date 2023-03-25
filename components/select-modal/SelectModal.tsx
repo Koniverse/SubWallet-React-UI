@@ -2,6 +2,7 @@ import { CaretDown } from 'phosphor-react';
 import classNames from 'classnames';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import * as React from 'react';
+import ActivityIndicator from '../activity-indicator';
 import type { PresetBarShapeType } from '../_util/shapes';
 import { useToken } from '../theme/internal';
 import type { SwListSectionRef, SwListSectionProps } from '../sw-list';
@@ -63,6 +64,7 @@ export interface SelectModalProps<T extends SelectModalItem>
   actionBtnIcon?: React.ReactNode;
   showActionBtn?: boolean;
   onClickActionBtn?: () => void;
+  loading?: boolean;
 }
 
 const DEFAULT_SUFFIX = <Icon type="phosphor" phosphorIcon={CaretDown} size="xs" />;
@@ -96,6 +98,7 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
     id,
     onCancel,
     label = '',
+    loading,
     suffix = DEFAULT_SUFFIX,
     prefix,
     hideSuffix,
@@ -133,10 +136,10 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
   const enableSearchInput = !!searchFunction;
 
   const openModal = useCallback(() => {
-    if (!disabled) {
+    if (!disabled && !loading) {
       activeModal(id);
     }
-  }, [activeModal, id, disabled]);
+  }, [activeModal, id, disabled, loading]);
 
   const clearSearchInput = useCallback(() => {
     if (enableSearchInput) {
@@ -238,6 +241,7 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
               {
                 [`${prefixCls}-input-focus`]: isActive,
                 [`${prefixCls}-input-disabled`]: disabled,
+                [`${prefixCls}-input-loading`]: loading,
                 [`${prefixCls}-input-with-label`]: label,
               },
             )}
@@ -249,7 +253,8 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
               <div className={classNames(`${prefixCls}-input-content`)}>
                 {_renderInput(selectedItem)}
               </div>
-              {!hideSuffix && suffix}
+              {loading && <ActivityIndicator size={token.size} />}
+              {!hideSuffix && !loading && suffix}
             </div>
           </div>
         )}

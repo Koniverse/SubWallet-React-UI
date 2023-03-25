@@ -71,6 +71,10 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
           },
         },
 
+        [`&${componentCls}-input-loading`]: {
+          cursor: 'not-allowed',
+        },
+
         [`&${componentCls}-input-disabled`]: {
           cursor: 'not-allowed',
 
