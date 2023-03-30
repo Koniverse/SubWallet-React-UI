@@ -3,7 +3,7 @@ import type { InputProps as RcInputProps, InputRef } from 'rc-input';
 import RcInput from 'rc-input';
 import type { BaseInputProps } from 'rc-input/lib/interface';
 import { composeRef } from 'rc-util/lib/ref';
-import React, { forwardRef, useContext, useEffect, useMemo, useRef } from 'react';
+import React, { forwardRef, useContext, useEffect, useRef } from 'react';
 import { CheckCircle, WarningCircle, XCircle } from 'phosphor-react';
 import { ConfigContext } from '../config-provider';
 import DisabledContext from '../config-provider/DisabledContext';
@@ -219,18 +219,6 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     onChange?.(e);
   };
 
-  const Wrapper = useMemo((): React.FC<{ children: React.ReactNode }> => {
-    if (statusHelp || tooltip) {
-      return ({ children }) => (
-        <Tooltip trigger='hover' title={statusHelp || tooltip} placement={tooltipPlacement}>
-          {children}
-        </Tooltip>
-      );
-    }
-
-    return React.Fragment;
-  }, [statusHelp, tooltip, tooltipPlacement]);
-
   const suffixNode = (!!mergedStatus || suffix) && (
     <>
       {!!mergedStatus && (mergedStatus !== 'success' || displaySuccessStatus) && (
@@ -259,7 +247,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   }
 
   return wrapSSR(
-    <Wrapper>
+    <Tooltip trigger='hover' title={statusHelp || tooltip} placement={tooltipPlacement}>
       <div
         className={classNames(
           `${prefixCls}-container`,
@@ -315,7 +303,7 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
           />
         </div>
       </div>
-    </Wrapper>,
+    </Tooltip>,
   );
 });
 

@@ -157,18 +157,6 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
 
   const sectionRef = useRef<SwListSectionRef>(null);
 
-  const Wrapper = useMemo((): React.FC<{ children: React.ReactNode }> => {
-    if (statusHelp || tooltip) {
-      return ({ children }) => (
-        <Tooltip trigger='hover' title={statusHelp || tooltip} placement={tooltipPlacement}>
-          {children}
-        </Tooltip>
-      );
-    }
-
-    return React.Fragment;
-  }, [statusHelp, tooltip, tooltipPlacement]);
-
   const suffixNode = useMemo((): React.ReactNode => {
     if (loading) {
       return <ActivityIndicator size={token.size} />;
@@ -284,7 +272,7 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
   return wrapSSR(
     <NoCompactStyle>
       <NoFormStyle override>
-        <Wrapper>
+        <Tooltip trigger='hover' title={statusHelp || tooltip} placement={tooltipPlacement}>
           {customInput ? (
             <div
               className={classNames(hashId, `${prefixCls}-input-custom`, {
@@ -325,7 +313,7 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
               </div>
             </div>
           )}
-        </Wrapper>
+        </Tooltip>
         <SwModal
           {...restProps}
           title={title || DEFAULT_TITLE}

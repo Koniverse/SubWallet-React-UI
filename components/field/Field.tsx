@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import React, { useMemo } from 'react';
+import React from 'react';
 import type { PresetBarShapeType } from '../_util/shapes';
 import { ConfigContext } from '../config-provider';
 import { NoFormStyle } from '../form/context';
@@ -53,21 +53,10 @@ const Field = (props: FieldProps): JSX.Element => {
   // Style
   const [wrapSSR, hashId] = useStyle(prefixCls);
 
-  const Wrapper = useMemo((): React.FC<{ children: React.ReactNode }> => {
-    if (tooltip) {
-      return ({ children }) => (
-        <Tooltip trigger='hover' title={tooltip} placement={tooltipPlacement}>
-          {children}
-        </Tooltip>
-      );
-    }
-    return React.Fragment;
-  }, [tooltip, tooltipPlacement]);
-
   return wrapSSR(
     <NoCompactStyle>
       <NoFormStyle override>
-        <Wrapper>
+        <Tooltip trigger='hover' title={tooltip} placement={tooltipPlacement}>
           <div
             className={classNames(
               hashId,
@@ -97,7 +86,7 @@ const Field = (props: FieldProps): JSX.Element => {
               {suffix}
             </div>
           </div>
-        </Wrapper>
+        </Tooltip>
       </NoFormStyle>
     </NoCompactStyle>,
   );
