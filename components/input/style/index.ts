@@ -538,6 +538,12 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
         '&.-shape-round, &.-shape-round:before': {
           borderRadius: token.borderRadiusLG,
         },
+
+        [`${componentCls}`]: {
+          '&:-webkit-autofill': {
+            borderTopWidth: 0,
+          },
+        },
       },
 
       '--webkit-autofill-border-color': token.colorBgSecondary,
@@ -559,6 +565,8 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
           marginRight: token.marginXXS,
           borderBottomStyle: token.lineType,
           borderBottomWidth: token.lineWidth * 2,
+          borderTopStyle: token.lineType,
+          borderTopWidth: token.lineWidth * 2,
           borderColor: 'var(--webkit-autofill-border-color)',
           transition: 'border-color 0.3s',
           boxShadow: '0 0 0 1000px var(--webkit-autofill-background-color) inset',

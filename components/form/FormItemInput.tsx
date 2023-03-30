@@ -25,7 +25,8 @@ interface FormItemInputMiscProps {
       },
     ) => React.ReactNode;
   };
-  hideError?: boolean;
+  hideStatusHelp?: boolean;
+  statusHelpAsTooltip?: boolean;
 }
 
 export interface FormItemInputProps {
@@ -47,7 +48,8 @@ const FormItemInput: React.FC<FormItemInputProps & FormItemInputMiscProps> = (pr
     _internalItemRender: formItemRender,
     extra,
     help,
-    hideError = false,
+    hideStatusHelp = false,
+    statusHelpAsTooltip = false,
     fieldId,
     marginBottom,
     onErrorVisibleChanged,
@@ -74,7 +76,7 @@ const FormItemInput: React.FC<FormItemInputProps & FormItemInputMiscProps> = (pr
   const errorListDom =
     marginBottom !== null || errors.length || warnings.length ? (
       <div style={{ display: 'flex', flexWrap: 'nowrap' }}>
-        {!hideError && (
+        {!hideStatusHelp && !statusHelpAsTooltip && (
           <FormItemPrefixContext.Provider value={formItemContext}>
             <ErrorList
               fieldId={fieldId}

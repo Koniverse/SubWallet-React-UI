@@ -1,7 +1,8 @@
-import { CaretDown } from 'phosphor-react';
+import { CaretDown, CheckCircle, WarningCircle, XCircle } from 'phosphor-react';
 import classNames from 'classnames';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import * as React from 'react';
+import { getMergedStatus, getStatusClassNames } from '../_util/statusUtils';
 import ActivityIndicator from '../activity-indicator';
 import type { PresetBarShapeType } from '../_util/shapes';
 import { useToken } from '../theme/internal';
@@ -11,11 +12,15 @@ import SwModal from '../sw-modal';
 import type { SwModalProps } from '../sw-modal';
 import { ModalContext } from '../sw-modal/provider';
 import { ConfigContext } from '../config-provider';
-import { NoFormStyle } from '../form/context';
+import { FormItemInputContext, NoFormStyle } from '../form/context';
 import { NoCompactStyle } from '../space/Compact';
+import Tooltip from '../tooltip';
 import useStyle from './style';
+import type { SwIconProps } from '../icon';
 import Icon from '../icon';
 import Typography from '../typography';
+import type { InputStatus } from '../_util/statusUtils';
+import type { TooltipPlacement } from '../tooltip';
 
 export type SelectModalSize = 'small' | 'medium';
 
@@ -65,12 +70,23 @@ export interface SelectModalProps<T extends SelectModalItem>
   showActionBtn?: boolean;
   onClickActionBtn?: () => void;
   loading?: boolean;
+  displaySuccessStatus?: boolean;
+  status?: InputStatus;
+  statusHelp?: string;
+  tooltip?: string;
+  tooltipPlacement?: TooltipPlacement;
 }
 
-const DEFAULT_SUFFIX = <Icon type="phosphor" phosphorIcon={CaretDown} size="xs" />;
+const DEFAULT_SUFFIX = <Icon type='phosphor' phosphorIcon={CaretDown} size='xs' />;
 const DEFAULT_PLACEHOLDER = 'Select box';
 const DEFAULT_TITLE = 'Select modal';
 const DEFAULT_SEARCH_PLACEHOLDER = 'Search';
+const StatusIconMap: Record<string, SwIconProps['phosphorIcon']> = {
+  success: CheckCircle,
+  error: XCircle,
+  warning: WarningCircle,
+};
+
 const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX.Element => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const [, token] = useToken();
@@ -115,6 +131,11 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
     showActionBtn,
     onClickActionBtn,
     filterBy,
+    tooltipPlacement = 'topLeft',
+    tooltip,
+    statusHelp,
+    displaySuccessStatus,
+    status: customStatus,
     ...restProps
   } = props;
 
@@ -127,11 +148,56 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
     [selected, items, itemKey],
   );
 
+  const { status: contextStatus, hasFeedback } = useContext(FormItemInputContext);
+  const mergedStatus = getMergedStatus(contextStatus, customStatus);
+
   const prefixCls = getPrefixCls('select-modal', customizePrefixCls);
   // Style
   const [wrapSSR, hashId] = useStyle(prefixCls);
 
   const sectionRef = useRef<SwListSectionRef>(null);
+
+  const Wrapper = useMemo((): React.FC<{ children: React.ReactNode }> => {
+    if (statusHelp || tooltip) {
+      return ({ children }) => (
+        <Tooltip trigger='hover' title={statusHelp || tooltip} placement={tooltipPlacement}>
+          {children}
+        </Tooltip>
+      );
+    }
+
+    return React.Fragment;
+  }, [statusHelp, tooltip, tooltipPlacement]);
+
+  const suffixNode = useMemo((): React.ReactNode => {
+    if (loading) {
+      return <ActivityIndicator size={token.size} />;
+    }
+
+    return (
+      (!!mergedStatus || suffix) && (
+        <>
+          {!!mergedStatus && (mergedStatus !== 'success' || displaySuccessStatus) && (
+            <Icon
+              phosphorIcon={StatusIconMap[mergedStatus]}
+              weight='fill'
+              className={`${prefixCls}-status-icon`}
+            />
+          )}
+          {!hideSuffix && suffix}
+        </>
+      )
+    );
+  }, [
+    loading,
+    mergedStatus,
+    suffix,
+    mergedStatus,
+    displaySuccessStatus,
+    prefixCls,
+    hideSuffix,
+    suffix,
+  ]);
 
   const enableSearchInput = !!searchFunction;
 
@@ -217,47 +283,49 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
 
   return wrapSSR(
     <NoCompactStyle>
-      <NoFormStyle status override>
-        {customInput ? (
-          <div
-            className={classNames(hashId, `${prefixCls}-input-custom`, {
-              [`${prefixCls}-input-focus`]: isActive,
-              [`${prefixCls}-input-disabled`]: disabled,
-            })}
-            onClick={openModal}
-          >
-            {customInput}
-          </div>
-        ) : (
-          <div
-            onClick={openModal}
-            className={classNames(
-              hashId,
-              `${prefixCls}-input-container`,
-              `${prefixCls}-input-border-${shape}`,
-              `${prefixCls}-input-bg-${background}`,
-              `${prefixCls}-input-size-${inputSize}`,
-              inputClassName,
-              {
+      <NoFormStyle override>
+        <Wrapper>
+          {customInput ? (
+            <div
+              className={classNames(hashId, `${prefixCls}-input-custom`, {
                 [`${prefixCls}-input-focus`]: isActive,
                 [`${prefixCls}-input-disabled`]: disabled,
-                [`${prefixCls}-input-loading`]: loading,
-                [`${prefixCls}-input-with-label`]: label,
-              },
-            )}
-            style={{ width: inputWidth }}
-          >
-            {label && <div className={classNames(`${prefixCls}-input-label`)}>{label}</div>}
-            <div className={classNames(`${prefixCls}-input-wrapper`)}>
-              {prefix}
-              <div className={classNames(`${prefixCls}-input-content`)}>
-                {_renderInput(selectedItem)}
-              </div>
-              {loading && <ActivityIndicator size={token.size} />}
-              {!hideSuffix && !loading && suffix}
+              })}
+              onClick={openModal}
+            >
+              {customInput}
             </div>
-          </div>
-        )}
+          ) : (
+            <div
+              onClick={openModal}
+              className={classNames(
+                hashId,
+                `${prefixCls}-input-container`,
+                `${prefixCls}-input-border-${shape}`,
+                `${prefixCls}-input-bg-${background}`,
+                `${prefixCls}-input-size-${inputSize}`,
+                inputClassName,
+                getStatusClassNames('', mergedStatus, hasFeedback),
+                {
+                  [`${prefixCls}-input-focus`]: isActive,
+                  [`${prefixCls}-input-disabled`]: disabled,
+                  [`${prefixCls}-input-loading`]: loading,
+                  [`${prefixCls}-input-with-label`]: label,
+                },
+              )}
+              style={{ width: inputWidth }}
+            >
+              {label && <div className={classNames(`${prefixCls}-input-label`)}>{label}</div>}
+              <div className={classNames(`${prefixCls}-input-wrapper`)}>
+                {prefix && <div className={classNames(`${prefixCls}-input-prefix`)}>{prefix}</div>}
+                <div className={classNames(`${prefixCls}-input-content`)}>
+                  {_renderInput(selectedItem)}
+                </div>
+                <div className={classNames(`${prefixCls}-input-suffix`)}>{suffixNode}</div>
+              </div>
+            </div>
+          )}
+        </Wrapper>
         <SwModal
           {...restProps}
           title={title || DEFAULT_TITLE}

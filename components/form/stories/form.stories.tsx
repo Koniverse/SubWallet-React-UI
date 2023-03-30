@@ -63,6 +63,7 @@ const App = () => {
             message: 'Please input your username!',
           },
         ]}
+        statusHelpAsTooltip
       >
         <Input
           label="Username"
@@ -76,7 +77,7 @@ const App = () => {
         validateStatus={responseStatus}
         name="password"
         rules={[{ required: true, message: 'Please input your password!' }]}
-        hideError
+        statusHelpAsTooltip
       >
         <Input.Password
           label="Password"

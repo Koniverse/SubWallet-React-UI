@@ -164,6 +164,16 @@ export default {
         eq: '',
       },
     },
+    status: {
+      control: 'radio',
+      options: ['warning', 'error', 'success'],
+    },
+    tooltip: {
+      type: 'string',
+    },
+    statusHelp: {
+      type: 'string',
+    },
     disabled: { type: 'boolean' },
     loading: { type: 'boolean' },
     withLabel: {
@@ -215,6 +225,9 @@ const DEFAULT_ARGS = {
   disabled: false,
   loading: false,
   label: '',
+  status: 'success',
+  tooltip: '',
+  statusHelp: '',
 };
 export const Default = Template.bind({});
 

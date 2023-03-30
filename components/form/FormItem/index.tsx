@@ -69,7 +69,8 @@ export interface FormItemProps<Values = any>
   tooltip?: LabelTooltipType;
   /** @deprecated No need anymore */
   fieldKey?: React.Key | React.Key[];
-  hideError?: boolean;
+  hideStatusHelp?: boolean;
+  statusHelpAsTooltip?: boolean;
 }
 
 function hasValidName(name?: NamePath): Boolean {
@@ -104,6 +105,7 @@ function InternalFormItem<Values = any>(props: FormItemProps<Values>): React.Rea
     messageVariables,
     trigger = 'onChange',
     validateTrigger,
+    statusHelpAsTooltip,
     hidden,
   } = props;
   const { getPrefixCls } = React.useContext(ConfigContext);
@@ -279,6 +281,10 @@ function InternalFormItem<Values = any>(props: FormItemProps<Values>): React.Rea
         const mergedControl: typeof control = {
           ...control,
         };
+
+        if (statusHelpAsTooltip && (mergedErrors.length > 0 || mergedWarnings.length > 0)) {
+          mergedControl.statusHelp = mergedErrors[0] || mergedWarnings[0];
+        }
 
         let childNode: React.ReactNode = null;
 

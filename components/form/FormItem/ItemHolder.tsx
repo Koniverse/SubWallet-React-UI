@@ -166,7 +166,7 @@ export default function ItemHolder(props: ItemHolderProps) {
           'validateTrigger',
           'valuePropName',
           'wrapperCol',
-          'hideError',
+          'hideStatusHelp',
         ])}
       >
         {/* Label */}

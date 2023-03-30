@@ -23,6 +23,8 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
         lineHeight: token.lineHeightLG,
         position: 'relative',
 
+        // Common
+
         [`${componentCls}-input-wrapper`]: {
           display: 'flex',
           flexDirection: 'row',
@@ -50,6 +52,36 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
           position: 'relative',
         },
 
+        [`&${componentCls}-input-loading`]: {
+          cursor: 'not-allowed',
+        },
+
+        [`${componentCls}-input-placeholder`]: {
+          color: token.colorText,
+          fontSize: token.fontSizeHeading6,
+          lineHeight: token.lineHeightHeading6,
+        },
+
+        [`${componentCls}-input-prefix`]: {
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+        },
+
+        [`${componentCls}-input-suffix`]: {
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+        },
+
+        [`${componentCls}-status-icon`]: {
+          fontSize: token.sizeMD,
+          marginRight: token.marginXS,
+          order: -1,
+        },
+
+        // Border color
+
         '&::before': {
           content: '""',
           position: 'absolute',
@@ -71,10 +103,6 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
           },
         },
 
-        [`&${componentCls}-input-loading`]: {
-          cursor: 'not-allowed',
-        },
-
         [`&${componentCls}-input-disabled`]: {
           cursor: 'not-allowed',
 
@@ -87,14 +115,38 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
 
         [`&${componentCls}-input-focus`]: {
           '&::before': {
-            borderColor: `${token['geekblue-6']} !important`,
+            borderColor: `${token['geekblue-6']}`,
           },
         },
 
-        [`${componentCls}-input-placeholder`]: {
-          color: token.colorText,
-          fontSize: token.fontSizeHeading6,
-          lineHeight: token.lineHeightHeading6,
+        '&.-status-warning': {
+          '&:before': {
+            borderColor: token.colorWarning,
+          },
+
+          [`${componentCls}-status-icon`]: {
+            color: token.colorWarning,
+          },
+        },
+
+        '&.-status-error': {
+          '&:before': {
+            borderColor: token.colorError,
+          },
+
+          [`${componentCls}-status-icon`]: {
+            color: token.colorError,
+          },
+        },
+
+        '&.-status-success.-display-success-status': {
+          '&:before': {
+            borderColor: token.colorSuccess,
+          },
+
+          [`${componentCls}-status-icon`]: {
+            color: token.colorSuccess,
+          },
         },
 
         // Size
@@ -123,7 +175,7 @@ const genInputStyle: GenerateStyle<SelectModalToken> = (token) => {
           },
         },
 
-        // Border
+        // Border radius
         [`&${componentCls}-input-border-square`]: {
           '&::before': {
             borderRadius: 0,

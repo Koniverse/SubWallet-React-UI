@@ -3,7 +3,7 @@ import type { InputProps as RcInputProps, InputRef } from 'rc-input';
 import RcInput from 'rc-input';
 import type { BaseInputProps } from 'rc-input/lib/interface';
 import { composeRef } from 'rc-util/lib/ref';
-import React, { forwardRef, useContext, useEffect, useRef } from 'react';
+import React, { forwardRef, useContext, useEffect, useMemo, useRef } from 'react';
 import { CheckCircle, WarningCircle, XCircle } from 'phosphor-react';
 import { ConfigContext } from '../config-provider';
 import DisabledContext from '../config-provider/DisabledContext';
@@ -15,6 +15,8 @@ import { getMergedStatus, getStatusClassNames } from '../_util/statusUtils';
 import warning from '../_util/warning';
 import useRemovePasswordTimeout from './hooks/useRemovePasswordTimeout';
 import { hasPrefixSuffix } from './utils';
+import type { TooltipPlacement } from '../tooltip';
+import Tooltip from '../tooltip';
 
 // CSSINJS
 import useStyle from './style';
@@ -131,6 +133,9 @@ export interface InputProps
   label?: string;
   displaySuccessStatus?: boolean;
   containerClassName?: string;
+  statusHelp?: string;
+  tooltip?: string;
+  tooltipPlacement?: TooltipPlacement;
   [key: `data-${string}`]: string | undefined;
 }
 
@@ -158,6 +163,9 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     containerClassName,
     shape = 'default',
     label,
+    statusHelp,
+    tooltip,
+    tooltipPlacement = 'topLeft',
     ...rest
   } = props;
   const { getPrefixCls, direction, input } = React.useContext(ConfigContext);
@@ -211,6 +219,18 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
     onChange?.(e);
   };
 
+  const Wrapper = useMemo((): React.FC<{ children: React.ReactNode }> => {
+    if (statusHelp || tooltip) {
+      return ({ children }) => (
+        <Tooltip trigger='hover' title={statusHelp || tooltip} placement={tooltipPlacement}>
+          {children}
+        </Tooltip>
+      );
+    }
+
+    return React.Fragment;
+  }, [statusHelp, tooltip, tooltipPlacement]);
+
   const suffixNode = (!!mergedStatus || suffix) && (
     <>
       {!!mergedStatus && (mergedStatus !== 'success' || displaySuccessStatus) && (
@@ -239,61 +259,63 @@ const Input = forwardRef<InputRef, InputProps>((props, ref) => {
   }
 
   return wrapSSR(
-    <div
-      className={classNames(
-        `${prefixCls}-container`,
-        className,
-        {
-          [`${containerClassName}`]: !!containerClassName,
-          [`-shape-${shape}`]: !!shape,
-          [`-rtl`]: direction === 'rtl',
-          '-has-prefix': !!prefix,
-          '-has-suffix': !!mergedStatus || !!suffix,
-          '-has-label': !!label,
-          '-disabled': !!mergedDisabled,
-          '-display-success-status': displaySuccessStatus,
-        },
-        getStatusClassNames('', mergedStatus, hasFeedback),
-        hashId,
-      )}
-    >
-      {!!label && <div className={`${prefixCls}-label`}>{label}</div>}
-      <div className={`${prefixCls}-wrapper`}>
-        <RcInput
-          ref={composeRef(ref, inputRef)}
-          prefixCls={prefixCls}
-          autoComplete={input?.autoComplete}
-          {...rest}
-          disabled={mergedDisabled || undefined}
-          onBlur={handleBlur}
-          onFocus={handleFocus}
-          suffix={suffixNode}
-          prefix={prefix}
-          allowClear={mergedAllowClear}
-          className={classNames(compactItemClassnames)}
-          onChange={handleChange}
-          addonAfter={
-            addonAfter && (
-              <NoCompactStyle>
-                <NoFormStyle override status>
-                  {addonAfter}
-                </NoFormStyle>
-              </NoCompactStyle>
-            )
-          }
-          addonBefore={
-            addonBefore && (
-              <NoCompactStyle>
-                <NoFormStyle override status>
-                  {addonBefore}
-                </NoFormStyle>
-              </NoCompactStyle>
-            )
-          }
-          inputClassName={hashId}
-        />
+    <Wrapper>
+      <div
+        className={classNames(
+          `${prefixCls}-container`,
+          className,
+          {
+            [`${containerClassName}`]: !!containerClassName,
+            [`-shape-${shape}`]: !!shape,
+            [`-rtl`]: direction === 'rtl',
+            '-has-prefix': !!prefix,
+            '-has-suffix': !!mergedStatus || !!suffix,
+            '-has-label': !!label,
+            '-disabled': !!mergedDisabled,
+            '-display-success-status': displaySuccessStatus,
+          },
+          getStatusClassNames('', mergedStatus, hasFeedback),
+          hashId,
+        )}
+      >
+        {!!label && <div className={`${prefixCls}-label`}>{label}</div>}
+        <div className={`${prefixCls}-wrapper`}>
+          <RcInput
+            ref={composeRef(ref, inputRef)}
+            prefixCls={prefixCls}
+            autoComplete={input?.autoComplete}
+            {...rest}
+            disabled={mergedDisabled || undefined}
+            onBlur={handleBlur}
+            onFocus={handleFocus}
+            suffix={suffixNode}
+            prefix={prefix}
+            allowClear={mergedAllowClear}
+            className={classNames(compactItemClassnames)}
+            onChange={handleChange}
+            addonAfter={
+              addonAfter && (
+                <NoCompactStyle>
+                  <NoFormStyle override status>
+                    {addonAfter}
+                  </NoFormStyle>
+                </NoCompactStyle>
+              )
+            }
+            addonBefore={
+              addonBefore && (
+                <NoCompactStyle>
+                  <NoFormStyle override status>
+                    {addonBefore}
+                  </NoFormStyle>
+                </NoCompactStyle>
+              )
+            }
+            inputClassName={hashId}
+          />
+        </div>
       </div>
-    </div>,
+    </Wrapper>,
   );
 });
 
