@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import type { SwModalFuncProps } from '../SwModal';
 import type { SwConfirmDialogProps } from '../SwConfirmDialog';
 import SwConfirmDialog from '../SwConfirmDialog';
@@ -7,16 +7,14 @@ interface ModalContextType {
   initModal: (id: string) => void;
   clearModal: (id: string) => void;
   clearModals: (ids: string[]) => void;
-  activeList: string[];
   checkActive: (id: string) => boolean;
   activeModal: (id: string) => void;
   inactiveModal: (id: string) => void;
   inactiveModals: (ids: string[]) => void;
   addConfirmModal: (props: SwModalFuncProps) => void;
-  scannerOpen: boolean;
-  setScannerOpen: (value: boolean) => void;
   addExclude: (id: string) => void;
   removeExclude: (id: string) => void;
+  hasActiveModal: boolean;
 }
 
 interface ModalContextProviderProps {
@@ -34,71 +32,89 @@ interface ModalContextProviderProps {
 export const ModalContext = React.createContext({} as ModalContextType);
 export const ModalContextProvider = ({ children }: ModalContextProviderProps) => {
   const [externalList, setExternalList] = useState<SwConfirmDialogProps[]>([]);
-  const [, setGlobalList] = useState<string[]>([]);
-  const [activeList, setActiveList] = useState<string[]>([]);
-  const [excludeCheckList, setExcludeCheckList] = useState<string[]>([]);
-  const [scannerOpen, setScannerOpen] = useState(false);
+  const [globalMap, setGlobalMap] = useState<Record<string, boolean>>({});
+  const [excludeCheckMap, setExcludeCheckMap] = useState<Record<string, boolean>>({});
+  const [activeMap, setActiveMap] = useState<Record<string, number>>({});
+
+  const hasActiveModal = useMemo(
+    (): boolean =>
+      Object.entries(activeMap).reduce(
+        (previousValue, [id, value]) => previousValue || (!!value && globalMap[id]),
+        false,
+      ),
+    [activeMap, globalMap],
+  );
 
   const initModal = useCallback((id: string) => {
-    setGlobalList((prevState) => {
-      const result = [...prevState];
-      if (!result.includes(id)) {
-        result.push(id);
-      }
-
-      return result;
-    });
+    setGlobalMap((prevState) => ({
+      ...prevState,
+      [id]: true,
+    }));
   }, []);
 
   const clearModal = useCallback((id: string) => {
-    setGlobalList((prevState) => {
-      const result = [...prevState];
-
-      return result.filter((value) => value !== id);
-    });
-    setActiveList((prevState) => [...prevState].filter((value) => value !== id));
+    setGlobalMap((prevState) => ({
+      ...prevState,
+      [id]: false,
+    }));
+    setActiveMap((prevState) => ({
+      ...prevState,
+      [id]: 0,
+    }));
   }, []);
 
   const clearModals = useCallback(
     (ids: string[]) => {
-      setGlobalList((prevState) => {
-        const result = [...prevState];
-
-        return result.filter((value) => !ids.includes(value));
+      setGlobalMap((prevState) => {
+        const result = { ...prevState };
+        ids.forEach((id) => {
+          result[id] = false;
+        });
+        return result;
       });
     },
-    [activeList],
+    [activeMap],
   );
 
   const checkActive = useCallback(
     (id: string): boolean => {
-      if (activeList.length) {
-        if (activeList.includes(id)) {
-          if (excludeCheckList.includes(id)) {
-            return true;
-          }
-          return activeList[activeList.length - 1] === id;
+      if (activeMap[id]) {
+        if (excludeCheckMap[id]) {
+          return true;
         }
+        const max = Object.values(activeMap).reduce((prev, current) => Math.max(prev, current));
+        return activeMap[id] === max;
       }
       return false;
     },
-    [activeList, excludeCheckList],
+    [activeMap, excludeCheckMap],
   );
 
   const activeModal = useCallback((id: string) => {
-    setActiveList((prevState) => {
-      const result = [...prevState].filter((value) => value !== id);
-      result.push(id);
+    setActiveMap((prevState) => {
+      const result = { ...prevState };
+      const max = Object.values(prevState).reduce((prev, current) => Math.max(prev, current), 1);
+      result[id] = max + 1;
+
       return result;
     });
   }, []);
 
   const inactiveModal = useCallback((id: string) => {
-    setActiveList((prevState) => [...prevState].filter((value) => value !== id));
+    setActiveMap((prevState) => ({
+      ...prevState,
+      [id]: 0,
+    }));
   }, []);
 
   const inactiveModals = useCallback((ids: string[]) => {
-    setActiveList((prevState) => [...prevState].filter((value) => !ids.includes(value)));
+    setActiveMap((prevState) => {
+      const result = { ...prevState };
+      ids.forEach((id) => {
+        result[id] = 0;
+      });
+      return result;
+    });
   }, []);
 
   const addConfirmModal = useCallback((_props: SwModalFuncProps) => {
@@ -107,14 +123,10 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
       ..._props,
     };
 
-    setGlobalList((prevState) => {
-      const result = [...prevState];
-      if (!result.includes(id)) {
-        result.push(id);
-      }
-
-      return result;
-    });
+    setGlobalMap((prevState) => ({
+      ...prevState,
+      [id]: true,
+    }));
 
     setExternalList((prevState) => {
       const result = [...prevState];
@@ -129,23 +141,27 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
       return result;
     });
 
-    setActiveList((prevState) => {
-      const result = [...prevState].filter((value) => value !== id);
-      result.push(id);
+    setActiveMap((prevState) => {
+      const result = { ...prevState };
+      const max = Object.values(prevState).reduce((prev, current) => Math.max(prev, current), 1);
+      result[id] = max + 1;
+
       return result;
     });
   }, []);
 
   const addExclude = useCallback((id: string) => {
-    setExcludeCheckList((prevState) => {
-      const result = [...prevState].filter((value) => value !== id);
-      result.push(id);
-      return result;
-    });
+    setExcludeCheckMap((prevState) => ({
+      ...prevState,
+      [id]: true,
+    }));
   }, []);
 
   const removeExclude = useCallback((id: string) => {
-    setExcludeCheckList((prevState) => [...prevState].filter((value) => value !== id));
+    setExcludeCheckMap((prevState) => ({
+      ...prevState,
+      [id]: false,
+    }));
   }, []);
 
   return (
@@ -159,10 +175,8 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
         inactiveModal,
         inactiveModals,
         checkActive,
-        activeList,
+        hasActiveModal,
         addConfirmModal,
-        scannerOpen,
-        setScannerOpen,
         addExclude,
         removeExclude,
       }}
