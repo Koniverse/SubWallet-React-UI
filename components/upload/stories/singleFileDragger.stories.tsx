@@ -19,4 +19,5 @@ export const Default = Template.bind({});
 Default.args = {
   title: 'Import from Polkadot.js',
   hint: 'Please drag an drop the .json file you  exported  from Polkadot.js',
+  statusHelp: 'Status text',
 };

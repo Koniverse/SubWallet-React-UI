@@ -20,6 +20,8 @@ import { fixControlledValue, resolveOnChange, triggerFocus } from './Input';
 import useStyle from './style';
 import type { SwIconProps } from '../icon';
 import Icon from '../icon';
+import type { TooltipPlacement } from '../tooltip';
+import Tooltip from '../tooltip';
 
 interface ShowCountProps {
   formatter: (args: { value: string; count: number; maxLength?: number }) => string;
@@ -59,6 +61,9 @@ export interface TextAreaProps extends RcTextAreaProps {
   shape?: PresetBarShapeType;
   label?: string;
   displaySuccessStatus?: boolean;
+  statusHelp?: string;
+  tooltip?: string;
+  tooltipPlacement?: TooltipPlacement;
 }
 
 export interface TextAreaRef {
@@ -91,6 +96,9 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
       shape = 'default',
       label,
       displaySuccessStatus = false,
+      statusHelp,
+      tooltip,
+      tooltipPlacement = 'topLeft',
       ...props
     },
     ref,
@@ -243,36 +251,38 @@ const TextArea = React.forwardRef<TextAreaRef, TextAreaProps>(
     );
 
     return wrapSSR(
-      <div
-        className={classNames(
-          `${prefixCls}-container -textarea`,
-          {
-            [`-shape-${shape}`]: !!shape,
-            [`-rtl`]: direction === 'rtl',
-            '-has-suffix': !!mergedStatus,
-            '-disabled': !!mergedDisabled,
-            '-display-success-status': displaySuccessStatus,
-          },
-          getStatusClassNames('', mergedStatus, hasFeedback),
-          hashId,
-          className,
-        )}
-      >
-        {!!label && <div className={`${prefixCls}-label`}>{label}</div>}
-        <div className={`${prefixCls}-wrapper`}>
-          {textareaNode}
-
-          {!!mergedStatus && (mergedStatus !== 'success' || displaySuccessStatus) && (
-            <div className={`${prefixCls}-suffix`}>
-              <Icon
-                phosphorIcon={StatusIconMap[mergedStatus]}
-                weight="fill"
-                className={`${prefixCls}-status-icon`}
-              />
-            </div>
+      <Tooltip trigger='hover' title={statusHelp || tooltip} placement={tooltipPlacement}>
+        <div
+          className={classNames(
+            `${prefixCls}-container -textarea`,
+            {
+              [`-shape-${shape}`]: !!shape,
+              [`-rtl`]: direction === 'rtl',
+              '-has-suffix': !!mergedStatus,
+              '-disabled': !!mergedDisabled,
+              '-display-success-status': displaySuccessStatus,
+            },
+            getStatusClassNames('', mergedStatus, hasFeedback),
+            hashId,
+            className,
           )}
+        >
+          {!!label && <div className={`${prefixCls}-label`}>{label}</div>}
+          <div className={`${prefixCls}-wrapper`}>
+            {textareaNode}
+
+            {!!mergedStatus && (mergedStatus !== 'success' || displaySuccessStatus) && (
+              <div className={`${prefixCls}-suffix`}>
+                <Icon
+                  phosphorIcon={StatusIconMap[mergedStatus]}
+                  weight="fill"
+                  className={`${prefixCls}-status-icon`}
+                />
+              </div>
+            )}
+          </div>
         </div>
-      </div>,
+      </Tooltip>,
     );
   },
 );

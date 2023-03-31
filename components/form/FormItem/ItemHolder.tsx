@@ -167,6 +167,7 @@ export default function ItemHolder(props: ItemHolderProps) {
           'valuePropName',
           'wrapperCol',
           'hideStatusHelp',
+          'statusHelpAsTooltip',
         ])}
       >
         {/* Label */}

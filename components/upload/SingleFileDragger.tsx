@@ -1,12 +1,20 @@
 import * as React from 'react';
 import type { UploadProps } from './interface';
 import Upload from './Upload';
+import type { TooltipPlacement } from '../tooltip';
+import Tooltip from '../tooltip';
 
-export type SingleFileDraggerProps = Omit<UploadProps, 'type' | 'multiple'>;
+export interface SingleFileDraggerProps extends Omit<UploadProps, 'type' | 'multiple'> {
+  statusHelp?: string;
+  tooltip?: string;
+  tooltipPlacement?: TooltipPlacement;
+}
 
 const SingleFileDragger = React.forwardRef<unknown, SingleFileDraggerProps>(
-  ({ ...restProps }, ref) => (
-    <Upload ref={ref} {...restProps} type="single-file-drag" multiple={false} maxCount={1} />
+  ({ statusHelp, tooltip, tooltipPlacement = 'topLeft', ...restProps }, ref) => (
+    <Tooltip trigger='hover' title={statusHelp || tooltip} placement={tooltipPlacement}>
+      <Upload ref={ref} {...restProps} type="single-file-drag" multiple={false} maxCount={1} />
+    </Tooltip>
   ),
 );
 

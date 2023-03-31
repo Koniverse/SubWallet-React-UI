@@ -28,6 +28,10 @@ export default {
       control: 'text',
       defaultValue: '',
     },
+    statusHelp: {
+      control: 'text',
+      defaultValue: '',
+    },
   },
 } as ComponentMeta<typeof TextArea>;
 
