@@ -77,7 +77,7 @@ export interface SelectModalProps<T extends SelectModalItem>
   tooltipPlacement?: TooltipPlacement;
 }
 
-const DEFAULT_SUFFIX = <Icon type='phosphor' phosphorIcon={CaretDown} size='xs' />;
+const DEFAULT_SUFFIX = <Icon type='phosphor' phosphorIcon={CaretDown} size='sm' />;
 const DEFAULT_PLACEHOLDER = 'Select box';
 const DEFAULT_TITLE = 'Select modal';
 const DEFAULT_SEARCH_PLACEHOLDER = 'Search';
