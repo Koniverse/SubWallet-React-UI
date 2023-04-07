@@ -15,6 +15,12 @@ interface ModalContextType {
   addExclude: (id: string) => void;
   removeExclude: (id: string) => void;
   hasActiveModal: boolean;
+  data: {
+    externalMap: Record<string, SwConfirmDialogProps>;
+    globalMap: Record<string, boolean>;
+    excludeCheckMap: Record<string, boolean>;
+    activeMap: Record<string, number>;
+  };
 }
 
 interface ModalContextProviderProps {
@@ -31,7 +37,7 @@ interface ModalContextProviderProps {
 
 export const ModalContext = React.createContext({} as ModalContextType);
 export const ModalContextProvider = ({ children }: ModalContextProviderProps) => {
-  const [externalList, setExternalList] = useState<SwConfirmDialogProps[]>([]);
+  const [externalMap, setExternalMap] = useState<Record<string, SwConfirmDialogProps>>({});
   const [globalMap, setGlobalMap] = useState<Record<string, boolean>>({});
   const [excludeCheckMap, setExcludeCheckMap] = useState<Record<string, boolean>>({});
   const [activeMap, setActiveMap] = useState<Record<string, number>>({});
@@ -128,18 +134,10 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
       [id]: true,
     }));
 
-    setExternalList((prevState) => {
-      const result = [...prevState];
-      const exists = result.find((value) => value.id === id);
-      if (exists) {
-        const idx = result.indexOf(exists);
-        result[idx] = { ...newProps };
-      } else {
-        result.push({ ...newProps });
-      }
-
-      return result;
-    });
+    setExternalMap((prevState) => ({
+      ...prevState,
+      [id]: newProps,
+    }));
 
     setActiveMap((prevState) => {
       const result = { ...prevState };
@@ -179,10 +177,17 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
         addConfirmModal,
         addExclude,
         removeExclude,
+        // TODO: need to remove
+        data: {
+          externalMap,
+          activeMap,
+          globalMap,
+          excludeCheckMap,
+        },
       }}
     >
       {children}
-      {externalList.map((props) => (
+      {Object.values(externalMap).map((props) => (
         <SwConfirmDialog key={props.id} {...props} />
       ))}
     </ModalContext.Provider>
