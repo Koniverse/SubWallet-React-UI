@@ -16,6 +16,9 @@ const clearZero = (result: string): string => {
   return result;
 };
 
+const NUM_1T = new BigNumber(1e12);
+const NUM_1B = new BigNumber(1e9);
+const NUM_1M = new BigNumber(1e6);
 export const balanceFormatter: NumberFormatter = (
   input: string,
   metadata?: Record<string, number>,
@@ -33,6 +36,16 @@ export const balanceFormatter: NumberFormatter = (
 
     // If count of number in integer part greater or equal maxNumberFormat, do not show decimal
     if (intNumber.gte(max)) {
+      if (intNumber.gte(NUM_1M)) {
+        if (intNumber.gte(NUM_1B)) {
+          if (intNumber.gte(NUM_1T)) {
+            return `${intNumber.dividedBy(NUM_1T).toFixed(0)} T`;
+          }
+          return `${intNumber.dividedBy(NUM_1B).toFixed(0)} B`;
+        }
+        return `${intNumber.dividedBy(NUM_1M).toFixed(0)} M`;
+      }
+
       return int;
     }
 
