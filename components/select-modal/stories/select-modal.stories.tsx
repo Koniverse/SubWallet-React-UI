@@ -199,7 +199,7 @@ export default {
         },
       },
     },
-    searchableMinCharactersCount: {
+    searchMinCharactersCount: {
       control: {
         if: {
           arg: 'withSearch',
@@ -298,6 +298,6 @@ export const WithSearch = Template.bind({});
 WithSearch.args = {
   ...DEFAULT_ARGS,
   withSearch: true,
-  searchableMinCharactersCount: 2,
+  searchMinCharactersCount: 2,
   searchPlaceholder: 'Search',
 };

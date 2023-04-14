@@ -39,7 +39,7 @@ export interface SelectModalProps<T extends SelectModalItem>
     Partial<
       Pick<
         SwListSectionProps<T>,
-        | 'searchableMinCharactersCount'
+        | 'searchMinCharactersCount'
         | 'searchFunction'
         | 'searchPlaceholder'
         | 'renderWhenEmpty'
@@ -123,7 +123,7 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
     customInput,
     searchFunction,
     searchPlaceholder,
-    searchableMinCharactersCount,
+    searchMinCharactersCount,
     renderWhenEmpty,
     ignoreScrollbar,
     ignoreScrollbarMethod,
@@ -341,7 +341,7 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
             rowGap={`${token.paddingContentVerticalSM}px`}
             searchFunction={searchFunction}
             searchPlaceholder={searchPlaceholder || DEFAULT_SEARCH_PLACEHOLDER}
-            searchableMinCharactersCount={searchableMinCharactersCount}
+            searchMinCharactersCount={searchMinCharactersCount}
             showActionBtn={showActionBtn}
           />
         </SwModal>
