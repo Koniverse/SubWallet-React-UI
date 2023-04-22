@@ -144,10 +144,11 @@ const Number: React.FC<SwNumberProps> = (props) => {
     }
   }, [value, decimal, customFormatter, formatType, metadata]);
 
-  const [_int, _dec] = useMemo((): [string, string] => {
-    const [int, dec] = formatted.split('.');
+  const [_int, _dec, _abbreviation] = useMemo((): [string, string, string] => {
+    const [int, decAndAbb] = formatted.split('.');
+    const [dec, abbreviation] = decAndAbb ? decAndAbb.split(' ') : [''];
 
-    return [intToLocaleString(int, thousandSeparator), dec];
+    return [intToLocaleString(int, thousandSeparator), dec, abbreviation];
   }, [formatted]);
 
   return wrapSSR(
@@ -175,10 +176,18 @@ const Number: React.FC<SwNumberProps> = (props) => {
           {_dec}
         </Typography.Text>
       )}
+      {!!_abbreviation && (
+        <Typography.Text
+          className={classNames(`${prefixCls}-integer`)}
+          style={{ ...decimalStyle, fontWeight: weight, fontSize: integerFontSize }}
+        >
+          {_abbreviation}
+        </Typography.Text>
+      )}
       {suffix && (
         <Typography.Text
           className={classNames(`${prefixCls}-suffix`)}
-          style={{ ...unitStyle, fontWeight: weight, fontSize: decimalFontSize }}
+          style={{ ...unitStyle, fontWeight: weight, fontSize: integerFontSize }}
         >
           &nbsp;{suffix}
         </Typography.Text>

@@ -39,11 +39,11 @@ export const balanceFormatter: NumberFormatter = (
       if (intNumber.gte(NUM_1M)) {
         if (intNumber.gte(NUM_1B)) {
           if (intNumber.gte(NUM_1T)) {
-            return `${intNumber.dividedBy(NUM_1T).toFixed(0)} T`;
+            return `${intNumber.dividedBy(NUM_1T).toFixed(2)} T`;
           }
-          return `${intNumber.dividedBy(NUM_1B).toFixed(0)} B`;
+          return `${intNumber.dividedBy(NUM_1B).toFixed(2)} B`;
         }
-        return `${intNumber.dividedBy(NUM_1M).toFixed(0)} M`;
+        return `${intNumber.dividedBy(NUM_1M).toFixed(2)} M`;
       }
 
       return int;
