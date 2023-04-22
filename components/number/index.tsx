@@ -179,15 +179,15 @@ const Number: React.FC<SwNumberProps> = (props) => {
       {!!_abbreviation && (
         <Typography.Text
           className={classNames(`${prefixCls}-integer`)}
-          style={{ ...decimalStyle, fontWeight: weight, fontSize: integerFontSize }}
+          style={{ ...intStyle, fontWeight: weight, fontSize: integerFontSize }}
         >
-          {_abbreviation}
+          {` ${_abbreviation}`}
         </Typography.Text>
       )}
       {suffix && (
         <Typography.Text
           className={classNames(`${prefixCls}-suffix`)}
-          style={{ ...unitStyle, fontWeight: weight, fontSize: integerFontSize }}
+          style={{ ...unitStyle, fontWeight: weight, fontSize: decimalFontSize }}
         >
           &nbsp;{suffix}
         </Typography.Text>
