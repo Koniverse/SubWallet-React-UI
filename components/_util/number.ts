@@ -17,9 +17,9 @@ const clearZero = (result: string): string => {
 };
 
 const NUM_1T = new BigNumber(1e12);
-const NUM_100T = new BigNumber(1e14);
+const TLIM = new BigNumber(1e17);
 const NUM_1B = new BigNumber(1e9);
-const NUM_100B = new BigNumber(1e11);
+const BLIM = new BigNumber(1e14);
 const NUM_1M = new BigNumber(1e6);
 const NUM_100M = new BigNumber(1e8);
 export const balanceFormatter: NumberFormatter = (
@@ -40,8 +40,8 @@ export const balanceFormatter: NumberFormatter = (
     // If count of number in integer part greater or equal maxNumberFormat, do not show decimal
     if (intNumber.gte(max)) {
       if (intNumber.gte(NUM_100M)) {
-        if (intNumber.gte(NUM_100B)) {
-          if (intNumber.gte(NUM_100T)) {
+        if (intNumber.gte(BLIM)) {
+          if (intNumber.gte(TLIM)) {
             return `${intNumber.dividedBy(NUM_1T).toFixed(2)} T`;
           }
           return `${intNumber.dividedBy(NUM_1B).toFixed(2)} B`;
