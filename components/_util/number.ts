@@ -27,13 +27,13 @@ export const balanceFormatter: NumberFormatter = (
   metadata?: Record<string, number>,
 ): string => {
   const absGteOne = new BigNumber(input).abs().gte(1);
-  const minNumberFormat = metadata?.minNumberFormat || 2;
-  const maxNumberFormat = metadata?.maxNumberFormat || 6;
 
   const [int, decimal = '0'] = input.split('.');
   let _decimal = '';
 
   if (absGteOne) {
+    const minNumberFormat = metadata?.minNumberFormat || 2;
+    const maxNumberFormat = metadata?.maxIntPlaceToDislayDecimal || 6;
     const intNumber = new BigNumber(int);
     const max = BN_TEN.pow(maxNumberFormat);
 
@@ -42,11 +42,11 @@ export const balanceFormatter: NumberFormatter = (
       if (intNumber.gte(NUM_100M)) {
         if (intNumber.gte(BLIM)) {
           if (intNumber.gte(TLIM)) {
-            return `${intNumber.dividedBy(NUM_1T).toFixed(2)} T`;
+            return `${intNumber.dividedBy(NUM_1T).toFixed(minNumberFormat)} T`;
           }
-          return `${intNumber.dividedBy(NUM_1B).toFixed(2)} B`;
+          return `${intNumber.dividedBy(NUM_1B).toFixed(minNumberFormat)} B`;
         }
-        return `${intNumber.dividedBy(NUM_1M).toFixed(2)} M`;
+        return `${intNumber.dividedBy(NUM_1M).toFixed(minNumberFormat)} M`;
       }
 
       return int;
@@ -62,37 +62,10 @@ export const balanceFormatter: NumberFormatter = (
     // Clear zero number for decimal
     _decimal = clearZero(_decimal);
   } else {
-    // Index of cursor
-    let index = 0;
+    const maxNumberFormat = metadata?.maxNumberFormat || 4;
 
-    // Count of not zero number in decimal
-    let current = 0;
-
-    // Find a not zero number in decimal
-    let metNotZero = false;
-
-    // Get at least minNumberFormat number not 0 from index 0
-    // If count of 0 number at prefix greater or equal maxNumberFormat should stop and return 0
-
-    // current === minNumberFormat: get enough number
-    // index === decimal.length: end of decimal
-    // index === maxNumberFormat: reach limit of 0 number at prefix
-    while (
-      current < minNumberFormat &&
-      index < decimal.length &&
-      (index < maxNumberFormat || metNotZero)
-    ) {
-      const _char = decimal[index];
-      _decimal += _char;
-      index++;
-      if (_char !== '0') {
-        metNotZero = true;
-      }
-
-      if (metNotZero) {
-        current++;
-      }
-    }
+    // Get the first maxNumberFormat characters from origin decimal
+    _decimal = decimal.slice(0, maxNumberFormat);
 
     // Clear zero number for decimal
     _decimal = clearZero(_decimal);
