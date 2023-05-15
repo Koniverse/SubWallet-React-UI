@@ -11,6 +11,7 @@ interface ModalContextType {
   activeModal: (id: string) => void;
   inactiveModal: (id: string) => void;
   inactiveModals: (ids: string[]) => void;
+  inactiveAll: () => void;
   addConfirmModal: (props: SwModalFuncProps) => void;
   addExclude: (id: string) => void;
   removeExclude: (id: string) => void;
@@ -123,6 +124,18 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
     });
   }, []);
 
+  const inactiveAll = useCallback(() => {
+    setActiveMap((prevState) => {
+      const result = { ...prevState };
+      const keys = Object.keys(result);
+      for (let i = 0; i < keys.length; i++) {
+        const key = keys[i];
+        result[key] = 0;
+      }
+      return result;
+    });
+  }, []);
+
   const addConfirmModal = useCallback((_props: SwModalFuncProps) => {
     const { id } = _props;
     const newProps: SwConfirmDialogProps = {
@@ -172,6 +185,7 @@ export const ModalContextProvider = ({ children }: ModalContextProviderProps) =>
         activeModal,
         inactiveModal,
         inactiveModals,
+        inactiveAll,
         checkActive,
         hasActiveModal,
         addConfirmModal,
