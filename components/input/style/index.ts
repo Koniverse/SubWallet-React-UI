@@ -663,7 +663,7 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
         },
       },
 
-      '&.-status-warning': {
+      '&.-status-warning, &.-disabled&.-status-warning': {
         '--webkit-autofill-border-color': token.colorWarning,
 
         '&:before': {
@@ -675,7 +675,7 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
         },
       },
 
-      '&.-status-error': {
+      '&.-status-error, &.-disabled&.-status-error': {
         '--webkit-autofill-border-color': token.colorError,
 
         '&:before': {
