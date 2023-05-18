@@ -116,7 +116,7 @@ const splitObject = <T extends React.CSSProperties>(
 function getDisabledCompatibleChildren(element: React.ReactElement<any>, prefixCls: string) {
   const elementType = element.type as any;
   if (
-    ((elementType.__ANT_BUTTON === true || element.type === 'button') && element.props.disabled) ||
+    // ((elementType.__ANT_BUTTON === true || element.type === 'button') && element.props.disabled) ||
     (elementType.__ANT_SWITCH === true && (element.props.disabled || element.props.loading)) ||
     (elementType.__ANT_RADIO === true && element.props.disabled)
   ) {
