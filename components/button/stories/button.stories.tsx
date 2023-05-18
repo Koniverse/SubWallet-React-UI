@@ -59,6 +59,9 @@ export default {
         disable: true,
       },
     },
+    tooltip: {
+      type: 'string',
+    },
   },
 } as ComponentMeta<typeof Button>;
 
