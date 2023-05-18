@@ -25,7 +25,8 @@ export interface ButtonToken extends FullToken<'Button'> {
 
 // ============================== Shared ==============================
 const genSharedButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token): CSSObject => {
-  const { componentCls, iconCls } = token;
+  const { componentCls, iconCls, antCls } = token;
+  const tooltipClass = `${antCls}-tooltip`;
 
   return {
     [componentCls]: {
@@ -47,6 +48,10 @@ const genSharedButtonStyle: GenerateStyle<ButtonToken, CSSObject> = (token): CSS
       lineHeight: `${buttonSizeMap.md}px`,
       alignItems: 'center',
       justifyContent: 'center',
+
+      [`&${tooltipClass}-open`]: {
+        fontWeight: 600,
+      },
 
       [`&${componentCls}-block`]: {
         width: '100%',
