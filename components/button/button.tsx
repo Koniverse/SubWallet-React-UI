@@ -22,7 +22,7 @@ import type {
 import useStyle from './style';
 import Squircle from '../squircle';
 import type { TooltipProps } from '../tooltip';
-import Tooltip from '../tooltip';
+// import Tooltip from '../tooltip';
 
 const rxTwoCNChar = /^[\u4e00-\u9fa5]{2}$/;
 const isTwoCNChar = rxTwoCNChar.test.bind(rxTwoCNChar);
@@ -181,8 +181,8 @@ const InternalButton: React.ForwardRefRenderFunction<
     icon,
     ghost = false,
     block = false,
-    tooltip,
-    tooltipPlacement = 'top',
+    // tooltip,
+    // tooltipPlacement = 'top',
     /** If we extract items here, we don't need use omit.js */
     // React does not recognize the `htmlType` prop on a DOM element. Here we pick it out of `rest`.
     htmlType = 'button' as ButtonProps['htmlType'],
@@ -334,19 +334,19 @@ const InternalButton: React.ForwardRefRenderFunction<
   }
 
   let buttonNode = (
-    <Tooltip title={tooltip} placement={tooltipPlacement}>
-      <button
-        {...(rest as NativeButtonProps)}
-        type={htmlType}
-        className={classes}
-        onClick={handleClick}
-        disabled={mergedDisabled}
-        ref={buttonRef}
-      >
-        {iconNode}
-        {kids}
-      </button>
-    </Tooltip>
+    // <Tooltip title={tooltip} placement={tooltipPlacement}>
+    <button
+      {...(rest as NativeButtonProps)}
+      type={htmlType}
+      className={classes}
+      onClick={handleClick}
+      disabled={mergedDisabled}
+      ref={buttonRef}
+    >
+      {iconNode}
+      {kids}
+    </button>
+    // </Tooltip>
   );
 
   if (!!icon && isIconOnly && shape === 'squircle' && type === 'default') {
