@@ -1,4 +1,4 @@
-import { resetComponent } from 'antd/es/style';
+import { resetComponent } from '../../style';
 import type { FullToken, GenerateStyle } from '../../theme/internal';
 import { mergeToken, genComponentStyleHook } from '../../theme/internal';
 
