@@ -63,6 +63,7 @@ import type { ComponentToken as SwModalComponentToken } from '../../sw-modal/sty
 import type { ComponentToken as SwScreenLayoutComponentToken } from '../../sw-screen-layout/style';
 import type { ComponentToken as SwSubHeaderComponentToken } from '../../sw-sub-header/style';
 import type { ComponentToken as SwTabBarComponentToken } from '../../sw-tab-bar/style';
+import type { ComponentToken as SwQrCodeComponentToken } from '../../sw-qr-code/style';
 import type { ComponentToken as StepsComponentToken } from '../../steps/style';
 import type { ComponentToken as TableComponentToken } from '../../table/style';
 import type { ComponentToken as TabsComponentToken } from '../../tabs/style';
@@ -147,6 +148,7 @@ export interface ComponentTokenMap {
   SwScreenLayout?: SwScreenLayoutComponentToken;
   SwSubHeader?: SwSubHeaderComponentToken;
   SwTabBar?: SwTabBarComponentToken;
+  SwQRCode?: SwQrCodeComponentToken;
   Web3Gallery?: {};
 
   Statistic?: {};

@@ -206,6 +206,8 @@ export { default as SwTabBar } from './sw-tab-bar';
 export type { SwTabBarProps, SwTabBarItem } from './sw-tab-bar';
 export { default as Icon } from './icon';
 export type { SwIconProps } from './icon';
+export { default as SwQRCode } from './sw-qr-code';
+export type { SwQRCodeProps } from './sw-qr-code';
 
 export { default as Web3Block } from './web3-block/base';
 export type { Web3BlockProps } from './web3-block/base';
