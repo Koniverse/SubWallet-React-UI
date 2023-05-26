@@ -1,8 +1,11 @@
+import { Copy } from 'phosphor-react';
 import React, { useMemo } from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import SwAvatar from '../../sw-avatar';
 import Field from '../index';
 import type { FieldProps } from '../index';
+import Button from '../../button';
+import Icon from '../../icon';
 
 interface WrapperProps extends FieldProps {
   suffixType: number;
@@ -25,7 +28,9 @@ const Wrapper = ({ suffixType = 1, prefixType = 0, ...args }: WrapperProps) => {
 
     switch (suffixType) {
       case 2:
-        result.suffix = icon;
+        result.suffix = (
+          <Button icon={<Icon phosphorIcon={Copy} />} type='ghost' style={{ height: 'auto' }} />
+        );
         break;
       default:
         break;
@@ -48,6 +53,11 @@ export default {
   argTypes: {
     title: {
       type: 'string',
+    },
+    status: {
+      control: 'radio',
+      options: ['warning', 'error', 'success', undefined],
+      defaultValue: undefined,
     },
     placeholder: {
       type: 'string',
