@@ -15,7 +15,6 @@ const genFieldStyle: GenerateStyle<FieldToken> = (token) => {
       [`${componentCls}-container`]: {
         display: 'flex',
         flexDirection: 'column',
-        gap: 8,
         color: token.colorTextTertiary,
         lineHeight: token.lineHeightLG,
         position: 'relative',
@@ -25,8 +24,9 @@ const genFieldStyle: GenerateStyle<FieldToken> = (token) => {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          gap: 8,
+          gap: token.sizeXS,
           overflow: 'hidden',
+          zIndex: 2,
 
           [`${componentCls}-content-wrapper`]: {
             overflow: 'hidden',
@@ -63,6 +63,19 @@ const genFieldStyle: GenerateStyle<FieldToken> = (token) => {
           position: 'relative',
         },
 
+        [`${componentCls}-suffix, ${componentCls}-prefix`]: {
+          color: token.colorTextLight4,
+          display: 'flex',
+          alignItems: 'center',
+        },
+
+        [`${componentCls}-status-icon`]: {
+          fontSize: 20,
+          marginLeft: 8,
+          marginRight: 8,
+          order: -1,
+        },
+
         // Size
 
         [`&${componentCls}-size-small`]: {
@@ -73,7 +86,8 @@ const genFieldStyle: GenerateStyle<FieldToken> = (token) => {
 
         [`&${componentCls}-size-medium`]: {
           [`${componentCls}-wrapper`]: {
-            padding: `${token.paddingContentVertical}px ${token.paddingContentHorizontal}px`,
+            padding: `${token.paddingSM - 2}px ${token.paddingContentHorizontal}px`,
+            minHeight: 48,
           },
         },
 
@@ -83,23 +97,44 @@ const genFieldStyle: GenerateStyle<FieldToken> = (token) => {
           },
 
           [`${componentCls}-wrapper`]: {
-            padding: `${token.paddingContentVertical - 2}px ${token.paddingSM}px ${
-              token.paddingContentVertical
-            }px`,
+            padding: `${token.paddingXS}px ${token.paddingSM}px ${token.paddingSM - 2}px`,
+            minHeight: 48,
           },
         },
 
         // Border
+        '&:before': {
+          content: '""',
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          display: 'block',
+          border: '2px solid transparent',
+          transition: `border-color ${token.motionDurationSlow}`,
+          zIndex: 0,
+        },
+
         [`&${componentCls}-border-square`]: {
           borderRadius: 0,
+          '&:before': {
+            borderRadius: 0,
+          },
         },
 
         [`&${componentCls}-border-round`]: {
           borderRadius: token.controlHeightLG + token.borderRadiusLG,
+          '&:before': {
+            borderRadius: token.controlHeightLG + token.borderRadiusLG,
+          },
         },
 
         [`&${componentCls}-border-default`]: {
-          borderRadius: token.borderRadius,
+          borderRadius: token.borderRadiusLG,
+          '&:before': {
+            borderRadius: token.borderRadiusLG,
+          },
         },
 
         // Background
@@ -109,6 +144,37 @@ const genFieldStyle: GenerateStyle<FieldToken> = (token) => {
 
         [`&${componentCls}-bg-transparent`]: {
           background: 'transparent',
+        },
+
+        // Color
+        '&.-status-warning, &.-disabled&.-status-warning': {
+          '&:before': {
+            borderColor: token.colorWarning,
+          },
+
+          [`${componentCls}-status-icon`]: {
+            color: token.colorWarning,
+          },
+        },
+
+        '&.-status-error, &.-disabled&.-status-error': {
+          '&:before': {
+            borderColor: token.colorError,
+          },
+
+          [`${componentCls}-status-icon`]: {
+            color: token.colorError,
+          },
+        },
+
+        '&.-status-success.-display-success-status': {
+          '&:before': {
+            borderColor: token.colorSuccess,
+          },
+
+          [`${componentCls}-status-icon`]: {
+            color: token.colorSuccess,
+          },
         },
       },
     },
