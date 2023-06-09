@@ -118,6 +118,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@google/model-viewer": "^3.1.1",
     "@polkadot/react-identicon": "^2.9.14",
     "@polkadot/util-crypto": "^11.1.1",
     "@rc-component/tour": "~1.1.0",
@@ -171,6 +172,7 @@
     "react-superellipse": "^0.0.6",
     "react-toastify": "^9.1.1",
     "scroll-into-view-if-needed": "^3.0.3",
+    "three": "^0.153.0",
     "throttle-debounce": "^5.0.0"
   },
   "devDependencies": {

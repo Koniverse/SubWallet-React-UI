@@ -1,6 +1,9 @@
+import '@google/model-viewer';
 import classNames from 'classnames';
 import RcImage, { type ImageProps } from 'rc-image';
 import * as React from 'react';
+import type { SyntheticEvent } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import Squircle from '../squircle/index';
 import { ConfigContext } from '../config-provider';
@@ -23,6 +26,7 @@ export interface SwImageProps extends ImageProps {
   responsive?: boolean;
   isLoading?: boolean;
   activityIndicatorSize?: number | string;
+  isShow3dModel?: boolean;
 }
 
 export interface CompositionImage<P> extends React.FC<P> {
@@ -39,6 +43,10 @@ const Image: CompositionImage<SwImageProps> = ({
   responsive,
   isLoading,
   activityIndicatorSize = 16,
+  isShow3dModel = true,
+  onLoad,
+  onError,
+  src,
   ...otherProps
 }) => {
   const {
@@ -53,6 +61,11 @@ const Image: CompositionImage<SwImageProps> = ({
   const rootPrefixCls = getPrefixCls();
 
   const imageLocale = contextLocale.Image || defaultLocale.Image;
+
+  const [showImage, setShowImage] = useState(true);
+  const [showVideo, setShowVideo] = useState(false);
+  const [show3dViewer, setShow3dViewer] = useState(false);
+
   // Style
   const [wrapSSR, hashId] = useStyle(prefixCls);
 
@@ -81,6 +94,100 @@ const Image: CompositionImage<SwImageProps> = ({
       maskTransitionName: getTransitionName(rootPrefixCls, 'fade', _preview.maskTransitionName),
     };
   }, [preview, imageLocale]);
+
+  const handleOnLoad = useCallback(
+    (event: SyntheticEvent<HTMLImageElement>) => {
+      onLoad?.(event);
+    },
+    [onLoad],
+  );
+
+  const handleImageError = useCallback(
+    (event: SyntheticEvent<HTMLImageElement>) => {
+      setShowImage(false);
+      setShowVideo(true);
+      onError?.(event);
+    },
+    [onError],
+  );
+
+  const handleVideoError = useCallback(() => {
+    setShowVideo(false);
+    setShow3dViewer(true);
+  }, []);
+
+  useEffect(() => {
+    setShowImage(true);
+    setShowVideo(false);
+    setShow3dViewer(false);
+  }, [src]);
+
+  const renderImage = () => {
+    if (showImage) {
+      return (
+        <RcImage
+          style={{ width, height }}
+          preview={mergedPreview}
+          prefixCls={`${prefixCls}`}
+          rootClassName={mergedRootClassName}
+          fallback={FAULT_TOLERANT}
+          onLoad={handleOnLoad}
+          onError={handleImageError}
+          src={src}
+          {...otherProps}
+        />
+      );
+    }
+
+    if (showVideo) {
+      return (
+        <video autoPlay height='124' loop muted onError={handleVideoError} width='124'>
+          <source src={src} type='video/mp4' />
+        </video>
+      );
+    }
+
+    if (show3dViewer && isShow3dModel) {
+      return (
+        <div style={{ width, height, display: 'grid' }}>
+          {/* @ts-ignore */}
+          <model-viewer
+            className={classNames(`${prefixCls}-3d-modal-viewer`)}
+            alt="model-viewer"
+            ar-status="not-presenting"
+            auto-rotate="true"
+            auto-rotate-delay={100}
+            bounds="tight"
+            disable-pan="true"
+            disable-scroll="true"
+            disable-tap="true"
+            disable-zoom="true"
+            environment-image="neutral"
+            interaction-prompt="none"
+            loading="eager"
+            src={src}
+            touch-action="none"
+            style={{ width: '100%', height: '100%' }}
+          />
+        </div>
+      );
+    }
+
+    return (
+      <RcImage
+        style={{ width, height }}
+        preview={false}
+        prefixCls={`${prefixCls}`}
+        rootClassName={mergedRootClassName}
+        fallback={FAULT_TOLERANT}
+        onLoad={handleOnLoad}
+        onError={handleImageError}
+        src={FAULT_TOLERANT}
+        {...otherProps}
+      />
+    );
+  };
+
   if (shape === 'squircle') {
     if (isLoading) {
       return wrapSSR(
@@ -94,18 +201,7 @@ const Image: CompositionImage<SwImageProps> = ({
       );
     }
 
-    return wrapSSR(
-      <Squircle customSize={width}>
-        <RcImage
-          style={{ width, height }}
-          preview={false}
-          prefixCls={`${prefixCls}`}
-          rootClassName={mergedRootClassName}
-          fallback={FAULT_TOLERANT}
-          {...otherProps}
-        />
-      </Squircle>,
-    );
+    return wrapSSR(<Squircle customSize={width}>{renderImage()}</Squircle>);
   }
 
   if (isLoading) {
@@ -121,16 +217,7 @@ const Image: CompositionImage<SwImageProps> = ({
     );
   }
 
-  return wrapSSR(
-    <RcImage
-      style={{ width, height: shape === 'circle' ? width : height }}
-      preview={mergedPreview}
-      prefixCls={`${prefixCls}`}
-      rootClassName={mergedRootClassName}
-      fallback={FAULT_TOLERANT}
-      {...otherProps}
-    />,
-  );
+  return wrapSSR(<>{renderImage()}</>);
 };
 
 export { ImageProps };
