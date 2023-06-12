@@ -15,6 +15,7 @@ export default {
     width: { control: 'number' },
     height: { control: 'number', if: { arg: 'height', truthy: true } },
     responsive: { control: 'boolean', defaultValue: true },
+    modelViewerProps: { defaultValue: {} },
     isLoading: { control: 'boolean', defaultValue: false },
   },
 } as ComponentMeta<typeof Image>;
