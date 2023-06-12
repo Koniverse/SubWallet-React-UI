@@ -19,6 +19,8 @@ import { formatPxNumbers } from '../_util/dimension';
 const ImageShapes = ['default', 'square', 'circle', 'squircle', 'none'] as const;
 export type ImageShape = typeof ImageShapes[number];
 
+type ModelViewerProps = Record<string, any>;
+
 export interface SwImageProps extends ImageProps {
   shape?: ImageShape;
   width?: string | number;
@@ -26,7 +28,7 @@ export interface SwImageProps extends ImageProps {
   responsive?: boolean;
   isLoading?: boolean;
   activityIndicatorSize?: number | string;
-  isShow3dModel?: boolean;
+  modelViewerProps?: ModelViewerProps;
 }
 
 export interface CompositionImage<P> extends React.FC<P> {
@@ -43,7 +45,7 @@ const Image: CompositionImage<SwImageProps> = ({
   responsive,
   isLoading,
   activityIndicatorSize = 16,
-  isShow3dModel = true,
+  modelViewerProps,
   onLoad,
   onError,
   src,
@@ -147,7 +149,7 @@ const Image: CompositionImage<SwImageProps> = ({
       );
     }
 
-    if (show3dViewer && isShow3dModel) {
+    if (show3dViewer && modelViewerProps) {
       return (
         <div style={{ width, height, display: 'grid' }}>
           {/* @ts-ignore */}
@@ -165,9 +167,10 @@ const Image: CompositionImage<SwImageProps> = ({
             environment-image="neutral"
             interaction-prompt="none"
             loading="eager"
-            src={src}
             touch-action="none"
             style={{ width: '100%', height: '100%' }}
+            {...modelViewerProps}
+            src={src}
           />
         </div>
       );
