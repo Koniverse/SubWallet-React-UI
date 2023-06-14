@@ -143,7 +143,15 @@ const Image: CompositionImage<SwImageProps> = ({
 
     if (showVideo) {
       return (
-        <video autoPlay height='124' loop muted onError={handleVideoError} width='124'>
+        <video
+          className={classNames(`${prefixCls}-video`)}
+          autoPlay
+          height='124'
+          loop
+          muted
+          onError={handleVideoError}
+          width='124'
+        >
           <source src={src} type='video/mp4' />
         </video>
       );
@@ -151,10 +159,9 @@ const Image: CompositionImage<SwImageProps> = ({
 
     if (show3dViewer && modelViewerProps) {
       return (
-        <div style={{ width, height, display: 'grid' }}>
+        <div className={classNames(`${prefixCls}-3d-modal-viewer`)} style={{ width, height }}>
           {/* @ts-ignore */}
           <model-viewer
-            className={classNames(`${prefixCls}-3d-modal-viewer`)}
             alt="model-viewer"
             ar-status="not-presenting"
             auto-rotate="true"
