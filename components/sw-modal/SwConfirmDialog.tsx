@@ -58,9 +58,9 @@ export const SwConfirmContent = (
 
   const okProps = useMemo((): ButtonProps | undefined => {
     const result = {
+      icon: <Icon type="phosphor" phosphorIcon={CheckCircle} />,
       ...okButtonProps,
       ...convertLegacyProps(okType),
-      icon: <Icon type="phosphor" phosphorIcon={CheckCircle} />,
     };
 
     if (!okButtonProps?.icon) {
