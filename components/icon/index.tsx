@@ -1,20 +1,23 @@
-import * as React from 'react';
-import type { IconWeight } from 'phosphor-react/src/lib';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import type { IconProps } from 'phosphor-react';
-import type { IconProp } from '@fortawesome/fontawesome-svg-core';
 import type AntIcon from '@ant-design/icons/es';
+import type { IconProp } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import classNames from "classnames";
+import type { IconProps } from 'phosphor-react';
+import type { IconWeight } from 'phosphor-react/src/lib';
+import * as React from 'react';
+import { CSSProperties,useMemo } from "react";
 import type { SizeType } from '../config-provider/SizeContext';
 
 export type AntIconType = typeof AntIcon;
 
 export interface SwIconProps {
-  type?: 'fontAwesome' | 'phosphor' | 'antDesignIcon';
+  type?: 'fontAwesome' | 'phosphor' | 'antDesignIcon' | 'customIcon';
   size?: SizeType;
   customSize?: string;
   phosphorIcon?: React.ForwardRefExoticComponent<IconProps & React.RefAttributes<SVGSVGElement>>;
   fontawesomeIcon?: IconProp;
   antDesignIcon?: AntIconType;
+  customIcon?: React.ReactNode;
   weight?: IconWeight;
   iconColor?: string;
   className?: string;
@@ -28,10 +31,11 @@ const Icon: React.FC<SwIconProps> = ({
   phosphorIcon: PhosphorIcon,
   fontawesomeIcon,
   antDesignIcon: AntDesignIcon,
+  customIcon,
   weight,
   iconColor,
 }) => {
-  const getIconSize = () => {
+  const iconSize = useMemo(() => {
     if (!size) {
       return undefined;
     }
@@ -48,18 +52,31 @@ const Icon: React.FC<SwIconProps> = ({
     }
 
     return 32;
-  };
+  }, [size]);
 
-  const wrapperClass = className ? `anticon ${className}` : 'anticon';
+  const wrapperClass = classNames('anticon', className);
+
+  const customStyles = useMemo((): CSSProperties => {
+    const size = customSize || iconSize;
+    const result: CSSProperties =  {
+      fontSize: size,
+      color: iconColor,
+    }
+
+    if (type === 'customIcon') {
+      result.width = size;
+      result.height = size;
+      result.justifyContent = 'center';
+    }
+
+    return result;
+  }, [iconColor, customSize, iconSize, type]);
 
   if (type === 'fontAwesome' && fontawesomeIcon) {
     return (
       <span
         className={wrapperClass}
-        style={{
-          fontSize: customSize || getIconSize(),
-          color: iconColor,
-        }}
+        style={customStyles}
       >
         <FontAwesomeIcon
           icon={fontawesomeIcon}
@@ -74,10 +91,7 @@ const Icon: React.FC<SwIconProps> = ({
     return (
       <span
         className={wrapperClass}
-        style={{
-          fontSize: customSize || getIconSize(),
-          color: iconColor,
-        }}
+        style={customStyles}
       >
         <PhosphorIcon size="1em" weight={weight} color="currentColor" />
       </span>
@@ -88,11 +102,20 @@ const Icon: React.FC<SwIconProps> = ({
     return (
       <AntDesignIcon
         className={className}
-        style={{
-          fontSize: customSize || getIconSize(),
-          color: iconColor,
-        }}
+        style={customStyles}
       />
+    );
+  }
+
+
+  if (type === 'customIcon' && customIcon) {
+    return (
+      <span
+        className={wrapperClass}
+        style={customStyles}
+      >
+        {customIcon}
+      </span>
     );
   }
 

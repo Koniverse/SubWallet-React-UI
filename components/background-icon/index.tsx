@@ -1,37 +1,22 @@
 import * as React from 'react';
-import type { IconWeight } from 'phosphor-react/src/lib';
 import classNames from 'classnames';
-import type { SizeType } from '../config-provider/SizeContext';
 import type { SwIconProps } from '../icon';
-import Icon from '../icon';
+import Icon from "../icon";
 import { ConfigContext } from '../config-provider';
 import useStyle from './style';
 import type { ImageShape } from '../image';
 import Squircle from '../squircle';
 
-export interface BackgroundIconProps {
+export interface BackgroundIconProps extends Omit<SwIconProps, 'customSize'>{
   shape?: ImageShape;
-  type?: 'fontAwesome' | 'phosphor' | 'antDesignIcon';
-  size?: SizeType;
-  phosphorIcon?: SwIconProps['phosphorIcon'];
-  fontawesomeIcon?: SwIconProps['fontawesomeIcon'];
-  antDesignIcon?: SwIconProps['antDesignIcon'];
-  weight?: IconWeight;
-  iconColor?: string;
-  className?: string;
   backgroundColor?: string;
 }
 
 const BackgroundIcon: React.FC<BackgroundIconProps> = ({
   size,
-  type,
-  phosphorIcon,
-  fontawesomeIcon,
-  antDesignIcon,
-  weight,
-  iconColor,
   shape = 'circle',
   backgroundColor = '#004BFF',
+  ...iconProps
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
   const prefixCls = getPrefixCls('background-icon');
@@ -72,12 +57,7 @@ const BackgroundIcon: React.FC<BackgroundIconProps> = ({
     return (
       <Squircle customSize={wrapperSize} fill={backgroundColor}>
         <Icon
-          type={type}
-          phosphorIcon={phosphorIcon}
-          fontawesomeIcon={fontawesomeIcon}
-          antDesignIcon={antDesignIcon}
-          weight={weight}
-          iconColor={iconColor}
+          {...iconProps}
           customSize={iconSize}
         />
       </Squircle>
@@ -87,12 +67,7 @@ const BackgroundIcon: React.FC<BackgroundIconProps> = ({
   return wrapSSR(
     <div className={classes} style={{ width: wrapperSize, height: wrapperSize, backgroundColor }}>
       <Icon
-        type={type}
-        phosphorIcon={phosphorIcon}
-        fontawesomeIcon={fontawesomeIcon}
-        antDesignIcon={antDesignIcon}
-        weight={weight}
-        iconColor={iconColor}
+        {...iconProps}
         customSize={iconSize}
       />
     </div>,
