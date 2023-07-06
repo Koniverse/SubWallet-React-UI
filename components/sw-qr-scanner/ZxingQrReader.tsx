@@ -1,12 +1,12 @@
 import classNames from 'classnames';
-import React, { useRef } from 'react';
+import React from 'react';
 import { ConfigContext } from '../config-provider';
 import useStyle from './style';
-import useQrReader from './hooks/useQrReader';
+import useZxingQrReader from './hooks/useZxingQrReader';
 
 import type { QrReaderProps } from './types';
 
-const QrReader: React.FC<QrReaderProps> = ({
+const ZxingQrReader: React.FC<QrReaderProps> = ({
   videoContainerStyle,
   containerStyle,
   videoStyle,
@@ -23,9 +23,8 @@ const QrReader: React.FC<QrReaderProps> = ({
   const _prefixCls = getPrefixCls('sw-qr-scanner');
   const prefixCls = `${_prefixCls}-reader`;
   const [wrapSSR, hashId] = useStyle(prefixCls);
-  const videoRef = useRef<HTMLVideoElement | null>(null);
 
-  useQrReader({
+  useZxingQrReader({
     constraints,
     scanDelay,
     onResult,
@@ -48,7 +47,6 @@ const QrReader: React.FC<QrReaderProps> = ({
         <video
           muted
           id={videoId}
-          ref={videoRef}
           className={classNames(`${prefixCls}-video`)}
           style={{
             ...videoStyle,
@@ -60,8 +58,8 @@ const QrReader: React.FC<QrReaderProps> = ({
   );
 };
 
-QrReader.displayName = 'QrReader';
-QrReader.defaultProps = {
+ZxingQrReader.displayName = 'QrReader';
+ZxingQrReader.defaultProps = {
   constraints: {
     facingMode: 'user',
   },
@@ -69,4 +67,4 @@ QrReader.defaultProps = {
   scanDelay: 500,
 };
 
-export default QrReader;
+export default ZxingQrReader;
