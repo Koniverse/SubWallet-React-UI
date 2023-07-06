@@ -158,6 +158,7 @@ module.exports = {
     'react/no-unused-prop-types': 0,
     'react/default-props-match-prop-types': 0,
     'react-hooks/rules-of-hooks': 2,
+    'react-hooks/exhaustive-deps': 2,
     // Checks rules of Hooks
     'react/function-component-definition': 0,
     'react/no-unused-class-component-methods': 0,
@@ -207,7 +208,7 @@ module.exports = {
     'jest/no-standalone-expect': 0,
     'unicorn/better-regex': 2,
     'unicorn/prefer-string-trim-start-end': 2,
-    'unicorn/expiring-todo-comments': 2,
+    'unicorn/expiring-todo-comments': 0,
     'unicorn/no-abusive-eslint-disable': 2,
     // https://github.com/typescript-eslint/typescript-eslint/issues/2540#issuecomment-692866111
     'no-use-before-define': 0,

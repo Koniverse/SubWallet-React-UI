@@ -36,6 +36,7 @@ export default {
       defaultValue: 'top',
     },
     type: { control: 'radio', options: ['default', 'success', 'info', 'warning', 'error'] },
+    closeable: { type: 'boolean', defaultValue: true },
   } as ComponentMeta<typeof Notification>,
 };
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
@@ -55,6 +56,7 @@ const Template: ComponentStory<typeof Notification> = (args) => {
     closeIcon,
     type,
     update,
+    closeable,
   } = args;
   const { showNotification } = useContext(NotificationContext);
   return (
@@ -78,6 +80,7 @@ const Template: ComponentStory<typeof Notification> = (args) => {
             closeIcon,
             type,
             update,
+            closeable,
           })
         }
       >

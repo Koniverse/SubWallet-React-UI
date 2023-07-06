@@ -1,8 +1,8 @@
 import { Keyframes } from '@ant-design/cssinjs';
+import { resetComponent } from '../../style';
 import type { FullToken, GenerateStyle } from '../../theme/internal';
 import { genComponentStyleHook, mergeToken } from '../../theme/internal';
 import genNotificationPlacementStyle from './placement';
-import { resetComponent } from '../../style';
 
 /** Component only token. Which will handle additional calculation of alias token */
 export interface ComponentToken {
@@ -41,9 +41,11 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
     fontSize,
     lineHeight,
     width,
+    antCls,
   } = token;
 
   const noticeCls = `${componentCls}-notice`;
+  const btnCls = `${antCls}-btn`;
 
   const notificationFadeIn = new Keyframes('antNotificationFadeIn', {
     '0%': {
@@ -258,6 +260,16 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
           },
           [`&-error${iconCls}`]: {
             color: colorError,
+          },
+        },
+
+        [`${noticeCls}-close-button`]: {
+          marginLeft: token.marginXS,
+          alignSelf: 'start',
+          [`&${btnCls}`]: {
+            lineHeight: `${token.sizeXL}px`,
+            height: token.sizeXL,
+            padding: 0,
           },
         },
 

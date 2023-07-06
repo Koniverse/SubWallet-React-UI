@@ -1,17 +1,18 @@
-import * as React from 'react';
-import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
-import ExclamationCircleFilled from '@ant-design/icons/ExclamationCircleFilled';
-import CloseCircleFilled from '@ant-design/icons/CloseCircleFilled';
 import CheckCircleFilled from '@ant-design/icons/CheckCircleFilled';
+import CloseCircleFilled from '@ant-design/icons/CloseCircleFilled';
+import ExclamationCircleFilled from '@ant-design/icons/ExclamationCircleFilled';
 import InfoCircleFilled from '@ant-design/icons/InfoCircleFilled';
-import { Notice } from 'rc-notification';
+import LoadingOutlined from '@ant-design/icons/LoadingOutlined';
 import classNames from 'classnames';
-import type { NoticeProps } from 'rc-notification/lib/Notice';
 import { CheckCircle, Info, WarningCircle, X, XCircle } from 'phosphor-react';
-import useStyle from './style';
+import { Notice } from 'rc-notification';
+import type { NoticeProps } from 'rc-notification/lib/Notice';
+import * as React from 'react';
+import Button from '../button';
 import { ConfigContext } from '../config-provider';
-import type { IconType } from './interface';
 import Icon from '../icon';
+import type { IconType } from './interface';
+import useStyle from './style';
 
 export const TypeIcon = {
   info: <InfoCircleFilled />,
@@ -39,11 +40,14 @@ export function getCloseIcon(prefixCls: string, closeIcon?: React.ReactNode) {
 export interface PureContentProps {
   prefixCls: string;
   icon?: React.ReactNode;
+  closeIcon?: React.ReactNode;
   message?: React.ReactNode;
   description?: React.ReactNode;
   btn?: React.ReactNode;
   type?: IconType;
   direction?: 'horizontal' | 'vertical';
+  onClose?: () => void;
+  closeable?: boolean;
 }
 
 const typeToIcon = {
@@ -61,6 +65,9 @@ export function PureContent({
   description,
   direction,
   btn,
+  onClose,
+  closeable,
+  closeIcon = <Icon phosphorIcon={X} size='sm' />,
 }: PureContentProps) {
   let iconNode: React.ReactNode = null;
   if (icon) {
@@ -91,6 +98,16 @@ export function PureContent({
         {description && <div className={`${prefixCls}-description`}>{description}</div>}
         {btn && <div className={`${prefixCls}-btn`}>{btn}</div>}
       </div>
+      {onClose && closeable && (
+        <Button
+          onClick={onClose}
+          className={classNames(`${prefixCls}-close-button`)}
+          size='xs'
+          type='ghost'
+        >
+          {closeIcon}
+        </Button>
+      )}
     </div>
   );
 }
