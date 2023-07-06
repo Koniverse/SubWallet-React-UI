@@ -22,6 +22,7 @@ interface QRProps {
   outerEyesRadius?: number;
   innerEyesRadius?: number;
   logoPadding?: number;
+  ignoreEncode?: boolean;
 }
 
 export interface SwQRCodeProps extends QRProps {
@@ -49,6 +50,7 @@ const SwQRCode: React.FC<SwQRCodeProps> = (props: SwQRCodeProps) => {
     outerEyesRadius = 20,
     innerEyesRadius = 9,
     logoPadding = 6,
+    ignoreEncode,
   } = props;
 
   const { getPrefixCls } = useContext<ConfigConsumerProps>(ConfigContext);
@@ -106,6 +108,7 @@ const SwQRCode: React.FC<SwQRCodeProps> = (props: SwQRCodeProps) => {
         logoPadding={logoPadding}
         fgColor={color}
         bgColor={bgColor}
+        ignoreEncode={ignoreEncode}
       />
     </div>,
   );
