@@ -114,8 +114,22 @@ export function useInternalNotification(
         btn,
         className,
         direction,
+        closeable = false,
+        onClose,
         ...restConfig
       } = config;
+
+      const { key } = config;
+
+      const _onClose = () => {
+        if (onClose) {
+          onClose();
+        } else if (key !== undefined) {
+          holderRef.current?.close(key);
+        } else {
+          holderRef.current?.destroy();
+        }
+      };
 
       return originOpen({
         ...restConfig,
@@ -128,6 +142,9 @@ export function useInternalNotification(
             description={description}
             direction={direction}
             btn={btn}
+            onClose={_onClose}
+            closeable={closeable}
+            closeIcon={restConfig.closeIcon}
           />
         ),
         placement,

@@ -197,6 +197,11 @@ export default {
     multipleFrame: {
       control: false,
     },
+    type: {
+      options: ['zxing', 'jsqr'],
+      control: 'radio',
+      defaultValue: 'jsqr',
+    },
   },
 } as ComponentMeta<typeof Wrapper>;
 
@@ -205,6 +210,7 @@ const Template: ComponentStory<typeof Wrapper> = (args) => <Wrapper {...args} />
 const DEFAULT_ARGS = {
   title: 'Custom title',
   description: 'Custom description',
+  type: 'jsqr',
 };
 
 export const Default = Template.bind({});

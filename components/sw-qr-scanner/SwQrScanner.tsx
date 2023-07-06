@@ -1,25 +1,27 @@
-import { BrowserQRCodeReader } from '@zxing/browser';
+import type { Result as ZxingResult } from '@zxing/library';
 import classNames from 'classnames';
-import type { ChangeEventHandler } from 'react';
+import type { QRCode as JsQrResult } from 'jsqr';
+import { Camera, CheckCircle, ImageSquare, Info, XCircle } from 'phosphor-react';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Info, ImageSquare, Camera, CheckCircle, XCircle } from 'phosphor-react';
-import type { Result } from '@zxing/library';
-import SwModal, { ModalContext, useExcludeModal } from '../sw-modal';
-import type { SwModalProps } from '../sw-modal';
 import ActivityIndicator from '../activity-indicator';
-import SelectModal from '../select-modal';
-import { openGrantCameraPermissionDocument } from './configs';
 import BackgroundIcon from '../background-icon';
-import { useToken } from '../theme/internal';
-import QrReader from './QrReader';
-import Icon from '../icon';
-import SwSubHeader from '../sw-sub-header';
 import type { ButtonProps } from '../button';
 import Button from '../button';
 import { ConfigContext } from '../config-provider';
-import useStyle from './style';
 import { NoFormStyle } from '../form/context';
+import Icon from '../icon';
+import SelectModal from '../select-modal';
 import { NoCompactStyle } from '../space/Compact';
+import type { SwModalProps } from '../sw-modal';
+import SwModal, { ModalContext, useExcludeModal } from '../sw-modal';
+import SwSubHeader from '../sw-sub-header';
+import { useToken } from '../theme/internal';
+import { openGrantCameraPermissionDocument } from './configs';
+import useSelectQrImage from './hooks/useSelectQrImage';
+import JsQrReader from './JsQrReader';
+import ZxingQrReader from './ZxingQrReader';
+import useStyle from './style';
+import type { QrDecodeLib, SelectQrImageHookProps } from './types';
 
 interface VideoDeviceInfo extends Pick<MediaDeviceInfo, 'deviceId' | 'groupId' | 'label'> {
   key: string;
@@ -52,6 +54,7 @@ export interface SwQrScannerProps
   footer?: React.ReactNode;
   overlay?: React.ReactNode;
   ratio?: number;
+  type?: QrDecodeLib;
 }
 
 const filterVideoMediaFunction = (devices: MediaDeviceInfo[]): MediaDeviceInfo[] =>
@@ -85,6 +88,9 @@ const SELECT_CAMERA_PREFIX = 'select-camera-';
 const VIDEO_ID = 'qr-scanner';
 const Z_INDEX = 1002;
 
+const isZxingResult = (result: ZxingResult | JsQrResult): result is ZxingResult =>
+  'getRawBytes' in result;
+
 const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
   const {
     prefixCls: customizePrefixCls,
@@ -103,6 +109,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     zIndex: mainZIndex = Z_INDEX,
     wrapClassName,
     transitionName = 'fade',
+    type = 'jsqr',
     ...restProps
   } = props;
 
@@ -133,7 +140,6 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
   const [devices, setDevices] = useState<VideoDeviceInfo[]>([]);
   const [selected, setSelected] = useState<string>('');
   const [loadingCamera, setLoadingCamera] = useState<boolean>(true);
-  const [loadingImage, setLoadingImage] = useState<boolean>(false);
   const [loadingGrantPermission, setLoadingGrantPermission] = useState<boolean>(false);
 
   const device = useMemo((): VideoDeviceInfo | undefined => {
@@ -164,7 +170,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
             groupId: device?.groupId,
           }
         : null,
-    [device],
+    [device, ratio],
   );
 
   const _onClose = useCallback(() => {
@@ -177,12 +183,19 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
   }, []);
 
   const onScan = useCallback(
-    (result: Result | undefined | null, error: Error | undefined | null) => {
+    (result: ZxingResult | JsQrResult | undefined | null, error: Error | undefined | null) => {
       if (result) {
-        onSuccess({
-          raw: result.getRawBytes(),
-          text: result.getText(),
-        });
+        if (isZxingResult(result)) {
+          onSuccess({
+            raw: result.getRawBytes(),
+            text: result.getText(),
+          });
+        } else {
+          onSuccess({
+            raw: Uint8Array.from(result.binaryData),
+            text: result.data,
+          });
+        }
       }
 
       if (error && error.message) {
@@ -192,46 +205,24 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     [onSuccess, onError],
   );
 
+  const selectQrImageHookProps = useMemo(
+    (): SelectQrImageHookProps => ({
+      onResult: onScan,
+      type,
+    }),
+    [onScan, type],
+  );
+
+  const { onFileChange, imageLoading } = useSelectQrImage(selectQrImageHookProps);
+
   const customInput = useMemo(
     (): React.ReactNode => (
       <Button
-        icon={<Icon type='phosphor' phosphorIcon={Camera} weight='fill' />}
-        schema='secondary'
+        icon={<Icon type="phosphor" phosphorIcon={Camera} weight="fill" />}
+        schema="secondary"
       />
     ),
     [],
-  );
-
-  const onChangeFile: ChangeEventHandler<HTMLInputElement> = useCallback(
-    (event) => {
-      setLoadingImage(true);
-      const file = event.target.files ? event.target.files[0] : null;
-
-      if (file) {
-        const codeReader = new BrowserQRCodeReader();
-        const reader = new FileReader();
-        reader.onload = () => {
-          codeReader
-            .decodeFromImageUrl(reader.result as string)
-            .then((value) => {
-              onScan(value, null);
-            })
-            .catch((error: Error) => {
-              if (error.name === 'NotFoundException' || !error.message) {
-                error.message = 'Invalid QR code, please try again';
-              }
-              onScan(null, error);
-            })
-            .finally(() => {
-              setLoadingImage(false);
-            });
-        };
-        reader.readAsDataURL(file);
-      } else {
-        setLoadingImage(false);
-      }
-    },
-    [onScan],
   );
 
   const onGrantPermission = useCallback((): void => {
@@ -272,27 +263,26 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     (_item: VideoDeviceInfo, _selected: boolean) => (
       <div className={classNames(`${prefixCls}-camera-item`)}>
         <BackgroundIcon
-          type='phosphor'
+          type="phosphor"
           phosphorIcon={Camera}
-          weight='fill'
-          size='sm'
+          weight="fill"
+          size="sm"
           backgroundColor={token['gray-3']}
-          shape='circle'
+          shape="circle"
         />
         <div className={classNames(`${prefixCls}-camera-label`)}>{_item.label}</div>
         {_selected && (
           <div className={classNames(`${prefixCls}-camera-selected`)}>
-            <Icon type='phosphor' phosphorIcon={CheckCircle} size='sm' weight='fill' />
+            <Icon type="phosphor" phosphorIcon={CheckCircle} size="sm" weight="fill" />
           </div>
         )}
       </div>
     ),
-    [prefixCls],
+    [prefixCls, token],
   );
 
   const onChangeCamera = useCallback((_selected: string) => {
     setSelected(_selected);
-    setLoadingCamera(true);
   }, []);
 
   useEffect(() => {
@@ -416,15 +406,30 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
         >
           <div className={classNames(`${prefixCls}-scanner`)}>
             {cameraState === 'Allowed' && constraints && (
-              <QrReader
-                className='qr-scanner-container'
-                constraints={constraints}
-                onResult={onScan}
-                scanDelay={150}
-                videoId={VIDEO_ID}
-                videoContainerStyle={{ paddingTop: `${100 / ratio}%` }}
-                setLoading={setLoadingCamera}
-              />
+              <>
+                {type === 'zxing' && (
+                  <ZxingQrReader
+                    className="qr-scanner-container"
+                    constraints={constraints}
+                    onResult={onScan}
+                    scanDelay={150}
+                    videoId={VIDEO_ID}
+                    videoContainerStyle={{ paddingTop: `${100 / ratio}%` }}
+                    setLoading={setLoadingCamera}
+                  />
+                )}
+                {type === 'jsqr' && (
+                  <JsQrReader
+                    className="qr-scanner-container"
+                    constraints={constraints}
+                    onResult={onScan}
+                    scanDelay={150}
+                    videoId={VIDEO_ID}
+                    videoContainerStyle={{ paddingTop: `${100 / ratio}%` }}
+                    setLoading={setLoadingCamera}
+                  />
+                )}
+              </>
             )}
           </div>
           <div className={classNameExtended}>
@@ -434,12 +439,16 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                 showBackButton
                 paddingVertical
                 onBack={_onClose}
-                background='transparent'
+                background="transparent"
                 title={title}
                 rightButtons={
                   rightIconProps
                     ? [rightIconProps]
-                    : [{ icon: <Icon type='phosphor' phosphorIcon={Info} /> }]
+                    : [
+                        {
+                          icon: <Icon type="phosphor" phosphorIcon={Info} />,
+                        },
+                      ]
                 }
               />
               {description && (
@@ -469,9 +478,9 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                         <div className={classNames(`${prefixCls}-camera-block-content`)}>
                           <Icon
                             className={classNames(`${prefixCls}-camera-block-icon`)}
-                            type='phosphor'
+                            type="phosphor"
                             phosphorIcon={XCircle}
-                            weight='fill'
+                            weight="fill"
                             customSize={`${token.sizeXL}px`}
                           />
                           <div className={classNames(`${prefixCls}-camera-block-text`)}>
@@ -496,7 +505,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                   ? cameraState === 'Blocked' && (
                       <Button
                         onClick={onGrantPermission}
-                        icon={<Icon type='phosphor' phosphorIcon={Info} weight='fill' />}
+                        icon={<Icon type="phosphor" phosphorIcon={Info} weight="fill" />}
                         block
                         loading={loadingGrantPermission}
                       >
@@ -507,22 +516,22 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                       <>
                         <input
                           className={classNames(`${prefixCls}-hidden-input`)}
-                          type='file'
-                          onChange={onChangeFile}
-                          accept='image/*'
+                          type="file"
+                          onChange={onFileChange}
+                          accept="image/*"
                           ref={fileRef}
                         />
                         <Button
                           onClick={onOpenFile}
-                          icon={<Icon type='phosphor' phosphorIcon={ImageSquare} weight='fill' />}
-                          loading={loadingImage}
-                          schema='secondary'
+                          icon={<Icon type="phosphor" phosphorIcon={ImageSquare} weight="fill" />}
+                          loading={imageLoading}
+                          schema="secondary"
                         >
                           Upload from photos
                         </Button>
                         <SelectModal
                           items={devices}
-                          itemKey='key'
+                          itemKey="key"
                           selected={selected}
                           maskClosable
                           renderItem={renderCameraItem}
@@ -530,7 +539,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                           id={selectCameraModalId}
                           zIndex={mainZIndex + 1}
                           customInput={customInput}
-                          title='Select camera'
+                          title="Select camera"
                           className={classNames(hashId, `${prefixCls}-camera-items-container`)}
                           getContainer={props.getContainer}
                           destroyOnClose

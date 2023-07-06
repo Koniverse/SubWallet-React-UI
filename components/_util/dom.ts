@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/prefer-default-export
 export const waitForElement = (selector: string, callback: (element: Element) => any) => {
   let count = 0;
   const interval = setInterval(() => {
@@ -20,3 +19,5 @@ export const waitForElement = (selector: string, callback: (element: Element) =>
     }
   }, 100);
 };
+
+export const noop: VoidFunction = () => {};

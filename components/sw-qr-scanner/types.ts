@@ -1,6 +1,10 @@
 import type { BrowserQRCodeReader } from '@zxing/browser';
-import type { Result } from '@zxing/library';
+import type { Result as ZxingResult } from '@zxing/library';
+import type { QRCode as JsQrResult } from 'jsqr';
+import { ChangeEventHandler } from 'react';
 import type React from 'react';
+
+export type QrDecodeLib = 'zxing' | 'jsqr';
 
 export type QrReaderProps = {
   /**
@@ -44,9 +48,9 @@ export type QrReaderProps = {
 
 export type OnResultFunction = (
   /**
-   * The QR values extracted by Zxing
+   * The QR values extracted by Zxing or JsQR
    */
-  result?: Result | undefined | null,
+  result?: ZxingResult | JsQrResult | undefined | null,
   /**
    * The name of the exceptions thrown while reading the QR
    */
@@ -78,4 +82,16 @@ export type UseQrReaderHookProps = {
   setLoading: (value: boolean) => void;
 };
 
-export type UseQrReaderHook = (props: UseQrReaderHookProps) => void;
+export type UseZxingQrReaderHook = (props: UseQrReaderHookProps) => void;
+
+export interface SelectQrImageHookProps {
+  onResult: OnResultFunction;
+  type: QrDecodeLib;
+}
+
+export interface SelectQrImageHookResult {
+  imageLoading: boolean;
+  onFileChange: ChangeEventHandler<HTMLInputElement>;
+}
+
+export type UseSelectQrImageHook = (props: SelectQrImageHookProps) => SelectQrImageHookResult;
