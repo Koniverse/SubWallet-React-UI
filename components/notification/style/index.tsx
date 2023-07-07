@@ -167,7 +167,7 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
         borderRadius: borderRadiusLG,
         boxShadow: boxShadowSecondary,
 
-        [`${noticeCls}-with-icon`]: {
+        [`${noticeCls}-container`]: {
           display: 'flex',
           alignItems: 'center',
         },
@@ -176,7 +176,7 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
           display: 'flex',
         },
 
-        [`${noticeCls}-with-icon${noticeCls}-vertical`]: {
+        [`${noticeCls}-container${noticeCls}-vertical`]: {
           flexDirection: 'column',
           minHeight: 94,
           minWidth: 78,
@@ -190,6 +190,10 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
           [`${noticeCls}-icon`]: {
             position: 'static',
             marginRight: 0,
+          },
+          [`${noticeCls}-close-button`]: {
+            marginLeft: 0,
+            alignSelf: 'center',
           },
         },
 
@@ -234,11 +238,11 @@ const genNotificationStyle: GenerateStyle<NotificationToken> = (token) => {
           paddingInlineEnd: 0,
         },
 
-        [`${noticeCls}-with-icon ${noticeCls}-message`]: {
+        [`${noticeCls}-container ${noticeCls}-message`]: {
           fontSize,
         },
 
-        [`${noticeCls}-with-icon ${noticeCls}-description`]: {
+        [`${noticeCls}-container ${noticeCls}-description`]: {
           marginTop: token.marginXS,
           fontSize: token.fontSizeSM,
         },

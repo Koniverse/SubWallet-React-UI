@@ -30,7 +30,7 @@ export interface ArgsProps {
   closeIcon?: React.ReactNode;
   direction?: 'horizontal' | 'vertical';
   props?: DivProps;
-  closeable?: boolean;
+  closable?: boolean;
 }
 
 export interface NotificationInstance {

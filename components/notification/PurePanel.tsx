@@ -67,7 +67,7 @@ export function PureContent({
   btn,
   onClose,
   closeable,
-  closeIcon = <Icon phosphorIcon={X} size='sm' />,
+  closeIcon = <Icon phosphorIcon={X} size="sm" />,
 }: PureContentProps) {
   let iconNode: React.ReactNode = null;
   if (icon) {
@@ -86,8 +86,7 @@ export function PureContent({
 
   return (
     <div
-      className={classNames({
-        [`${prefixCls}-with-icon`]: iconNode,
+      className={classNames(`${prefixCls}-container`, {
         [`${prefixCls}-vertical`]: direction === 'vertical',
       })}
       role="alert"
@@ -102,8 +101,8 @@ export function PureContent({
         <Button
           onClick={onClose}
           className={classNames(`${prefixCls}-close-button`)}
-          size='xs'
-          type='ghost'
+          size="xs"
+          type="ghost"
         >
           {closeIcon}
         </Button>
