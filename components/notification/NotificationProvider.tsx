@@ -56,7 +56,7 @@ const NotificationProvider = ({
       key: _key,
     } = notificationProps;
 
-    const key = _key ?? Date.now();
+    const key = _key || Date.now();
 
     if (type && api[type]) {
       api[type]({

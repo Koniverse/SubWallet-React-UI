@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
-import type { ComponentStory, ComponentMeta } from '@storybook/react';
+import type { ComponentMeta, ComponentStory } from '@storybook/react';
 import { Info } from 'phosphor-react';
-import type { NotificationProps } from '../NotificationProvider';
-import NotificationProvider, { NotificationContext } from '../NotificationProvider';
+import React, { useContext } from 'react';
 import Button from '../../button';
 import Icon from '../../icon';
+import type { NotificationProps } from '../NotificationProvider';
+import NotificationProvider, { NotificationContext } from '../NotificationProvider';
 
 // eslint-disable-next-line react/jsx-no-useless-fragment
 const Notification: React.FC<NotificationProps> = () => <></>;
@@ -37,6 +37,7 @@ export default {
     },
     type: { control: 'radio', options: ['default', 'success', 'info', 'warning', 'error'] },
     closable: { type: 'boolean', defaultValue: true },
+    key: { control: 'text', defaultValue: '' },
   } as ComponentMeta<typeof Notification>,
 };
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
@@ -57,6 +58,7 @@ const Template: ComponentStory<typeof Notification> = (args) => {
     type,
     update,
     closable,
+    key,
   } = args;
   const { showNotification } = useContext(NotificationContext);
   return (
@@ -81,6 +83,7 @@ const Template: ComponentStory<typeof Notification> = (args) => {
             type,
             update,
             closable,
+            key,
           })
         }
       >
