@@ -176,16 +176,7 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
         </>
       )
     );
-  }, [
-    loading,
-    mergedStatus,
-    suffix,
-    mergedStatus,
-    displaySuccessStatus,
-    prefixCls,
-    hideSuffix,
-    suffix,
-  ]);
+  }, [loading, mergedStatus, suffix, displaySuccessStatus, prefixCls, hideSuffix, token.size]);
 
   const enableSearchInput = !!searchFunction;
 
@@ -223,7 +214,7 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
 
       return renderItem(item, false);
     },
-    [renderSelected, placeholder],
+    [renderSelected, renderItem, prefixCls, placeholder],
   );
 
   const _onSelect = useCallback(
@@ -250,7 +241,7 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
         </div>
       );
     },
-    [_onSelect, renderItem, itemKey, selected],
+    [itemKey, selected, _onSelect, prefixCls, renderItem],
   );
 
   useEffect(() => {

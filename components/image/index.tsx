@@ -1,20 +1,19 @@
+import EyeOutlined from '@ant-design/icons/EyeOutlined';
 import '@google/model-viewer';
 import classNames from 'classnames';
 import RcImage, { type ImageProps } from 'rc-image';
-import * as React from 'react';
 import type { SyntheticEvent } from 'react';
-import { useCallback, useEffect, useState } from 'react';
-import EyeOutlined from '@ant-design/icons/EyeOutlined';
-import Squircle from '../squircle/index';
+import React, { useCallback, useEffect, useState } from 'react';
 import { ConfigContext } from '../config-provider';
+import Squircle from '../squircle/index';
 // CSSINJS
-import useStyle from './style';
-import defaultLocale from '../locale/en_US';
-import { getTransitionName } from '../_util/motion';
-import PreviewGroup, { icons } from './PreviewGroup';
 import ActivityIndicator from '../activity-indicator';
+import defaultLocale from '../locale/en_US';
 import { FAULT_TOLERANT } from '../_util/constant';
 import { formatPxNumbers } from '../_util/dimension';
+import { getTransitionName } from '../_util/motion';
+import PreviewGroup, { icons } from './PreviewGroup';
+import useStyle from './style';
 
 const ImageShapes = ['default', 'square', 'circle', 'squircle', 'none'] as const;
 export type ImageShape = typeof ImageShapes[number];
@@ -95,7 +94,7 @@ const Image: CompositionImage<SwImageProps> = ({
       transitionName: getTransitionName(rootPrefixCls, 'zoom', _preview.transitionName),
       maskTransitionName: getTransitionName(rootPrefixCls, 'fade', _preview.maskTransitionName),
     };
-  }, [preview, imageLocale]);
+  }, [preview, prefixCls, imageLocale?.preview, getContextPopupContainer, rootPrefixCls]);
 
   const handleOnLoad = useCallback(
     (event: SyntheticEvent<HTMLImageElement>) => {
@@ -146,13 +145,13 @@ const Image: CompositionImage<SwImageProps> = ({
         <video
           className={classNames(`${prefixCls}-video`)}
           autoPlay
-          height='124'
+          width={width}
+          height={height}
           loop
           muted
           onError={handleVideoError}
-          width='124'
         >
-          <source src={src} type='video/mp4' />
+          <source src={src} type="video/mp4" />
         </video>
       );
     }
