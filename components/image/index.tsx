@@ -142,17 +142,21 @@ const Image: CompositionImage<SwImageProps> = ({
 
     if (showVideo) {
       return (
-        <video
-          className={classNames(`${prefixCls}-video`)}
-          autoPlay
-          width={width}
-          height={height}
-          loop
-          muted
-          onError={handleVideoError}
-        >
-          <source src={src} type="video/mp4" />
-        </video>
+        <div className={classNames(prefixCls, mergedRootClassName)}>
+          <div className={classNames(`${prefixCls}-video-container`)}>
+            <video
+              className={classNames(`${prefixCls}-video`)}
+              autoPlay
+              width={width}
+              height={height}
+              loop
+              muted
+              onError={handleVideoError}
+            >
+              <source src={src} type="video/mp4" />
+            </video>
+          </div>
+        </div>
       );
     }
 
