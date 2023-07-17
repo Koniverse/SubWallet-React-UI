@@ -286,21 +286,27 @@ const genImageStyle: GenerateStyle<ImageToken> = (token: ImageToken) => {
       [`${componentCls}-placeholder`]: {
         ...genBoxStyle(),
       },
-      '> .ant-image-img': {
+
+      [`${componentCls}-video-container`]: {
+        display: 'flex',
+        overflow: 'hidden',
+      },
+
+      '> .ant-image-img, > .ant-image-video-container': {
         borderRadius: token.borderRadiusLG,
       },
       '&.-shape-square': {
-        '> .ant-image-img': {
+        '> .ant-image-img, > .ant-image-video-container': {
           borderRadius: '0px',
         },
       },
       '&.-shape-circle': {
-        '> .ant-image-img': {
+        '> .ant-image-img, > .ant-image-video-container': {
           borderRadius: '50%',
         },
       },
       '&.-responsive': {
-        '> .ant-image-img': {
+        '> .ant-image-img, > .ant-image-video-container': {
           maxWidth: '100%',
         },
       },
