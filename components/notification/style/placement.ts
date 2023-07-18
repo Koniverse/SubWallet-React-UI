@@ -20,12 +20,12 @@ const genNotificationPlacementStyle: GenerateStyle<NotificationToken, CSSObject>
 
   const notificationBottomFadeIn = new Keyframes('antNotificationBottomFadeIn', {
     '0%': {
-      marginBottom: '-100%',
+      transform: 'translateY(50%)',
       opacity: 0,
     },
 
     '100%': {
-      marginBottom: 0,
+      transform: 'translateY(0)',
       opacity: 1,
     },
   });

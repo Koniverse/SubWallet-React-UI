@@ -114,7 +114,7 @@ export function useInternalNotification(
         btn,
         className,
         direction,
-        closeable = false,
+        closable = false,
         onClose,
         ...restConfig
       } = config;
@@ -133,6 +133,7 @@ export function useInternalNotification(
 
       return originOpen({
         ...restConfig,
+        closable,
         content: (
           <PureContent
             prefixCls={noticePrefixCls}
@@ -143,7 +144,7 @@ export function useInternalNotification(
             direction={direction}
             btn={btn}
             onClose={_onClose}
-            closeable={closeable}
+            closeable={closable}
             closeIcon={restConfig.closeIcon}
           />
         ),

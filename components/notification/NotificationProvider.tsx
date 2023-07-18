@@ -23,7 +23,8 @@ export interface NotificationProps {
   closeIcon?: React.ReactNode;
   type?: NotificationType;
   direction?: 'horizontal' | 'vertical';
-  closeable?: boolean;
+  closable?: boolean;
+  key?: React.Key;
 }
 
 export const NotificationContext = React.createContext<{
@@ -51,9 +52,12 @@ const NotificationProvider = ({
       closeIcon,
       type,
       update,
-      closeable,
+      closable,
+      key: _key,
     } = notificationProps;
-    api.destroy();
+
+    const key = _key || Date.now();
+
     if (type && api[type]) {
       api[type]({
         message,
@@ -68,7 +72,8 @@ const NotificationProvider = ({
         className,
         closeIcon,
         direction,
-        closeable,
+        closable,
+        key,
       });
 
       return;
@@ -87,7 +92,8 @@ const NotificationProvider = ({
       className,
       closeIcon,
       direction,
-      closeable,
+      closable,
+      key,
     });
 
     // eslint-disable-next-line @typescript-eslint/no-unused-expressions
