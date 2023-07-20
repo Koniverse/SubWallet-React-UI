@@ -24,6 +24,10 @@ const genNumberStyle = (token: NumberToken): CSSInterpolation => {
           color: token.colorText,
         },
 
+        [`${componentCls}-hide-content`]: {
+          color: token.colorText,
+        },
+
         [`${componentCls}-decimal`]: {
           color: token.colorText,
         },
