@@ -28,6 +28,9 @@ export interface SwNumberProps {
   decimalColor?: string;
   unitOpacity?: number;
   unitColor?: string;
+
+  hide?: boolean;
+  showHideLength?: number;
 }
 
 interface LocaleNumberFormat {
@@ -85,6 +88,8 @@ const Number: React.FC<SwNumberProps> = (props) => {
     unitColor = token.colorTextLight1,
     unitOpacity = 1,
     weight = 500,
+    hide,
+    showHideLength = 6,
   } = props;
 
   const intStyle = useMemo(
@@ -151,46 +156,60 @@ const Number: React.FC<SwNumberProps> = (props) => {
     return [intToLocaleString(int, thousandSeparator), dec, abbreviation];
   }, [formatted]);
 
+  const hideContent = useMemo(() => new Array(showHideLength).fill('*').join(''), [showHideLength]);
+
   return wrapSSR(
     <div className={classNames(classNameExtend)}>
-      {prefix && (
+      {hide && (
         <Typography.Text
-          className={classNames(`${prefixCls}-prefix`)}
-          style={{ ...unitStyle, fontWeight: weight, fontSize: integerFontSize }}
-        >
-          {prefix}
-        </Typography.Text>
-      )}
-      <Typography.Text
-        className={classNames(`${prefixCls}-integer`)}
-        style={{ ...intStyle, fontWeight: weight, fontSize: integerFontSize }}
-      >
-        {_int}
-      </Typography.Text>
-      {!!_dec && (
-        <Typography.Text
-          className={classNames(`${prefixCls}-decimal`)}
-          style={{ ...decimalStyle, fontWeight: weight, fontSize: decimalFontSize }}
-        >
-          {decimalSeparator}
-          {_dec}
-        </Typography.Text>
-      )}
-      {!!_abbreviation && (
-        <Typography.Text
-          className={classNames(`${prefixCls}-integer`)}
+          className={classNames(`${prefixCls}-hide-content`)}
           style={{ ...intStyle, fontWeight: weight, fontSize: integerFontSize }}
         >
-          {` ${_abbreviation}`}
+          {hideContent}
         </Typography.Text>
       )}
-      {suffix && (
-        <Typography.Text
-          className={classNames(`${prefixCls}-suffix`)}
-          style={{ ...unitStyle, fontWeight: weight, fontSize: decimalFontSize }}
-        >
-          &nbsp;{suffix}
-        </Typography.Text>
+      {!hide && (
+        <>
+          {prefix && (
+            <Typography.Text
+              className={classNames(`${prefixCls}-prefix`)}
+              style={{ ...unitStyle, fontWeight: weight, fontSize: integerFontSize }}
+            >
+              {prefix}
+            </Typography.Text>
+          )}
+          <Typography.Text
+            className={classNames(`${prefixCls}-integer`)}
+            style={{ ...intStyle, fontWeight: weight, fontSize: integerFontSize }}
+          >
+            {_int}
+          </Typography.Text>
+          {!!_dec && (
+            <Typography.Text
+              className={classNames(`${prefixCls}-decimal`)}
+              style={{ ...decimalStyle, fontWeight: weight, fontSize: decimalFontSize }}
+            >
+              {decimalSeparator}
+              {_dec}
+            </Typography.Text>
+          )}
+          {!!_abbreviation && (
+            <Typography.Text
+              className={classNames(`${prefixCls}-integer`)}
+              style={{ ...intStyle, fontWeight: weight, fontSize: integerFontSize }}
+            >
+              {` ${_abbreviation}`}
+            </Typography.Text>
+          )}
+          {suffix && (
+            <Typography.Text
+              className={classNames(`${prefixCls}-suffix`)}
+              style={{ ...unitStyle, fontWeight: weight, fontSize: decimalFontSize }}
+            >
+              &nbsp;{suffix}
+            </Typography.Text>
+          )}
+        </>
       )}
     </div>,
   );

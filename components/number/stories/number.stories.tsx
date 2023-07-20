@@ -70,6 +70,10 @@ export default {
     unitColor: {
       control: 'color',
     },
+    hide: {
+      control: 'boolean',
+      defaultValue: false,
+    },
   },
 } as ComponentMeta<typeof Number>;
 
@@ -84,9 +88,10 @@ Default.args = {
   suffix: 'DOT',
   size: 16,
   subFloatNumber: true,
-  leftOpacity: 1,
-  leftColor: '#FFF',
-  rightOpacity: 0.8,
-  rightColor: '#FFF',
+  intOpacity: 1,
+  intColor: '#FFF',
+  decimalOpacity: 0.8,
+  decimalColor: '#FFF',
   weight: 500,
+  hide: false,
 };

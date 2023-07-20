@@ -61,34 +61,33 @@ const Template: ComponentStory<typeof Notification> = (args) => {
     key,
   } = args;
   const { showNotification } = useContext(NotificationContext);
+
+  const _onClick = () => {
+    showNotification({
+      message,
+      description,
+      icon,
+      direction,
+      style,
+      duration,
+      placement,
+      btn,
+      onClick,
+      onClose,
+      className,
+      closeIcon,
+      type,
+      update,
+      closable,
+      key,
+    });
+  };
+
   return (
     <div
       style={{ height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
     >
-      <Button
-        onClick={() =>
-          showNotification({
-            message,
-            description,
-            icon,
-            direction,
-            style,
-            duration,
-            placement,
-            btn,
-            onClick,
-            onClose,
-            className,
-            closeIcon,
-            type,
-            update,
-            closable,
-            key,
-          })
-        }
-      >
-        Click me!
-      </Button>
+      <Button onClick={_onClick}>Click me!</Button>
     </div>
   );
 };
