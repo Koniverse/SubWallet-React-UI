@@ -42,52 +42,17 @@ export default {
 };
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
 const Template: ComponentStory<typeof Notification> = (args) => {
-  const {
-    message,
-    description,
-    icon,
-    style,
-    duration,
-    placement = 'top',
-    direction,
-    btn,
-    onClick,
-    onClose,
-    className,
-    closeIcon,
-    type,
-    update,
-    closable,
-    key,
-  } = args;
   const { showNotification } = useContext(NotificationContext);
 
-  const _onClick = () => {
-    showNotification({
-      message,
-      description,
-      icon,
-      direction,
-      style,
-      duration,
-      placement,
-      btn,
-      onClick,
-      onClose,
-      className,
-      closeIcon,
-      type,
-      update,
-      closable,
-      key,
-    });
+  const onOpen = () => {
+    showNotification(args);
   };
 
   return (
     <div
       style={{ height: '400px', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
     >
-      <Button onClick={_onClick}>Click me!</Button>
+      <Button onClick={onOpen}>Click me!</Button>
     </div>
   );
 };
