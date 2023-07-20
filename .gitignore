@@ -33,7 +33,7 @@ elasticsearch-*
 config/base.yaml
 /.vscode/
 /coverage
-yarn.lock
+# yarn.lock
 package-lock.json
 pnpm-lock.yaml
 .pnpm-debug.log
