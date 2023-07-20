@@ -25,6 +25,7 @@ export interface StakingItemProps extends Web3BlockProps {
   className?: string;
   onPressItem?: () => void;
   onClickRightIcon?: () => void;
+  hideBalance?: boolean;
 }
 
 const StakingItem: React.FC<StakingItemProps> = ({
@@ -44,6 +45,7 @@ const StakingItem: React.FC<StakingItemProps> = ({
   middleItem,
   rightItem,
   onClickRightIcon,
+  hideBalance,
   ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
@@ -81,6 +83,7 @@ const StakingItem: React.FC<StakingItemProps> = ({
               <Number
                 value={stakingValue}
                 decimal={decimal}
+                hide={hideBalance}
                 suffix={displayToken}
                 decimalOpacity={0.45}
               />
@@ -89,6 +92,7 @@ const StakingItem: React.FC<StakingItemProps> = ({
                 prefix="$"
                 value={convertedStakingValue}
                 decimal={0}
+                hide={hideBalance}
                 intOpacity={0.45}
                 decimalOpacity={0.45}
                 unitOpacity={0.45}
