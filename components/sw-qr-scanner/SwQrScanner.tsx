@@ -55,6 +55,8 @@ export interface SwQrScannerProps
   overlay?: React.ReactNode;
   ratio?: number;
   type?: QrDecodeLib;
+  selectCameraTitle?: string;
+  selectCameraMotion?: SwModalProps['motion'];
 }
 
 const filterVideoMediaFunction = (devices: MediaDeviceInfo[]): MediaDeviceInfo[] =>
@@ -110,6 +112,8 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
     wrapClassName,
     transitionName = 'fade',
     type = 'jsqr',
+    selectCameraTitle = 'Select camera',
+    selectCameraMotion,
     ...restProps
   } = props;
 
@@ -308,7 +312,7 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
   useEffect(() => {
     let amount = true;
     let checking = false;
-    let interval: NodeJS.Timer;
+    let interval: NodeJS.Timeout;
     const updateDeviceList = () => {
       if (!checking && amount) {
         checking = true;
@@ -539,7 +543,8 @@ const SwQrScanner: React.FC<SwQrScannerProps> = (props) => {
                           id={selectCameraModalId}
                           zIndex={mainZIndex + 1}
                           customInput={customInput}
-                          title="Select camera"
+                          title={selectCameraTitle}
+                          motion={selectCameraMotion}
                           className={classNames(hashId, `${prefixCls}-camera-items-container`)}
                           getContainer={props.getContainer}
                           destroyOnClose

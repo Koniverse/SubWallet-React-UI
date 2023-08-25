@@ -245,7 +245,7 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
   );
 
   useEffect(() => {
-    let timeOut: NodeJS.Timer;
+    let timeOut: NodeJS.Timeout;
 
     if (isActive) {
       timeOut = setTimeout(() => {

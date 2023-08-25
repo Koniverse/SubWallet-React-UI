@@ -103,7 +103,7 @@ const Wrapper: React.FC<WrapperProps> = ({ footerElement, onCancel, onOk, ...arg
       title: 'Select account',
       type: 'error',
     });
-  }, [addConfirmModal, args]);
+  }, [addConfirmModal, args.closable, args.maskClosable, inactiveModal]);
 
   return (
     <div>
@@ -135,6 +135,24 @@ export default {
   component: Wrapper,
   // More on argTypes: https://storybook.js.org/docs/react/api/argtypes
   argTypes: {
+    background: {
+      control: 'radio',
+      options: ['default', 'transparent'],
+    },
+    motion: {
+      control: 'radio',
+      options: [
+        'slide-up',
+        'slide-down',
+        'slide-left',
+        'slide-right',
+        'move-up',
+        'move-down',
+        'move-left',
+        'move-right',
+        'fade',
+      ],
+    },
     title: {
       type: 'string',
     },
@@ -167,4 +185,5 @@ Primary.args = {
   closable: false,
   forceRenderFooter: true,
   footerElement: 2,
+  motion: 'slide-down',
 };

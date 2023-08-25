@@ -37,6 +37,17 @@ if (canUseDocElement()) {
   document.documentElement.addEventListener('click', getClickPosition, true);
 }
 
+export type SwModalMotion =
+  | 'slide-up'
+  | 'slide-down'
+  | 'slide-left'
+  | 'slide-right'
+  | 'move-up'
+  | 'move-down'
+  | 'move-left'
+  | 'move-right'
+  | 'fade';
+
 export interface SwModalProps {
   confirmLoading?: boolean;
   title?: React.ReactNode;
@@ -57,6 +68,7 @@ export interface SwModalProps {
   style?: React.CSSProperties;
   wrapClassName?: string;
   maskTransitionName?: string;
+  motion?: SwModalMotion;
   transitionName?: string;
   className?: string;
   getContainer?: string | HTMLElement | getContainerFunc | false;
@@ -125,6 +137,7 @@ const SwModal: React.FC<SwModalProps> = (props) => {
     rightIconProps,
     closable = true,
     title: _title,
+    motion = 'slide-down',
     ...restProps
   } = props;
 
@@ -184,7 +197,7 @@ const SwModal: React.FC<SwModalProps> = (props) => {
           mousePosition={restProps.mousePosition ?? mousePosition}
           onClose={handleCancel}
           focusTriggerAfterClose={focusTriggerAfterClose}
-          transitionName={getTransitionName(rootPrefixCls, 'slide-down', props.transitionName)}
+          transitionName={getTransitionName(rootPrefixCls, motion, props.transitionName)}
           maskTransitionName={getTransitionName(rootPrefixCls, 'fade', props.maskTransitionName)}
           className={classNames(hashId, className)}
           title={renderTitle()}

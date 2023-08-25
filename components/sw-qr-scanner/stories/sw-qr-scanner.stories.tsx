@@ -202,6 +202,23 @@ export default {
       control: 'radio',
       defaultValue: 'jsqr',
     },
+    selectCameraTitle: {
+      type: 'string',
+    },
+    selectCameraMotion: {
+      control: 'radio',
+      options: [
+        'slide-up',
+        'slide-down',
+        'slide-left',
+        'slide-right',
+        'move-up',
+        'move-down',
+        'move-left',
+        'move-right',
+        'fade',
+      ],
+    },
   },
 } as ComponentMeta<typeof Wrapper>;
 
@@ -211,6 +228,8 @@ const DEFAULT_ARGS = {
   title: 'Custom title',
   description: 'Custom description',
   type: 'jsqr',
+  selectCameraTitle: 'Select camera',
+  selectCameraMotion: 'slide-down',
 };
 
 export const Default = Template.bind({});

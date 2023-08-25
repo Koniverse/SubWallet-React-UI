@@ -598,6 +598,10 @@ const genInputStyle: GenerateStyle<InputToken> = (token: InputToken) => {
       [`${componentCls}-suffix`]: {
         height: 48,
         marginRight: -8,
+
+        '& > span:empty': {
+          marginRight: 8,
+        },
       },
 
       [`${componentCls}-status-icon`]: {

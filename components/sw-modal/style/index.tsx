@@ -1,5 +1,5 @@
 import type React from 'react';
-import { initFadeMotion, initSlideMotion } from '../../style/motion';
+import { initFadeMotion, initMoveMotion, initSlideMotion } from '../../style/motion';
 import type { AliasToken, FullToken, GenerateStyle } from '../../theme/internal';
 import { genComponentStyleHook, mergeToken } from '../../theme/internal';
 import type { TokenWithCommonCls } from '../../theme/util/genComponentStyleHook';
@@ -469,6 +469,14 @@ export default genComponentStyleHook('SwModal', (token) => {
     genRTLStyle(modalToken),
     genModalMaskStyle(modalToken),
     token.wireframe && genWireframeStyle(modalToken),
+    initSlideMotion(modalToken, 'slide-up'),
     initSlideMotion(modalToken, 'slide-down'),
+    initSlideMotion(modalToken, 'slide-left'),
+    initSlideMotion(modalToken, 'slide-right'),
+    initMoveMotion(modalToken, 'move-up'),
+    initMoveMotion(modalToken, 'move-down'),
+    initMoveMotion(modalToken, 'move-left'),
+    initMoveMotion(modalToken, 'move-right'),
+    initFadeMotion(modalToken),
   ];
 });

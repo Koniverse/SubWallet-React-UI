@@ -70,7 +70,7 @@ const Wrapper = <T extends Record<string, any>>({
         }
       />
     ),
-    [],
+    [token.colorSecondary],
   );
 
   const additionalProps = useMemo((): Pick<
@@ -156,6 +156,20 @@ export default {
       control: 'radio',
       options: ['default', 'transparent'],
     },
+    motion: {
+      control: 'radio',
+      options: [
+        'slide-up',
+        'slide-down',
+        'slide-left',
+        'slide-right',
+        'move-up',
+        'move-down',
+        'move-left',
+        'move-right',
+        'fade',
+      ],
+    },
     size: {
       control: 'select',
       options: ['small', 'medium'],
@@ -219,6 +233,7 @@ const DEFAULT_ARGS = {
   maskClosable: false,
   shape: 'default',
   background: 'default',
+  motion: 'slide-down',
   size: 'medium',
   placeholder: 'Select Box',
   title: 'Select modal',
