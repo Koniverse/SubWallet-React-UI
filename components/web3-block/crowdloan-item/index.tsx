@@ -24,6 +24,7 @@ export interface CrowdloanItemProps extends Web3BlockProps {
   isShowSubLogo?: boolean;
   crowdloanStatusTag?: React.ReactNode;
   displayToken?: string;
+  hideBalance?: boolean;
 }
 
 const CrowdloanItem: React.FC<CrowdloanItemProps> = ({
@@ -46,6 +47,7 @@ const CrowdloanItem: React.FC<CrowdloanItemProps> = ({
   middleItem,
   rightItem,
   className,
+  hideBalance,
   ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
@@ -89,11 +91,13 @@ const CrowdloanItem: React.FC<CrowdloanItemProps> = ({
               value={balanceValue}
               decimal={decimal}
               decimalOpacity={0.45}
+              hide={hideBalance}
               suffix={displayToken}
             />
             <Number
               size={12}
               decimal={0}
+              hide={hideBalance}
               value={convertedBalanceValue}
               prefix="$"
               intOpacity={0.45}

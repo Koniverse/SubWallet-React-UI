@@ -99,7 +99,8 @@
     "clean-storybook": "yarn clean && rm -rf storybook-static",
     "build-storybook": "yarn clean-storybook && build-storybook",
     "deploy-storybook": "yarn build-storybook && gh-pages --dist 'storybook-static' --branch 'gh-page-storybook'",
-    "postinstall": "npx patch-package"
+    "postinstall": "npx patch-package",
+    "create-build-folder": "npm run build && node ./scripts/create-build-folder"
   },
   "browserslist": [
     "> 0.5%",
