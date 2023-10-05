@@ -1,14 +1,13 @@
-import React, { useCallback, useRef } from 'react';
+import React, { useCallback } from 'react';
 import type { ComponentStory, ComponentMeta } from '@storybook/react';
 import { FadersHorizontal } from 'phosphor-react';
-import type { SwListSectionProps, SwListSectionRef } from '..';
+import type { SwListSectionProps } from '..';
 import SwList from '..';
 import type { DemoAccountType } from './data';
 import { DemoAccounts } from './data';
 import AccountCard from '../../web3-block/account-card';
 import NetworkItem from '../../web3-block/network-item';
 import Icon from '../../icon';
-import Button from '../../button';
 
 // More on default export: https://storybook.js.org/docs/react/writing-stories/introduction#default-export
 export default {
@@ -92,8 +91,6 @@ const App = ({
     );
   };
 
-  const sectionRef = useRef<SwListSectionRef>(null);
-
   const sectionProps: SwListSectionProps<DemoAccountType> = {
     renderItem,
     list: DemoAccounts,
@@ -130,16 +127,7 @@ const App = ({
     };
   }
 
-  const clearSearch = useCallback(() => {
-    sectionRef.current?.setSearchValue('333');
-  }, []);
-
-  return (
-    <>
-      <Button onClick={clearSearch}>ABC</Button>
-      <SwList.Section ref={sectionRef} {...sectionProps} />
-    </>
-  );
+  return <SwList.Section {...sectionProps} />;
 };
 
 // More on component templates: https://storybook.js.org/docs/react/writing-stories/introduction#using-args
