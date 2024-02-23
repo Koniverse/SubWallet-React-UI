@@ -65,3 +65,4 @@ __image_snapshots__/
 .devcontainer*
 /storybook-static/
 build/
+.yarn/cache

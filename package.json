@@ -1,6 +1,6 @@
 {
   "name": "@subwallet/react-ui",
-  "version": "5.1.2-b74",
+  "version": "5.1.2-b75",
   "description": "SubWallet React UI base on ant-design",
   "title": "SubWallet React UI",
   "keywords": [
@@ -357,5 +357,6 @@
   "lint-staged": {
     "*.{ts,tsx,js,jsx}": "rome format --write",
     "*.{json,less,md}": "prettier --ignore-unknown --write"
-  }
+  },
+  "packageManager": "yarn@3.2.0"
 }
