@@ -245,20 +245,22 @@ const SelectModal = <T extends SelectModalItem>(props: SelectModalProps<T>): JSX
   );
 
   useEffect(() => {
-    let timeOut: NodeJS.Timeout;
+    if (!token.SelectModal?.disableAutoFocus) {
+      let timeOut: NodeJS.Timeout;
 
-    if (isActive) {
-      timeOut = setTimeout(() => {
-        setFocusSearch(true);
-      }, 200);
-    } else {
-      setFocusSearch(false);
+      if (isActive) {
+        timeOut = setTimeout(() => {
+          setFocusSearch(true);
+        }, 200);
+      } else {
+        setFocusSearch(false);
+      }
+
+      return () => {
+        clearTimeout(timeOut);
+      };
     }
-
-    return () => {
-      clearTimeout(timeOut);
-    };
-  }, [isActive]);
+  }, [isActive, token.SelectModal?.disableAutoFocus]);
 
   return wrapSSR(
     <NoCompactStyle>
