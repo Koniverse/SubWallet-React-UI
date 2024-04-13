@@ -17,6 +17,8 @@ export interface CrowdloanItemProps extends Web3BlockProps {
   networkKey?: string;
   subNetworkKey?: string;
   symbol?: string;
+  prefix?: string;
+  suffix?: string;
   subSymbol?: string;
   networkMainLogoSize?: number;
   networkMainLogoShape?: 'circle' | 'squircle';
@@ -48,6 +50,8 @@ const CrowdloanItem: React.FC<CrowdloanItemProps> = ({
   rightItem,
   className,
   hideBalance,
+  prefix,
+  suffix,
   ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
@@ -99,7 +103,8 @@ const CrowdloanItem: React.FC<CrowdloanItemProps> = ({
               decimal={0}
               hide={hideBalance}
               value={convertedBalanceValue}
-              prefix="$"
+              prefix={prefix}
+              suffix={suffix}
               intOpacity={0.45}
               decimalOpacity={0.45}
               unitOpacity={0.45}
