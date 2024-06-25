@@ -3,8 +3,9 @@ import classNames from 'classnames';
 import React, { useMemo } from 'react';
 import { ConfigContext } from '../config-provider';
 import useStyle from './style';
-import type { NumberFormatter } from '../_util/number';
-import { balanceFormatter, formatNumber } from '../_util/number';
+import type { NumberFormatter} from '../_util/number';
+import { toBNString , balanceFormatter, formatNumber } from '../_util/number';
+
 import Typography from '../typography';
 import { useToken } from '../theme/internal';
 
@@ -159,7 +160,7 @@ const Number: React.FC<SwNumberProps> = (props) => {
   const hideContent = useMemo(() => new Array(showHideLength).fill('*').join(''), [showHideLength]);
 
   return wrapSSR(
-    <div className={classNames(classNameExtend)}>
+    <div className={classNames(classNameExtend)} attrValue={toBNString(value, decimal)}>
       {hide && (
         <Typography.Text
           className={classNames(`${prefixCls}-hide-content`)}
