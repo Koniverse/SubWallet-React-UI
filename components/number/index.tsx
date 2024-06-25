@@ -160,7 +160,7 @@ const Number: React.FC<SwNumberProps> = (props) => {
   const hideContent = useMemo(() => new Array(showHideLength).fill('*').join(''), [showHideLength]);
 
   return wrapSSR(
-    <div className={classNames(classNameExtend)} attrValue={toBNString(value, decimal)}>
+    <div className={classNames(classNameExtend)} data-value={toBNString(value, decimal)}>
       {hide && (
         <Typography.Text
           className={classNames(`${prefixCls}-hide-content`)}
