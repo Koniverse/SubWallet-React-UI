@@ -21,6 +21,8 @@ export interface StakingItemProps extends Web3BlockProps {
   networkMainLogoShape?: 'circle' | 'squircle';
   networkKey?: string;
   symbol?: string;
+  prefix?: string;
+  suffix?: string;
   displayToken?: string;
   className?: string;
   onPressItem?: () => void;
@@ -46,6 +48,8 @@ const StakingItem: React.FC<StakingItemProps> = ({
   rightItem,
   onClickRightIcon,
   hideBalance,
+  prefix,
+  suffix,
   ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
@@ -89,7 +93,8 @@ const StakingItem: React.FC<StakingItemProps> = ({
               />
               <Number
                 size={12}
-                prefix="$"
+                prefix={prefix}
+                suffix={suffix}
                 value={convertedStakingValue}
                 decimal={0}
                 hide={hideBalance}

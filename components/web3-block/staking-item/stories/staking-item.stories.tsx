@@ -16,6 +16,8 @@ export default {
     displayToken: { control: 'text', defaultValue: 'DOT' },
     convertedStakingValue: { control: 'number', defaultValue: 4993.33 },
     stakingValue: { control: 'number', defaultValue: 600 },
+    prefix: { control: 'text', defaultValue: '$' },
+    suffix: { control: 'text', defaultValue: '' },
   },
 } as ComponentMeta<typeof StakingItem>;
 

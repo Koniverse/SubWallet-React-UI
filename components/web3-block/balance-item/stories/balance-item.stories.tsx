@@ -16,6 +16,8 @@ export default {
     convertedBalanceValue: { control: 'number', defaultValue: 4993.33 },
     balanceValue: { control: 'number', defaultValue: 600 },
     withDivider: { control: 'boolean', defaultValue: false },
+    prefix: { control: 'text', defaultValue: '$' },
+    suffix: { control: 'text', defaultValue: '' },
   },
 } as ComponentMeta<typeof BalanceItem>;
 

@@ -21,6 +21,8 @@ export interface BalanceItemProps extends Web3BlockProps {
   networkMainLogoShape?: 'circle' | 'squircle';
   networkSubLogoShape?: 'circle' | 'squircle';
   isShowSubLogo?: boolean;
+  prefix?: string;
+  suffix?: string;
   networkKey?: string;
   subNetworkKey?: string;
   symbol?: string;
@@ -55,6 +57,8 @@ const BalanceItem: React.FC<BalanceItemProps> = ({
   leftItem,
   middleItem,
   rightItem,
+  prefix,
+  suffix,
   ...props
 }) => {
   const { getPrefixCls } = React.useContext(ConfigContext);
@@ -96,7 +100,8 @@ const BalanceItem: React.FC<BalanceItemProps> = ({
                 size={12}
                 value={price}
                 decimal={0}
-                prefix="$"
+                prefix={prefix}
+                suffix={suffix}
                 intColor="#4CEAAC"
                 decimalColor="#4CEAAC"
                 unitColor="#4CEAAC"

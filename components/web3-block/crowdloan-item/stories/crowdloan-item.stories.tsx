@@ -16,6 +16,8 @@ export default {
     paraChain: { control: 'text', defaultValue: 'Polkadot Parachain' },
     symbol: { control: 'text', defaultValue: 'dot' },
     isShowSubLogo: { control: 'boolean', defaultValue: true },
+    preffix: { control: 'text', defaultValue: '$' },
+    suffix: { control: 'text', defaultValue: '' },
   },
 } as ComponentMeta<typeof CrowdloanItem>;
 
