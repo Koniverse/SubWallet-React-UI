@@ -1,6 +1,8 @@
 import { generate } from '@ant-design/colors';
 import type { DerivativeFunc } from '@ant-design/cssinjs';
 import type { ThemePresetColorType } from '../../interface/presetColors';
+import { PresetColors , ThemePresetColors } from '../../interface/presetColors';
+
 import type { ColorPalettes, MapToken, PresetColorType, SeedToken } from '../../interface';
 import { defaultPresetColors, themePresetColors } from '../seed';
 import genColorMapToken from '../shared/genColorMapToken';
@@ -15,7 +17,7 @@ const derivative: DerivativeFunc<SeedToken, MapToken> = (token, mapToken) => {
         backgroundColor: token.colorBgBase,
       });
 
-      if (colorKey === 'colorPrimary') {
+      if (ThemePresetColors.includes(colorKey)) {
         colors[5] = token[colorKey];
       }
 
@@ -40,7 +42,7 @@ const derivative: DerivativeFunc<SeedToken, MapToken> = (token, mapToken) => {
         backgroundColor: token.colorBgBase,
       });
 
-      if (colorKey === 'geekblue') {
+      if (PresetColors.includes(colorKey)) {
         colors[5] = token[colorKey];
       }
 
