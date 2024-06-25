@@ -1,5 +1,4 @@
 import EyeOutlined from '@ant-design/icons/EyeOutlined';
-import '@google/model-viewer';
 import classNames from 'classnames';
 import RcImage, { type ImageProps } from 'rc-image';
 import type { SyntheticEvent } from 'react';
@@ -27,7 +26,8 @@ export interface SwImageProps extends ImageProps {
   responsive?: boolean;
   isLoading?: boolean;
   activityIndicatorSize?: number | string;
-  modelViewerProps?: ModelViewerProps;
+  modelViewerProps?: ModelViewerProps; // will remove after
+  fallbackSrc?: string;
 }
 
 export interface CompositionImage<P> extends React.FC<P> {
@@ -42,6 +42,7 @@ const Image: CompositionImage<SwImageProps> = ({
   width = 'auto',
   height = 'auto',
   responsive,
+ fallbackSrc,
   isLoading,
   activityIndicatorSize = 16,
   modelViewerProps,
@@ -65,7 +66,6 @@ const Image: CompositionImage<SwImageProps> = ({
 
   const [showImage, setShowImage] = useState(true);
   const [showVideo, setShowVideo] = useState(false);
-  const [show3dViewer, setShow3dViewer] = useState(false);
 
   // Style
   const [wrapSSR, hashId] = useStyle(prefixCls);
@@ -114,13 +114,11 @@ const Image: CompositionImage<SwImageProps> = ({
 
   const handleVideoError = useCallback(() => {
     setShowVideo(false);
-    setShow3dViewer(true);
   }, []);
 
   useEffect(() => {
     setShowImage(true);
     setShowVideo(false);
-    setShow3dViewer(false);
   }, [src]);
 
   const renderImage = () => {
@@ -160,42 +158,16 @@ const Image: CompositionImage<SwImageProps> = ({
       );
     }
 
-    if (show3dViewer && modelViewerProps) {
-      return (
-        <div className={classNames(`${prefixCls}-3d-modal-viewer`)} style={{ width, height }}>
-          {/* @ts-ignore */}
-          <model-viewer
-            alt="model-viewer"
-            ar-status="not-presenting"
-            auto-rotate="true"
-            auto-rotate-delay={100}
-            bounds="tight"
-            disable-pan="true"
-            disable-scroll="true"
-            disable-tap="true"
-            disable-zoom="true"
-            environment-image="neutral"
-            interaction-prompt="none"
-            loading="eager"
-            touch-action="none"
-            style={{ width: '100%', height: '100%' }}
-            {...modelViewerProps}
-            src={src}
-          />
-        </div>
-      );
-    }
-
     return (
       <RcImage
         style={{ width, height }}
         preview={false}
         prefixCls={`${prefixCls}`}
         rootClassName={mergedRootClassName}
-        fallback={FAULT_TOLERANT}
+        fallback={fallbackSrc || FAULT_TOLERANT}
         onLoad={handleOnLoad}
         onError={handleImageError}
-        src={FAULT_TOLERANT}
+        src={fallbackSrc || FAULT_TOLERANT}
         {...otherProps}
       />
     );

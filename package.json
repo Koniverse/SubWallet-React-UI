@@ -119,7 +119,6 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
-    "@google/model-viewer": "3.1.1",
     "@polkadot/react-identicon": "^3.6.3",
     "@polkadot/util-crypto": "^12.5.1",
     "@polkadot/wasm-crypto": "^7.2.2",
